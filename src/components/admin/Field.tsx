@@ -12,21 +12,21 @@ type TextProps = {
 export function TextField({ label, value, onChange, multiline, placeholder, rows = 4 }: TextProps) {
   return (
     <div>
-      <label className="label-luxe">{label}</label>
+      <label className="label-field">{label}</label>
       {multiline ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={rows}
           placeholder={placeholder}
-          className="input-luxe resize-y"
+          className="input-clean resize-y"
         />
       ) : (
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="input-luxe"
+          className="input-clean"
         />
       )}
     </div>

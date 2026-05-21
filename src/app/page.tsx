@@ -15,7 +15,7 @@ import Footer from "@/components/public/Footer";
 export default async function HomePage() {
   const content = await readContent();
   return (
-    <main className="relative overflow-hidden bg-obsidian">
+    <main className="relative overflow-hidden bg-canvas">
       <Nav brand={content.brand} nav={content.nav} />
       <Hero brand={content.brand} hero={content.hero} />
       <TrustBar data={content.trustBar} />
