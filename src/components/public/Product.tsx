@@ -107,7 +107,7 @@ export default function Product({ brand, product }: Props) {
           </div>
 
           <p className="mt-6 text-[11px] uppercase tracking-widest text-muted">
-            {brand.company}  •  {brand.tagline}
+            {brand.company} · {brand.tagline}
           </p>
         </motion.div>
       </div>

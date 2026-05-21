@@ -33,18 +33,12 @@ export default function Nav({ brand, nav }: Props) {
       }`}
     >
       <div className="container-app flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-2.5 group">
           <span className="grid h-8 w-8 place-items-center rounded-full bg-ink text-canvas text-sm font-semibold">
             {brand.logoMark}
           </span>
-          <span className="flex flex-col leading-none">
-            <span className="text-[15px] font-semibold tracking-tight text-ink">
-              {brand.name}
-              <sup className="ml-0.5 text-[9px] font-medium text-muted">{brand.trademark}</sup>
-            </span>
-            <span className="mt-0.5 text-[10px] uppercase tracking-widest text-muted">
-              {brand.company}
-            </span>
+          <span className="text-[15px] font-semibold tracking-tight text-ink">
+            {brand.company}
           </span>
         </Link>
 

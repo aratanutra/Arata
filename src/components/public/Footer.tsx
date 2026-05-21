@@ -13,21 +13,21 @@ export default function Footer({ brand, footer }: Props) {
       <div className="container-app">
         <div className="grid gap-12 md:grid-cols-4">
           <div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-sm font-semibold text-canvas">
                 {brand.logoMark}
               </span>
-              <span className="flex flex-col leading-none">
-                <span className="text-lg font-semibold tracking-tight text-ink">
-                  {brand.name}
-                  <sup className="ml-0.5 text-[9px] font-medium text-muted">{brand.trademark}</sup>
-                </span>
-                <span className="mt-0.5 text-[10px] uppercase tracking-widest text-muted">
-                  {brand.company}
-                </span>
+              <span className="text-lg font-semibold tracking-tight text-ink">
+                {brand.company}
               </span>
             </div>
             <p className="mt-5 text-base text-ink-soft">{footer.tagline}</p>
+            <a
+              href={`mailto:${brand.email}`}
+              className="mt-3 inline-block text-[13px] text-muted transition-colors hover:text-ink"
+            >
+              {brand.email}
+            </a>
           </div>
 
           {footer.columns.map((col) => (

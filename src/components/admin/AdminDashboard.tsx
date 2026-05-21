@@ -55,6 +55,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       { id: "prescription", label: "Prescription" },
       { id: "blog", label: "Blog" },
       { id: "newsletter", label: "Newsletter" },
+      { id: "contactForm", label: "Contact" },
       { id: "footer", label: "Footer" }
     ],
     []
@@ -65,7 +66,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       <header className="flex flex-col gap-4 border-b border-hairline pb-8 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-widest text-sage">
-            ARATA Nutraceuticals  •  Aeternyx™ Console
+            Arata Nutraceuticals · Aeternyx™ Console
           </p>
           <h1 className="mt-2 text-5xl text-ink">Content Studio</h1>
           <p className="mt-2 text-sm text-muted">
@@ -127,6 +128,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         <PrescriptionCard content={content} update={update} />
         <BlogCard content={content} update={update} />
         <NewsletterCard content={content} update={update} />
+        <ContactFormCard content={content} update={update} />
         <FooterCard content={content} update={update} />
       </div>
     </div>
@@ -151,6 +153,8 @@ function BrandCard({ content, update }: CardProps) {
         <TextField label="Price" value={v.price} onChange={(x) => set({ price: x })} />
         <TextField label="Price Cadence" value={v.priceCadence} onChange={(x) => set({ priceCadence: x })} />
         <TextField label="Logo Mark (1 character)" value={v.logoMark} onChange={(x) => set({ logoMark: x })} />
+        <TextField label="Public Email" value={v.email} onChange={(x) => set({ email: x })} />
+        <TextField label="Domain" value={v.domain} onChange={(x) => set({ domain: x })} />
       </div>
     </SectionCard>
   );
@@ -692,7 +696,7 @@ function BlogCard({ content, update }: CardProps) {
           <div key={p.id} className="rounded-xl border border-hairline p-5 space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-[10px] uppercase tracking-widest text-sage">
-                Post #{i + 1}  •  id: {p.id}
+                Post #{i + 1} · id: {p.id}
               </span>
               <button
                 type="button"
@@ -765,6 +769,40 @@ function NewsletterCard({ content, update }: CardProps) {
         <TextField label="Button Label" value={v.buttonLabel} onChange={(x) => set({ buttonLabel: x })} />
       </div>
       <TextField label="Disclaimer" value={v.disclaimer} onChange={(x) => set({ disclaimer: x })} />
+    </SectionCard>
+  );
+}
+
+function ContactFormCard({ content, update }: CardProps) {
+  const v = content.contactForm;
+  const set = (patch: Partial<SiteContent["contactForm"]>) =>
+    update("contactForm", { ...v, ...patch });
+  return (
+    <SectionCard
+      id="contactForm"
+      title="Contact Form"
+      subtitle="Google Form embedded in a modal — opens whenever a link points to #contact"
+    >
+      <TextField label="Trigger Label" value={v.triggerLabel} onChange={(x) => set({ triggerLabel: x })} />
+      <TextField label="Modal Title" value={v.title} onChange={(x) => set({ title: x })} />
+      <TextField label="Modal Description" value={v.description} onChange={(x) => set({ description: x })} multiline />
+      <TextField
+        label="Google Form URL"
+        value={v.formUrl}
+        onChange={(x) => set({ formUrl: x })}
+        placeholder="https://docs.google.com/forms/d/e/.../viewform"
+      />
+      <TextField
+        label="Fallback Email (shown when no form URL is set)"
+        value={v.fallbackEmail}
+        onChange={(x) => set({ fallbackEmail: x })}
+      />
+      <p className="rounded-xl bg-mist px-4 py-3 text-[13px] leading-relaxed text-muted">
+        How to get the URL: open your Google Form → <span className="font-medium text-ink">Send</span> →
+        <span className="font-medium text-ink"> &lt;/&gt; Embed</span> tab → copy the URL from the <code className="rounded bg-canvas px-1.5 py-0.5 text-ink">src=&quot;…&quot;</code> snippet
+        (or paste the regular <span className="font-medium text-ink">.../viewform</span> link — we add
+        <code className="rounded bg-canvas px-1.5 py-0.5 text-ink">?embedded=true</code> automatically).
+      </p>
     </SectionCard>
   );
 }

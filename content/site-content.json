@@ -2,11 +2,13 @@
   "brand": {
     "name": "Aeternyx",
     "trademark": "™",
-    "company": "ARATA Nutraceuticals",
+    "company": "Arata Nutraceuticals",
     "tagline": "Cellular Intelligence",
     "price": "₹2,500",
     "priceCadence": "/ month",
-    "logoMark": "Æ"
+    "logoMark": "A",
+    "email": "aratanutra@gmail.com",
+    "domain": "aratanutra.com"
   },
   "nav": {
     "links": [
@@ -22,7 +24,7 @@
     "ctaHref": "#newsletter"
   },
   "hero": {
-    "eyebrow": "ARATA Nutraceuticals presents",
+    "eyebrow": "Arata Nutraceuticals presents",
     "title": "Aeternyx",
     "tagline": "Cellular Intelligence",
     "subtitle": "A single capsule. Ten bioactives. Five aging pathways. Engineered by physicians for the next 100 years of you.",
@@ -49,9 +51,9 @@
       { "value": "1", "label": "Daily Capsule" }
     ],
     "price": "₹2,500",
-    "cadence": "per month  •  30 capsules  •  30-day supply",
+    "cadence": "per month · 30 capsules · 30-day supply",
     "primaryCta": { "label": "Start Subscription", "href": "#newsletter" },
-    "secondaryCta": { "label": "Speak to a Physician", "href": "#prescription" },
+    "secondaryCta": { "label": "Speak to a Physician", "href": "#contact" },
     "image": ""
   },
   "ingredientsSection": {
@@ -156,7 +158,7 @@
     "eyebrow": "Founding Principle",
     "quote": "We did not build Aeternyx to be a supplement. We built it to be the molecular floor on which a longer life is constructed — every dose mapped to a randomised trial, every molecule earning its place. Cellular intelligence is not a marketing phrase. It is the standard.",
     "founderName": "Dr. Rahul Gaddipati",
-    "founderTitle": "Founder & Chief Formulator, ARATA Nutraceuticals"
+    "founderTitle": "Founder & Chief Formulator, Arata Nutraceuticals"
   },
   "prescription": {
     "eyebrow": "For Physicians",
@@ -194,7 +196,8 @@
         "excerpt": "The Q-SYMBIO and KiSel-10 trials defined the floor for clinical effect. Anything less is theatre.",
         "image": "/seed/blog-1.svg",
         "slug": "coq10-dosing",
-        "published": true
+        "published": true,
+        "body": "Most CoQ10 supplements in the Indian market contain 30mg or less. This is not a clinical dose — it is a marketing dose.\n\nThe Q-SYMBIO trial (Mortensen et al., 2014) randomised 420 patients with chronic heart failure to 300mg of CoQ10 daily or placebo. After two years, all-cause mortality fell 42%. The follow-up KiSel-10 trial in healthy elderly Swedes used 200mg of CoQ10 plus 200mcg of selenium daily for four years, and reduced cardiovascular mortality by 53%.\n\nAt 100mg, Aeternyx™ sits at the floor of clinical effect — the dose at which serum CoQ10 reliably rises above the deficiency threshold in adults over 40 — paired with 55mcg of selenium to complete the KiSel-10 synergy. Anything less is below the line at which the molecule does anything measurable in the literature."
       },
       {
         "id": "p2",
@@ -202,7 +205,8 @@
         "excerpt": "Unaccompanied Vitamin D3 supplementation can deposit calcium where it does the most harm. K2-7 is non-negotiable.",
         "image": "/seed/blog-2.svg",
         "slug": "d3-k2-paradox",
-        "published": true
+        "published": true,
+        "body": "Vitamin D3 raises serum calcium. That calcium has to go somewhere. In a K2-replete body, osteocalcin (a K2-dependent protein) carboxylates and routes the calcium into bone, where it is wanted. In a K2-deficient body, that same calcium drifts into arterial walls — where it is the substrate for atherosclerotic plaque calcification.\n\nThis is the calcium paradox, and it is the reason high-dose D3 supplementation without K2 has been associated with elevated coronary calcification scores in several observational cohorts.\n\nAeternyx™ pairs every 2000 IU of D3 with 100mcg of K2-7 (the MK-7 isoform, which has a 72-hour half-life versus MK-4's 8 hours). The molecules are not interchangeable. They are partners, and we will not ship D3 without K2."
       },
       {
         "id": "p3",
@@ -210,7 +214,8 @@
         "excerpt": "Why one tiny molecule from microalgae outperforms most cognitive supplements on the market.",
         "image": "/seed/blog-3.svg",
         "slug": "astaxanthin-bbb",
-        "published": true
+        "published": true,
+        "body": "Astaxanthin is the carotenoid that gives salmon and flamingos their colour. It is also the only carotenoid known to cross both the blood-brain barrier and the blood-retina barrier in measurable concentrations.\n\nIts antioxidant capacity is approximately 6,000× that of Vitamin C and 100× that of Vitamin E in vitro. It also suppresses NF-κB, the master inflammatory transcription factor, and stabilises the mitochondrial inner membrane against oxidative leak.\n\nIn the cognition literature, 4–12mg of astaxanthin per day has been associated with improvements in working memory, reaction time, and macular pigment optical density. Aeternyx™ includes 4mg — the floor of efficacy, dosed for daily sustainable use rather than acute studies."
       }
     ]
   },
@@ -222,6 +227,13 @@
     "buttonLabel": "Request Access",
     "disclaimer": "We never share your data. One email per quarter, never more."
   },
+  "contactForm": {
+    "triggerLabel": "Contact",
+    "title": "Get in touch",
+    "description": "Tell us about your practice, your patients, or your interest in Aeternyx™. We respond within two business days.",
+    "formUrl": "",
+    "fallbackEmail": "aratanutra@gmail.com"
+  },
   "footer": {
     "tagline": "Cellular Intelligence, daily.",
     "columns": [
@@ -230,7 +242,7 @@
         "links": [
           { "label": "About Aeternyx", "href": "#product" },
           { "label": "Philosophy", "href": "#philosophy" },
-          { "label": "Press Kit", "href": "#" }
+          { "label": "Press Kit", "href": "#contact" }
         ]
       },
       {
@@ -246,20 +258,20 @@
         "title": "For Physicians",
         "links": [
           { "label": "Prescriber Programme", "href": "#prescription" },
-          { "label": "Clinical Dossier", "href": "#" },
-          { "label": "Sample Request", "href": "#" }
+          { "label": "Clinical Dossier", "href": "#contact" },
+          { "label": "Sample Request", "href": "#contact" }
         ]
       },
       {
         "title": "Company",
         "links": [
-          { "label": "ARATA Nutraceuticals", "href": "#" },
-          { "label": "Contact", "href": "mailto:hello@aratanutra.com" },
+          { "label": "Arata Nutraceuticals", "href": "#" },
+          { "label": "Contact", "href": "#contact" },
           { "label": "Terms & Privacy", "href": "#" }
         ]
       }
     ],
-    "address": "ARATA Nutraceuticals Pvt. Ltd.  •  Hyderabad, India",
-    "rights": "© 2026 ARATA Nutraceuticals. Aeternyx™ is a registered trademark."
+    "address": "Arata Nutraceuticals Pvt. Ltd. · Hyderabad, India",
+    "rights": "© 2026 Arata Nutraceuticals. Aeternyx™ is a registered trademark."
   }
 }

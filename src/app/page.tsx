@@ -11,6 +11,7 @@ import Prescription from "@/components/public/Prescription";
 import Blog from "@/components/public/Blog";
 import Newsletter from "@/components/public/Newsletter";
 import Footer from "@/components/public/Footer";
+import ContactDialog from "@/components/public/ContactDialog";
 
 export default async function HomePage() {
   const content = await readContent();
@@ -28,6 +29,7 @@ export default async function HomePage() {
       <Blog data={content.blog} />
       <Newsletter data={content.newsletter} />
       <Footer brand={content.brand} footer={content.footer} />
+      <ContactDialog contactForm={content.contactForm} />
     </main>
   );
 }

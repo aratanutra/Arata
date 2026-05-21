@@ -1,0 +1,22 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# The official @netlify/plugin-nextjs is installed automatically by Netlify
+# when it detects a Next.js project, so we do not need to declare it here.
+# It serves App Router pages, API routes, middleware (NextAuth) and Image
+# Optimization on Netlify Functions / Edge Functions.
+
+# Long-cache the build assets that Next.js fingerprints
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/seed/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
