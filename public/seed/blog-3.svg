@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Astaxanthin essay">
+  <defs>
+    <radialGradient id="brain" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E8D5B0" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="#0E0E0E"/>
+  <circle cx="400" cy="300" r="220" fill="url(#brain)"/>
+  <g stroke="#C9A96E" stroke-opacity="0.45" fill="none">
+    <path d="M 260 300 Q 320 200, 400 220 Q 480 200, 540 300 Q 480 400, 400 380 Q 320 400, 260 300 Z"/>
+    <path d="M 290 300 Q 340 240, 400 250 Q 460 240, 510 300 Q 460 360, 400 350 Q 340 360, 290 300 Z"/>
+    <path d="M 400 220 L 400 380" stroke-opacity="0.3"/>
+  </g>
+  <g fill="#E8D5B0">
+    <circle cx="340" cy="290" r="4"/>
+    <circle cx="380" cy="310" r="4"/>
+    <circle cx="430" cy="280" r="4"/>
+    <circle cx="465" cy="320" r="4"/>
+  </g>
+  <text x="400" y="540" text-anchor="middle" fill="#A89880" font-family="Syncopate, sans-serif" font-size="12" letter-spacing="6">BLOOD-BRAIN BARRIER</text>
+</svg>

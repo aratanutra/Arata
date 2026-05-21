@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Mitochondria essay">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0E0E0E"/>
+      <stop offset="100%" stop-color="#1a1410"/>
+    </linearGradient>
+    <radialGradient id="orb1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E8D5B0" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#C9A96E" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg1)"/>
+  <circle cx="400" cy="300" r="260" fill="url(#orb1)"/>
+  <g stroke="#C9A96E" stroke-opacity="0.4" fill="none">
+    <ellipse cx="400" cy="300" rx="180" ry="80"/>
+    <ellipse cx="400" cy="300" rx="180" ry="80" transform="rotate(60 400 300)"/>
+    <ellipse cx="400" cy="300" rx="180" ry="80" transform="rotate(120 400 300)"/>
+  </g>
+  <circle cx="400" cy="300" r="24" fill="#C9A96E" fill-opacity="0.4"/>
+  <text x="400" y="540" text-anchor="middle" fill="#A89880" font-family="Syncopate, sans-serif" font-size="14" letter-spacing="6">MITOCHONDRIA</text>
+</svg>
