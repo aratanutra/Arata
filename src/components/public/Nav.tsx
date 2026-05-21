@@ -2,17 +2,49 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import type { SiteContent } from "@/types/content";
+import type { NavLink, SiteContent } from "@/types/content";
 
 type Props = {
   brand: SiteContent["brand"];
   nav: SiteContent["nav"];
 };
 
+function isHashOnly(href: string) {
+  return href.startsWith("#");
+}
+
+function NavItem({
+  link,
+  active,
+  onClick,
+  size = "sm"
+}: {
+  link: NavLink;
+  active: boolean;
+  onClick?: () => void;
+  size?: "sm" | "lg";
+}) {
+  const className = `${size === "lg" ? "text-base" : ""} nav-link ${active ? "text-ink" : ""}`;
+  if (isHashOnly(link.href)) {
+    return (
+      <a href={link.href} onClick={onClick} className={className}>
+        {link.label}
+      </a>
+    );
+  }
+  return (
+    <Link href={link.href} onClick={onClick} className={className}>
+      {link.label}
+    </Link>
+  );
+}
+
 export default function Nav({ brand, nav }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -20,6 +52,12 @@ export default function Nav({ brand, nav }: Props) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  function isActive(href: string) {
+    if (isHashOnly(href)) return false;
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
+  }
 
   return (
     <motion.header
@@ -44,16 +82,26 @@ export default function Nav({ brand, nav }: Props) {
 
         <nav className="hidden lg:flex items-center gap-7">
           {nav.links.map((link) => (
-            <a key={link.href} href={link.href} className="nav-link">
-              {link.label}
-            </a>
+            <NavItem key={link.href} link={link} active={isActive(link.href)} />
           ))}
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href={nav.ctaHref} className="hidden md:inline-flex btn-primary py-2 px-5 text-[13px]">
-            {nav.ctaLabel}
-          </a>
+          {isHashOnly(nav.ctaHref) ? (
+            <a
+              href={nav.ctaHref}
+              className="hidden md:inline-flex btn-primary py-2 px-5 text-[13px]"
+            >
+              {nav.ctaLabel}
+            </a>
+          ) : (
+            <Link
+              href={nav.ctaHref}
+              className="hidden md:inline-flex btn-primary py-2 px-5 text-[13px]"
+            >
+              {nav.ctaLabel}
+            </Link>
+          )}
           <button
             type="button"
             aria-label="Toggle menu"
@@ -69,18 +117,31 @@ export default function Nav({ brand, nav }: Props) {
         <div className="lg:hidden border-t border-hairline bg-canvas">
           <div className="container-app flex flex-col gap-4 py-6">
             {nav.links.map((link) => (
-              <a
+              <NavItem
                 key={link.href}
-                href={link.href}
+                link={link}
+                active={isActive(link.href)}
                 onClick={() => setMobileOpen(false)}
-                className="nav-link text-base"
-              >
-                {link.label}
-              </a>
+                size="lg"
+              />
             ))}
-            <a href={nav.ctaHref} className="btn-primary mt-2" onClick={() => setMobileOpen(false)}>
-              {nav.ctaLabel}
-            </a>
+            {isHashOnly(nav.ctaHref) ? (
+              <a
+                href={nav.ctaHref}
+                className="btn-primary mt-2"
+                onClick={() => setMobileOpen(false)}
+              >
+                {nav.ctaLabel}
+              </a>
+            ) : (
+              <Link
+                href={nav.ctaHref}
+                className="btn-primary mt-2"
+                onClick={() => setMobileOpen(false)}
+              >
+                {nav.ctaLabel}
+              </Link>
+            )}
           </div>
         </div>
       ) : null}
