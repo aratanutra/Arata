@@ -13,7 +13,7 @@ import ContactDialog from "@/components/public/ContactDialog";
 import AeternyxPageHero from "@/components/public/AeternyxPageHero";
 
 export const metadata: Metadata = {
-  title: "Aeternyx™ — Cellular Intelligence | Arata Nutraceuticals",
+  title: "Aeternyx™ · Cellular Intelligence | Arata Nutraceuticals",
   description:
     "The complete physician-formulated longevity protocol. Ten RCT-grade bioactives, five aging pathways, one daily capsule."
 };
