@@ -34,55 +34,53 @@ function LoginForm() {
   }
 
   return (
-    <div className="grid min-h-screen place-items-center bg-obsidian px-6">
+    <div className="grid min-h-screen place-items-center bg-mist px-6">
       <div className="w-full max-w-md">
         <div className="text-center">
-          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full border border-gold/40 font-display text-2xl text-gold">
+          <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-ink text-base font-semibold text-canvas">
             Æ
           </div>
-          <h1 className="mt-6 font-display text-4xl text-gold-gradient">Aeternyx Admin</h1>
-          <p className="mt-2 font-accent text-[10px] uppercase tracking-widest text-text-secondary">
+          <h1 className="mt-6 text-3xl font-semibold tracking-tight text-ink">Aeternyx Admin</h1>
+          <p className="mt-2 text-[11px] font-medium uppercase tracking-widest text-muted">
             ARATA Nutraceuticals  •  Content Console
           </p>
         </div>
 
-        <form onSubmit={onSubmit} className="luxe-card mt-10 space-y-5 p-8">
+        <form onSubmit={onSubmit} className="mt-10 space-y-5 rounded-2xl border border-hairline bg-canvas p-8 shadow-card">
           <div>
-            <label className="label-luxe">Email</label>
+            <label className="label-field">Email</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="input-luxe"
+              className="input-clean"
               autoComplete="email"
             />
           </div>
           <div>
-            <label className="label-luxe">Password</label>
+            <label className="label-field">Password</label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="input-luxe"
+              className="input-clean"
               autoComplete="current-password"
             />
           </div>
 
           {error ? (
-            <p className="font-accent text-[10px] uppercase tracking-widest text-red-400">
-              {error}
-            </p>
+            <p className="text-[11px] font-medium uppercase tracking-widest text-red-500">{error}</p>
           ) : null}
 
-          <button type="submit" disabled={loading} className="btn-gold w-full disabled:opacity-60">
+          <button type="submit" disabled={loading} className="btn-primary w-full disabled:opacity-60">
             {loading ? "Authenticating…" : "Sign In"}
           </button>
         </form>
 
-        <p className="mt-6 text-center font-body text-xs text-text-secondary">
-          Credentials configured via <code className="text-gold">.env.local</code>
+        <p className="mt-6 text-center text-[12px] text-muted">
+          Credentials configured via <code className="rounded bg-canvas px-1.5 py-0.5 text-ink">.env.local</code>
         </p>
       </div>
     </div>

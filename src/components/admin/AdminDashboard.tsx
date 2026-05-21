@@ -62,37 +62,37 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
-      <header className="flex flex-col gap-4 border-b border-gold-soft pb-8 md:flex-row md:items-end md:justify-between">
+      <header className="flex flex-col gap-4 border-b border-hairline pb-8 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="font-accent text-[10px] uppercase tracking-widest text-gold">
+          <p className="text-[10px] uppercase tracking-widest text-sage">
             ARATA Nutraceuticals  •  Aeternyx™ Console
           </p>
-          <h1 className="mt-2 font-display text-5xl text-gold-gradient">Content Studio</h1>
-          <p className="mt-2 font-body text-sm text-text-secondary">
-            Edit any field below. Changes are persisted to <code className="text-gold">/content/site-content.json</code>.
+          <h1 className="mt-2 text-5xl text-ink">Content Studio</h1>
+          <p className="mt-2 text-sm text-muted">
+            Edit any field below. Changes are persisted to <code className="text-sage">/content/site-content.json</code>.
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <span className="font-accent text-[10px] uppercase tracking-widest text-text-secondary">
+          <span className="text-[10px] uppercase tracking-widest text-muted">
             {adminEmail}
           </span>
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: "/admin/login" })}
-            className="btn-ghost"
+            className="btn-secondary"
           >
             Sign Out
           </button>
         </div>
       </header>
 
-      <div className="sticky top-4 z-10 mt-6 flex items-center justify-between rounded-2xl border border-gold/30 bg-obsidian/85 px-6 py-4 backdrop-blur">
+      <div className="sticky top-4 z-10 mt-6 flex items-center justify-between rounded-2xl border border-hairline bg-canvas/90 px-6 py-4 backdrop-blur">
         <div className="flex items-center gap-4 overflow-x-auto">
           {sections.map((s) => (
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="whitespace-nowrap font-accent text-[10px] uppercase tracking-widest text-text-secondary hover:text-gold"
+              className="whitespace-nowrap text-[10px] uppercase tracking-widest text-muted hover:text-sage"
             >
               {s.label}
             </a>
@@ -100,15 +100,15 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         </div>
         <div className="flex items-center gap-3">
           {status.kind === "saved" ? (
-            <span className="font-accent text-[10px] uppercase tracking-widest text-gold">
+            <span className="text-[10px] uppercase tracking-widest text-sage">
               ✓ Saved
             </span>
           ) : status.kind === "error" ? (
-            <span className="font-accent text-[10px] uppercase tracking-widest text-red-300">
+            <span className="text-[10px] uppercase tracking-widest text-red-500">
               {status.msg}
             </span>
           ) : null}
-          <button type="button" onClick={save} disabled={status.kind === "saving"} className="btn-gold">
+          <button type="button" onClick={save} disabled={status.kind === "saving"} className="btn-primary">
             {status.kind === "saving" ? "Saving…" : "Save Changes"}
           </button>
         </div>
@@ -166,12 +166,12 @@ function NavCard({ content, update }: CardProps) {
         <TextField label="CTA Href" value={v.ctaHref} onChange={(x) => set({ ctaHref: x })} />
       </div>
       <div>
-        <label className="label-luxe">Links</label>
+        <label className="label-field">Links</label>
         <div className="space-y-3">
           {v.links.map((link, i) => (
             <div key={i} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
               <input
-                className="input-luxe"
+                className="input-clean"
                 value={link.label}
                 onChange={(e) => {
                   const next = [...v.links];
@@ -180,7 +180,7 @@ function NavCard({ content, update }: CardProps) {
                 }}
               />
               <input
-                className="input-luxe"
+                className="input-clean"
                 value={link.href}
                 onChange={(e) => {
                   const next = [...v.links];
@@ -191,7 +191,7 @@ function NavCard({ content, update }: CardProps) {
               <button
                 type="button"
                 onClick={() => set({ links: v.links.filter((_, j) => j !== i) })}
-                className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+                className="text-[10px] uppercase tracking-widest text-red-500"
               >
                 Remove
               </button>
@@ -200,7 +200,7 @@ function NavCard({ content, update }: CardProps) {
           <button
             type="button"
             onClick={() => set({ links: [...v.links, { label: "New", href: "#" }] })}
-            className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+            className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
           >
             + Add link
           </button>
@@ -214,7 +214,7 @@ function HeroCard({ content, update }: CardProps) {
   const v = content.hero;
   const set = (patch: Partial<SiteContent["hero"]>) => update("hero", { ...v, ...patch });
   return (
-    <SectionCard id="hero" title="Hero" subtitle="Full-viewport opening with the gold orb">
+    <SectionCard id="hero" title="Hero" subtitle="Top of page — headline, tagline, CTAs, capsule">
       <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
       <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
@@ -252,7 +252,7 @@ function TrustBarCard({ content, update }: CardProps) {
       {v.badges.map((b, i) => (
         <div key={i} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
           <input
-            className="input-luxe"
+            className="input-clean"
             value={b.title}
             onChange={(e) => {
               const next = [...v.badges];
@@ -261,7 +261,7 @@ function TrustBarCard({ content, update }: CardProps) {
             }}
           />
           <input
-            className="input-luxe"
+            className="input-clean"
             value={b.subtitle}
             onChange={(e) => {
               const next = [...v.badges];
@@ -272,7 +272,7 @@ function TrustBarCard({ content, update }: CardProps) {
           <button
             type="button"
             onClick={() => update("trustBar", { badges: v.badges.filter((_, j) => j !== i) })}
-            className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+            className="text-[10px] uppercase tracking-widest text-red-500"
           >
             Remove
           </button>
@@ -283,7 +283,7 @@ function TrustBarCard({ content, update }: CardProps) {
         onClick={() =>
           update("trustBar", { badges: [...v.badges, { title: "New Badge", subtitle: "Subtitle" }] })
         }
-        className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+        className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
       >
         + Add badge
       </button>
@@ -303,11 +303,11 @@ function ProductCard({ content, update }: CardProps) {
       <TextField label="Cadence" value={v.cadence} onChange={(x) => set({ cadence: x })} />
       <ImageUploader label="Capsule image (optional)" value={v.image} onChange={(url) => set({ image: url })} />
       <div>
-        <label className="label-luxe">Stat Cards</label>
+        <label className="label-field">Stat Cards</label>
         {v.stats.map((s, i) => (
           <div key={i} className="grid gap-3 md:grid-cols-[1fr_2fr_auto]">
             <input
-              className="input-luxe"
+              className="input-clean"
               value={s.value}
               onChange={(e) => {
                 const next = [...v.stats];
@@ -316,7 +316,7 @@ function ProductCard({ content, update }: CardProps) {
               }}
             />
             <input
-              className="input-luxe"
+              className="input-clean"
               value={s.label}
               onChange={(e) => {
                 const next = [...v.stats];
@@ -327,7 +327,7 @@ function ProductCard({ content, update }: CardProps) {
             <button
               type="button"
               onClick={() => set({ stats: v.stats.filter((_, j) => j !== i) })}
-              className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+              className="text-[10px] uppercase tracking-widest text-red-500"
             >
               Remove
             </button>
@@ -336,7 +336,7 @@ function ProductCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ stats: [...v.stats, { value: "0", label: "Label" }] })}
-          className="mt-2 font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+          className="mt-2 text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
         >
           + Add stat
         </button>
@@ -385,7 +385,7 @@ function IngredientsCard({ content, update }: CardProps) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gold-soft text-left font-accent text-[10px] uppercase tracking-widest text-text-secondary">
+            <tr className="border-b border-hairline text-left text-[10px] uppercase tracking-widest text-muted">
               <th className="py-2 pr-3">#</th>
               <th className="py-2 pr-3">Name</th>
               <th className="py-2 pr-3">Dose</th>
@@ -395,27 +395,27 @@ function IngredientsCard({ content, update }: CardProps) {
           </thead>
           <tbody>
             {v.items.map((ing, i) => (
-              <tr key={i} className="align-top border-b border-gold-soft/40">
-                <td className="py-3 pr-3 font-accent text-[10px] text-text-secondary">
+              <tr key={i} className="align-top border-b border-hairline/40">
+                <td className="py-3 pr-3 text-[10px] text-muted">
                   {String(i + 1).padStart(2, "0")}
                 </td>
                 <td className="py-3 pr-3">
                   <input
-                    className="input-luxe"
+                    className="input-clean"
                     value={ing.name}
                     onChange={(e) => setItem(i, { name: e.target.value })}
                   />
                 </td>
                 <td className="py-3 pr-3">
                   <input
-                    className="input-luxe w-28"
+                    className="input-clean w-28"
                     value={ing.dose}
                     onChange={(e) => setItem(i, { dose: e.target.value })}
                   />
                 </td>
                 <td className="py-3 pr-3">
                   <textarea
-                    className="input-luxe min-h-[88px]"
+                    className="input-clean min-h-[88px]"
                     value={ing.description}
                     onChange={(e) => setItem(i, { description: e.target.value })}
                   />
@@ -424,7 +424,7 @@ function IngredientsCard({ content, update }: CardProps) {
                   <button
                     type="button"
                     onClick={() => set({ items: v.items.filter((_, j) => j !== i) })}
-                    className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+                    className="text-[10px] uppercase tracking-widest text-red-500"
                   >
                     Remove
                   </button>
@@ -444,7 +444,7 @@ function IngredientsCard({ content, update }: CardProps) {
             ]
           })
         }
-        className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+        className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
       >
         + Add ingredient
       </button>
@@ -461,11 +461,11 @@ function ScienceCard({ content, update }: CardProps) {
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
       <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
       <div>
-        <label className="label-luxe">Pathways</label>
+        <label className="label-field">Pathways</label>
         {v.pathways.map((p, i) => (
           <div key={i} className="mb-3 grid gap-3 md:grid-cols-[1fr_2fr_auto]">
             <input
-              className="input-luxe"
+              className="input-clean"
               value={p.name}
               onChange={(e) => {
                 const next = [...v.pathways];
@@ -474,7 +474,7 @@ function ScienceCard({ content, update }: CardProps) {
               }}
             />
             <input
-              className="input-luxe"
+              className="input-clean"
               value={p.detail}
               onChange={(e) => {
                 const next = [...v.pathways];
@@ -485,7 +485,7 @@ function ScienceCard({ content, update }: CardProps) {
             <button
               type="button"
               onClick={() => set({ pathways: v.pathways.filter((_, j) => j !== i) })}
-              className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+              className="text-[10px] uppercase tracking-widest text-red-500"
             >
               Remove
             </button>
@@ -494,7 +494,7 @@ function ScienceCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ pathways: [...v.pathways, { name: "New pathway", detail: "Detail" }] })}
-          className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
         >
           + Add pathway
         </button>
@@ -511,11 +511,11 @@ function BenefitsCard({ content, update }: CardProps) {
       <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
       <div>
-        <label className="label-luxe">Tiles (icon keys: energy, cognition, heart, skin, eye, cell, shield, gut)</label>
+        <label className="label-field">Tiles (icon keys: energy, cognition, heart, skin, eye, cell, shield, gut)</label>
         {v.tiles.map((t, i) => (
           <div key={i} className="mb-3 grid gap-3 md:grid-cols-[1fr_1fr_2fr_auto]">
             <input
-              className="input-luxe"
+              className="input-clean"
               value={t.icon}
               onChange={(e) => {
                 const next = [...v.tiles];
@@ -524,7 +524,7 @@ function BenefitsCard({ content, update }: CardProps) {
               }}
             />
             <input
-              className="input-luxe"
+              className="input-clean"
               value={t.title}
               onChange={(e) => {
                 const next = [...v.tiles];
@@ -533,7 +533,7 @@ function BenefitsCard({ content, update }: CardProps) {
               }}
             />
             <input
-              className="input-luxe"
+              className="input-clean"
               value={t.detail}
               onChange={(e) => {
                 const next = [...v.tiles];
@@ -544,7 +544,7 @@ function BenefitsCard({ content, update }: CardProps) {
             <button
               type="button"
               onClick={() => set({ tiles: v.tiles.filter((_, j) => j !== i) })}
-              className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+              className="text-[10px] uppercase tracking-widest text-red-500"
             >
               Remove
             </button>
@@ -555,7 +555,7 @@ function BenefitsCard({ content, update }: CardProps) {
           onClick={() =>
             set({ tiles: [...v.tiles, { icon: "cell", title: "New Tile", detail: "Detail" }] })
           }
-          className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
         >
           + Add tile
         </button>
@@ -588,11 +588,11 @@ function PrescriptionCard({ content, update }: CardProps) {
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
       <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
       <div>
-        <label className="label-luxe">Specialties</label>
+        <label className="label-field">Specialties</label>
         {v.specialties.map((s, i) => (
           <div key={i} className="mb-2 flex gap-3">
             <input
-              className="input-luxe"
+              className="input-clean"
               value={s}
               onChange={(e) => {
                 const next = [...v.specialties];
@@ -603,7 +603,7 @@ function PrescriptionCard({ content, update }: CardProps) {
             <button
               type="button"
               onClick={() => set({ specialties: v.specialties.filter((_, j) => j !== i) })}
-              className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+              className="text-[10px] uppercase tracking-widest text-red-500"
             >
               Remove
             </button>
@@ -612,7 +612,7 @@ function PrescriptionCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ specialties: [...v.specialties, "New specialty"] })}
-          className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
         >
           + Add specialty
         </button>
@@ -640,11 +640,11 @@ function PrescriptionCard({ content, update }: CardProps) {
         />
       </div>
       <div>
-        <label className="label-luxe">Rx Lines</label>
+        <label className="label-field">Rx Lines</label>
         {v.rxCard.lines.map((line, i) => (
           <div key={i} className="mb-2 flex gap-3">
             <input
-              className="input-luxe"
+              className="input-clean"
               value={line}
               onChange={(e) => {
                 const next = [...v.rxCard.lines];
@@ -657,7 +657,7 @@ function PrescriptionCard({ content, update }: CardProps) {
               onClick={() =>
                 set({ rxCard: { ...v.rxCard, lines: v.rxCard.lines.filter((_, j) => j !== i) } })
               }
-              className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+              className="text-[10px] uppercase tracking-widest text-red-500"
             >
               Remove
             </button>
@@ -666,7 +666,7 @@ function PrescriptionCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ rxCard: { ...v.rxCard, lines: [...v.rxCard.lines, "New line"] } })}
-          className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
         >
           + Add line
         </button>
@@ -689,15 +689,15 @@ function BlogCard({ content, update }: CardProps) {
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
       <div className="space-y-6">
         {v.posts.map((p, i) => (
-          <div key={p.id} className="rounded-xl border border-gold-soft p-5 space-y-4">
+          <div key={p.id} className="rounded-xl border border-hairline p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <span className="font-accent text-[10px] uppercase tracking-widest text-gold">
+              <span className="text-[10px] uppercase tracking-widest text-sage">
                 Post #{i + 1}  •  id: {p.id}
               </span>
               <button
                 type="button"
                 onClick={() => set({ posts: v.posts.filter((_, j) => j !== i) })}
-                className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+                className="text-[10px] uppercase tracking-widest text-red-500"
               >
                 Delete
               </button>
@@ -718,9 +718,9 @@ function BlogCard({ content, update }: CardProps) {
                 type="checkbox"
                 checked={p.published}
                 onChange={(e) => setPost(i, { published: e.target.checked })}
-                className="h-4 w-4 accent-[#C9A96E]"
+                className="h-4 w-4 accent-[#2D7A5B]"
               />
-              <span className="font-accent text-[10px] uppercase tracking-widest text-text-secondary">
+              <span className="text-[10px] uppercase tracking-widest text-muted">
                 Published
               </span>
             </label>
@@ -743,7 +743,7 @@ function BlogCard({ content, update }: CardProps) {
               ]
             })
           }
-          className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
         >
           + Add post
         </button>
@@ -779,10 +779,10 @@ function FooterCard({ content, update }: CardProps) {
       <TextField label="Rights" value={v.rights} onChange={(x) => set({ rights: x })} />
 
       {v.columns.map((col, ci) => (
-        <div key={ci} className="rounded-xl border border-gold-soft p-5 space-y-3">
+        <div key={ci} className="rounded-xl border border-hairline p-5 space-y-3">
           <div className="flex items-center justify-between">
             <input
-              className="input-luxe font-display text-lg"
+              className="input-clean text-lg"
               value={col.title}
               onChange={(e) => {
                 const next = [...v.columns];
@@ -793,7 +793,7 @@ function FooterCard({ content, update }: CardProps) {
             <button
               type="button"
               onClick={() => set({ columns: v.columns.filter((_, j) => j !== ci) })}
-              className="ml-3 font-accent text-[10px] uppercase tracking-widest text-red-300"
+              className="ml-3 text-[10px] uppercase tracking-widest text-red-500"
             >
               Delete column
             </button>
@@ -801,7 +801,7 @@ function FooterCard({ content, update }: CardProps) {
           {col.links.map((l, li) => (
             <div key={li} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
               <input
-                className="input-luxe"
+                className="input-clean"
                 value={l.label}
                 onChange={(e) => {
                   const nextCols = [...v.columns];
@@ -812,7 +812,7 @@ function FooterCard({ content, update }: CardProps) {
                 }}
               />
               <input
-                className="input-luxe"
+                className="input-clean"
                 value={l.href}
                 onChange={(e) => {
                   const nextCols = [...v.columns];
@@ -829,7 +829,7 @@ function FooterCard({ content, update }: CardProps) {
                   nextCols[ci] = { ...col, links: col.links.filter((_, k) => k !== li) };
                   set({ columns: nextCols });
                 }}
-                className="font-accent text-[10px] uppercase tracking-widest text-red-300"
+                className="text-[10px] uppercase tracking-widest text-red-500"
               >
                 Remove
               </button>
@@ -842,7 +842,7 @@ function FooterCard({ content, update }: CardProps) {
               nextCols[ci] = { ...col, links: [...col.links, { label: "New", href: "#" }] };
               set({ columns: nextCols });
             }}
-            className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+            className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
           >
             + Add link
           </button>
@@ -851,7 +851,7 @@ function FooterCard({ content, update }: CardProps) {
       <button
         type="button"
         onClick={() => set({ columns: [...v.columns, { title: "New Column", links: [] }] })}
-        className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light"
+        className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
       >
         + Add column
       </button>

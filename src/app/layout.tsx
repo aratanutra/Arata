@@ -1,25 +1,11 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans, Syncopate } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const display = Cormorant_Garamond({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-display",
-  display: "swap"
-});
-
-const body = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-body",
-  display: "swap"
-});
-
-const accent = Syncopate({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-accent",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-sans",
   display: "swap"
 });
 
@@ -42,10 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${accent.variable}`}>
-      <body className="font-body bg-obsidian text-text-primary antialiased">
-        {children}
-      </body>
+    <html lang="en" className={inter.variable}>
+      <body className="font-sans bg-canvas text-ink antialiased">{children}</body>
     </html>
   );
 }

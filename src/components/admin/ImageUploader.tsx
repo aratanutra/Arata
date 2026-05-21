@@ -35,14 +35,14 @@ export default function ImageUploader({ label = "Image", value, onChange }: Prop
 
   return (
     <div>
-      <label className="label-luxe">{label}</label>
+      <label className="label-field">{label}</label>
       <div className="flex items-center gap-3">
-        <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-lg border border-gold-soft bg-obsidian">
+        <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-xl border border-hairline bg-mist">
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={value} alt="" className="h-full w-full object-cover" />
           ) : (
-            <span className="font-accent text-[8px] tracking-widest text-text-secondary">EMPTY</span>
+            <span className="text-[9px] font-medium uppercase tracking-widest text-muted">Empty</span>
           )}
         </div>
         <div className="flex-1">
@@ -50,14 +50,14 @@ export default function ImageUploader({ label = "Image", value, onChange }: Prop
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="/uploads/your-image.png or https://..."
-            className="input-luxe"
+            className="input-clean"
           />
           <div className="mt-2 flex items-center gap-3">
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
               disabled={uploading}
-              className="font-accent text-[10px] uppercase tracking-widest text-gold hover:text-gold-light disabled:opacity-50"
+              className="text-[12px] font-medium text-sage hover:text-sage-deep disabled:opacity-50"
             >
               {uploading ? "Uploading…" : "Upload file"}
             </button>
@@ -65,7 +65,7 @@ export default function ImageUploader({ label = "Image", value, onChange }: Prop
               <button
                 type="button"
                 onClick={() => onChange("")}
-                className="font-accent text-[10px] uppercase tracking-widest text-text-secondary hover:text-red-300"
+                className="text-[12px] font-medium text-muted hover:text-red-500"
               >
                 Clear
               </button>
@@ -83,9 +83,7 @@ export default function ImageUploader({ label = "Image", value, onChange }: Prop
             }}
           />
           {error ? (
-            <p className="mt-1 font-accent text-[10px] uppercase tracking-widest text-red-300">
-              {error}
-            </p>
+            <p className="mt-1 text-[11px] font-medium uppercase tracking-widest text-red-500">{error}</p>
           ) : null}
         </div>
       </div>
