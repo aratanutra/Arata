@@ -42,7 +42,7 @@ function LoginForm() {
           </div>
           <h1 className="mt-6 text-3xl font-semibold tracking-tight text-ink">Aeternyx Admin</h1>
           <p className="mt-2 text-[11px] font-medium uppercase tracking-widest text-muted">
-            ARATA Nutraceuticals  •  Content Console
+            Arata Nutraceuticals · Content Console
           </p>
         </div>
 

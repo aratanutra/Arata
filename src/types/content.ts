@@ -39,6 +39,15 @@ export type SiteContent = {
     price: string;
     priceCadence: string;
     logoMark: string;
+    email: string;
+    domain: string;
+  };
+  contactForm: {
+    triggerLabel: string;
+    title: string;
+    description: string;
+    formUrl: string;
+    fallbackEmail: string;
   };
   nav: {
     links: NavLink[];
