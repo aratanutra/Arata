@@ -12,16 +12,13 @@
   },
   "nav": {
     "links": [
-      { "label": "Product", "href": "#product" },
-      { "label": "Ingredients", "href": "#ingredients" },
-      { "label": "Science", "href": "#science" },
-      { "label": "Benefits", "href": "#benefits" },
-      { "label": "Philosophy", "href": "#philosophy" },
-      { "label": "Physicians", "href": "#prescription" },
-      { "label": "Journal", "href": "#blog" }
+      { "label": "Home", "href": "/" },
+      { "label": "Aeternyx™", "href": "/aeternyx" },
+      { "label": "About Us", "href": "/about" },
+      { "label": "Contact", "href": "#contact" }
     ],
     "ctaLabel": "Reserve",
-    "ctaHref": "#newsletter"
+    "ctaHref": "/#newsletter"
   },
   "hero": {
     "eyebrow": "Arata Nutraceuticals presents",
@@ -227,6 +224,44 @@
     "buttonLabel": "Request Access",
     "disclaimer": "We never share your data. One email per quarter, never more."
   },
+  "aeternyxPage": {
+    "eyebrow": "The Protocol",
+    "title": "Aeternyx",
+    "tagline": "Cellular Intelligence",
+    "subtitle": "A single capsule. Ten bioactives. Five aging pathways. The complete physician-formulated longevity protocol — engineered, dosed, and audited to the standard of the published literature.",
+    "primaryCta": { "label": "Reserve", "href": "#newsletter" },
+    "secondaryCta": { "label": "Read the Science", "href": "#science" }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "About Us",
+      "title": "We are Arata Nutraceuticals.",
+      "subtitle": "A physician-led longevity laboratory based in Hyderabad, building India's most clinically literate supplement portfolio. Aeternyx™ is our founding formulation."
+    },
+    "story": {
+      "title": "Why we exist",
+      "paragraphs": [
+        "Arata Nutraceuticals was founded on a single conviction: the supplement industry in India had drifted dangerously far from the clinical literature. Bottles claimed everything; trials supported almost nothing. Doses were marketing artefacts. Excipients outweighed actives.",
+        "We work backwards from the randomised trial. Every molecule in every Arata product is included because a peer-reviewed human RCT proved it does something measurable. Every dose matches the trial that earned it. Anything that cannot survive that test is not in the capsule.",
+        "Aeternyx™ is the first of a planned portfolio of physician-formulated protocols, each engineered for a specific axis of healthspan — and each held to the same standard."
+      ]
+    },
+    "values": {
+      "title": "What we hold to",
+      "items": [
+        { "title": "Trial-anchored", "detail": "Every ingredient maps to a peer-reviewed RCT — no proprietary blends, no marketing megadoses." },
+        { "title": "Physician-led", "detail": "Formulated and reviewed by MD specialists. No outsourced label engineering." },
+        { "title": "Indian-realistic", "detail": "Designed for the genetic, dietary, and environmental gaps specific to the Indian population." },
+        { "title": "Manufacturing transparency", "detail": "GMP + USFDA-registered facility, NABL third-party tested, lot-level certificates of analysis." }
+      ]
+    },
+    "closingCta": {
+      "eyebrow": "Begin",
+      "title": "Aeternyx™ is the first protocol. Start there.",
+      "primaryCta": { "label": "Explore Aeternyx™", "href": "/aeternyx" },
+      "secondaryCta": { "label": "Talk to us", "href": "#contact" }
+    }
+  },
   "contactForm": {
     "triggerLabel": "Contact",
     "title": "Get in touch",
@@ -238,26 +273,18 @@
     "tagline": "Cellular Intelligence, daily.",
     "columns": [
       {
-        "title": "Brand",
+        "title": "Aeternyx™",
         "links": [
-          { "label": "About Aeternyx", "href": "#product" },
-          { "label": "Philosophy", "href": "#philosophy" },
-          { "label": "Press Kit", "href": "#contact" }
-        ]
-      },
-      {
-        "title": "Explore",
-        "links": [
-          { "label": "Ingredients", "href": "#ingredients" },
-          { "label": "Science", "href": "#science" },
-          { "label": "Benefits", "href": "#benefits" },
-          { "label": "Journal", "href": "#blog" }
+          { "label": "Overview", "href": "/aeternyx" },
+          { "label": "Ingredients", "href": "/aeternyx#ingredients" },
+          { "label": "Science", "href": "/aeternyx#science" },
+          { "label": "Benefits", "href": "/aeternyx#benefits" }
         ]
       },
       {
         "title": "For Physicians",
         "links": [
-          { "label": "Prescriber Programme", "href": "#prescription" },
+          { "label": "Prescriber Programme", "href": "/aeternyx#prescription" },
           { "label": "Clinical Dossier", "href": "#contact" },
           { "label": "Sample Request", "href": "#contact" }
         ]
@@ -265,8 +292,16 @@
       {
         "title": "Company",
         "links": [
-          { "label": "Arata Nutraceuticals", "href": "#" },
-          { "label": "Contact", "href": "#contact" },
+          { "label": "About Us", "href": "/about" },
+          { "label": "Journal", "href": "/#blog" },
+          { "label": "Press Kit", "href": "#contact" }
+        ]
+      },
+      {
+        "title": "Contact",
+        "links": [
+          { "label": "Get in touch", "href": "#contact" },
+          { "label": "aratanutra@gmail.com", "href": "mailto:aratanutra@gmail.com" },
           { "label": "Terms & Privacy", "href": "#" }
         ]
       }

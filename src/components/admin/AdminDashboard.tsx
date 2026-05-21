@@ -56,6 +56,8 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       { id: "blog", label: "Blog" },
       { id: "newsletter", label: "Newsletter" },
       { id: "contactForm", label: "Contact" },
+      { id: "aeternyxPage", label: "Aeternyx Page" },
+      { id: "about", label: "About Page" },
       { id: "footer", label: "Footer" }
     ],
     []
@@ -129,6 +131,8 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         <BlogCard content={content} update={update} />
         <NewsletterCard content={content} update={update} />
         <ContactFormCard content={content} update={update} />
+        <AeternyxPageCard content={content} update={update} />
+        <AboutCard content={content} update={update} />
         <FooterCard content={content} update={update} />
       </div>
     </div>
@@ -803,6 +807,240 @@ function ContactFormCard({ content, update }: CardProps) {
         (or paste the regular <span className="font-medium text-ink">.../viewform</span> link — we add
         <code className="rounded bg-canvas px-1.5 py-0.5 text-ink">?embedded=true</code> automatically).
       </p>
+    </SectionCard>
+  );
+}
+
+function AeternyxPageCard({ content, update }: CardProps) {
+  const v = content.aeternyxPage;
+  const set = (patch: Partial<SiteContent["aeternyxPage"]>) =>
+    update("aeternyxPage", { ...v, ...patch });
+  return (
+    <SectionCard
+      id="aeternyxPage"
+      title="Aeternyx Page Hero"
+      subtitle="Top of the dedicated /aeternyx product page"
+    >
+      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
+      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
+      <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
+      <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
+      <div className="grid gap-5 md:grid-cols-2">
+        <TextField
+          label="Primary CTA — Label"
+          value={v.primaryCta.label}
+          onChange={(x) => set({ primaryCta: { ...v.primaryCta, label: x } })}
+        />
+        <TextField
+          label="Primary CTA — Href"
+          value={v.primaryCta.href}
+          onChange={(x) => set({ primaryCta: { ...v.primaryCta, href: x } })}
+        />
+        <TextField
+          label="Secondary CTA — Label"
+          value={v.secondaryCta.label}
+          onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, label: x } })}
+        />
+        <TextField
+          label="Secondary CTA — Href"
+          value={v.secondaryCta.href}
+          onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, href: x } })}
+        />
+      </div>
+    </SectionCard>
+  );
+}
+
+function AboutCard({ content, update }: CardProps) {
+  const v = content.about;
+  const set = (patch: Partial<SiteContent["about"]>) => update("about", { ...v, ...patch });
+  return (
+    <SectionCard
+      id="about"
+      title="About Page"
+      subtitle="Content of /about — hero, story, values, closing CTA"
+    >
+      <div className="space-y-4 rounded-xl border border-hairline p-5">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Hero</p>
+        <TextField
+          label="Eyebrow"
+          value={v.hero.eyebrow}
+          onChange={(x) => set({ hero: { ...v.hero, eyebrow: x } })}
+        />
+        <TextField
+          label="Title"
+          value={v.hero.title}
+          onChange={(x) => set({ hero: { ...v.hero, title: x } })}
+        />
+        <TextField
+          label="Subtitle"
+          value={v.hero.subtitle}
+          onChange={(x) => set({ hero: { ...v.hero, subtitle: x } })}
+          multiline
+        />
+      </div>
+
+      <div className="space-y-4 rounded-xl border border-hairline p-5">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Story</p>
+        <TextField
+          label="Section Title"
+          value={v.story.title}
+          onChange={(x) => set({ story: { ...v.story, title: x } })}
+        />
+        <div>
+          <label className="label-field">Paragraphs</label>
+          {v.story.paragraphs.map((p, i) => (
+            <div key={i} className="mb-3 flex gap-3">
+              <textarea
+                className="input-clean min-h-[96px] resize-y"
+                value={p}
+                onChange={(e) => {
+                  const next = [...v.story.paragraphs];
+                  next[i] = e.target.value;
+                  set({ story: { ...v.story, paragraphs: next } });
+                }}
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  set({
+                    story: { ...v.story, paragraphs: v.story.paragraphs.filter((_, j) => j !== i) }
+                  })
+                }
+                className="self-start text-[11px] font-medium uppercase tracking-widest text-red-500"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() =>
+              set({ story: { ...v.story, paragraphs: [...v.story.paragraphs, ""] } })
+            }
+            className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+          >
+            + Add paragraph
+          </button>
+        </div>
+      </div>
+
+      <div className="space-y-4 rounded-xl border border-hairline p-5">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Values</p>
+        <TextField
+          label="Section Title"
+          value={v.values.title}
+          onChange={(x) => set({ values: { ...v.values, title: x } })}
+        />
+        {v.values.items.map((it, i) => (
+          <div key={i} className="grid gap-3 md:grid-cols-[1fr_2fr_auto]">
+            <input
+              className="input-clean"
+              value={it.title}
+              onChange={(e) => {
+                const next = [...v.values.items];
+                next[i] = { ...it, title: e.target.value };
+                set({ values: { ...v.values, items: next } });
+              }}
+            />
+            <input
+              className="input-clean"
+              value={it.detail}
+              onChange={(e) => {
+                const next = [...v.values.items];
+                next[i] = { ...it, detail: e.target.value };
+                set({ values: { ...v.values, items: next } });
+              }}
+            />
+            <button
+              type="button"
+              onClick={() =>
+                set({
+                  values: { ...v.values, items: v.values.items.filter((_, j) => j !== i) }
+                })
+              }
+              className="text-[11px] font-medium uppercase tracking-widest text-red-500"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() =>
+            set({
+              values: { ...v.values, items: [...v.values.items, { title: "New value", detail: "Detail" }] }
+            })
+          }
+          className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+        >
+          + Add value
+        </button>
+      </div>
+
+      <div className="space-y-4 rounded-xl border border-hairline p-5">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Closing CTA</p>
+        <TextField
+          label="Eyebrow"
+          value={v.closingCta.eyebrow}
+          onChange={(x) => set({ closingCta: { ...v.closingCta, eyebrow: x } })}
+        />
+        <TextField
+          label="Title"
+          value={v.closingCta.title}
+          onChange={(x) => set({ closingCta: { ...v.closingCta, title: x } })}
+        />
+        <div className="grid gap-5 md:grid-cols-2">
+          <TextField
+            label="Primary CTA — Label"
+            value={v.closingCta.primaryCta.label}
+            onChange={(x) =>
+              set({
+                closingCta: {
+                  ...v.closingCta,
+                  primaryCta: { ...v.closingCta.primaryCta, label: x }
+                }
+              })
+            }
+          />
+          <TextField
+            label="Primary CTA — Href"
+            value={v.closingCta.primaryCta.href}
+            onChange={(x) =>
+              set({
+                closingCta: {
+                  ...v.closingCta,
+                  primaryCta: { ...v.closingCta.primaryCta, href: x }
+                }
+              })
+            }
+          />
+          <TextField
+            label="Secondary CTA — Label"
+            value={v.closingCta.secondaryCta.label}
+            onChange={(x) =>
+              set({
+                closingCta: {
+                  ...v.closingCta,
+                  secondaryCta: { ...v.closingCta.secondaryCta, label: x }
+                }
+              })
+            }
+          />
+          <TextField
+            label="Secondary CTA — Href"
+            value={v.closingCta.secondaryCta.href}
+            onChange={(x) =>
+              set({
+                closingCta: {
+                  ...v.closingCta,
+                  secondaryCta: { ...v.closingCta.secondaryCta, href: x }
+                }
+              })
+            }
+          />
+        </div>
+      </div>
     </SectionCard>
   );
 }

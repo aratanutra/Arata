@@ -49,6 +49,35 @@ export type SiteContent = {
     formUrl: string;
     fallbackEmail: string;
   };
+  aeternyxPage: {
+    eyebrow: string;
+    title: string;
+    tagline: string;
+    subtitle: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+  };
+  about: {
+    hero: {
+      eyebrow: string;
+      title: string;
+      subtitle: string;
+    };
+    story: {
+      title: string;
+      paragraphs: string[];
+    };
+    values: {
+      title: string;
+      items: { title: string; detail: string }[];
+    };
+    closingCta: {
+      eyebrow: string;
+      title: string;
+      primaryCta: CtaLink;
+      secondaryCta: CtaLink;
+    };
+  };
   nav: {
     links: NavLink[];
     ctaLabel: string;
