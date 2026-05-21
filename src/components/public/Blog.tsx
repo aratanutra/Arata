@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
+import { asset } from "@/lib/asset";
 
 export default function Blog({ data }: { data: SiteContent["blog"] }) {
   const visible = data.posts.filter((p) => p.published);
@@ -35,7 +36,11 @@ export default function Blog({ data }: { data: SiteContent["blog"] }) {
                   className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
                   style={
                     post.image
-                      ? { backgroundImage: `url(${post.image})`, backgroundSize: "cover", backgroundPosition: "center" }
+                      ? {
+                          backgroundImage: `url(${asset(post.image)})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center"
+                        }
                       : undefined
                   }
                 />
