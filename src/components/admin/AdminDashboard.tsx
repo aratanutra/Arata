@@ -54,8 +54,11 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       { id: "philosophy", label: "Philosophy" },
       { id: "prescription", label: "Prescription" },
       { id: "blog", label: "Blog" },
+      { id: "homeFeatured", label: "Home — Featured" },
+      { id: "homeValues", label: "Home — Values" },
       { id: "newsletter", label: "Newsletter" },
       { id: "contactForm", label: "Contact" },
+      { id: "dossier", label: "Dossier" },
       { id: "aeternyxPage", label: "Aeternyx Page" },
       { id: "about", label: "About Page" },
       { id: "footer", label: "Footer" }
@@ -129,8 +132,11 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         <PhilosophyCard content={content} update={update} />
         <PrescriptionCard content={content} update={update} />
         <BlogCard content={content} update={update} />
+        <HomeFeaturedCard content={content} update={update} />
+        <HomeValuesCard content={content} update={update} />
         <NewsletterCard content={content} update={update} />
         <ContactFormCard content={content} update={update} />
+        <DossierCard content={content} update={update} />
         <AeternyxPageCard content={content} update={update} />
         <AboutCard content={content} update={update} />
         <FooterCard content={content} update={update} />
@@ -159,6 +165,8 @@ function BrandCard({ content, update }: CardProps) {
         <TextField label="Logo Mark (1 character)" value={v.logoMark} onChange={(x) => set({ logoMark: x })} />
         <TextField label="Public Email" value={v.email} onChange={(x) => set({ email: x })} />
         <TextField label="Domain" value={v.domain} onChange={(x) => set({ domain: x })} />
+        <TextField label="FSSAI License No." value={v.fssaiLicense} onChange={(x) => set({ fssaiLicense: x })} />
+        <TextField label="FSSAI Category" value={v.fssaiCategory} onChange={(x) => set({ fssaiCategory: x })} />
       </div>
     </SectionCard>
   );
@@ -222,29 +230,29 @@ function HeroCard({ content, update }: CardProps) {
   const v = content.hero;
   const set = (patch: Partial<SiteContent["hero"]>) => update("hero", { ...v, ...patch });
   return (
-    <SectionCard id="hero" title="Hero" subtitle="Top of page — headline, tagline, CTAs, capsule">
+    <SectionCard id="hero" title="Hero" subtitle="Top of page · headline, tagline, CTAs, capsule">
       <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
       <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
       <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
       <div className="grid gap-5 md:grid-cols-2">
         <TextField
-          label="Primary CTA — Label"
+          label="Primary CTA Label"
           value={v.primaryCta.label}
           onChange={(x) => set({ primaryCta: { ...v.primaryCta, label: x } })}
         />
         <TextField
-          label="Primary CTA — Href"
+          label="Primary CTA Href"
           value={v.primaryCta.href}
           onChange={(x) => set({ primaryCta: { ...v.primaryCta, href: x } })}
         />
         <TextField
-          label="Secondary CTA — Label"
+          label="Secondary CTA Label"
           value={v.secondaryCta.label}
           onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, label: x } })}
         />
         <TextField
-          label="Secondary CTA — Href"
+          label="Secondary CTA Href"
           value={v.secondaryCta.href}
           onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, href: x } })}
         />
@@ -351,22 +359,22 @@ function ProductCard({ content, update }: CardProps) {
       </div>
       <div className="grid gap-5 md:grid-cols-2">
         <TextField
-          label="Primary CTA — Label"
+          label="Primary CTA Label"
           value={v.primaryCta.label}
           onChange={(x) => set({ primaryCta: { ...v.primaryCta, label: x } })}
         />
         <TextField
-          label="Primary CTA — Href"
+          label="Primary CTA Href"
           value={v.primaryCta.href}
           onChange={(x) => set({ primaryCta: { ...v.primaryCta, href: x } })}
         />
         <TextField
-          label="Secondary CTA — Label"
+          label="Secondary CTA Label"
           value={v.secondaryCta.label}
           onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, label: x } })}
         />
         <TextField
-          label="Secondary CTA — Href"
+          label="Secondary CTA Href"
           value={v.secondaryCta.href}
           onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, href: x } })}
         />
@@ -385,7 +393,7 @@ function IngredientsCard({ content, update }: CardProps) {
     set({ items: next });
   };
   return (
-    <SectionCard id="ingredientsSection" title="Ingredients" subtitle="All ten bioactives — name, dose, mechanism">
+    <SectionCard id="ingredientsSection" title="Ingredients" subtitle="All ten bioactives. Name, dose, mechanism.">
       <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
       <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
@@ -777,6 +785,214 @@ function NewsletterCard({ content, update }: CardProps) {
   );
 }
 
+function HomeFeaturedCard({ content, update }: CardProps) {
+  const v = content.homeFeatured;
+  const set = (patch: Partial<SiteContent["homeFeatured"]>) =>
+    update("homeFeatured", { ...v, ...patch });
+  return (
+    <SectionCard
+      id="homeFeatured"
+      title="Home · Featured Product"
+      subtitle="The Aeternyx product card on the homepage"
+    >
+      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
+      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
+      <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
+      <TextField label="Description" value={v.description} onChange={(x) => set({ description: x })} multiline />
+      <div>
+        <label className="label-field">Highlights (numeric tiles)</label>
+        {v.highlights.map((h, i) => (
+          <div key={i} className="mb-2 grid gap-3 md:grid-cols-[1fr_2fr_auto]">
+            <input
+              className="input-clean"
+              value={h.value}
+              placeholder="Value"
+              onChange={(e) => {
+                const next = [...v.highlights];
+                next[i] = { ...h, value: e.target.value };
+                set({ highlights: next });
+              }}
+            />
+            <input
+              className="input-clean"
+              value={h.label}
+              placeholder="Label"
+              onChange={(e) => {
+                const next = [...v.highlights];
+                next[i] = { ...h, label: e.target.value };
+                set({ highlights: next });
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => set({ highlights: v.highlights.filter((_, j) => j !== i) })}
+              className="text-[11px] font-medium uppercase tracking-widest text-red-500"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => set({ highlights: [...v.highlights, { value: "0", label: "Label" }] })}
+          className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+        >
+          + Add highlight
+        </button>
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        <TextField
+          label="Primary CTA Label"
+          value={v.primaryCta.label}
+          onChange={(x) => set({ primaryCta: { ...v.primaryCta, label: x } })}
+        />
+        <TextField
+          label="Primary CTA Href"
+          value={v.primaryCta.href}
+          onChange={(x) => set({ primaryCta: { ...v.primaryCta, href: x } })}
+        />
+        <TextField
+          label="Secondary CTA Label"
+          value={v.secondaryCta.label}
+          onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, label: x } })}
+        />
+        <TextField
+          label="Secondary CTA Href"
+          value={v.secondaryCta.href}
+          onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, href: x } })}
+        />
+      </div>
+    </SectionCard>
+  );
+}
+
+function HomeValuesCard({ content, update }: CardProps) {
+  const v = content.homeValues;
+  const set = (patch: Partial<SiteContent["homeValues"]>) =>
+    update("homeValues", { ...v, ...patch });
+  return (
+    <SectionCard
+      id="homeValues"
+      title="Home · Values"
+      subtitle="Four commitments shown on the homepage"
+    >
+      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
+      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
+      {v.items.map((it, i) => (
+        <div key={i} className="grid gap-3 md:grid-cols-[1fr_2fr_auto]">
+          <input
+            className="input-clean"
+            value={it.title}
+            onChange={(e) => {
+              const next = [...v.items];
+              next[i] = { ...it, title: e.target.value };
+              set({ items: next });
+            }}
+          />
+          <input
+            className="input-clean"
+            value={it.detail}
+            onChange={(e) => {
+              const next = [...v.items];
+              next[i] = { ...it, detail: e.target.value };
+              set({ items: next });
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => set({ items: v.items.filter((_, j) => j !== i) })}
+            className="text-[11px] font-medium uppercase tracking-widest text-red-500"
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={() => set({ items: [...v.items, { title: "New value", detail: "Detail" }] })}
+        className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+      >
+        + Add value
+      </button>
+    </SectionCard>
+  );
+}
+
+function DossierCard({ content, update }: CardProps) {
+  const v = content.dossier;
+  const set = (patch: Partial<SiteContent["dossier"]>) => update("dossier", { ...v, ...patch });
+  return (
+    <SectionCard
+      id="dossier"
+      title="Clinical Dossier"
+      subtitle="/dossier · specialty-specific clinical brief downloads"
+    >
+      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
+      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
+      <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
+      <TextField label="Footnote" value={v.footnote} onChange={(x) => set({ footnote: x })} multiline />
+      <div>
+        <label className="label-field">Specialties (paste the PDF URL into URL field to enable download)</label>
+        {v.specialties.map((s, i) => (
+          <div key={i} className="mb-3 grid gap-3 md:grid-cols-[1fr_2fr_1fr_auto]">
+            <input
+              className="input-clean"
+              value={s.name}
+              placeholder="Cardiology"
+              onChange={(e) => {
+                const next = [...v.specialties];
+                next[i] = { ...s, name: e.target.value };
+                set({ specialties: next });
+              }}
+            />
+            <input
+              className="input-clean"
+              value={s.summary}
+              placeholder="One-line summary of the brief"
+              onChange={(e) => {
+                const next = [...v.specialties];
+                next[i] = { ...s, summary: e.target.value };
+                set({ specialties: next });
+              }}
+            />
+            <input
+              className="input-clean"
+              value={s.url}
+              placeholder="/uploads/cardiology-dossier.pdf"
+              onChange={(e) => {
+                const next = [...v.specialties];
+                next[i] = { ...s, url: e.target.value };
+                set({ specialties: next });
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => set({ specialties: v.specialties.filter((_, j) => j !== i) })}
+              className="text-[11px] font-medium uppercase tracking-widest text-red-500"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() =>
+            set({
+              specialties: [
+                ...v.specialties,
+                { name: "New Specialty", summary: "Summary of the brief", url: "" }
+              ]
+            })
+          }
+          className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+        >
+          + Add specialty
+        </button>
+      </div>
+    </SectionCard>
+  );
+}
+
 function ContactFormCard({ content, update }: CardProps) {
   const v = content.contactForm;
   const set = (patch: Partial<SiteContent["contactForm"]>) =>
@@ -785,27 +1001,67 @@ function ContactFormCard({ content, update }: CardProps) {
     <SectionCard
       id="contactForm"
       title="Contact Form"
-      subtitle="Google Form embedded in a modal — opens whenever a link points to #contact"
+      subtitle="Native contact and sample-order form. Opens as a modal whenever a link points to #contact"
     >
       <TextField label="Trigger Label" value={v.triggerLabel} onChange={(x) => set({ triggerLabel: x })} />
       <TextField label="Modal Title" value={v.title} onChange={(x) => set({ title: x })} />
       <TextField label="Modal Description" value={v.description} onChange={(x) => set({ description: x })} multiline />
       <TextField
-        label="Google Form URL"
-        value={v.formUrl}
-        onChange={(x) => set({ formUrl: x })}
-        placeholder="https://docs.google.com/forms/d/e/.../viewform"
+        label="Submission Endpoint URL (optional)"
+        value={v.endpointUrl}
+        onChange={(x) => set({ endpointUrl: x })}
+        placeholder="https://your-webhook-or-google-form-action-url"
       />
       <TextField
-        label="Fallback Email (shown when no form URL is set)"
+        label="Fallback Email (used when no endpoint is set)"
         value={v.fallbackEmail}
         onChange={(x) => set({ fallbackEmail: x })}
       />
+      <div>
+        <label className="label-field">Enquiry Types</label>
+        {v.types.map((t, i) => (
+          <div key={i} className="mb-2 grid gap-3 md:grid-cols-[1fr_2fr_auto]">
+            <input
+              className="input-clean"
+              value={t.id}
+              placeholder="id"
+              onChange={(e) => {
+                const next = [...v.types];
+                next[i] = { ...t, id: e.target.value };
+                set({ types: next });
+              }}
+            />
+            <input
+              className="input-clean"
+              value={t.label}
+              placeholder="Label shown to the user"
+              onChange={(e) => {
+                const next = [...v.types];
+                next[i] = { ...t, label: e.target.value };
+                set({ types: next });
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => set({ types: v.types.filter((_, j) => j !== i) })}
+              className="text-[11px] font-medium uppercase tracking-widest text-red-500"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => set({ types: [...v.types, { id: "new", label: "New type" }] })}
+          className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+        >
+          + Add enquiry type
+        </button>
+      </div>
       <p className="rounded-xl bg-mist px-4 py-3 text-[13px] leading-relaxed text-muted">
-        How to get the URL: open your Google Form → <span className="font-medium text-ink">Send</span> →
-        <span className="font-medium text-ink"> &lt;/&gt; Embed</span> tab → copy the URL from the <code className="rounded bg-canvas px-1.5 py-0.5 text-ink">src=&quot;…&quot;</code> snippet
-        (or paste the regular <span className="font-medium text-ink">.../viewform</span> link — we add
-        <code className="rounded bg-canvas px-1.5 py-0.5 text-ink">?embedded=true</code> automatically).
+        Special ids: <span className="font-medium text-ink">prescriber</span> and{" "}
+        <span className="font-medium text-ink">sample</span> trigger extra fields (specialty, clinic, shipping
+        address). The <span className="font-medium text-ink">sample</span> type collects a quantity.
       </p>
     </SectionCard>
   );
@@ -827,22 +1083,22 @@ function AeternyxPageCard({ content, update }: CardProps) {
       <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
       <div className="grid gap-5 md:grid-cols-2">
         <TextField
-          label="Primary CTA — Label"
+          label="Primary CTA Label"
           value={v.primaryCta.label}
           onChange={(x) => set({ primaryCta: { ...v.primaryCta, label: x } })}
         />
         <TextField
-          label="Primary CTA — Href"
+          label="Primary CTA Href"
           value={v.primaryCta.href}
           onChange={(x) => set({ primaryCta: { ...v.primaryCta, href: x } })}
         />
         <TextField
-          label="Secondary CTA — Label"
+          label="Secondary CTA Label"
           value={v.secondaryCta.label}
           onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, label: x } })}
         />
         <TextField
-          label="Secondary CTA — Href"
+          label="Secondary CTA Href"
           value={v.secondaryCta.href}
           onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, href: x } })}
         />
@@ -858,7 +1114,7 @@ function AboutCard({ content, update }: CardProps) {
     <SectionCard
       id="about"
       title="About Page"
-      subtitle="Content of /about — hero, story, values, closing CTA"
+      subtitle="Content of /about. Hero, story, values, closing CTA"
     >
       <div className="space-y-4 rounded-xl border border-hairline p-5">
         <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Hero</p>
@@ -992,7 +1248,7 @@ function AboutCard({ content, update }: CardProps) {
         />
         <div className="grid gap-5 md:grid-cols-2">
           <TextField
-            label="Primary CTA — Label"
+            label="Primary CTA Label"
             value={v.closingCta.primaryCta.label}
             onChange={(x) =>
               set({
@@ -1004,7 +1260,7 @@ function AboutCard({ content, update }: CardProps) {
             }
           />
           <TextField
-            label="Primary CTA — Href"
+            label="Primary CTA Href"
             value={v.closingCta.primaryCta.href}
             onChange={(x) =>
               set({
@@ -1016,7 +1272,7 @@ function AboutCard({ content, update }: CardProps) {
             }
           />
           <TextField
-            label="Secondary CTA — Label"
+            label="Secondary CTA Label"
             value={v.closingCta.secondaryCta.label}
             onChange={(x) =>
               set({
@@ -1028,7 +1284,7 @@ function AboutCard({ content, update }: CardProps) {
             }
           />
           <TextField
-            label="Secondary CTA — Href"
+            label="Secondary CTA Href"
             value={v.closingCta.secondaryCta.href}
             onChange={(x) =>
               set({
@@ -1053,6 +1309,14 @@ function FooterCard({ content, update }: CardProps) {
       <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
       <TextField label="Address" value={v.address} onChange={(x) => set({ address: x })} />
       <TextField label="Rights" value={v.rights} onChange={(x) => set({ rights: x })} />
+      <TextField label="FSSAI Prefix Text" value={v.fssaiText} onChange={(x) => set({ fssaiText: x })} />
+      <TextField
+        label="FSSAI Compliance Disclaimer"
+        value={v.complianceDisclaimer}
+        onChange={(x) => set({ complianceDisclaimer: x })}
+        multiline
+        rows={5}
+      />
 
       {v.columns.map((col, ci) => (
         <div key={ci} className="rounded-xl border border-hairline p-5 space-y-3">

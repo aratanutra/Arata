@@ -30,6 +30,10 @@ export type BlogPost = {
 
 export type FooterColumn = { title: string; links: NavLink[] };
 
+export type ContactFormType = { id: string; label: string };
+
+export type DossierSpecialty = { name: string; summary: string; url: string };
+
 export type SiteContent = {
   brand: {
     name: string;
@@ -41,42 +45,8 @@ export type SiteContent = {
     logoMark: string;
     email: string;
     domain: string;
-  };
-  contactForm: {
-    triggerLabel: string;
-    title: string;
-    description: string;
-    formUrl: string;
-    fallbackEmail: string;
-  };
-  aeternyxPage: {
-    eyebrow: string;
-    title: string;
-    tagline: string;
-    subtitle: string;
-    primaryCta: CtaLink;
-    secondaryCta: CtaLink;
-  };
-  about: {
-    hero: {
-      eyebrow: string;
-      title: string;
-      subtitle: string;
-    };
-    story: {
-      title: string;
-      paragraphs: string[];
-    };
-    values: {
-      title: string;
-      items: { title: string; detail: string }[];
-    };
-    closingCta: {
-      eyebrow: string;
-      title: string;
-      primaryCta: CtaLink;
-      secondaryCta: CtaLink;
-    };
+    fssaiLicense: string;
+    fssaiCategory: string;
   };
   nav: {
     links: NavLink[];
@@ -92,6 +62,20 @@ export type SiteContent = {
     secondaryCta: CtaLink;
   };
   trustBar: { badges: TrustBadge[] };
+  homeFeatured: {
+    eyebrow: string;
+    title: string;
+    tagline: string;
+    description: string;
+    highlights: { label: string; value: string }[];
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+  };
+  homeValues: {
+    eyebrow: string;
+    title: string;
+    items: { title: string; detail: string }[];
+  };
   product: {
     eyebrow: string;
     title: string;
@@ -152,10 +136,56 @@ export type SiteContent = {
     buttonLabel: string;
     disclaimer: string;
   };
+  contactForm: {
+    triggerLabel: string;
+    title: string;
+    description: string;
+    endpointUrl: string;
+    fallbackEmail: string;
+    types: ContactFormType[];
+  };
+  dossier: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    footnote: string;
+    specialties: DossierSpecialty[];
+  };
+  aeternyxPage: {
+    eyebrow: string;
+    title: string;
+    tagline: string;
+    subtitle: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+  };
+  about: {
+    hero: {
+      eyebrow: string;
+      title: string;
+      subtitle: string;
+    };
+    story: {
+      title: string;
+      paragraphs: string[];
+    };
+    values: {
+      title: string;
+      items: { title: string; detail: string }[];
+    };
+    closingCta: {
+      eyebrow: string;
+      title: string;
+      primaryCta: CtaLink;
+      secondaryCta: CtaLink;
+    };
+  };
   footer: {
     tagline: string;
     columns: FooterColumn[];
     address: string;
     rights: string;
+    fssaiText: string;
+    complianceDisclaimer: string;
   };
 };

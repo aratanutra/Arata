@@ -25,6 +25,29 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
   );
 }
 
+function FssaiBadge({ license }: { license: string }) {
+  return (
+    <div className="inline-flex items-center gap-3 rounded-xl border border-hairline bg-canvas px-4 py-3">
+      <div className="grid h-9 w-9 place-items-center rounded-lg bg-sage-soft">
+        <svg viewBox="0 0 24 24" className="h-5 w-5 text-sage-deep" fill="none" aria-hidden>
+          <path
+            d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6Z"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinejoin="round"
+            fill="none"
+          />
+          <path d="M9 12l2.4 2.4L15.4 10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      </div>
+      <div className="leading-tight">
+        <div className="text-[10px] font-semibold uppercase tracking-widest text-ink">FSSAI</div>
+        <div className="tnum text-[12px] font-medium text-muted">Lic. {license}</div>
+      </div>
+    </div>
+  );
+}
+
 export default function Footer({ brand, footer }: Props) {
   return (
     <footer className="relative border-t border-hairline bg-mist py-20">
@@ -35,9 +58,7 @@ export default function Footer({ brand, footer }: Props) {
               <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-sm font-semibold text-canvas">
                 {brand.logoMark}
               </span>
-              <span className="text-lg font-semibold tracking-tight text-ink">
-                {brand.company}
-              </span>
+              <span className="text-lg font-semibold tracking-tight text-ink">{brand.company}</span>
             </Link>
             <p className="mt-5 text-base text-ink-soft">{footer.tagline}</p>
             <a
@@ -46,6 +67,9 @@ export default function Footer({ brand, footer }: Props) {
             >
               {brand.email}
             </a>
+            <div className="mt-6">
+              <FssaiBadge license={brand.fssaiLicense} />
+            </div>
           </div>
 
           {footer.columns.map((col) => (
@@ -62,7 +86,17 @@ export default function Footer({ brand, footer }: Props) {
           ))}
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 border-t border-hairline pt-8 text-muted md:flex-row md:items-center md:justify-between">
+        <div className="mt-14 rounded-2xl border border-hairline bg-canvas/70 p-6 md:p-7">
+          <div className="text-[10px] font-semibold uppercase tracking-widest text-sage">
+            FSSAI Disclosure
+          </div>
+          <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{footer.complianceDisclaimer}</p>
+          <p className="mt-3 text-[12px] uppercase tracking-widest text-muted">
+            Category: {brand.fssaiCategory} · {footer.fssaiText} {brand.fssaiLicense}
+          </p>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-3 border-t border-hairline pt-8 text-muted md:flex-row md:items-center md:justify-between">
           <p className="text-[11px] uppercase tracking-widest">{footer.address}</p>
           <p className="text-[12px]">{footer.rights}</p>
         </div>

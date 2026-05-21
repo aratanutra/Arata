@@ -1,10 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import type { SiteContent } from "@/types/content";
+import type { CtaLink, SiteContent } from "@/types/content";
 
 type Props = {
-  brand: SiteContent["brand"];
   hero: SiteContent["hero"];
 };
 
@@ -51,7 +51,26 @@ function CapsuleRender() {
   );
 }
 
-export default function Hero({ brand, hero }: Props) {
+function Action({ cta, variant }: { cta: CtaLink; variant: "primary" | "link" }) {
+  const className = variant === "primary" ? "btn-primary" : "btn-link";
+  const arrow = variant === "link" ? <span aria-hidden>→</span> : null;
+  if (cta.href.startsWith("#")) {
+    return (
+      <a href={cta.href} className={className}>
+        {cta.label}
+        {arrow}
+      </a>
+    );
+  }
+  return (
+    <Link href={cta.href} className={className}>
+      {cta.label}
+      {arrow}
+    </Link>
+  );
+}
+
+export default function Hero({ hero }: Props) {
   return (
     <section className="relative overflow-hidden bg-canvas pt-32 pb-20 md:pt-40 md:pb-28">
       <div
@@ -73,12 +92,9 @@ export default function Hero({ brand, hero }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 heading-xl"
+            className="mt-6 text-4xl font-semibold tracking-tight text-ink md:text-7xl lg:text-8xl lg:leading-[1.02]"
           >
             {hero.title}
-            <sup className="ml-1 align-super text-[0.28em] font-medium text-muted">
-              {brand.trademark}
-            </sup>
           </motion.h1>
 
           <motion.p
@@ -105,13 +121,8 @@ export default function Hero({ brand, hero }: Props) {
             transition={{ duration: 0.7, delay: 0.7 }}
             className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
           >
-            <a href={hero.primaryCta.href} className="btn-primary">
-              {hero.primaryCta.label}
-            </a>
-            <a href={hero.secondaryCta.href} className="btn-link">
-              {hero.secondaryCta.label}
-              <span aria-hidden>→</span>
-            </a>
+            <Action cta={hero.primaryCta} variant="primary" />
+            <Action cta={hero.secondaryCta} variant="link" />
           </motion.div>
         </div>
 
