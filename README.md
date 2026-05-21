@@ -98,20 +98,46 @@ npm run lint        # next lint
 
 ## Deployment
 
-The included GitHub Actions workflow at `.github/workflows/deploy.yml` deploys to Vercel on every push to `main`. Required repository secrets:
+This repo ships **two** deploy targets:
+
+### 1. GitHub Pages — public marketing site
+
+`.github/workflows/pages.yml` builds a static export and publishes to GitHub Pages at <https://aratanutra.github.io/Arata/>.
+
+Setup (one time):
+
+1. Repo → **Settings → Pages → Source: GitHub Actions**.
+2. Push to `main` (or the feature branch) — the workflow runs automatically.
+
+The workflow strips `src/app/admin`, `src/app/api`, and `middleware.ts` before building, then runs `next build` with:
+
+```
+STATIC_EXPORT=true
+NEXT_PUBLIC_ASSET_PREFIX=/Arata
+```
+
+This produces a fully static `out/` directory that's uploaded with `actions/deploy-pages`.
+
+> **Updating content on Pages:** edit `content/site-content.json` and push to `main`. The workflow re-runs and re-publishes. The admin UI is **not** available on the Pages deployment (no server runtime).
+
+### 2. Vercel — admin panel + full app
+
+`.github/workflows/deploy.yml` deploys the complete app (including `/admin` and API routes) to Vercel on every push to `main`.
+
+Required GitHub repo secrets:
 
 - `VERCEL_TOKEN`
 - `VERCEL_ORG_ID`
 - `VERCEL_PROJECT_ID`
 
-Also configure these as **Vercel** environment variables (Production):
+Required Vercel project environment variables (Production):
 
 - `ADMIN_EMAIL`
 - `ADMIN_PASSWORD`
 - `NEXTAUTH_SECRET`
-- `NEXTAUTH_URL` (the live URL, e.g. `https://aeternyx.com`)
+- `NEXTAUTH_URL` (the live URL, e.g. `https://aeternyx-admin.vercel.app`)
 
-> **Note on the JSON content store**: writes from the admin panel persist to the local filesystem. On Vercel's serverless filesystem these writes do **not** survive deployments. For production durability, swap `src/lib/content.ts` to read/write from a database, Vercel KV, or GitHub. For now this is the simplest possible CMS for a single-author site.
+> **Note on the JSON content store:** writes from the admin panel persist to the local filesystem. On Vercel's serverless filesystem these writes do **not** survive deployments. For durable production writes, swap `src/lib/content.ts` to a database, Vercel KV, or GitHub commits via Octokit. For now this is the simplest possible CMS for a single-author site.
 
 ## Design tokens
 

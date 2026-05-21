@@ -12,8 +12,6 @@ import Blog from "@/components/public/Blog";
 import Newsletter from "@/components/public/Newsletter";
 import Footer from "@/components/public/Footer";
 
-export const revalidate = 0;
-
 export default async function HomePage() {
   const content = await readContent();
   return (
