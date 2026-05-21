@@ -1,0 +1,32 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# next
+.next
+out
+build
+
+# env
+.env
+.env.local
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# misc
+.DS_Store
+*.pem
+.vercel
+.turbo
+next-env.d.ts
+*.tsbuildinfo
+
+# uploads (admin generated) — keep folder, ignore contents
+/public/uploads/*
+!/public/uploads/.gitkeep

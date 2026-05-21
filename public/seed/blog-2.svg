@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Calcium paradox essay">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0E0E0E"/>
+      <stop offset="100%" stop-color="#1a1410"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg2)"/>
+  <g stroke="#C9A96E" stroke-opacity="0.5" fill="none" stroke-width="1.5">
+    <path d="M 80 460 C 200 360, 320 440, 440 340 S 680 240, 740 140"/>
+    <path d="M 80 480 C 200 400, 320 460, 440 380 S 680 300, 740 220" stroke-opacity="0.25"/>
+  </g>
+  <g fill="#E8D5B0" fill-opacity="0.85">
+    <circle cx="180" cy="420" r="6"/>
+    <circle cx="300" cy="400" r="6"/>
+    <circle cx="420" cy="350" r="6"/>
+    <circle cx="540" cy="310" r="6"/>
+    <circle cx="660" cy="250" r="6"/>
+  </g>
+  <text x="400" y="100" text-anchor="middle" fill="#C9A96E" font-family="Syncopate, sans-serif" font-size="16" letter-spacing="8">D3 + K2</text>
+  <text x="400" y="540" text-anchor="middle" fill="#A89880" font-family="Syncopate, sans-serif" font-size="12" letter-spacing="6">CALCIUM PATHWAY</text>
+</svg>

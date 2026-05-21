@@ -1,0 +1,265 @@
+{
+  "brand": {
+    "name": "Aeternyx",
+    "trademark": "™",
+    "company": "ARATA Nutraceuticals",
+    "tagline": "Cellular Intelligence",
+    "price": "₹2,500",
+    "priceCadence": "/ month",
+    "logoMark": "Æ"
+  },
+  "nav": {
+    "links": [
+      { "label": "Product", "href": "#product" },
+      { "label": "Ingredients", "href": "#ingredients" },
+      { "label": "Science", "href": "#science" },
+      { "label": "Benefits", "href": "#benefits" },
+      { "label": "Philosophy", "href": "#philosophy" },
+      { "label": "Physicians", "href": "#prescription" },
+      { "label": "Journal", "href": "#blog" }
+    ],
+    "ctaLabel": "Reserve",
+    "ctaHref": "#newsletter"
+  },
+  "hero": {
+    "eyebrow": "ARATA Nutraceuticals presents",
+    "title": "Aeternyx",
+    "tagline": "Cellular Intelligence",
+    "subtitle": "A single capsule. Ten bioactives. Five aging pathways. Engineered by physicians for the next 100 years of you.",
+    "primaryCta": { "label": "Begin the Protocol", "href": "#product" },
+    "secondaryCta": { "label": "Read the Science", "href": "#science" }
+  },
+  "trustBar": {
+    "badges": [
+      { "title": "Physician Formulated", "subtitle": "Designed by MD specialists" },
+      { "title": "Third-Party Tested", "subtitle": "NABL accredited labs" },
+      { "title": "GMP + USFDA Registered", "subtitle": "Facility audited" },
+      { "title": "10 Bioactive Compounds", "subtitle": "Clinical dose alignment" },
+      { "title": "Vegan • No Fillers", "subtitle": "Plant capsule, zero excipient" }
+    ]
+  },
+  "product": {
+    "eyebrow": "The Daily Protocol",
+    "title": "One capsule. The architecture of cellular longevity.",
+    "description": "Aeternyx™ is a clinical-grade longevity formulation that converges ten evidence-graded molecules across the five hallmarks of aging — mitochondrial decline, oxidative stress, inflammaging, vascular calcification, and micronutrient deficiency. Each dose is mapped to a published human RCT.",
+    "stats": [
+      { "value": "10", "label": "Bioactive Ingredients" },
+      { "value": "5", "label": "Aging Pathways" },
+      { "value": "300+", "label": "Clinical Studies" },
+      { "value": "1", "label": "Daily Capsule" }
+    ],
+    "price": "₹2,500",
+    "cadence": "per month  •  30 capsules  •  30-day supply",
+    "primaryCta": { "label": "Start Subscription", "href": "#newsletter" },
+    "secondaryCta": { "label": "Speak to a Physician", "href": "#prescription" },
+    "image": ""
+  },
+  "ingredientsSection": {
+    "eyebrow": "The Formulation",
+    "title": "Ten molecules. Mapped to RCT-grade dosing.",
+    "subtitle": "Every ingredient is dosed to mirror the human clinical trial that validated its mechanism — not the bottom of the supplement market.",
+    "items": [
+      {
+        "name": "Coenzyme Q10",
+        "dose": "100mg",
+        "description": "Mitochondrial ATP synthesis; matches Q-SYMBIO and KiSel-10 RCT dosing. Rate-limiting cofactor for cellular energy production."
+      },
+      {
+        "name": "Trans-Resveratrol",
+        "dose": "100mg",
+        "description": "SIRT1 activator and NF-κB inflammaging suppressor. Matched to Witte 2014 cognitive RCT dose."
+      },
+      {
+        "name": "Alpha-Lipoic Acid",
+        "dose": "50mg",
+        "description": "Universal antioxidant (water + lipid soluble). Regenerates Vitamins C and E. Matches ALADIN/SYDNEY 2 neuroprotection dose range."
+      },
+      {
+        "name": "Astaxanthin",
+        "dose": "4mg",
+        "description": "6,000× stronger than Vitamin C. Crosses blood-brain and blood-retina barriers. Suppresses NF-κB. Strongest carotenoid antioxidant known."
+      },
+      {
+        "name": "Lycopene",
+        "dose": "10mg",
+        "description": "Lipid peroxidation chain terminator. Cardioprotective at 10mg (PREDIMED alignment). Completes carotenoid antioxidant spectrum with Astaxanthin."
+      },
+      {
+        "name": "Selenium (L-Selenomethionine)",
+        "dose": "55mcg",
+        "description": "Rate-limiting cofactor for GPx1–GPx5 enzymatic antioxidant cascade. KiSel-10 partner molecule. Addresses India's selenium-deficient soil gap."
+      },
+      {
+        "name": "Vitamin C (Ascorbic Acid)",
+        "dose": "500mg",
+        "description": "Recycles oxidised Vitamin E and glutathione. Collagen synthesis co-factor. Foundational antioxidant network anchor."
+      },
+      {
+        "name": "Vitamin D3 (Cholecalciferol)",
+        "dose": "2000 IU",
+        "description": "Addresses 80%+ urban Indian deficiency. Immunomodulator, anti-inflammatory, cardiovascular and bone health."
+      },
+      {
+        "name": "Vitamin K2-7 (MK-7)",
+        "dose": "100mcg",
+        "description": "Directs calcium to bone not arteries. Prevents calcium paradox risk in D3 users. Essential D3 partner molecule."
+      },
+      {
+        "name": "Zinc (Zinc Bisglycinate)",
+        "dose": "15mg",
+        "description": "Antioxidant enzyme cofactor (SOD). Immune defence, wound healing, testosterone maintenance. Chelated form for maximum bioavailability."
+      }
+    ]
+  },
+  "science": {
+    "eyebrow": "Mechanism",
+    "title": "Five aging pathways. One convergent intervention.",
+    "subtitle": "Aging is not one process. It is the cumulative failure of mitochondria, redox balance, signalling, calcium homeostasis, and micronutrient status. Aeternyx™ addresses all five at once.",
+    "pathways": [
+      {
+        "name": "Mitochondrial Decline",
+        "detail": "CoQ10 + ALA restore ATP synthesis efficiency lost from age 30 onward."
+      },
+      {
+        "name": "Oxidative Stress",
+        "detail": "Astaxanthin, Lycopene, Vitamin C and Selenium-GPx form a layered ROS defence."
+      },
+      {
+        "name": "Inflammaging",
+        "detail": "Resveratrol-driven SIRT1 activation and NF-κB suppression at the gene level."
+      },
+      {
+        "name": "Vascular Calcification",
+        "detail": "K2-7 directs calcium away from arterial walls, partnered with D3."
+      },
+      {
+        "name": "Micronutrient Deficiency",
+        "detail": "D3, Zinc and Selenium correct India-specific population-level deficits."
+      }
+    ]
+  },
+  "benefits": {
+    "eyebrow": "What you feel",
+    "title": "Eight systems. One protocol.",
+    "tiles": [
+      { "icon": "energy", "title": "Sustained Energy", "detail": "Mitochondrial ATP restoration without stimulants." },
+      { "icon": "cognition", "title": "Mental Clarity", "detail": "Resveratrol and astaxanthin cross the blood-brain barrier." },
+      { "icon": "heart", "title": "Cardiovascular", "detail": "CoQ10 + K2-7 + Lycopene cardioprotective stack." },
+      { "icon": "skin", "title": "Skin Resilience", "detail": "Collagen co-factor support and photo-oxidative defence." },
+      { "icon": "eye", "title": "Vision", "detail": "Astaxanthin's blood-retina barrier crossing protects macular tissue." },
+      { "icon": "cell", "title": "Cellular Repair", "detail": "Glutathione recycling and DNA-protective antioxidant network." },
+      { "icon": "shield", "title": "Immune Defence", "detail": "Zinc, D3 and Vitamin C immune-modulatory triad." },
+      { "icon": "gut", "title": "Gut Integrity", "detail": "Reduced systemic inflammation supports barrier function." }
+    ]
+  },
+  "philosophy": {
+    "eyebrow": "Founding Principle",
+    "quote": "We did not build Aeternyx to be a supplement. We built it to be the molecular floor on which a longer life is constructed — every dose mapped to a randomised trial, every molecule earning its place. Cellular intelligence is not a marketing phrase. It is the standard.",
+    "founderName": "Dr. Rahul Gaddipati",
+    "founderTitle": "Founder & Chief Formulator, ARATA Nutraceuticals"
+  },
+  "prescription": {
+    "eyebrow": "For Physicians",
+    "title": "A formulation your patients can take alongside their prescription.",
+    "subtitle": "Aeternyx™ is built to integrate with mainstream clinical practice. No proprietary blends, no megadosing, no interactions outside the published literature. Specialists who recommend Aeternyx™ include:",
+    "specialties": [
+      "Cardiology",
+      "Endocrinology",
+      "Internal Medicine",
+      "Dermatology",
+      "Ophthalmology",
+      "Neurology",
+      "Geriatrics",
+      "Functional Medicine"
+    ],
+    "rxCard": {
+      "header": "Rx",
+      "patient": "Mr. / Mrs. _________________",
+      "date": "Date: __ / __ / 20__",
+      "lines": [
+        "Aeternyx™ — 1 capsule",
+        "Once daily, with morning meal",
+        "Continue for 90 days, review thereafter"
+      ],
+      "signature": "Signature & Stamp"
+    }
+  },
+  "blog": {
+    "eyebrow": "Journal",
+    "title": "Notes from the laboratory.",
+    "posts": [
+      {
+        "id": "p1",
+        "title": "Why we dose CoQ10 at 100mg, not 30mg",
+        "excerpt": "The Q-SYMBIO and KiSel-10 trials defined the floor for clinical effect. Anything less is theatre.",
+        "image": "/seed/blog-1.svg",
+        "slug": "coq10-dosing",
+        "published": true
+      },
+      {
+        "id": "p2",
+        "title": "The calcium paradox — why D3 needs K2",
+        "excerpt": "Unaccompanied Vitamin D3 supplementation can deposit calcium where it does the most harm. K2-7 is non-negotiable.",
+        "image": "/seed/blog-2.svg",
+        "slug": "d3-k2-paradox",
+        "published": true
+      },
+      {
+        "id": "p3",
+        "title": "Astaxanthin: the only carotenoid that crosses the BBB",
+        "excerpt": "Why one tiny molecule from microalgae outperforms most cognitive supplements on the market.",
+        "image": "/seed/blog-3.svg",
+        "slug": "astaxanthin-bbb",
+        "published": true
+      }
+    ]
+  },
+  "newsletter": {
+    "eyebrow": "Reserve",
+    "title": "Join the Aeternyx™ protocol.",
+    "subtitle": "Limited monthly batches. Early access for physicians and founding subscribers.",
+    "placeholder": "your@email.com",
+    "buttonLabel": "Request Access",
+    "disclaimer": "We never share your data. One email per quarter, never more."
+  },
+  "footer": {
+    "tagline": "Cellular Intelligence, daily.",
+    "columns": [
+      {
+        "title": "Brand",
+        "links": [
+          { "label": "About Aeternyx", "href": "#product" },
+          { "label": "Philosophy", "href": "#philosophy" },
+          { "label": "Press Kit", "href": "#" }
+        ]
+      },
+      {
+        "title": "Explore",
+        "links": [
+          { "label": "Ingredients", "href": "#ingredients" },
+          { "label": "Science", "href": "#science" },
+          { "label": "Benefits", "href": "#benefits" },
+          { "label": "Journal", "href": "#blog" }
+        ]
+      },
+      {
+        "title": "For Physicians",
+        "links": [
+          { "label": "Prescriber Programme", "href": "#prescription" },
+          { "label": "Clinical Dossier", "href": "#" },
+          { "label": "Sample Request", "href": "#" }
+        ]
+      },
+      {
+        "title": "Company",
+        "links": [
+          { "label": "ARATA Nutraceuticals", "href": "#" },
+          { "label": "Contact", "href": "mailto:hello@aratanutra.com" },
+          { "label": "Terms & Privacy", "href": "#" }
+        ]
+      }
+    ],
+    "address": "ARATA Nutraceuticals Pvt. Ltd.  •  Hyderabad, India",
+    "rights": "© 2026 ARATA Nutraceuticals. Aeternyx™ is a registered trademark."
+  }
+}
