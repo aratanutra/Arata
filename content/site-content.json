@@ -28,8 +28,8 @@
       { "label": "AETERNYX™", "href": "/aeternyx" },
       { "label": "About Us", "href": "/about" }
     ],
-    "ctaLabel": "Order on WhatsApp",
-    "ctaHref": "whatsapp"
+    "ctaLabel": "",
+    "ctaHref": ""
   },
   "hero": {
     "eyebrow": "Arata Nutraceuticals",
@@ -84,7 +84,7 @@
     ],
     "price": "₹800",
     "cadence": "M.R.P. per strip · 10 tablets · inclusive of all taxes",
-    "primaryCta": { "label": "Order on WhatsApp", "href": "whatsapp" },
+    "primaryCta": { "label": "Order now", "href": "whatsapp" },
     "secondaryCta": { "label": "Read the Science", "href": "#science" },
     "image": "",
     "packForm": "1×10 tablet blister strip",
@@ -199,7 +199,7 @@
     "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
     "subtitle": "A single tablet. Ten bioactives. Five cellular wellness pathways. The complete expertly composed healthspan nutraceutical, dosed and audited to global standards.",
-    "primaryCta": { "label": "Order on WhatsApp", "href": "whatsapp" },
+    "primaryCta": { "label": "Order now", "href": "whatsapp" },
     "secondaryCta": { "label": "Read the Science", "href": "#science" }
   },
   "productHero": {
@@ -220,7 +220,7 @@
     "mrpNote": "Inclusive of all taxes",
     "netQuantity": "Net Quantity: 10 tablets per strip",
     "bestBefore": "Best before: 24 months from date of manufacturing (printed on each strip)",
-    "primaryCta": { "label": "Order on WhatsApp", "href": "whatsapp" },
+    "primaryCta": { "label": "Order now", "href": "whatsapp" },
     "secondaryCta": { "label": "Read the Science", "href": "#science" },
     "shipLine": "Batch, MFG date, and expiry printed on each strip. Delivery details confirmed on WhatsApp.",
     "trustIcons": ["FSSAI Licensed", "Vegetarian", "GMP + HACCP", "Third-Party Tested"]
@@ -312,7 +312,7 @@
       {
         "title": "Contact",
         "links": [
-          { "label": "Order on WhatsApp", "href": "whatsapp" },
+          { "label": "WhatsApp", "href": "whatsapp" },
           { "label": "aratanutra@gmail.com", "href": "mailto:aratanutra@gmail.com" }
         ]
       }
