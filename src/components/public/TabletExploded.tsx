@@ -1,15 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useAnimationFrame,
+  useMotionValue,
+  useTransform,
+  type MotionValue
+} from "framer-motion";
 import type { SiteContent } from "@/types/content";
 
 type Props = { data: SiteContent["ingredientsSection"] };
 
-/**
- * Body-part that each active is best associated with. Used to render the
- * anatomical graphic in the detail card ("where it acts").
- */
+/* ---------- Ingredient meta ---------- */
+
 const BODY_PARTS: Record<string, string> = {
   "Co-enzyme Q10": "heart",
   "Trans-Resveratrol": "brain",
@@ -33,7 +38,6 @@ const BODY_LABELS: Record<string, string> = {
   shield: "Immune system"
 };
 
-/** Short display name for the disc label under each slice. */
 const SHORT_NAMES: Record<string, string> = {
   "Co-enzyme Q10": "CoQ10",
   "Trans-Resveratrol": "Resveratrol",
@@ -60,22 +64,8 @@ const BODY_ICONS: Record<string, JSX.Element> = {
         strokeWidth="1.4"
         strokeLinejoin="round"
       />
-      <path
-        d="M12 11 L 14 10 L 16 12 L 18 10 L 20 11"
-        stroke="currentColor"
-        strokeWidth="1"
-        fill="none"
-        opacity="0.55"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 15 Q 16 19, 23 15"
-        stroke="currentColor"
-        strokeWidth="1"
-        fill="none"
-        opacity="0.45"
-      />
-      <path d="M16 12 L 16 20" stroke="currentColor" strokeWidth="0.9" opacity="0.35" />
+      <path d="M12 11 L 14 10 L 16 12 L 18 10 L 20 11" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.55" strokeLinejoin="round" />
+      <path d="M9 15 Q 16 19, 23 15" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.45" />
     </g>
   ),
   brain: (
@@ -106,24 +96,8 @@ const BODY_ICONS: Record<string, JSX.Element> = {
   ),
   cell: (
     <g>
-      <circle
-        cx="16"
-        cy="16"
-        r="12"
-        fill="currentColor"
-        fillOpacity="0.12"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-      <circle
-        cx="16"
-        cy="16"
-        r="5"
-        fill="currentColor"
-        fillOpacity="0.35"
-        stroke="currentColor"
-        strokeWidth="1"
-      />
+      <circle cx="16" cy="16" r="12" fill="currentColor" fillOpacity="0.12" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="16" cy="16" r="5" fill="currentColor" fillOpacity="0.35" stroke="currentColor" strokeWidth="1" />
       <circle cx="16.5" cy="15.5" r="1.6" fill="currentColor" fillOpacity="0.8" />
       <ellipse cx="9" cy="11" rx="1.7" ry="0.9" fill="currentColor" opacity="0.55" transform="rotate(-30 9 11)" />
       <ellipse cx="23" cy="10" rx="1.7" ry="0.9" fill="currentColor" opacity="0.55" transform="rotate(25 23 10)" />
@@ -133,34 +107,10 @@ const BODY_ICONS: Record<string, JSX.Element> = {
   ),
   skin: (
     <g>
-      <path
-        d="M3 7 Q 8 5, 13 7 T 23 7 T 29 7"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        fill="none"
-      />
-      <path
-        d="M3 13 Q 8 11, 13 13 T 23 13 T 29 13"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        fill="none"
-        opacity="0.75"
-      />
-      <path
-        d="M3 20 Q 8 18, 13 20 T 23 20 T 29 20"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        fill="none"
-        opacity="0.5"
-      />
-      <path
-        d="M3 27 Q 8 25, 13 27 T 23 27 T 29 27"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        fill="none"
-        opacity="0.3"
-      />
-      {/* Hair follicle */}
+      <path d="M3 7 Q 8 5, 13 7 T 23 7 T 29 7" stroke="currentColor" strokeWidth="1.6" fill="none" />
+      <path d="M3 13 Q 8 11, 13 13 T 23 13 T 29 13" stroke="currentColor" strokeWidth="1.4" fill="none" opacity="0.75" />
+      <path d="M3 20 Q 8 18, 13 20 T 23 20 T 29 20" stroke="currentColor" strokeWidth="1.4" fill="none" opacity="0.5" />
+      <path d="M3 27 Q 8 25, 13 27 T 23 27 T 29 27" stroke="currentColor" strokeWidth="1.4" fill="none" opacity="0.3" />
       <line x1="16" y1="2" x2="16" y2="7" stroke="currentColor" strokeWidth="1.2" opacity="0.75" />
       <circle cx="16" cy="12" r="1.6" fill="currentColor" fillOpacity="0.5" />
     </g>
@@ -219,105 +169,157 @@ function BodyGraphic({ part }: { part: string }) {
   );
 }
 
-/* ---------- Tablet visualisation ---------- */
+/* ---------- Layout constants ---------- */
 
-const DISC_W = 54;
-const DISC_H = 96;
-const GAP = 10;
-const STAGE_W = 760;
-const STAGE_H = 300;
-const CAPSULE_W = 480;
-const CAPSULE_H = 96;
-const CAPSULE_Y = STAGE_H / 2 - CAPSULE_H / 2 - 12;
-const DISC_Y = STAGE_H / 2 - 12;
-/** slight sketched tilt for the tablet + disc row, per reference */
+const STAGE = 620;
+const CENTER = STAGE / 2;
+const ORBIT_R = 232;
+const DISC_R = 30;
+const CAPSULE_W = 190;
+const CAPSULE_H = 70;
 const TILT_DEG = -8;
+/** milliseconds per degree of orbit rotation. 111 → ~40s per revolution */
+const ORBIT_MS_PER_DEG = 111;
+/** milliseconds between auto-cycle highlight changes */
+const AUTO_CYCLE_MS = 3200;
+
+/* ---------- Orbiting disc ---------- */
+
+function OrbitDisc({
+  baseAngle,
+  orbitAngle,
+  name,
+  selected,
+  dimmed,
+  onTap
+}: {
+  baseAngle: number;
+  orbitAngle: MotionValue<number>;
+  name: string;
+  selected: boolean;
+  dimmed: boolean;
+  onTap: () => void;
+}) {
+  const x = useTransform(
+    orbitAngle,
+    (a) => CENTER + ORBIT_R * Math.cos(((baseAngle + a - 90) * Math.PI) / 180)
+  );
+  const y = useTransform(
+    orbitAngle,
+    (a) => CENTER + ORBIT_R * Math.sin(((baseAngle + a - 90) * Math.PI) / 180)
+  );
+
+  const nameSize = name.length > 9 ? 7 : name.length > 6 ? 8 : 9;
+
+  return (
+    <motion.g
+      style={{ x, y, cursor: "pointer" }}
+      animate={{ scale: selected ? 1.28 : 1, opacity: dimmed ? 0.38 : 1 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      onClick={(e) => {
+        e.stopPropagation();
+        onTap();
+      }}
+    >
+      {selected ? (
+        <circle
+          cx={0}
+          cy={0}
+          r={DISC_R + 8}
+          fill="none"
+          stroke="#17203D"
+          strokeOpacity="0.18"
+          strokeWidth="1"
+          strokeDasharray="2 4"
+        />
+      ) : null}
+      <circle
+        cx={0}
+        cy={0}
+        r={DISC_R}
+        fill="url(#td_tablet)"
+        stroke={selected ? "#17203D" : "#8B5A2B"}
+        strokeWidth={selected ? 2 : 0.6}
+      />
+      {/* score line */}
+      <line
+        x1={-DISC_R + 8}
+        y1={0}
+        x2={DISC_R - 8}
+        y2={0}
+        stroke="#5C3818"
+        strokeOpacity="0.42"
+        strokeWidth="0.7"
+      />
+      <text
+        x={0}
+        y={3}
+        textAnchor="middle"
+        fill={selected ? "#17203D" : "#3C3C43"}
+        fontFamily="Inter, sans-serif"
+        fontSize={nameSize}
+        fontWeight={selected ? 700 : 600}
+      >
+        {name}
+      </text>
+    </motion.g>
+  );
+}
+
+/* ---------- Main component ---------- */
 
 export default function TabletExploded({ data }: Props) {
   const items = data.items.slice(0, 10);
-  const [open, setOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-  const [autoplayStopped, setAutoplayStopped] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
+  const [autoCyclePaused, setAutoCyclePaused] = useState(false);
+  const orbitAngle = useMotionValue(0);
 
+  // Orbit — continuous rotation. Autoplay by default, always.
+  useAnimationFrame((t) => {
+    orbitAngle.set((t / ORBIT_MS_PER_DEG) % 360);
+  });
+
+  // Auto-cycle the highlighted disc so the detail card walks through every ingredient
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            setInView(true);
-            obs.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: 0.3 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!inView || autoplayStopped) return;
-    const timers: number[] = [];
-    timers.push(window.setTimeout(() => setOpen(true), 900));
-    items.forEach((_, i) => {
-      timers.push(
-        window.setTimeout(() => {
-          if (!autoplayStopped) setSelectedIdx(i);
-        }, 1800 + i * 1400)
-      );
-    });
-    timers.push(
-      window.setTimeout(() => {
-        if (!autoplayStopped) {
-          setSelectedIdx(null);
-          setOpen(false);
-        }
-      }, 1800 + items.length * 1400 + 1600)
-    );
-    return () => timers.forEach((t) => clearTimeout(t));
-  }, [inView, autoplayStopped, items.length, items]);
-
-  function stopAutoplay() {
-    setAutoplayStopped(true);
-  }
-
-  function toggleOpen() {
-    stopAutoplay();
-    if (open) {
-      setSelectedIdx(null);
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
-  }
+    if (autoCyclePaused) return;
+    let index = 0;
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const start = window.setTimeout(() => {
+      setSelectedIdx(0);
+      interval = setInterval(() => {
+        index = (index + 1) % items.length;
+        setSelectedIdx(index);
+      }, AUTO_CYCLE_MS);
+    }, 900);
+    return () => {
+      window.clearTimeout(start);
+      if (interval) clearInterval(interval);
+    };
+  }, [autoCyclePaused, items.length]);
 
   function tapDisc(i: number) {
-    stopAutoplay();
+    setAutoCyclePaused(true);
     setSelectedIdx((cur) => (cur === i ? null : i));
   }
 
-  const rowWidth = DISC_W * items.length + GAP * (items.length - 1);
-  const rowStartX = (STAGE_W - rowWidth) / 2;
-  const capsuleX = (STAGE_W - CAPSULE_W) / 2;
+  function resumeAutoplay() {
+    setAutoCyclePaused(false);
+  }
+
   const selectedItem = selectedIdx !== null ? items[selectedIdx] : null;
   const selectedPart = selectedItem ? BODY_PARTS[selectedItem.name] ?? "cell" : null;
 
   return (
-    <div ref={containerRef} className="mx-auto w-full max-w-4xl">
+    <div className="mx-auto w-full max-w-4xl">
       <div className="relative">
         <svg
-          viewBox={`0 0 ${STAGE_W} ${STAGE_H}`}
-          className="mx-auto block h-auto w-full max-h-[300px]"
+          viewBox={`0 0 ${STAGE} ${STAGE}`}
+          className="mx-auto block h-auto w-full max-w-[560px]"
           role="img"
-          aria-label="AETERNYX tablet composition"
+          aria-label="AETERNYX tablet with ten ingredients orbiting"
         >
           <defs>
-            {/* Warm amber tablet — matches the reference sketch */}
+            {/* Warm amber tablet — same colours across capsule and orbiting discs */}
             <radialGradient id="td_tablet" cx="35%" cy="28%" r="72%">
               <stop offset="0%" stopColor="#F5C078" />
               <stop offset="42%" stopColor="#E8A45C" />
@@ -330,163 +332,79 @@ export default function TabletExploded({ data }: Props) {
             </radialGradient>
           </defs>
 
-          <motion.ellipse
-            cx={STAGE_W / 2}
-            cy={STAGE_H / 2 + 66}
-            rx={open ? rowWidth / 2 + 20 : CAPSULE_W / 2}
-            ry="14"
+          {/* Orbit path */}
+          <circle
+            cx={CENTER}
+            cy={CENTER}
+            r={ORBIT_R}
+            fill="none"
+            stroke="#B8935E"
+            strokeOpacity="0.28"
+            strokeDasharray="3 6"
+          />
+
+          {/* Central capsule shadow */}
+          <ellipse
+            cx={CENTER}
+            cy={CENTER + CAPSULE_H / 2 + 12}
+            rx={CAPSULE_W / 2 + 8}
+            ry="8"
             fill="url(#td_shadow)"
-            animate={{ rx: open ? rowWidth / 2 + 20 : CAPSULE_W / 2 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           />
 
-          <AnimatePresence mode="wait">
-            {open ? (
-              <g key="open-wrap" transform={`rotate(${TILT_DEG} ${STAGE_W / 2} ${DISC_Y})`}>
-              <motion.g
-                key="open"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                {items.map((ing, i) => {
-                  const cx = rowStartX + i * (DISC_W + GAP) + DISC_W / 2;
-                  const selected = selectedIdx === i;
-                  const dimmed = selectedIdx !== null && !selected;
-                  const shortName = SHORT_NAMES[ing.name] ?? ing.name;
-                  // scale font down for longer names so they fit under the disc
-                  const nameFontSize = shortName.length > 9 ? 8 : shortName.length > 6 ? 9 : 10;
-                  return (
-                    <motion.g
-                      key={i}
-                      initial={{ opacity: 0, y: -6, scale: 0.6 }}
-                      animate={{
-                        opacity: dimmed ? 0.35 : 1,
-                        y: 0,
-                        scale: selected ? 1.14 : 1
-                      }}
-                      exit={{ opacity: 0, scale: 0.6 }}
-                      transition={{
-                        duration: 0.55,
-                        ease: [0.16, 1, 0.3, 1],
-                        delay: 0.05 + i * 0.04
-                      }}
-                      style={{ transformOrigin: `${cx}px ${DISC_Y}px`, cursor: "pointer" }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        tapDisc(i);
-                      }}
-                    >
-                      <ellipse
-                        cx={cx}
-                        cy={DISC_Y}
-                        rx={DISC_W / 2}
-                        ry={DISC_H / 2}
-                        fill="url(#td_tablet)"
-                        stroke={selected ? "#17203D" : "#8B5A2B"}
-                        strokeWidth={selected ? 2 : 0.6}
-                      />
-                      {/* subtle score line */}
-                      <line
-                        x1={cx}
-                        y1={DISC_Y - DISC_H / 2 + 8}
-                        x2={cx}
-                        y2={DISC_Y + DISC_H / 2 - 8}
-                        stroke="#5C3818"
-                        strokeOpacity="0.4"
-                        strokeWidth="0.8"
-                      />
-                      <text
-                        x={cx}
-                        y={DISC_Y + DISC_H / 2 + 22}
-                        textAnchor="middle"
-                        fill={selected ? "#17203D" : "#3C3C43"}
-                        fontFamily="Inter, sans-serif"
-                        fontSize={nameFontSize}
-                        fontWeight={selected ? 700 : 600}
-                      >
-                        {shortName}
-                      </text>
-                    </motion.g>
-                  );
-                })}
-              </motion.g>
-              </g>
-            ) : (
-              <g key="closed-wrap" transform={`rotate(${TILT_DEG} ${STAGE_W / 2} ${STAGE_H / 2 - 12})`}>
-              <motion.g
-                key="closed"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.85 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformOrigin: `${STAGE_W / 2}px ${STAGE_H / 2 - 12}px`, cursor: "pointer" }}
-                onClick={() => toggleOpen()}
-              >
-                <rect
-                  x={capsuleX}
-                  y={CAPSULE_Y}
-                  width={CAPSULE_W}
-                  height={CAPSULE_H}
-                  rx={CAPSULE_H / 2}
-                  fill="url(#td_tablet)"
-                  stroke="#8B5A2B"
-                  strokeWidth="0.8"
-                />
-                {/* score line */}
-                <line
-                  x1={STAGE_W / 2}
-                  y1={CAPSULE_Y + 10}
-                  x2={STAGE_W / 2}
-                  y2={CAPSULE_Y + CAPSULE_H - 10}
-                  stroke="#5C3818"
-                  strokeOpacity="0.6"
-                  strokeWidth="1.4"
-                />
-                {/* wordmark on capsule — navy for contrast against amber */}
-                <text
-                  x={STAGE_W / 2}
-                  y={STAGE_H / 2 + 6}
-                  textAnchor="middle"
-                  fill="#17203D"
-                  fontFamily="Iowan Old Style, Palatino, serif"
-                  fontSize="18"
-                  fontWeight="700"
-                  letterSpacing="5"
-                  opacity="0.72"
-                >
-                  AETERNYX
-                </text>
-              </motion.g>
-              </g>
-            )}
-          </AnimatePresence>
+          {/* Central capsule — sharp, amber, slight sketched tilt */}
+          <g transform={`rotate(${TILT_DEG} ${CENTER} ${CENTER})`}>
+            <rect
+              x={CENTER - CAPSULE_W / 2}
+              y={CENTER - CAPSULE_H / 2}
+              width={CAPSULE_W}
+              height={CAPSULE_H}
+              rx={CAPSULE_H / 2}
+              fill="url(#td_tablet)"
+              stroke="#8B5A2B"
+              strokeWidth="0.9"
+            />
+            {/* score line */}
+            <line
+              x1={CENTER}
+              y1={CENTER - CAPSULE_H / 2 + 8}
+              x2={CENTER}
+              y2={CENTER + CAPSULE_H / 2 - 8}
+              stroke="#5C3818"
+              strokeOpacity="0.6"
+              strokeWidth="1.4"
+            />
+            <text
+              x={CENTER}
+              y={CENTER + 5}
+              textAnchor="middle"
+              fill="#17203D"
+              fontFamily="Iowan Old Style, Palatino, serif"
+              fontSize="15"
+              fontWeight="700"
+              letterSpacing="5"
+              opacity="0.78"
+            >
+              AETERNYX
+            </text>
+          </g>
 
-          <text
-            x={STAGE_W / 2}
-            y={STAGE_H - 8}
-            textAnchor="middle"
-            fill="#6B7085"
-            fontFamily="Inter, sans-serif"
-            fontSize="10"
-            fontWeight="600"
-            letterSpacing="4"
-          >
-            {open ? "TAP AN INGREDIENT" : "TAP TO OPEN"}
-          </text>
+          {/* Ten orbiting ingredient discs */}
+          {items.map((ing, i) => (
+            <OrbitDisc
+              key={i}
+              baseAngle={i * (360 / items.length)}
+              orbitAngle={orbitAngle}
+              name={SHORT_NAMES[ing.name] ?? ing.name}
+              selected={selectedIdx === i}
+              dimmed={selectedIdx !== null && selectedIdx !== i}
+              onTap={() => tapDisc(i)}
+            />
+          ))}
         </svg>
-
-        {!open ? (
-          <button
-            type="button"
-            onClick={toggleOpen}
-            aria-label="Open the AETERNYX tablet"
-            className="absolute inset-0"
-          />
-        ) : null}
       </div>
 
+      {/* Ingredient detail card */}
       <AnimatePresence mode="wait">
         {selectedItem && selectedPart ? (
           <motion.div
@@ -521,18 +439,15 @@ export default function TabletExploded({ data }: Props) {
         ) : null}
       </AnimatePresence>
 
+      {/* Controls */}
       <div className="mt-6 flex items-center justify-center gap-4 text-[12px]">
-        <button type="button" onClick={toggleOpen} className="btn-link">
-          {open ? (
-            <>
-              <span aria-hidden>←</span> Reform tablet
-            </>
-          ) : (
-            <>
-              Open the tablet <span aria-hidden>→</span>
-            </>
-          )}
-        </button>
+        {autoCyclePaused ? (
+          <button type="button" onClick={resumeAutoplay} className="btn-link">
+            <span aria-hidden>⟳</span> Resume auto-cycle
+          </button>
+        ) : (
+          <span className="text-muted">Watch the orbit, or tap a disc to hold it</span>
+        )}
       </div>
     </div>
   );
