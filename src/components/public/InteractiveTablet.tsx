@@ -20,12 +20,13 @@ export default function InteractiveTablet({ data }: Props) {
           <span className="eyebrow">Composition</span>
           <h2 className="mt-4 heading-md">Open the tablet. See every ingredient.</h2>
           <p className="mt-4 body-base">
-            Tap the AETERNYX tablet to split it into its ten actives. Hover or tap a wedge to read the dose and the mechanism it earns its place with.
+            The AETERNYX™ tablet splits into ten discs. Each disc is a single active. Tap one to read
+            the dose and see where in the body it goes to work.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
