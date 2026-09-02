@@ -5,7 +5,6 @@ import TrustBar from "@/components/public/TrustBar";
 import HomeFeatured from "@/components/public/HomeFeatured";
 import HomeValues from "@/components/public/HomeValues";
 import Philosophy from "@/components/public/Philosophy";
-import Blog from "@/components/public/Blog";
 import Newsletter from "@/components/public/Newsletter";
 import Footer from "@/components/public/Footer";
 import ContactDialog from "@/components/public/ContactDialog";
@@ -21,7 +20,6 @@ export default async function HomePage() {
       <HomeFeatured data={content.homeFeatured} brand={content.brand} />
       <HomeValues data={content.homeValues} />
       <Philosophy data={content.philosophy} />
-      <Blog data={content.blog} />
       <Newsletter data={content.newsletter} />
       <Footer brand={content.brand} footer={content.footer} />
       <ContactDialog contactForm={content.contactForm} />

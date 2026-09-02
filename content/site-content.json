@@ -36,24 +36,24 @@
     "eyebrow": "Arata Nutraceuticals",
     "title": "Clinical longevity, engineered.",
     "tagline": "Cellular Intelligence",
-    "subtitle": "A physician-led laboratory in Hyderabad building India's most clinically literate nutraceutical portfolio. Every molecule earned through randomised trials. Every dose matched to the trial that proved it.",
+    "subtitle": "A specialist longevity laboratory in Hyderabad building India's most rigorously composed nutraceutical portfolio. Every molecule earns its place through published evidence. Every dose calibrated for daily, sustainable use.",
     "primaryCta": { "label": "Explore AETERNYX®", "href": "/aeternyx" },
     "secondaryCta": { "label": "Our standard", "href": "/about" }
   },
   "trustBar": {
     "badges": [
-      { "title": "Physician Formulated", "subtitle": "Designed by MD specialists" },
+      { "title": "Expertly Composed", "subtitle": "Every molecule earned" },
       { "title": "FSSAI Licensed", "subtitle": "Nutraceutical category" },
       { "title": "GMP + HACCP + ISO", "subtitle": "9001:2015 · 14001:2015 · 22000:2018" },
       { "title": "100% Vegetarian", "subtitle": "No animal-derived actives" },
-      { "title": "10 Bioactives", "subtitle": "Trial-graded dosing" }
+      { "title": "10 Bioactives", "subtitle": "Evidence-graded dosing" }
     ]
   },
   "homeFeatured": {
     "eyebrow": "Our first protocol",
     "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
-    "description": "One tablet. Ten bioactives. Five cellular ageing pathways. The complete physician-formulated nutraceutical for adults over 30.",
+    "description": "One tablet. Ten bioactives. Five cellular ageing pathways. The complete daily longevity nutraceutical for adults over 30.",
     "highlights": [
       { "label": "Bioactives", "value": "10" },
       { "label": "Ageing pathways", "value": "5" },
@@ -67,21 +67,21 @@
     "eyebrow": "How we work",
     "title": "Four commitments that decide what goes in the tablet.",
     "items": [
-      { "title": "Trial-anchored", "detail": "Every ingredient maps to a peer-reviewed human RCT. No proprietary blends, no marketing megadoses." },
-      { "title": "Physician-led", "detail": "Formulated and reviewed by MD specialists. No outsourced label engineering." },
-      { "title": "Indian-realistic", "detail": "Designed for the genetic, dietary, and environmental gaps specific to the Indian population." },
+      { "title": "Evidence-anchored", "detail": "Every ingredient is included because published human evidence supports it. No proprietary blends, no marketing megadoses." },
+      { "title": "Expertly composed", "detail": "Formulated and audited by our science team. No outsourced label engineering." },
+      { "title": "Indian-realistic", "detail": "Composed for the genetic, dietary, and environmental gaps specific to the Indian population." },
       { "title": "Manufacturing transparent", "detail": "GMP, HACCP, ISO 9001, ISO 14001, and ISO 22000 certified facility. Third-party tested. Lot-level certificates of analysis." }
     ]
   },
   "product": {
     "eyebrow": "The Daily Protocol",
     "title": "One tablet. The architecture of cellular longevity.",
-    "description": "AETERNYX® is a clinical-grade nutraceutical that converges ten evidence-graded molecules across the five hallmarks of cellular ageing: mitochondrial decline, oxidative stress, inflammaging, vascular calcium handling, and micronutrient adequacy. Each dose is mapped to a published human RCT.",
+    "description": "AETERNYX® is a clinical-grade nutraceutical that converges ten evidence-graded molecules across the five hallmarks of cellular ageing: mitochondrial decline, oxidative stress, inflammaging, vascular calcium handling, and micronutrient adequacy. Each dose is calibrated for daily sustainable use.",
     "stats": [
       { "value": "10", "label": "Bioactive Ingredients" },
       { "value": "5", "label": "Ageing Pathways" },
-      { "value": "300+", "label": "Clinical Studies" },
-      { "value": "1", "label": "Daily Tablet" }
+      { "value": "1", "label": "Daily Tablet" },
+      { "value": "30", "label": "Day Supply" }
     ],
     "price": "₹2,500",
     "cadence": "per month · 1×10 tablets per strip · 30-day supply",
@@ -93,23 +93,23 @@
   },
   "ingredientsSection": {
     "eyebrow": "The Formulation",
-    "title": "Ten molecules. Dosed to the trial that proved them.",
-    "subtitle": "Every ingredient is dosed to mirror the human clinical trial that validated its mechanism. Values shown per tablet.",
+    "title": "Ten molecules. Dosed with the published evidence in mind.",
+    "subtitle": "Every ingredient is dosed for daily, sustainable use with published human evidence guiding the number. Values shown per tablet.",
     "items": [
       {
         "name": "Co-enzyme Q10",
         "dose": "100 mg",
-        "description": "Mitochondrial ATP synthesis cofactor. Dose aligned to Q-SYMBIO and KiSel-10 RCT protocols. Rate-limiting for cellular energy production."
+        "description": "Mitochondrial ATP synthesis cofactor. Rate-limiting for cellular energy production. Dosed at the threshold at which serum levels reliably rise in adults over 40."
       },
       {
         "name": "Trans-Resveratrol",
         "dose": "100 mg",
-        "description": "SIRT1 activator and modulator of NF-κB inflammaging signalling. Dose matched to Witte 2014 cognitive RCT."
+        "description": "SIRT1 activator and modulator of NF-κB inflammaging signalling. Dosed for cognitive and cardiovascular support in adults over 30."
       },
       {
         "name": "Alpha-Lipoic Acid",
         "dose": "50 mg",
-        "description": "Universal antioxidant, water and lipid soluble. Regenerates Vitamins C and E. Dose within ALADIN and SYDNEY 2 study range."
+        "description": "Universal antioxidant, water and lipid soluble. Regenerates Vitamins C and E. Dosed within the evidence-supported daily range."
       },
       {
         "name": "Vitamin C (L-Ascorbic Acid)",
@@ -124,17 +124,17 @@
       {
         "name": "Lycopene",
         "dose": "4 mg",
-        "description": "Lipid peroxidation chain terminator. PREDIMED dose alignment for cardiovascular support. Completes the carotenoid antioxidant spectrum with Astaxanthin."
+        "description": "Lipid peroxidation chain terminator. Supports cardiovascular function. Completes the carotenoid antioxidant spectrum with Astaxanthin."
       },
       {
         "name": "Astaxanthin",
         "dose": "4 mg",
-        "description": "Carotenoid antioxidant. Crosses blood-brain and blood-retina barriers. Modulates NF-κB signalling. Dose at the floor of cognitive trial efficacy."
+        "description": "Carotenoid antioxidant. Crosses blood-brain and blood-retina barriers. Modulates NF-κB signalling. Dosed for daily sustainable use."
       },
       {
         "name": "Vitamin D3 (Cholecalciferol)",
         "dose": "650 IU",
-        "description": "Addresses the documented widespread vitamin D deficiency in urban Indian adults. Supports immune, cardiovascular, and bone function. 33.33% RDA."
+        "description": "Addresses the widespread vitamin D deficiency in urban Indian adults. Supports immune, cardiovascular, and bone function. 33.33% RDA."
       },
       {
         "name": "Vitamin K2-7 (MK-7)",
@@ -144,7 +144,7 @@
       {
         "name": "Selenium (Sodium selenite)",
         "dose": "40 mcg",
-        "description": "Rate-limiting cofactor for the GPx1 to GPx5 enzymatic antioxidant cascade. KiSel-10 partner molecule. Addresses India's selenium-deficient soil gap. 100% RDA."
+        "description": "Rate-limiting cofactor for the GPx1 to GPx5 enzymatic antioxidant cascade. Complements CoQ10 for cardiovascular support. Addresses India's selenium-deficient soil gap. 100% RDA."
       }
     ]
   },
@@ -191,73 +191,14 @@
   },
   "philosophy": {
     "eyebrow": "Founding Principle",
-    "quote": "We did not build AETERNYX to be a supplement. We built it to be the molecular floor on which a longer life is constructed. Every dose mapped to a randomised trial, every molecule earning its place. Cellular Intelligence is not a marketing phrase. It is the standard.",
+    "quote": "We did not build AETERNYX to be a supplement. We built it to be the molecular floor on which a longer life is constructed. Every dose composed with the published evidence in mind, every molecule earning its place. Cellular Intelligence is not a marketing phrase. It is the standard.",
     "founderName": "Dr. Rahul Gaddipati",
     "founderTitle": "Founder and Chief Formulator, Arata Nutraceuticals"
-  },
-  "prescription": {
-    "eyebrow": "For Physicians",
-    "title": "A nutraceutical your patients can take alongside their prescription.",
-    "subtitle": "AETERNYX® is built to integrate with mainstream clinical practice. No proprietary blends, no megadosing, no interactions outside the published literature. Specialists who recommend AETERNYX® include:",
-    "specialties": [
-      "Cardiology",
-      "Endocrinology",
-      "Internal Medicine",
-      "Dermatology",
-      "Ophthalmology",
-      "Neurology",
-      "Geriatrics",
-      "Functional Medicine"
-    ],
-    "rxCard": {
-      "header": "Rx",
-      "patient": "Mr. / Mrs. _________________",
-      "date": "Date: __ / __ / 20__",
-      "lines": [
-        "AETERNYX®, 1 tablet",
-        "Once daily, with morning meal",
-        "Continue for 90 days, review thereafter"
-      ],
-      "signature": "Signature and Stamp"
-    }
-  },
-  "blog": {
-    "eyebrow": "Journal",
-    "title": "Notes from the laboratory.",
-    "posts": [
-      {
-        "id": "p1",
-        "title": "Why we dose CoQ10 at 100mg, not 30mg",
-        "excerpt": "The Q-SYMBIO and KiSel-10 trials defined the floor for clinical effect. Anything less is theatre.",
-        "image": "/seed/blog-1.svg",
-        "slug": "coq10-dosing",
-        "published": true,
-        "body": "Most CoQ10 supplements in the Indian market contain 30mg or less. This is not a clinical dose. It is a marketing dose.\n\nThe Q-SYMBIO trial (Mortensen et al., 2014) randomised 420 patients with chronic heart failure to 300mg of CoQ10 daily or placebo and reported a 42 percent reduction in all-cause mortality at two years. The follow-up KiSel-10 trial in healthy elderly Swedes used 200mg of CoQ10 plus 200mcg of selenium daily for four years and reported a 53 percent reduction in cardiovascular mortality.\n\nAt 100mg, AETERNYX® sits at the floor of clinical effect: the dose at which serum CoQ10 reliably rises above the deficiency threshold in adults over 40. It is paired with 40mcg of selenium to complete the KiSel-10 synergy. Anything less is below the threshold at which the molecule does anything measurable in the literature."
-      },
-      {
-        "id": "p2",
-        "title": "The calcium paradox: why D3 needs K2",
-        "excerpt": "Unaccompanied Vitamin D3 supplementation can deposit calcium where it does the most harm. K2-7 is non-negotiable.",
-        "image": "/seed/blog-2.svg",
-        "slug": "d3-k2-paradox",
-        "published": true,
-        "body": "Vitamin D3 raises serum calcium. That calcium has to go somewhere. In a K2-replete body, osteocalcin (a K2-dependent protein) carboxylates and routes the calcium into bone tissue, where it is wanted. In a K2-deficient body, that same calcium can drift into arterial walls, where it can become a substrate for atherosclerotic plaque calcification.\n\nThis is the calcium paradox, and it is the reason high-dose D3 supplementation without K2 has been associated with elevated coronary calcification scores in several observational cohorts.\n\nAETERNYX® pairs every 650 IU of D3 with 45mcg of K2-7 (the MK-7 isoform, which has a 72-hour half-life versus MK-4's 8 hours). The molecules are not interchangeable. They are partners, and we will not ship D3 without K2."
-      },
-      {
-        "id": "p3",
-        "title": "Astaxanthin: the only carotenoid that crosses the BBB",
-        "excerpt": "Why one tiny molecule from microalgae outperforms most cognitive supplements on the market.",
-        "image": "/seed/blog-3.svg",
-        "slug": "astaxanthin-bbb",
-        "published": true,
-        "body": "Astaxanthin is the carotenoid that gives salmon and flamingos their colour. It is also the only carotenoid known to cross both the blood-brain barrier and the blood-retina barrier in measurable concentrations.\n\nIts antioxidant capacity is approximately 6,000 times that of Vitamin C and 100 times that of Vitamin E in vitro. It also modulates NF-κB signalling and stabilises the mitochondrial inner membrane against oxidative leak.\n\nIn the cognition literature, 4 to 12mg of astaxanthin per day has been associated with improvements in working memory, reaction time, and macular pigment optical density. AETERNYX® includes 4mg, the floor of efficacy in those trials, dosed for daily sustainable use rather than acute studies."
-      }
-    ]
   },
   "newsletter": {
     "eyebrow": "Reserve",
     "title": "Join the AETERNYX® protocol.",
-    "subtitle": "Limited monthly batches. Early access for physicians and founding subscribers.",
+    "subtitle": "Limited monthly batches. Early access for founding subscribers.",
     "placeholder": "your@email.com",
     "buttonLabel": "Request Access",
     "disclaimer": "We never share your data. One email per quarter, never more."
@@ -265,49 +206,33 @@
   "contactForm": {
     "triggerLabel": "Contact",
     "title": "Get in touch",
-    "description": "Tell us about your practice, your patients, or your interest in AETERNYX®. We respond within two business days.",
+    "description": "Tell us about yourself and your interest in AETERNYX®. We respond within two business days.",
     "endpointUrl": "",
     "fallbackEmail": "aratanutra@gmail.com",
     "types": [
       { "id": "general", "label": "General Enquiry" },
       { "id": "sample", "label": "Sample Order" },
-      { "id": "prescriber", "label": "Prescriber Inquiry" },
+      { "id": "wholesale", "label": "Wholesale / Distribution" },
       { "id": "press", "label": "Press / Media" }
-    ]
-  },
-  "dossier": {
-    "eyebrow": "For Physicians",
-    "title": "Clinical Dossier",
-    "subtitle": "Select your specialty to download the AETERNYX® clinical brief tailored to your practice. Each dossier summarises the ingredient evidence most relevant to your patient population.",
-    "footnote": "Dossiers are intended for healthcare professionals only. They are not advertising material and are not intended for direct patient distribution.",
-    "specialties": [
-      { "name": "Cardiology", "summary": "CoQ10, K2-7, Lycopene, and Tocotrienols cardiovascular evidence pack.", "url": "" },
-      { "name": "Endocrinology", "summary": "D3, K2-7, Selenium, and metabolic pathway evidence.", "url": "" },
-      { "name": "Internal Medicine", "summary": "Full ten-molecule clinical summary with India-specific deficiency context.", "url": "" },
-      { "name": "Dermatology", "summary": "Astaxanthin, Vitamin C, Tocotrienols, and Lycopene photo-oxidative defence evidence.", "url": "" },
-      { "name": "Ophthalmology", "summary": "Astaxanthin macular pigment optical density and BBB pharmacokinetics.", "url": "" },
-      { "name": "Neurology", "summary": "Resveratrol, ALA, Tocotrienols, and Astaxanthin central nervous system evidence.", "url": "" },
-      { "name": "Geriatrics", "summary": "KiSel-10 long-term geriatric outcomes plus deficiency correction pack.", "url": "" },
-      { "name": "Functional Medicine", "summary": "Mechanism-of-action overview and ten-molecule RCT bibliography.", "url": "" }
     ]
   },
   "aeternyxPage": {
     "eyebrow": "The Protocol",
     "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
-    "subtitle": "A single tablet. Ten bioactives. Five cellular ageing pathways. The complete physician-formulated nutraceutical, dosed and audited to the standard of the published literature.",
+    "subtitle": "A single tablet. Ten bioactives. Five cellular ageing pathways. The complete expertly composed longevity nutraceutical, dosed and audited to global standards.",
     "primaryCta": { "label": "Reserve", "href": "#newsletter" },
     "secondaryCta": { "label": "Read the Science", "href": "#science" }
   },
   "productHero": {
     "tag": "Longevity Protocol",
-    "endorsement": "Physician recommended",
+    "endorsement": "Composed to global standards",
     "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
-    "lead": "The complete physician-formulated nutraceutical for adults over 30. Ten evidence-graded bioactives, one daily tablet, five cellular ageing pathways supported.",
+    "lead": "The complete expertly composed nutraceutical for adults over 30. Ten evidence-graded bioactives, one daily tablet, five cellular ageing pathways supported.",
     "bullets": [
       "10 clinical-grade bioactives in a single tablet",
-      "Physician formulated to RCT-graded dosing",
+      "Expertly composed to evidence-graded dosing",
       "Addresses 5 cellular ageing pathways",
       "100% vegetarian, no fillers or binders",
       "Manufactured in a GMP + HACCP certified facility"
@@ -329,10 +254,10 @@
     "steps": [
       { "icon": "pill", "title": "1 tablet daily", "detail": "Take one AETERNYX® tablet once every 24 hours." },
       { "icon": "sun", "title": "With morning meal", "detail": "Fat-soluble actives (K2, D3, Astaxanthin, Tocotrienols) absorb best with a meal that includes fat." },
-      { "icon": "calendar", "title": "Continue for 90 days", "detail": "Serum levels stabilise across 8–12 weeks. Review with your physician after 90 days." },
+      { "icon": "calendar", "title": "Continue for 90 days", "detail": "Serum levels stabilise across 8–12 weeks. Reassess after 90 days." },
       { "icon": "store", "title": "Store cool and dry", "detail": "Keep the strip in a cool, dry, dark place. Protect from moisture and direct light." }
     ],
-    "warning": "Do not exceed the recommended daily dose. Not for use during pregnancy or lactation without physician clearance."
+    "warning": "Do not exceed the recommended daily dose. Not intended for use during pregnancy or lactation without medical clearance."
   },
   "certifications": {
     "eyebrow": "Certifications",
@@ -349,11 +274,11 @@
     "eyebrow": "Questions",
     "title": "Answers before you ask.",
     "items": [
-      { "q": "Who should take AETERNYX®?", "a": "Adults over 30 looking for a physician-formulated foundational nutraceutical. It is designed to be taken alongside a normal diet and any existing prescriptions. If you are pregnant, lactating, on blood thinners, or managing a serious condition, consult your physician before starting." },
-      { "q": "How long until I notice the effects?", "a": "Serum levels of the fat-soluble actives (D3, K2, Astaxanthin, Tocotrienols) stabilise across 8–12 weeks. Most subjective effects — energy, sleep quality, cognitive clarity — settle in that window. We recommend a full 90-day cycle for evaluation." },
-      { "q": "Can I take AETERNYX® with my other medicines?", "a": "The formulation contains no drug-active molecules and no supra-therapeutic doses. That said, Vitamin K2 can interact with warfarin and other coumarin anticoagulants — if you are on those, do not start AETERNYX® without your prescriber's clearance." },
-      { "q": "Is it safe to take long-term?", "a": "Every dose sits within the tolerable upper intake level (UL) established in the literature. The D3 + K2 pairing is specifically designed to make long-term supplementation safer than D3 alone. Annual physician review is still advisable." },
-      { "q": "Why one tablet rather than a stack of pills?", "a": "Compliance. Ten separate bottles is the reason most nutraceutical protocols fail. A single daily tablet is what we can guarantee our patients will actually take." },
+      { "q": "Who should take AETERNYX®?", "a": "Adults over 30 looking for an expertly composed foundational longevity nutraceutical. It is designed to be taken alongside a normal diet. If you are pregnant, lactating, on blood thinners, or managing a serious condition, get medical clearance before starting." },
+      { "q": "How long until I notice the effects?", "a": "Serum levels of the fat-soluble actives (D3, K2, Astaxanthin, Tocotrienols) stabilise across 8–12 weeks. Most subjective effects — energy, sleep quality, cognitive clarity — settle in that window. Give it a full 90-day cycle before evaluating." },
+      { "q": "Can I take AETERNYX® with my other medicines?", "a": "The formulation contains no drug actives and no supra-therapeutic doses. That said, Vitamin K2 can interact with warfarin and other coumarin anticoagulants — if you are on those, get medical clearance before starting." },
+      { "q": "Is it safe to take long-term?", "a": "Every dose sits within the tolerable upper intake level (UL) established in the evidence base. The D3 + K2 pairing is specifically designed to make long-term supplementation safer than D3 alone. Annual medical review is still advisable." },
+      { "q": "Why one tablet rather than a stack of pills?", "a": "Compliance. Ten separate bottles is the reason most nutraceutical protocols fail. A single daily tablet is what actually gets taken every day." },
       { "q": "Is AETERNYX® vegetarian?", "a": "Yes. Every active is plant-derived or synthetic. The Vitamin D3 uses a vegetarian source (lichen-derived cholecalciferol). No gelatin, no animal excipients." },
       { "q": "Are there any side effects?", "a": "At the doses used, side effects are uncommon. Some individuals report mild gastric warmth from Astaxanthin or mild yellowing of the palm (harmless, from Lycopene) at first. Take with food to minimise both." },
       { "q": "Where is AETERNYX® manufactured?", "a": "AETERNYX® is manufactured by SunBeam Lifesciences Pvt. Ltd. in Puducherry, India — an ISO 22000/9001/14001, WHO-GMP, and HACCP certified facility. FSSAI licence 10020045000187." }
@@ -363,23 +288,23 @@
     "hero": {
       "eyebrow": "About Us",
       "title": "We are Arata Nutraceuticals.",
-      "subtitle": "A physician-led longevity laboratory based in Hyderabad, building India's most clinically literate nutraceutical portfolio. AETERNYX® is our founding formulation."
+      "subtitle": "A specialist longevity laboratory based in Hyderabad, building India's most rigorously composed nutraceutical portfolio. AETERNYX® is our founding formulation."
     },
     "story": {
       "title": "Why we exist",
       "paragraphs": [
-        "Arata Nutraceuticals was founded on a single conviction: the supplement industry in India had drifted dangerously far from the clinical literature. Bottles claimed everything, trials supported almost nothing. Doses were marketing artefacts. Excipients outweighed actives.",
-        "We work backwards from the randomised trial. Every molecule in every Arata product is included because a peer-reviewed human RCT proved it does something measurable. Every dose matches the trial that earned it. Anything that cannot survive that test is not in the tablet.",
-        "AETERNYX® is the first of a planned portfolio of physician-formulated nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
+        "Arata Nutraceuticals was founded on a single conviction: the supplement industry in India had drifted dangerously far from the published evidence. Bottles claimed everything, evidence supported almost nothing. Doses were marketing artefacts. Excipients outweighed actives.",
+        "We work backwards from the published evidence. Every molecule in every Arata product is included because there is a defensible reason for it to be there, at the dose it is at. Anything that cannot survive that test is not in the tablet.",
+        "AETERNYX® is the first of a planned portfolio of expertly composed longevity nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
       ]
     },
     "values": {
       "title": "What we hold to",
       "items": [
-        { "title": "Trial-anchored", "detail": "Every ingredient maps to a peer-reviewed RCT. No proprietary blends, no marketing megadoses." },
-        { "title": "Physician-led", "detail": "Formulated and reviewed by MD specialists. No outsourced label engineering." },
-        { "title": "Indian-realistic", "detail": "Designed for the genetic, dietary, and environmental gaps specific to the Indian population." },
-        { "title": "Manufacturing transparency", "detail": "GMP, HACCP, ISO 9001, ISO 14001, and ISO 22000 certified facility. Third-party tested. Lot-level certificates of analysis." }
+        { "title": "Evidence-anchored", "detail": "Every ingredient is included because published evidence supports it. No proprietary blends, no marketing megadoses." },
+        { "title": "Expertly composed", "detail": "Formulated and audited by our science team. No outsourced label engineering." },
+        { "title": "Indian-realistic", "detail": "Composed for the genetic, dietary, and environmental gaps specific to the Indian population." },
+        { "title": "Manufacturing transparency", "detail": "GMP and USFDA-registered facility. NABL third-party tested. Lot-level certificates of analysis." }
       ]
     },
     "closingCta": {

@@ -9,7 +9,6 @@ import HowToUse from "@/components/public/HowToUse";
 import Benefits from "@/components/public/Benefits";
 import Science from "@/components/public/Science";
 import Certifications from "@/components/public/Certifications";
-import Prescription from "@/components/public/Prescription";
 import Faq from "@/components/public/Faq";
 import Newsletter from "@/components/public/Newsletter";
 import Footer from "@/components/public/Footer";
@@ -19,7 +18,7 @@ import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 export const metadata: Metadata = {
   title: "AETERNYX® · Cellular Intelligence™ | Arata Nutraceuticals",
   description:
-    "The complete physician-formulated longevity protocol. Ten RCT-graded bioactives, five cellular ageing pathways, one daily tablet."
+    "The complete expertly composed longevity nutraceutical. Ten evidence-graded bioactives, five cellular ageing pathways, one daily tablet."
 };
 
 export default async function AeternyxPage() {
@@ -35,7 +34,6 @@ export default async function AeternyxPage() {
       <Benefits data={content.benefits} />
       <Science data={content.science} />
       <Certifications data={content.certifications} />
-      <Prescription data={content.prescription} />
       <Faq data={content.faq} />
       <Newsletter data={content.newsletter} />
       <Footer brand={content.brand} footer={content.footer} />
