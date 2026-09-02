@@ -8,7 +8,7 @@ type Props = {
 };
 
 /**
- * AETERNYX® tablet blister strip. Cinematic product render — brushed
+ * AETERNYX™ tablet blister strip. Cinematic product render — brushed
  * aluminium foil, ten embossed tablets in a 2×5 grid, navy header with
  * gold AETERNYX wordmark and italic Cellular Intelligence™ tagline.
  * Deliberately no marketing-copy banner below the tablets.
@@ -21,7 +21,7 @@ export default function TabletStrip({ size = "md", animate = true }: Props) {
       viewBox="0 0 240 380"
       style={{ height, width: "auto" }}
       role="img"
-      aria-label="AETERNYX® tablet blister strip"
+      aria-label="AETERNYX™ tablet blister strip"
     >
       <defs>
         {/* brushed aluminium foil */}
@@ -107,7 +107,7 @@ export default function TabletStrip({ size = "md", animate = true }: Props) {
           fontSize="7"
           fontWeight="600"
         >
-          ®
+          ™
         </text>
         <text
           x="120"

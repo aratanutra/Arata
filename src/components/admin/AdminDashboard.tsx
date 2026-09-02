@@ -54,8 +54,6 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       { id: "philosophy", label: "Philosophy" },
       { id: "homeFeatured", label: "Home · Featured" },
       { id: "homeValues", label: "Home · Values" },
-      { id: "newsletter", label: "Newsletter" },
-      { id: "contactForm", label: "Contact" },
       { id: "aeternyxPage", label: "AETERNYX Page" },
       { id: "about", label: "About Page" },
       { id: "footer", label: "Footer" }
@@ -68,7 +66,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       <header className="flex flex-col gap-4 border-b border-hairline pb-8 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-widest text-gold-deep">
-            Arata Nutraceuticals · AETERNYX® Console
+            Arata Nutraceuticals · AETERNYX™ Console
           </p>
           <h1 className="mt-2 text-5xl text-ink">Content Studio</h1>
           <p className="mt-2 text-sm text-muted">
@@ -129,8 +127,6 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         <PhilosophyCard content={content} update={update} />
         <HomeFeaturedCard content={content} update={update} />
         <HomeValuesCard content={content} update={update} />
-        <NewsletterCard content={content} update={update} />
-        <ContactFormCard content={content} update={update} />
         <AeternyxPageCard content={content} update={update} />
         <AboutCard content={content} update={update} />
         <FooterCard content={content} update={update} />
@@ -654,23 +650,6 @@ function PhilosophyCard({ content, update }: CardProps) {
   );
 }
 
-function NewsletterCard({ content, update }: CardProps) {
-  const v = content.newsletter;
-  const set = (patch: Partial<SiteContent["newsletter"]>) => update("newsletter", { ...v, ...patch });
-  return (
-    <SectionCard id="newsletter" title="Newsletter" subtitle="Email capture">
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
-      <div className="grid gap-5 md:grid-cols-2">
-        <TextField label="Placeholder" value={v.placeholder} onChange={(x) => set({ placeholder: x })} />
-        <TextField label="Button Label" value={v.buttonLabel} onChange={(x) => set({ buttonLabel: x })} />
-      </div>
-      <TextField label="Disclaimer" value={v.disclaimer} onChange={(x) => set({ disclaimer: x })} />
-    </SectionCard>
-  );
-}
-
 function HomeFeaturedCard({ content, update }: CardProps) {
   const v = content.homeFeatured;
   const set = (patch: Partial<SiteContent["homeFeatured"]>) =>
@@ -800,81 +779,6 @@ function HomeValuesCard({ content, update }: CardProps) {
       >
         + Add value
       </button>
-    </SectionCard>
-  );
-}
-
-function ContactFormCard({ content, update }: CardProps) {
-  const v = content.contactForm;
-  const set = (patch: Partial<SiteContent["contactForm"]>) =>
-    update("contactForm", { ...v, ...patch });
-  return (
-    <SectionCard
-      id="contactForm"
-      title="Contact Form"
-      subtitle="Native contact and sample-order form. Opens as a modal whenever a link points to #contact"
-    >
-      <TextField label="Trigger Label" value={v.triggerLabel} onChange={(x) => set({ triggerLabel: x })} />
-      <TextField label="Modal Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <TextField label="Modal Description" value={v.description} onChange={(x) => set({ description: x })} multiline />
-      <TextField
-        label="Submission Endpoint URL (optional)"
-        value={v.endpointUrl}
-        onChange={(x) => set({ endpointUrl: x })}
-        placeholder="https://your-webhook-or-google-form-action-url"
-      />
-      <TextField
-        label="Fallback Email (used when no endpoint is set)"
-        value={v.fallbackEmail}
-        onChange={(x) => set({ fallbackEmail: x })}
-      />
-      <div>
-        <label className="label-field">Enquiry Types</label>
-        {v.types.map((t, i) => (
-          <div key={i} className="mb-2 grid gap-3 md:grid-cols-[1fr_2fr_auto]">
-            <input
-              className="input-clean"
-              value={t.id}
-              placeholder="id"
-              onChange={(e) => {
-                const next = [...v.types];
-                next[i] = { ...t, id: e.target.value };
-                set({ types: next });
-              }}
-            />
-            <input
-              className="input-clean"
-              value={t.label}
-              placeholder="Label shown to the user"
-              onChange={(e) => {
-                const next = [...v.types];
-                next[i] = { ...t, label: e.target.value };
-                set({ types: next });
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => set({ types: v.types.filter((_, j) => j !== i) })}
-              className="text-[11px] font-medium uppercase tracking-widest text-red-500"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() => set({ types: [...v.types, { id: "new", label: "New type" }] })}
-          className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-        >
-          + Add enquiry type
-        </button>
-      </div>
-      <p className="rounded-xl bg-paper px-4 py-3 text-[13px] leading-relaxed text-muted">
-        Special ids: <span className="font-medium text-ink">sample</span> and{" "}
-        <span className="font-medium text-ink">wholesale</span> trigger extra fields (specialty / practice,
-        clinic / distributor, shipping address). The <span className="font-medium text-ink">sample</span>
-        type also collects a quantity.
-      </p>
     </SectionCard>
   );
 }

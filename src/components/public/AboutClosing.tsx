@@ -4,9 +4,27 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
 
-function Action({ href, label, variant }: { href: string; label: string; variant: "primary" | "link" }) {
+function Action({
+  href,
+  label,
+  variant,
+  waHref
+}: {
+  href: string;
+  label: string;
+  variant: "primary" | "link";
+  waHref: string;
+}) {
   const className = variant === "primary" ? "btn-primary" : "btn-link";
   const arrow = variant === "link" ? <span aria-hidden>→</span> : null;
+  if (href === "whatsapp") {
+    return (
+      <a href={waHref} target="_blank" rel="noopener noreferrer" className={className}>
+        {label}
+        {arrow}
+      </a>
+    );
+  }
   if (href.startsWith("#")) {
     return (
       <a href={href} className={className}>
@@ -23,7 +41,15 @@ function Action({ href, label, variant }: { href: string; label: string; variant
   );
 }
 
-export default function AboutClosing({ data }: { data: SiteContent["about"]["closingCta"] }) {
+type Props = {
+  data: SiteContent["about"]["closingCta"];
+  brand: SiteContent["brand"];
+};
+
+export default function AboutClosing({ data, brand }: Props) {
+  const waHref = `https://wa.me/${brand.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
+    brand.whatsappGreeting
+  )}`;
   return (
     <section className="relative bg-paper py-24 md:py-32">
       <div className="container-tight text-center">
@@ -52,8 +78,8 @@ export default function AboutClosing({ data }: { data: SiteContent["about"]["clo
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
-          <Action href={data.primaryCta.href} label={data.primaryCta.label} variant="primary" />
-          <Action href={data.secondaryCta.href} label={data.secondaryCta.label} variant="link" />
+          <Action href={data.primaryCta.href} label={data.primaryCta.label} variant="primary" waHref={waHref} />
+          <Action href={data.secondaryCta.href} label={data.secondaryCta.label} variant="link" waHref={waHref} />
         </motion.div>
       </div>
     </section>

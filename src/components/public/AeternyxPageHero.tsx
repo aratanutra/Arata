@@ -9,6 +9,11 @@ type Props = {
 };
 
 export default function AeternyxPageHero({ brand, page }: Props) {
+  const waHref = `https://wa.me/${brand.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
+    brand.whatsappGreeting
+  )}`;
+  const primaryHref = page.primaryCta.href === "whatsapp" ? waHref : page.primaryCta.href;
+  const secondaryHref = page.secondaryCta.href === "whatsapp" ? waHref : page.secondaryCta.href;
   return (
     <section className="relative overflow-hidden bg-canvas pt-32 pb-16 md:pt-40 md:pb-24">
       <div
@@ -63,10 +68,20 @@ export default function AeternyxPageHero({ brand, page }: Props) {
             transition={{ duration: 0.7, delay: 0.6 }}
             className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
-            <a href={page.primaryCta.href} className="btn-primary">
+            <a
+              href={primaryHref}
+              target={page.primaryCta.href === "whatsapp" ? "_blank" : undefined}
+              rel={page.primaryCta.href === "whatsapp" ? "noopener noreferrer" : undefined}
+              className="btn-primary"
+            >
               {page.primaryCta.label}
             </a>
-            <a href={page.secondaryCta.href} className="btn-link">
+            <a
+              href={secondaryHref}
+              target={page.secondaryCta.href === "whatsapp" ? "_blank" : undefined}
+              rel={page.secondaryCta.href === "whatsapp" ? "noopener noreferrer" : undefined}
+              className="btn-link"
+            >
               {page.secondaryCta.label}
               <span aria-hidden>→</span>
             </a>

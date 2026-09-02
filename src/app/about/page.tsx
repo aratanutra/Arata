@@ -3,7 +3,6 @@ import { readContent } from "@/lib/content";
 import Nav from "@/components/public/Nav";
 import Philosophy from "@/components/public/Philosophy";
 import Footer from "@/components/public/Footer";
-import ContactDialog from "@/components/public/ContactDialog";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import AboutHero from "@/components/public/AboutHero";
 import AboutStory from "@/components/public/AboutStory";
@@ -25,9 +24,8 @@ export default async function AboutPage() {
       <AboutStory story={content.about.story} />
       <AboutValues values={content.about.values} />
       <Philosophy data={content.philosophy} />
-      <AboutClosing data={content.about.closingCta} />
+      <AboutClosing data={content.about.closingCta} brand={content.brand} />
       <Footer brand={content.brand} footer={content.footer} />
-      <ContactDialog contactForm={content.contactForm} />
       <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
     </main>
   );

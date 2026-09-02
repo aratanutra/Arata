@@ -9,10 +9,25 @@ type Props = {
   footer: SiteContent["footer"];
 };
 
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+function FooterLink({
+  href,
+  children,
+  waHref
+}: {
+  href: string;
+  children: React.ReactNode;
+  waHref: string;
+}) {
+  const className = "text-[14px] text-muted transition-colors hover:text-ink";
+  if (href === "whatsapp") {
+    return (
+      <a href={waHref} target="_blank" rel="noopener noreferrer" className={className}>
+        {children}
+      </a>
+    );
+  }
   const isExternalOrAnchor =
     href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:");
-  const className = "text-[14px] text-muted transition-colors hover:text-ink";
   if (isExternalOrAnchor) {
     return (
       <a href={href} className={className}>
@@ -69,6 +84,9 @@ function FssaiBadge({ license }: { license: string }) {
 }
 
 export default function Footer({ brand, footer }: Props) {
+  const waHref = `https://wa.me/${brand.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
+    brand.whatsappGreeting
+  )}`;
   return (
     <footer className="relative border-t border-hairline bg-paper py-20">
       <div className="container-app">
@@ -110,7 +128,9 @@ export default function Footer({ brand, footer }: Props) {
               <ul className="mt-5 space-y-3">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <FooterLink href={l.href}>{l.label}</FooterLink>
+                    <FooterLink href={l.href} waHref={waHref}>
+                      {l.label}
+                    </FooterLink>
                   </li>
                 ))}
               </ul>

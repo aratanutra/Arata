@@ -16,6 +16,14 @@ function isHashOnly(href: string) {
   return href.startsWith("#");
 }
 
+function WhatsAppGlyph({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" className={className} fill="currentColor" aria-hidden>
+      <path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.4L4 29l7.8-1.8A11.9 11.9 0 0016 27c6.6 0 12-5.4 12-12S22.6 3 16 3zm5.5 15.2c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.4.2-.7.1c-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1s-.2-.5.1-.6c.1-.1.3-.4.5-.5s.2-.3.3-.5.1-.4 0-.5-.7-1.6-.9-2.2-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1.1 1-1.1 2.5 1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4s.3-1.3.2-1.4-.3-.2-.6-.4z" />
+    </svg>
+  );
+}
+
 function NavItem({
   link,
   active,
@@ -60,6 +68,40 @@ export default function Nav({ brand, nav }: Props) {
     return pathname === href || pathname.startsWith(href + "/");
   }
 
+  const waHref = `https://wa.me/${brand.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
+    brand.whatsappGreeting
+  )}`;
+  const ctaIsWhatsApp = nav.ctaHref === "whatsapp";
+
+  function renderCta(onClick?: () => void, extraClass = "") {
+    if (ctaIsWhatsApp) {
+      return (
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClick}
+          className={`inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-2 text-[13px] font-semibold text-white transition-all duration-200 hover:brightness-95 ${extraClass}`}
+        >
+          <WhatsAppGlyph className="h-4 w-4" />
+          {nav.ctaLabel}
+        </a>
+      );
+    }
+    if (isHashOnly(nav.ctaHref)) {
+      return (
+        <a href={nav.ctaHref} onClick={onClick} className={`btn-primary py-2 px-5 text-[13px] ${extraClass}`}>
+          {nav.ctaLabel}
+        </a>
+      );
+    }
+    return (
+      <Link href={nav.ctaHref} onClick={onClick} className={`btn-primary py-2 px-5 text-[13px] ${extraClass}`}>
+        {nav.ctaLabel}
+      </Link>
+    );
+  }
+
   return (
     <motion.header
       initial={{ y: -16, opacity: 0 }}
@@ -81,9 +123,7 @@ export default function Nav({ brand, nav }: Props) {
             width={36}
             height={36}
           />
-          <span className="text-[15px] font-semibold tracking-tight text-ink">
-            {brand.company}
-          </span>
+          <span className="text-[15px] font-semibold tracking-tight text-ink">{brand.company}</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7">
@@ -93,21 +133,7 @@ export default function Nav({ brand, nav }: Props) {
         </nav>
 
         <div className="flex items-center gap-3">
-          {isHashOnly(nav.ctaHref) ? (
-            <a
-              href={nav.ctaHref}
-              className="hidden md:inline-flex btn-primary py-2 px-5 text-[13px]"
-            >
-              {nav.ctaLabel}
-            </a>
-          ) : (
-            <Link
-              href={nav.ctaHref}
-              className="hidden md:inline-flex btn-primary py-2 px-5 text-[13px]"
-            >
-              {nav.ctaLabel}
-            </Link>
-          )}
+          <span className="hidden md:inline-flex">{renderCta()}</span>
           <button
             type="button"
             aria-label="Toggle menu"
@@ -131,23 +157,7 @@ export default function Nav({ brand, nav }: Props) {
                 size="lg"
               />
             ))}
-            {isHashOnly(nav.ctaHref) ? (
-              <a
-                href={nav.ctaHref}
-                className="btn-primary mt-2"
-                onClick={() => setMobileOpen(false)}
-              >
-                {nav.ctaLabel}
-              </a>
-            ) : (
-              <Link
-                href={nav.ctaHref}
-                className="btn-primary mt-2"
-                onClick={() => setMobileOpen(false)}
-              >
-                {nav.ctaLabel}
-              </Link>
-            )}
+            {renderCta(() => setMobileOpen(false), "mt-2 justify-center py-3")}
           </div>
         </div>
       ) : null}
