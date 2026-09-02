@@ -22,7 +22,7 @@ function Tick() {
 
 function Stars() {
   return (
-    <span className="inline-flex items-center gap-0.5 text-gold-deep" aria-label="Physician recommended">
+    <span className="inline-flex items-center gap-0.5 text-gold-deep" aria-label="Composed to global standards">
       {Array.from({ length: 5 }).map((_, i) => (
         <svg key={i} viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor" aria-hidden>
           <path d="M10 1l2.6 5.6 6.1.6-4.6 4.2 1.4 6L10 14.7 4.5 17.4l1.4-6L1.3 7.2l6.1-.6L10 1z" />

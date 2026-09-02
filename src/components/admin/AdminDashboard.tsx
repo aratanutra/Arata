@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { signOut } from "next-auth/react";
-import type { SiteContent, BlogPost, Ingredient } from "@/types/content";
+import type { SiteContent, Ingredient } from "@/types/content";
 import SectionCard from "./SectionCard";
 import { TextField } from "./Field";
 import ImageUploader from "./ImageUploader";
@@ -52,13 +52,10 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       { id: "science", label: "Science" },
       { id: "benefits", label: "Benefits" },
       { id: "philosophy", label: "Philosophy" },
-      { id: "prescription", label: "Prescription" },
-      { id: "blog", label: "Blog" },
-      { id: "homeFeatured", label: "Home — Featured" },
-      { id: "homeValues", label: "Home — Values" },
+      { id: "homeFeatured", label: "Home · Featured" },
+      { id: "homeValues", label: "Home · Values" },
       { id: "newsletter", label: "Newsletter" },
       { id: "contactForm", label: "Contact" },
-      { id: "dossier", label: "Dossier" },
       { id: "aeternyxPage", label: "AETERNYX Page" },
       { id: "about", label: "About Page" },
       { id: "footer", label: "Footer" }
@@ -130,13 +127,10 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         <ScienceCard content={content} update={update} />
         <BenefitsCard content={content} update={update} />
         <PhilosophyCard content={content} update={update} />
-        <PrescriptionCard content={content} update={update} />
-        <BlogCard content={content} update={update} />
         <HomeFeaturedCard content={content} update={update} />
         <HomeValuesCard content={content} update={update} />
         <NewsletterCard content={content} update={update} />
         <ContactFormCard content={content} update={update} />
-        <DossierCard content={content} update={update} />
         <AeternyxPageCard content={content} update={update} />
         <AboutCard content={content} update={update} />
         <FooterCard content={content} update={update} />
@@ -154,7 +148,7 @@ function BrandCard({ content, update }: CardProps) {
   const v = content.brand;
   const set = (patch: Partial<SiteContent["brand"]>) => update("brand", { ...v, ...patch });
   return (
-    <SectionCard id="brand" title="Brand Identity" subtitle="Used in nav, hero, footer, prescription card" defaultOpen>
+    <SectionCard id="brand" title="Brand Identity" subtitle="Used in nav, hero, and footer" defaultOpen>
       <div className="grid gap-5 md:grid-cols-2">
         <TextField label="Product Name" value={v.name} onChange={(x) => set({ name: x })} />
         <TextField label="Product Trademark (® / ™)" value={v.trademark} onChange={(x) => set({ trademark: x })} />
@@ -660,179 +654,6 @@ function PhilosophyCard({ content, update }: CardProps) {
   );
 }
 
-function PrescriptionCard({ content, update }: CardProps) {
-  const v = content.prescription;
-  const set = (patch: Partial<SiteContent["prescription"]>) => update("prescription", { ...v, ...patch });
-  return (
-    <SectionCard id="prescription" title="Prescription" subtitle="Doctor specialties + Rx card">
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
-      <div>
-        <label className="label-field">Specialties</label>
-        {v.specialties.map((s, i) => (
-          <div key={i} className="mb-2 flex gap-3">
-            <input
-              className="input-clean"
-              value={s}
-              onChange={(e) => {
-                const next = [...v.specialties];
-                next[i] = e.target.value;
-                set({ specialties: next });
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => set({ specialties: v.specialties.filter((_, j) => j !== i) })}
-              className="text-[10px] uppercase tracking-widest text-red-500"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() => set({ specialties: [...v.specialties, "New specialty"] })}
-          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-        >
-          + Add specialty
-        </button>
-      </div>
-      <div className="grid gap-5 md:grid-cols-2">
-        <TextField
-          label="Rx Header"
-          value={v.rxCard.header}
-          onChange={(x) => set({ rxCard: { ...v.rxCard, header: x } })}
-        />
-        <TextField
-          label="Rx Date Placeholder"
-          value={v.rxCard.date}
-          onChange={(x) => set({ rxCard: { ...v.rxCard, date: x } })}
-        />
-        <TextField
-          label="Rx Patient Line"
-          value={v.rxCard.patient}
-          onChange={(x) => set({ rxCard: { ...v.rxCard, patient: x } })}
-        />
-        <TextField
-          label="Rx Signature"
-          value={v.rxCard.signature}
-          onChange={(x) => set({ rxCard: { ...v.rxCard, signature: x } })}
-        />
-      </div>
-      <div>
-        <label className="label-field">Rx Lines</label>
-        {v.rxCard.lines.map((line, i) => (
-          <div key={i} className="mb-2 flex gap-3">
-            <input
-              className="input-clean"
-              value={line}
-              onChange={(e) => {
-                const next = [...v.rxCard.lines];
-                next[i] = e.target.value;
-                set({ rxCard: { ...v.rxCard, lines: next } });
-              }}
-            />
-            <button
-              type="button"
-              onClick={() =>
-                set({ rxCard: { ...v.rxCard, lines: v.rxCard.lines.filter((_, j) => j !== i) } })
-              }
-              className="text-[10px] uppercase tracking-widest text-red-500"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() => set({ rxCard: { ...v.rxCard, lines: [...v.rxCard.lines, "New line"] } })}
-          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-        >
-          + Add line
-        </button>
-      </div>
-    </SectionCard>
-  );
-}
-
-function BlogCard({ content, update }: CardProps) {
-  const v = content.blog;
-  const set = (patch: Partial<SiteContent["blog"]>) => update("blog", { ...v, ...patch });
-  const setPost = (i: number, patch: Partial<BlogPost>) => {
-    const next = [...v.posts];
-    next[i] = { ...next[i], ...patch };
-    set({ posts: next });
-  };
-  return (
-    <SectionCard id="blog" title="Blog / Journal" subtitle="Three-card grid of essays">
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <div className="space-y-6">
-        {v.posts.map((p, i) => (
-          <div key={p.id} className="rounded-xl border border-hairline p-5 space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase tracking-widest text-gold-deep">
-                Post #{i + 1} · id: {p.id}
-              </span>
-              <button
-                type="button"
-                onClick={() => set({ posts: v.posts.filter((_, j) => j !== i) })}
-                className="text-[10px] uppercase tracking-widest text-red-500"
-              >
-                Delete
-              </button>
-            </div>
-            <TextField label="Title" value={p.title} onChange={(x) => setPost(i, { title: x })} />
-            <TextField label="Slug" value={p.slug} onChange={(x) => setPost(i, { slug: x })} />
-            <TextField label="Excerpt" value={p.excerpt} onChange={(x) => setPost(i, { excerpt: x })} multiline />
-            <TextField
-              label="Body (optional, markdown)"
-              value={p.body ?? ""}
-              onChange={(x) => setPost(i, { body: x })}
-              multiline
-              rows={6}
-            />
-            <ImageUploader label="Image" value={p.image} onChange={(url) => setPost(i, { image: url })} />
-            <label className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                checked={p.published}
-                onChange={(e) => setPost(i, { published: e.target.checked })}
-                className="h-4 w-4 accent-[#B8935E]"
-              />
-              <span className="text-[10px] uppercase tracking-widest text-muted">
-                Published
-              </span>
-            </label>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() =>
-            set({
-              posts: [
-                ...v.posts,
-                {
-                  id: `p${Date.now()}`,
-                  title: "New essay",
-                  slug: "new-essay",
-                  excerpt: "Short excerpt",
-                  image: "",
-                  published: false
-                }
-              ]
-            })
-          }
-          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-        >
-          + Add post
-        </button>
-      </div>
-    </SectionCard>
-  );
-}
-
 function NewsletterCard({ content, update }: CardProps) {
   const v = content.newsletter;
   const set = (patch: Partial<SiteContent["newsletter"]>) => update("newsletter", { ...v, ...patch });
@@ -983,81 +804,6 @@ function HomeValuesCard({ content, update }: CardProps) {
   );
 }
 
-function DossierCard({ content, update }: CardProps) {
-  const v = content.dossier;
-  const set = (patch: Partial<SiteContent["dossier"]>) => update("dossier", { ...v, ...patch });
-  return (
-    <SectionCard
-      id="dossier"
-      title="Clinical Dossier"
-      subtitle="/dossier · specialty-specific clinical brief downloads"
-    >
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
-      <TextField label="Footnote" value={v.footnote} onChange={(x) => set({ footnote: x })} multiline />
-      <div>
-        <label className="label-field">Specialties (paste the PDF URL into URL field to enable download)</label>
-        {v.specialties.map((s, i) => (
-          <div key={i} className="mb-3 grid gap-3 md:grid-cols-[1fr_2fr_1fr_auto]">
-            <input
-              className="input-clean"
-              value={s.name}
-              placeholder="Cardiology"
-              onChange={(e) => {
-                const next = [...v.specialties];
-                next[i] = { ...s, name: e.target.value };
-                set({ specialties: next });
-              }}
-            />
-            <input
-              className="input-clean"
-              value={s.summary}
-              placeholder="One-line summary of the brief"
-              onChange={(e) => {
-                const next = [...v.specialties];
-                next[i] = { ...s, summary: e.target.value };
-                set({ specialties: next });
-              }}
-            />
-            <input
-              className="input-clean"
-              value={s.url}
-              placeholder="/uploads/cardiology-dossier.pdf"
-              onChange={(e) => {
-                const next = [...v.specialties];
-                next[i] = { ...s, url: e.target.value };
-                set({ specialties: next });
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => set({ specialties: v.specialties.filter((_, j) => j !== i) })}
-              className="text-[11px] font-medium uppercase tracking-widest text-red-500"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() =>
-            set({
-              specialties: [
-                ...v.specialties,
-                { name: "New Specialty", summary: "Summary of the brief", url: "" }
-              ]
-            })
-          }
-          className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-        >
-          + Add specialty
-        </button>
-      </div>
-    </SectionCard>
-  );
-}
-
 function ContactFormCard({ content, update }: CardProps) {
   const v = content.contactForm;
   const set = (patch: Partial<SiteContent["contactForm"]>) =>
@@ -1124,9 +870,10 @@ function ContactFormCard({ content, update }: CardProps) {
         </button>
       </div>
       <p className="rounded-xl bg-paper px-4 py-3 text-[13px] leading-relaxed text-muted">
-        Special ids: <span className="font-medium text-ink">prescriber</span> and{" "}
-        <span className="font-medium text-ink">sample</span> trigger extra fields (specialty, clinic, shipping
-        address). The <span className="font-medium text-ink">sample</span> type collects a quantity.
+        Special ids: <span className="font-medium text-ink">sample</span> and{" "}
+        <span className="font-medium text-ink">wholesale</span> trigger extra fields (specialty / practice,
+        clinic / distributor, shipping address). The <span className="font-medium text-ink">sample</span>
+        type also collects a quantity.
       </p>
     </SectionCard>
   );

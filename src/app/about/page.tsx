@@ -13,7 +13,7 @@ import AboutClosing from "@/components/public/AboutClosing";
 export const metadata: Metadata = {
   title: "About Us · Arata Nutraceuticals",
   description:
-    "Arata Nutraceuticals is a physician-led longevity laboratory based in Hyderabad, building India's most clinically literate supplement portfolio."
+    "Arata Nutraceuticals is a specialist longevity laboratory based in Hyderabad, building India's most rigorously composed nutraceutical portfolio."
 };
 
 export default async function AboutPage() {

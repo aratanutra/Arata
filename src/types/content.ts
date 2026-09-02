@@ -18,21 +18,9 @@ export type BenefitTile = {
 
 export type TrustBadge = { title: string; subtitle: string };
 
-export type BlogPost = {
-  id: string;
-  title: string;
-  excerpt: string;
-  image: string;
-  slug: string;
-  published: boolean;
-  body?: string;
-};
-
 export type FooterColumn = { title: string; links: NavLink[] };
 
 export type ContactFormType = { id: string; label: string };
-
-export type DossierSpecialty = { name: string; summary: string; url: string };
 
 export type SiteContent = {
   brand: {
@@ -122,24 +110,6 @@ export type SiteContent = {
     founderName: string;
     founderTitle: string;
   };
-  prescription: {
-    eyebrow: string;
-    title: string;
-    subtitle: string;
-    specialties: string[];
-    rxCard: {
-      header: string;
-      patient: string;
-      date: string;
-      lines: string[];
-      signature: string;
-    };
-  };
-  blog: {
-    eyebrow: string;
-    title: string;
-    posts: BlogPost[];
-  };
   newsletter: {
     eyebrow: string;
     title: string;
@@ -155,13 +125,6 @@ export type SiteContent = {
     endpointUrl: string;
     fallbackEmail: string;
     types: ContactFormType[];
-  };
-  dossier: {
-    eyebrow: string;
-    title: string;
-    subtitle: string;
-    footnote: string;
-    specialties: DossierSpecialty[];
   };
   aeternyxPage: {
     eyebrow: string;

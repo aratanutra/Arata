@@ -56,7 +56,7 @@ export default function ContactDialog({ contactForm }: Props) {
     }
   }
 
-  const needsSpecialty = type === "prescriber" || type === "sample";
+  const needsSpecialty = type === "sample" || type === "wholesale";
   const needsShipping = type === "sample";
 
   const summary = useMemo(() => {
