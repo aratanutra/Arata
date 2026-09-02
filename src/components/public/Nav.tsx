@@ -73,7 +73,10 @@ export default function Nav({ brand, nav }: Props) {
   )}`;
   const ctaIsWhatsApp = nav.ctaHref === "whatsapp";
 
+  const showCta = Boolean(nav.ctaLabel && nav.ctaHref);
+
   function renderCta(onClick?: () => void, extraClass = "") {
+    if (!showCta) return null;
     if (ctaIsWhatsApp) {
       return (
         <a
@@ -133,7 +136,7 @@ export default function Nav({ brand, nav }: Props) {
         </nav>
 
         <div className="flex items-center gap-3">
-          <span className="hidden md:inline-flex">{renderCta()}</span>
+          {showCta ? <span className="hidden md:inline-flex">{renderCta()}</span> : null}
           <button
             type="button"
             aria-label="Toggle menu"
