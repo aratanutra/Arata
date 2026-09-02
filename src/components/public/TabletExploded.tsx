@@ -38,17 +38,18 @@ const BODY_LABELS: Record<string, string> = {
   shield: "Immune system"
 };
 
-const SHORT_NAMES: Record<string, string> = {
-  "Co-enzyme Q10": "CoQ10",
-  "Trans-Resveratrol": "Resveratrol",
+/** Atomic-style short label for each orbiting disc. */
+const ATOM_LABELS: Record<string, string> = {
+  "Co-enzyme Q10": "Q10",
+  "Trans-Resveratrol": "Rsv",
   "Alpha-Lipoic Acid": "ALA",
-  "Vitamin C (L-Ascorbic Acid)": "Vitamin C",
-  "Vitamin E (Tocotrienols)": "Vitamin E",
-  Lycopene: "Lycopene",
-  Astaxanthin: "Astaxanthin",
-  "Vitamin D3 (Cholecalciferol)": "Vitamin D3",
-  "Vitamin K2-7 (MK-7)": "Vitamin K2",
-  "Selenium (Sodium selenite)": "Selenium"
+  "Vitamin C (L-Ascorbic Acid)": "C",
+  "Vitamin E (Tocotrienols)": "E",
+  Lycopene: "Ly",
+  Astaxanthin: "Ax",
+  "Vitamin D3 (Cholecalciferol)": "D3",
+  "Vitamin K2-7 (MK-7)": "K2",
+  "Selenium (Sodium selenite)": "Se"
 };
 
 /* ---------- Body-part anatomical icons ---------- */
@@ -171,50 +172,80 @@ function BodyGraphic({ part }: { part: string }) {
 
 /* ---------- Layout constants ---------- */
 
-const STAGE = 620;
+const STAGE = 640;
 const CENTER = STAGE / 2;
-const ORBIT_R = 232;
-const DISC_R = 30;
 const CAPSULE_W = 190;
 const CAPSULE_H = 70;
+const DISC_R = 26;
 const TILT_DEG = -8;
-/** milliseconds per degree of orbit rotation. 111 → ~40s per revolution */
-const ORBIT_MS_PER_DEG = 111;
+/** milliseconds per degree of orbit rotation. 138 → ~50s per revolution */
+const ORBIT_MS_PER_DEG = 138;
 /** milliseconds between auto-cycle highlight changes */
-const AUTO_CYCLE_MS = 3200;
+const AUTO_CYCLE_MS = 3400;
+
+type Orbit = { tilt: number; rx: number; ry: number };
+
+/** Three crossing elliptical orbits, atom-style. */
+const ORBITS: Orbit[] = [
+  { tilt: 15, rx: 250, ry: 82 },
+  { tilt: 75, rx: 235, ry: 92 },
+  { tilt: 135, rx: 258, ry: 78 }
+];
+
+/** Which orbit each ingredient lives on, and its starting phase angle. */
+const DISC_ASSIGN: { orbit: number; phase: number }[] = [
+  { orbit: 0, phase: 0 },
+  { orbit: 1, phase: 0 },
+  { orbit: 2, phase: 0 },
+  { orbit: 0, phase: 90 },
+  { orbit: 1, phase: 120 },
+  { orbit: 2, phase: 120 },
+  { orbit: 0, phase: 180 },
+  { orbit: 1, phase: 240 },
+  { orbit: 2, phase: 240 },
+  { orbit: 0, phase: 270 }
+];
 
 /* ---------- Orbiting disc ---------- */
 
 function OrbitDisc({
-  baseAngle,
+  orbit,
+  phase,
   orbitAngle,
   name,
   selected,
   dimmed,
   onTap
 }: {
-  baseAngle: number;
+  orbit: Orbit;
+  phase: number;
   orbitAngle: MotionValue<number>;
   name: string;
   selected: boolean;
   dimmed: boolean;
   onTap: () => void;
 }) {
-  const x = useTransform(
-    orbitAngle,
-    (a) => CENTER + ORBIT_R * Math.cos(((baseAngle + a - 90) * Math.PI) / 180)
-  );
-  const y = useTransform(
-    orbitAngle,
-    (a) => CENTER + ORBIT_R * Math.sin(((baseAngle + a - 90) * Math.PI) / 180)
-  );
+  const theta = (orbit.tilt * Math.PI) / 180;
+  const cosT = Math.cos(theta);
+  const sinT = Math.sin(theta);
 
-  const nameSize = name.length > 9 ? 7 : name.length > 6 ? 8 : 9;
+  const x = useTransform(orbitAngle, (a) => {
+    const angle = ((phase + a) * Math.PI) / 180;
+    const lx = orbit.rx * Math.cos(angle);
+    const ly = orbit.ry * Math.sin(angle);
+    return CENTER + (lx * cosT - ly * sinT);
+  });
+  const y = useTransform(orbitAngle, (a) => {
+    const angle = ((phase + a) * Math.PI) / 180;
+    const lx = orbit.rx * Math.cos(angle);
+    const ly = orbit.ry * Math.sin(angle);
+    return CENTER + (lx * sinT + ly * cosT);
+  });
 
   return (
     <motion.g
       style={{ x, y, cursor: "pointer" }}
-      animate={{ scale: selected ? 1.28 : 1, opacity: dimmed ? 0.38 : 1 }}
+      animate={{ scale: selected ? 1.32 : 1, opacity: dimmed ? 0.4 : 1 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       onClick={(e) => {
         e.stopPropagation();
@@ -225,10 +256,10 @@ function OrbitDisc({
         <circle
           cx={0}
           cy={0}
-          r={DISC_R + 8}
+          r={DISC_R + 9}
           fill="none"
           stroke="#17203D"
-          strokeOpacity="0.18"
+          strokeOpacity="0.2"
           strokeWidth="1"
           strokeDasharray="2 4"
         />
@@ -241,24 +272,25 @@ function OrbitDisc({
         stroke={selected ? "#17203D" : "#8B5A2B"}
         strokeWidth={selected ? 2 : 0.6}
       />
-      {/* score line */}
+      {/* small score line */}
       <line
-        x1={-DISC_R + 8}
+        x1={-DISC_R + 6}
         y1={0}
-        x2={DISC_R - 8}
+        x2={DISC_R - 6}
         y2={0}
         stroke="#5C3818"
-        strokeOpacity="0.42"
+        strokeOpacity="0.4"
         strokeWidth="0.7"
       />
       <text
         x={0}
-        y={3}
+        y={4}
         textAnchor="middle"
         fill={selected ? "#17203D" : "#3C3C43"}
         fontFamily="Inter, sans-serif"
-        fontSize={nameSize}
-        fontWeight={selected ? 700 : 600}
+        fontSize="11"
+        fontWeight={selected ? 700 : 700}
+        letterSpacing="0.5"
       >
         {name}
       </text>
@@ -314,12 +346,11 @@ export default function TabletExploded({ data }: Props) {
       <div className="relative">
         <svg
           viewBox={`0 0 ${STAGE} ${STAGE}`}
-          className="mx-auto block h-auto w-full max-w-[560px]"
+          className="mx-auto block h-auto w-full max-w-[600px]"
           role="img"
-          aria-label="AETERNYX tablet with ten ingredients orbiting"
+          aria-label="AETERNYX tablet with ten ingredients orbiting like an atom"
         >
           <defs>
-            {/* Warm amber tablet — same colours across capsule and orbiting discs */}
             <radialGradient id="td_tablet" cx="35%" cy="28%" r="72%">
               <stop offset="0%" stopColor="#F5C078" />
               <stop offset="42%" stopColor="#E8A45C" />
@@ -332,16 +363,22 @@ export default function TabletExploded({ data }: Props) {
             </radialGradient>
           </defs>
 
-          {/* Orbit path */}
-          <circle
-            cx={CENTER}
-            cy={CENTER}
-            r={ORBIT_R}
-            fill="none"
-            stroke="#B8935E"
-            strokeOpacity="0.28"
-            strokeDasharray="3 6"
-          />
+          {/* Three orbit rings crossing at the centre */}
+          {ORBITS.map((o, i) => (
+            <g key={i} transform={`rotate(${o.tilt} ${CENTER} ${CENTER})`}>
+              <ellipse
+                cx={CENTER}
+                cy={CENTER}
+                rx={o.rx}
+                ry={o.ry}
+                fill="none"
+                stroke="#8B5A2B"
+                strokeOpacity="0.25"
+                strokeDasharray="3 6"
+                strokeWidth="1"
+              />
+            </g>
+          ))}
 
           {/* Central capsule shadow */}
           <ellipse
@@ -364,7 +401,6 @@ export default function TabletExploded({ data }: Props) {
               stroke="#8B5A2B"
               strokeWidth="0.9"
             />
-            {/* score line */}
             <line
               x1={CENTER}
               y1={CENTER - CAPSULE_H / 2 + 8}
@@ -389,18 +425,22 @@ export default function TabletExploded({ data }: Props) {
             </text>
           </g>
 
-          {/* Ten orbiting ingredient discs */}
-          {items.map((ing, i) => (
-            <OrbitDisc
-              key={i}
-              baseAngle={i * (360 / items.length)}
-              orbitAngle={orbitAngle}
-              name={SHORT_NAMES[ing.name] ?? ing.name}
-              selected={selectedIdx === i}
-              dimmed={selectedIdx !== null && selectedIdx !== i}
-              onTap={() => tapDisc(i)}
-            />
-          ))}
+          {/* Ten orbiting ingredient discs, distributed across three orbits */}
+          {items.map((ing, i) => {
+            const assign = DISC_ASSIGN[i] ?? { orbit: 0, phase: 0 };
+            return (
+              <OrbitDisc
+                key={i}
+                orbit={ORBITS[assign.orbit]}
+                phase={assign.phase}
+                orbitAngle={orbitAngle}
+                name={ATOM_LABELS[ing.name] ?? ing.name.slice(0, 3)}
+                selected={selectedIdx === i}
+                dimmed={selectedIdx !== null && selectedIdx !== i}
+                onTap={() => tapDisc(i)}
+              />
+            );
+          })}
         </svg>
       </div>
 
@@ -446,7 +486,7 @@ export default function TabletExploded({ data }: Props) {
             <span aria-hidden>⟳</span> Resume auto-cycle
           </button>
         ) : (
-          <span className="text-muted">Watch the orbit, or tap a disc to hold it</span>
+          <span className="text-muted">Watch the atom, or tap a disc to hold it</span>
         )}
       </div>
     </div>
