@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "AETERNYX™ · Cellular Intelligence™ | Arata Nutraceuticals",
   description:
-    "AETERNYX™ is an expertly composed longevity nutraceutical: ten evidence-graded bioactives across five cellular ageing pathways in a single daily tablet.",
+    "AETERNYX™ is an expertly composed healthspan nutraceutical: ten evidence-graded bioactives across five cellular wellness pathways in a single daily tablet.",
   openGraph: {
     title: "AETERNYX™ · Cellular Intelligence™",
     description:

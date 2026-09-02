@@ -16,7 +16,7 @@ import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 export const metadata: Metadata = {
   title: "AETERNYX™ · Cellular Intelligence™ | Arata Nutraceuticals",
   description:
-    "The complete expertly composed longevity nutraceutical. Ten evidence-graded bioactives, five cellular ageing pathways, one daily tablet. M.R.P. ₹800 per strip of 10 tablets."
+    "The complete expertly composed healthspan nutraceutical. Ten evidence-graded bioactives, five cellular wellness pathways, one daily tablet. M.R.P. ₹800 per strip of 10 tablets."
 };
 
 export default async function AeternyxPage() {

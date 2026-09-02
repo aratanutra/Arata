@@ -33,9 +33,9 @@
   },
   "hero": {
     "eyebrow": "Arata Nutraceuticals",
-    "title": "Clinical longevity, engineered.",
+    "title": "Healthspan, engineered.",
     "tagline": "Cellular Intelligence",
-    "subtitle": "A specialist longevity laboratory in Hyderabad building India's most rigorously composed nutraceutical portfolio. Every molecule earns its place through published evidence. Every dose calibrated for daily, sustainable use.",
+    "subtitle": "A specialist healthspan laboratory in Hyderabad building India's most rigorously composed nutraceutical portfolio. Every molecule earns its place through published evidence. Every dose calibrated for daily, sustainable use.",
     "primaryCta": { "label": "Explore AETERNYX™", "href": "/aeternyx" },
     "secondaryCta": { "label": "Our standard", "href": "/about" }
   },
@@ -52,7 +52,7 @@
     "eyebrow": "Our first protocol",
     "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
-    "description": "One tablet. Ten bioactives. Five cellular ageing pathways. The complete daily longevity nutraceutical for adults over 30.",
+    "description": "One tablet. Ten bioactives. Five cellular ageing pathways. The complete daily healthspan nutraceutical for adults over 30.",
     "highlights": [
       { "label": "Bioactives", "value": "10" },
       { "label": "Ageing pathways", "value": "5" },
@@ -74,7 +74,7 @@
   },
   "product": {
     "eyebrow": "The Daily Protocol",
-    "title": "One tablet. The architecture of cellular longevity.",
+    "title": "One tablet. The architecture of cellular healthspan.",
     "description": "AETERNYX™ is a research-graded nutraceutical that converges ten evidence-graded molecules across the five hallmarks of cellular ageing: mitochondrial decline, oxidative stress, inflammaging, vascular calcium handling, and micronutrient adequacy. Each dose is calibrated for daily sustainable use.",
     "stats": [
       { "value": "10", "label": "Bioactive Ingredients" },
@@ -133,12 +133,12 @@
       {
         "name": "Vitamin D3 (Cholecalciferol)",
         "dose": "650 IU",
-        "description": "Addresses the widespread vitamin D deficiency in urban Indian adults. Supports immune, cardiovascular, and bone function. 33.33% RDA."
+        "description": "Contributes to healthy vitamin D status in adults. Supports immune, cardiovascular, and bone function. 33.33% RDA."
       },
       {
         "name": "Vitamin K2-7 (MK-7)",
         "dose": "45 mcg",
-        "description": "Activates osteocalcin, directing calcium to bone tissue. Essential D3 partner molecule for safe long-term supplementation. 81.81% RDA."
+        "description": "Activates osteocalcin, directing calcium to bone tissue. Essential D3 partner molecule for extended daily supplementation. 81.81% RDA."
       },
       {
         "name": "Selenium (Sodium selenite)",
@@ -149,7 +149,7 @@
   },
   "science": {
     "eyebrow": "Mechanism",
-    "title": "Five cellular ageing pathways. One convergent nutraceutical.",
+    "title": "Five cellular wellness pathways. One convergent nutraceutical.",
     "subtitle": "Cellular ageing is not one process. It is the cumulative drift of mitochondria, redox balance, signalling, calcium handling, and micronutrient status. AETERNYX™ supports all five.",
     "pathways": [
       {
@@ -198,7 +198,7 @@
     "eyebrow": "The Protocol",
     "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
-    "subtitle": "A single tablet. Ten bioactives. Five cellular ageing pathways. The complete expertly composed longevity nutraceutical, dosed and audited to global standards.",
+    "subtitle": "A single tablet. Ten bioactives. Five cellular wellness pathways. The complete expertly composed healthspan nutraceutical, dosed and audited to global standards.",
     "primaryCta": { "label": "Order on WhatsApp", "href": "whatsapp" },
     "secondaryCta": { "label": "Read the Science", "href": "#science" }
   },
@@ -207,11 +207,11 @@
     "endorsement": "Composed to global standards",
     "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
-    "lead": "The complete expertly composed nutraceutical for adults over 30. Ten evidence-graded bioactives, one daily tablet, five cellular ageing pathways supported.",
+    "lead": "The complete expertly composed nutraceutical for adults over 30. Ten evidence-graded bioactives, one daily tablet, five cellular wellness pathways supported.",
     "bullets": [
       "10 research-graded bioactives in a single tablet",
       "Expertly composed to evidence-graded dosing",
-      "Addresses 5 cellular ageing pathways",
+      "Addresses 5 cellular wellness pathways",
       "100% vegetarian, no fillers or binders",
       "Manufactured in a GMP + HACCP certified facility"
     ],
@@ -251,7 +251,7 @@
     "eyebrow": "Questions",
     "title": "Answers before you ask.",
     "items": [
-      { "q": "Who should take AETERNYX™?", "a": "Adults over 30 looking for an expertly composed foundational longevity nutraceutical. It is designed to be taken alongside a normal diet. If you are pregnant, lactating, on blood thinners, or managing a serious condition, get medical clearance before starting." },
+      { "q": "Who should take AETERNYX™?", "a": "Adults over 30 looking for an expertly composed foundational healthspan nutraceutical. It is designed to be taken alongside a normal diet. If you are pregnant, lactating, on blood thinners, or managing a serious condition, get medical clearance before starting." },
       { "q": "How long until I notice the effects?", "a": "Serum levels of the fat-soluble actives (D3, K2, Astaxanthin, Tocotrienols) stabilise across 8–12 weeks. Most subjective effects — energy, sleep quality, cognitive clarity — settle in that window. Give it a full 90-day cycle before evaluating." },
       { "q": "Can I take AETERNYX™ with my other medicines?", "a": "The formulation contains no drug actives and no supra-therapeutic doses. That said, Vitamin K2 can interact with warfarin and other coumarin anticoagulants — if you are on those, get medical clearance before starting." },
       { "q": "Is it safe to take long-term?", "a": "Every dose sits within the tolerable upper intake level (UL) established in the evidence base. The D3 + K2 pairing is specifically designed to make long-term supplementation safer than D3 alone. Annual medical review is still advisable." },
@@ -265,14 +265,14 @@
     "hero": {
       "eyebrow": "About Us",
       "title": "We are Arata Nutraceuticals.",
-      "subtitle": "A specialist longevity laboratory based in Hyderabad, building India's most rigorously composed nutraceutical portfolio. AETERNYX™ is our founding formulation."
+      "subtitle": "A specialist healthspan laboratory based in Hyderabad, building India's most rigorously composed nutraceutical portfolio. AETERNYX™ is our founding formulation."
     },
     "story": {
       "title": "Why we exist",
       "paragraphs": [
         "Arata Nutraceuticals was founded on a single conviction: the supplement industry in India had drifted dangerously far from the published evidence. Bottles claimed everything, evidence supported almost nothing. Doses were marketing artefacts. Excipients outweighed actives.",
         "We work backwards from the published evidence. Every molecule in every Arata product is included because there is a defensible reason for it to be there, at the dose it is at. Anything that cannot survive that test is not in the tablet.",
-        "AETERNYX™ is the first of a planned portfolio of expertly composed longevity nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
+        "AETERNYX™ is the first of a planned portfolio of expertly composed healthspan nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
       ]
     },
     "values": {
