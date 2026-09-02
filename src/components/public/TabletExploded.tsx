@@ -1,294 +1,419 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { Ingredient, SiteContent } from "@/types/content";
+import type { SiteContent } from "@/types/content";
 
-type Props = {
-  data: SiteContent["ingredientsSection"];
+type Props = { data: SiteContent["ingredientsSection"] };
+
+/**
+ * Body-part that each active is best associated with. Used to render the
+ * icon in the detail card ("where it acts").
+ */
+const BODY_PARTS: Record<string, string> = {
+  "Co-enzyme Q10": "heart",
+  "Trans-Resveratrol": "brain",
+  "Alpha-Lipoic Acid": "cell",
+  "Vitamin C (L-Ascorbic Acid)": "skin",
+  "Vitamin E (Tocotrienols)": "brain",
+  Lycopene: "heart",
+  Astaxanthin: "eye",
+  "Vitamin D3 (Cholecalciferol)": "bone",
+  "Vitamin K2-7 (MK-7)": "bone",
+  "Selenium (Sodium selenite)": "shield"
 };
 
-const RADIUS_OUTER = 190;
-const RADIUS_INNER = 62;
-const EXPLODE_DISTANCE = 30;
-const CENTER = { x: 240, y: 240 };
-const VIEWBOX = 480;
+const BODY_LABELS: Record<string, string> = {
+  heart: "Cardiovascular",
+  brain: "Central nervous system",
+  cell: "Cellular / redox",
+  skin: "Skin & collagen",
+  eye: "Vision & macula",
+  bone: "Bone & vascular calcium",
+  shield: "Immune system"
+};
 
-function polarPoint(cx: number, cy: number, r: number, angleDeg: number) {
-  const rad = (angleDeg - 90) * (Math.PI / 180);
-  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+function BodyGraphic({ part }: { part: string }) {
+  const p: Record<string, JSX.Element> = {
+    heart: (
+      <path
+        d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    ),
+    brain: (
+      <g fill="none" stroke="currentColor" strokeWidth="1.4">
+        <path d="M9 4a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h.5V4Z" />
+        <path d="M15 4a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-.5V4Z" />
+      </g>
+    ),
+    cell: (
+      <g fill="none" stroke="currentColor" strokeWidth="1.4">
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="3" />
+      </g>
+    ),
+    skin: (
+      <g fill="none" stroke="currentColor" strokeWidth="1.4">
+        <path d="M4 12c4-4 12-4 16 0-4 4-12 4-16 0Z" />
+        <path d="M8 11a1 1 0 0 1 0 2M14 11a1 1 0 0 1 0 2" />
+      </g>
+    ),
+    eye: (
+      <g fill="none" stroke="currentColor" strokeWidth="1.4">
+        <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" />
+        <circle cx="12" cy="12" r="3" />
+      </g>
+    ),
+    bone: (
+      <path
+        d="M6.5 7.5a2 2 0 1 1 3-1.5l6 6a2 2 0 1 1 1.5 3l-1 1a2 2 0 1 1-3 1.5l-6-6a2 2 0 1 1-1.5-3Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        fill="none"
+        strokeLinejoin="round"
+      />
+    ),
+    shield: (
+      <path
+        d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6Z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    )
+  };
+  return (
+    <div className="grid h-24 w-24 shrink-0 place-items-center rounded-2xl bg-gold-soft">
+      <svg viewBox="0 0 24 24" className="h-12 w-12 text-gold-deep" fill="none" aria-hidden>
+        {p[part] ?? p.cell}
+      </svg>
+    </div>
+  );
 }
 
-function wedgePath(cx: number, cy: number, rOuter: number, rInner: number, startDeg: number, endDeg: number) {
-  const p1 = polarPoint(cx, cy, rOuter, startDeg);
-  const p2 = polarPoint(cx, cy, rOuter, endDeg);
-  const p3 = polarPoint(cx, cy, rInner, endDeg);
-  const p4 = polarPoint(cx, cy, rInner, startDeg);
-  const largeArc = endDeg - startDeg > 180 ? 1 : 0;
-  return [
-    `M ${p1.x} ${p1.y}`,
-    `A ${rOuter} ${rOuter} 0 ${largeArc} 1 ${p2.x} ${p2.y}`,
-    `L ${p3.x} ${p3.y}`,
-    `A ${rInner} ${rInner} 0 ${largeArc} 0 ${p4.x} ${p4.y}`,
-    "Z"
-  ].join(" ");
-}
+/* ---------- Tablet visualisation ---------- */
 
-/** subtle warm-to-cool wedge colour ramp so each is distinguishable but coherent */
-const WEDGE_FILLS = [
-  "#F1E7CE",
-  "#EFE0C0",
-  "#EBD5A8",
-  "#E6C892",
-  "#DEBB7A",
-  "#D4B884",
-  "#C9A96E",
-  "#B8935E",
-  "#A98452",
-  "#8B6E44"
-];
+const DISC_W = 46;
+const DISC_H = 96;
+const GAP = 12;
+const STAGE_W = 700;
+const STAGE_H = 260;
+const CAPSULE_W = 420;
+const CAPSULE_H = 96;
+const CAPSULE_Y = STAGE_H / 2 - CAPSULE_H / 2;
+const DISC_Y = STAGE_H / 2;
 
 export default function TabletExploded({ data }: Props) {
-  const [exploded, setExploded] = useState(false);
-  const [hovered, setHovered] = useState<number | null>(null);
-  const [detail, setDetail] = useState<{ index: number; ing: Ingredient } | null>(null);
-
   const items = data.items.slice(0, 10);
-  const wedge = 360 / items.length;
+  const [open, setOpen] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const [autoplayStopped, setAutoplayStopped] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
 
+  // Trigger only when the section is visible
   useEffect(() => {
-    if (!exploded) {
-      setDetail(null);
-      setHovered(null);
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            setInView(true);
+            obs.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Autoplay: open once + cycle briefly through the first few ingredients
+  useEffect(() => {
+    if (!inView || autoplayStopped) return;
+    const timers: number[] = [];
+    timers.push(window.setTimeout(() => setOpen(true), 900));
+    // Show ingredients 1 → 10 with a short dwell, then reform
+    items.forEach((_, i) => {
+      timers.push(
+        window.setTimeout(() => {
+          if (!autoplayStopped) setSelectedIdx(i);
+        }, 1800 + i * 1400)
+      );
+    });
+    timers.push(
+      window.setTimeout(() => {
+        if (!autoplayStopped) {
+          setSelectedIdx(null);
+          setOpen(false);
+        }
+      }, 1800 + items.length * 1400 + 1600)
+    );
+    return () => timers.forEach((t) => clearTimeout(t));
+  }, [inView, autoplayStopped, items.length, items]);
+
+  function stopAutoplay() {
+    setAutoplayStopped(true);
+  }
+
+  function toggleOpen() {
+    stopAutoplay();
+    if (open) {
+      setSelectedIdx(null);
+      setOpen(false);
+    } else {
+      setOpen(true);
     }
-  }, [exploded]);
+  }
+
+  function tapDisc(i: number) {
+    stopAutoplay();
+    setSelectedIdx((cur) => (cur === i ? null : i));
+  }
+
+  const rowWidth = DISC_W * items.length + GAP * (items.length - 1);
+  const rowStartX = (STAGE_W - rowWidth) / 2;
+  const capsuleX = (STAGE_W - CAPSULE_W) / 2;
+  const selectedItem = selectedIdx !== null ? items[selectedIdx] : null;
+  const selectedPart = selectedItem ? BODY_PARTS[selectedItem.name] ?? "cell" : null;
 
   return (
-    <div className="relative mx-auto w-full max-w-4xl">
-      <div className="relative aspect-square w-full max-w-[560px] mx-auto">
+    <div ref={containerRef} className="mx-auto w-full max-w-4xl">
+      {/* Stage */}
+      <div className="relative">
         <svg
-          viewBox={`0 0 ${VIEWBOX} ${VIEWBOX}`}
-          className="h-full w-full cursor-pointer"
-          onClick={() => setExploded((v) => !v)}
-          aria-label="Interactive AETERNYX tablet — click to explode into ingredient wedges"
+          viewBox={`0 0 ${STAGE_W} ${STAGE_H}`}
+          className="mx-auto block h-auto w-full max-h-[300px]"
+          role="img"
+          aria-label="AETERNYX tablet composition"
         >
           <defs>
-            <radialGradient id="cx_tablet" cx="35%" cy="30%" r="70%">
+            <radialGradient id="td_tablet" cx="35%" cy="28%" r="72%">
               <stop offset="0%" stopColor="#FFFDF6" />
-              <stop offset="60%" stopColor="#F1EAD2" />
+              <stop offset="45%" stopColor="#F1EAD2" />
               <stop offset="100%" stopColor="#B8AC85" />
             </radialGradient>
-            <radialGradient id="cx_shadow" cx="50%" cy="50%" r="60%">
-              <stop offset="60%" stopColor="rgba(0,0,0,0)" />
-              <stop offset="100%" stopColor="rgba(23,32,61,0.20)" />
-            </radialGradient>
-            <linearGradient id="cx_gold" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id="td_gold" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#B8935E" />
               <stop offset="55%" stopColor="#D4B884" />
               <stop offset="100%" stopColor="#8B6E44" />
             </linearGradient>
+            <radialGradient id="td_shadow" cx="50%" cy="50%" r="60%">
+              <stop offset="60%" stopColor="rgba(0,0,0,0)" />
+              <stop offset="100%" stopColor="rgba(23,32,61,0.20)" />
+            </radialGradient>
           </defs>
 
-          <ellipse cx={CENTER.x} cy={CENTER.y + 8} rx={RADIUS_OUTER + 20} ry="26" fill="url(#cx_shadow)" />
+          {/* soft shadow */}
+          <motion.ellipse
+            cx={STAGE_W / 2}
+            cy={STAGE_H / 2 + 66}
+            rx={open ? rowWidth / 2 + 20 : CAPSULE_W / 2}
+            ry="14"
+            fill="url(#td_shadow)"
+            animate={{ rx: open ? rowWidth / 2 + 20 : CAPSULE_W / 2 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          />
 
-          <AnimatePresence>
-            {!exploded ? (
+          <AnimatePresence mode="wait">
+            {open ? (
               <motion.g
-                key="closed"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.35 }}
-              >
-                <circle
-                  cx={CENTER.x}
-                  cy={CENTER.y}
-                  r={RADIUS_OUTER}
-                  fill="url(#cx_tablet)"
-                  stroke="#A99C74"
-                  strokeWidth="0.6"
-                />
-                <line
-                  x1={CENTER.x - RADIUS_OUTER + 20}
-                  y1={CENTER.y}
-                  x2={CENTER.x + RADIUS_OUTER - 20}
-                  y2={CENTER.y}
-                  stroke="#8F8460"
-                  strokeWidth="1"
-                  strokeOpacity="0.35"
-                />
-                <ellipse
-                  cx={CENTER.x - 60}
-                  cy={CENTER.y - 55}
-                  rx="60"
-                  ry="24"
-                  fill="rgba(255,255,255,0.55)"
-                />
-                <text
-                  x={CENTER.x}
-                  y={CENTER.y + 8}
-                  textAnchor="middle"
-                  fill="#17203D"
-                  fontFamily="Iowan Old Style, Palatino, serif"
-                  fontSize="28"
-                  fontWeight="700"
-                  letterSpacing="4"
-                  opacity="0.75"
-                >
-                  ÆX
-                </text>
-                <text
-                  x={CENTER.x}
-                  y={CENTER.y + 60}
-                  textAnchor="middle"
-                  fill="#6B7085"
-                  fontFamily="Inter, sans-serif"
-                  fontSize="11"
-                  fontWeight="600"
-                  letterSpacing="4"
-                >
-                  TAP TO OPEN
-                </text>
-              </motion.g>
-            ) : (
-              <motion.g
-                key="exploded"
+                key="open"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
                 {items.map((ing, i) => {
-                  const startDeg = i * wedge;
-                  const endDeg = (i + 1) * wedge;
-                  const midDeg = startDeg + wedge / 2;
-                  const offset = polarPoint(0, 0, EXPLODE_DISTANCE, midDeg);
-                  const label = polarPoint(CENTER.x + offset.x, CENTER.y + offset.y, (RADIUS_OUTER + RADIUS_INNER) / 2, midDeg);
-                  const isHovered = hovered === i;
-                  const isActive = detail?.index === i;
+                  const cx = rowStartX + i * (DISC_W + GAP) + DISC_W / 2;
+                  const selected = selectedIdx === i;
+                  const dimmed = selectedIdx !== null && !selected;
                   return (
                     <motion.g
-                      key={ing.name}
-                      initial={{ x: 0, y: 0, opacity: 0 }}
-                      animate={{ x: offset.x, y: offset.y, opacity: 1 }}
-                      exit={{ x: 0, y: 0, opacity: 0 }}
-                      transition={{ duration: 0.55, delay: i * 0.03, ease: [0.16, 1, 0.3, 1] }}
-                      onMouseEnter={() => setHovered(i)}
-                      onMouseLeave={() => setHovered((h) => (h === i ? null : h))}
+                      key={i}
+                      initial={{ opacity: 0, y: -6, scale: 0.6 }}
+                      animate={{
+                        opacity: dimmed ? 0.35 : 1,
+                        y: 0,
+                        scale: selected ? 1.14 : 1
+                      }}
+                      exit={{ opacity: 0, scale: 0.6 }}
+                      transition={{
+                        duration: 0.55,
+                        ease: [0.16, 1, 0.3, 1],
+                        delay: 0.05 + i * 0.04
+                      }}
+                      style={{ transformOrigin: `${cx}px ${DISC_Y}px`, cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setDetail({ index: i, ing });
+                        tapDisc(i);
                       }}
-                      style={{ cursor: "pointer" }}
                     >
-                      <path
-                        d={wedgePath(CENTER.x, CENTER.y, RADIUS_OUTER, RADIUS_INNER, startDeg, endDeg)}
-                        fill={WEDGE_FILLS[i % WEDGE_FILLS.length]}
-                        stroke={isActive ? "#17203D" : isHovered ? "#8B6E44" : "#A99C74"}
-                        strokeWidth={isActive ? 2 : isHovered ? 1.6 : 0.6}
-                        style={{ transition: "stroke 0.2s, stroke-width 0.2s" }}
+                      <ellipse
+                        cx={cx}
+                        cy={DISC_Y}
+                        rx={DISC_W / 2}
+                        ry={DISC_H / 2}
+                        fill="url(#td_tablet)"
+                        stroke={selected ? "#17203D" : "#A99C74"}
+                        strokeWidth={selected ? 2 : 0.5}
+                      />
+                      {/* subtle score line */}
+                      <line
+                        x1={cx}
+                        y1={DISC_Y - DISC_H / 2 + 6}
+                        x2={cx}
+                        y2={DISC_Y + DISC_H / 2 - 6}
+                        stroke="#8F8460"
+                        strokeOpacity="0.35"
+                        strokeWidth="0.6"
                       />
                       <text
-                        x={label.x}
-                        y={label.y + 4}
+                        x={cx}
+                        y={DISC_Y + DISC_H / 2 + 22}
                         textAnchor="middle"
-                        fill="#17203D"
+                        fill={selected ? "#17203D" : "#6B7085"}
                         fontFamily="Inter, sans-serif"
-                        fontSize="14"
+                        fontSize="11"
                         fontWeight="700"
+                        letterSpacing="1"
                       >
                         {String(i + 1).padStart(2, "0")}
                       </text>
                     </motion.g>
                   );
                 })}
-                <circle
-                  cx={CENTER.x}
-                  cy={CENTER.y}
-                  r={RADIUS_INNER - 6}
-                  fill="url(#cx_tablet)"
-                  stroke="url(#cx_gold)"
-                  strokeWidth="1.5"
+              </motion.g>
+            ) : (
+              <motion.g
+                key="closed"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.85 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformOrigin: `${STAGE_W / 2}px ${STAGE_H / 2}px`, cursor: "pointer" }}
+                onClick={() => toggleOpen()}
+              >
+                <rect
+                  x={capsuleX}
+                  y={CAPSULE_Y}
+                  width={CAPSULE_W}
+                  height={CAPSULE_H}
+                  rx={CAPSULE_H / 2}
+                  fill="url(#td_tablet)"
+                  stroke="#A99C74"
+                  strokeWidth="0.6"
                 />
+                {/* score line */}
+                <line
+                  x1={STAGE_W / 2}
+                  y1={CAPSULE_Y + 8}
+                  x2={STAGE_W / 2}
+                  y2={CAPSULE_Y + CAPSULE_H - 8}
+                  stroke="#8F8460"
+                  strokeOpacity="0.55"
+                  strokeWidth="1.2"
+                />
+                {/* wordmark on capsule */}
                 <text
-                  x={CENTER.x}
-                  y={CENTER.y - 4}
+                  x={STAGE_W / 2}
+                  y={STAGE_H / 2 + 6}
                   textAnchor="middle"
-                  fill="#17203D"
-                  fontFamily="Inter, sans-serif"
-                  fontSize="10"
+                  fill="url(#td_gold)"
+                  fontFamily="Iowan Old Style, Palatino, serif"
+                  fontSize="18"
                   fontWeight="700"
-                  letterSpacing="3"
+                  letterSpacing="5"
+                  opacity="0.8"
                 >
-                  10
-                </text>
-                <text
-                  x={CENTER.x}
-                  y={CENTER.y + 12}
-                  textAnchor="middle"
-                  fill="#6B7085"
-                  fontFamily="Inter, sans-serif"
-                  fontSize="8"
-                  fontWeight="600"
-                  letterSpacing="2"
-                >
-                  ACTIVES
+                  AETERNYX
                 </text>
               </motion.g>
             )}
           </AnimatePresence>
+
+          {/* instruction pill */}
+          <text
+            x={STAGE_W / 2}
+            y={STAGE_H - 8}
+            textAnchor="middle"
+            fill="#6B7085"
+            fontFamily="Inter, sans-serif"
+            fontSize="10"
+            fontWeight="600"
+            letterSpacing="4"
+          >
+            {open ? "TAP AN INGREDIENT" : "TAP TO OPEN"}
+          </text>
         </svg>
 
-        {/* Floating detail card for the selected wedge */}
-        <AnimatePresence>
-          {exploded && detail ? (
-            <motion.div
-              key={detail.ing.name}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 8 }}
-              transition={{ duration: 0.25 }}
-              className="pointer-events-none absolute inset-x-0 bottom-2 mx-auto max-w-md rounded-2xl border border-hairline bg-canvas/95 p-4 shadow-card backdrop-blur"
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <div className="flex items-baseline gap-2">
-                  <span className="tnum text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
-                    {String(detail.index + 1).padStart(2, "0")}
-                  </span>
-                  <h4 className="text-lg font-semibold tracking-tight text-ink">{detail.ing.name}</h4>
-                </div>
-                <span className="tnum shrink-0 rounded-full bg-gold-soft px-3 py-1 text-[12px] font-semibold text-gold-deep">
-                  {detail.ing.dose}
-                </span>
-              </div>
-              <p className="mt-2 text-[13px] leading-relaxed text-muted">{detail.ing.description}</p>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
-      </div>
-
-      <div className="mt-6 flex items-center justify-center gap-3 text-[12px] text-muted">
-        {exploded ? (
-          <>
-            <span>Click a wedge to read its ingredient · </span>
-            <button
-              type="button"
-              onClick={() => setExploded(false)}
-              className="btn-link text-[12px]"
-            >
-              Close tablet
-            </button>
-          </>
-        ) : (
+        {/* Tap zone (closed only — click through when open so wedges get clicks) */}
+        {!open ? (
           <button
             type="button"
-            onClick={() => setExploded(true)}
-            className="btn-link"
+            onClick={toggleOpen}
+            aria-label="Open the AETERNYX tablet"
+            className="absolute inset-0"
+          />
+        ) : null}
+      </div>
+
+      {/* Ingredient detail card */}
+      <AnimatePresence mode="wait">
+        {selectedItem && selectedPart ? (
+          <motion.div
+            key={selectedItem.name}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="card-elevated mt-6 flex flex-col items-start gap-5 p-6 md:flex-row md:gap-7 md:p-8"
           >
-            Open the tablet
-            <span aria-hidden>→</span>
-          </button>
-        )}
+            <BodyGraphic part={selectedPart} />
+            <div className="flex-1">
+              <div className="flex flex-wrap items-baseline gap-3">
+                <span className="tnum text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
+                  {String((selectedIdx ?? 0) + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-xl font-semibold tracking-tight text-ink md:text-2xl">
+                  {selectedItem.name}
+                </h3>
+                <span className="tnum ml-auto shrink-0 rounded-full bg-gold-soft px-3 py-1 text-[12px] font-semibold text-gold-deep">
+                  {selectedItem.dose}
+                </span>
+              </div>
+              <p className="mt-1 text-[11px] font-medium uppercase tracking-widest text-muted">
+                Acts on: {BODY_LABELS[selectedPart] ?? "Cellular systems"}
+              </p>
+              <p className="mt-4 text-[14px] leading-relaxed text-muted md:text-[15px]">
+                {selectedItem.description}
+              </p>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      {/* Controls */}
+      <div className="mt-6 flex items-center justify-center gap-4 text-[12px]">
+        <button type="button" onClick={toggleOpen} className="btn-link">
+          {open ? (
+            <>
+              <span aria-hidden>←</span> Reform tablet
+            </>
+          ) : (
+            <>
+              Open the tablet <span aria-hidden>→</span>
+            </>
+          )}
+        </button>
       </div>
     </div>
   );
