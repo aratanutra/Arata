@@ -35,6 +35,7 @@ export default function HomeFeatured({ brand, data }: Props) {
               </h2>
               <p className="mt-3 text-sm font-medium uppercase tracking-widest text-gold-deep md:text-base">
                 {data.tagline}
+                <sup className="ml-0.5 text-[0.55em] font-medium">™</sup>
               </p>
               <p className="mt-5 text-base leading-relaxed text-muted md:text-lg">
                 {data.description}

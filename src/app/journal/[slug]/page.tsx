@@ -7,6 +7,7 @@ import Nav from "@/components/public/Nav";
 import Footer from "@/components/public/Footer";
 import Newsletter from "@/components/public/Newsletter";
 import ContactDialog from "@/components/public/ContactDialog";
+import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 
 type Params = { params: { slug: string } };
 
@@ -94,6 +95,7 @@ export default async function JournalPostPage({ params }: Params) {
       <Newsletter data={content.newsletter} />
       <Footer brand={content.brand} footer={content.footer} />
       <ContactDialog contactForm={content.contactForm} />
+      <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
     </main>
   );
 }

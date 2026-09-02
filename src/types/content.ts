@@ -38,12 +38,18 @@ export type SiteContent = {
   brand: {
     name: string;
     trademark: string;
+    taglineTrademark: string;
     company: string;
     tagline: string;
     price: string;
     priceCadence: string;
     logoMark: string;
+    logoAsset: string;
+    logoMarkAsset: string;
     email: string;
+    phone: string;
+    whatsappNumber: string;
+    whatsappGreeting: string;
     domain: string;
     fssaiLicense: string;
     fssaiManufacturerLicense: string;

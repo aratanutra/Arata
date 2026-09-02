@@ -62,6 +62,7 @@ export default function Hero({ hero }: Props) {
             className="mt-5 text-base font-medium uppercase tracking-widest text-gold-deep md:text-lg"
           >
             {hero.tagline}
+            <sup className="ml-0.5 text-[0.55em] font-medium">™</sup>
           </motion.p>
 
           <motion.p

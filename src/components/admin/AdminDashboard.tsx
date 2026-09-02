@@ -157,14 +157,41 @@ function BrandCard({ content, update }: CardProps) {
     <SectionCard id="brand" title="Brand Identity" subtitle="Used in nav, hero, footer, prescription card" defaultOpen>
       <div className="grid gap-5 md:grid-cols-2">
         <TextField label="Product Name" value={v.name} onChange={(x) => set({ name: x })} />
-        <TextField label="Trademark" value={v.trademark} onChange={(x) => set({ trademark: x })} />
+        <TextField label="Product Trademark (® / ™)" value={v.trademark} onChange={(x) => set({ trademark: x })} />
         <TextField label="Company" value={v.company} onChange={(x) => set({ company: x })} />
         <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
+        <TextField
+          label="Tagline Trademark (™)"
+          value={v.taglineTrademark}
+          onChange={(x) => set({ taglineTrademark: x })}
+        />
         <TextField label="Price" value={v.price} onChange={(x) => set({ price: x })} />
         <TextField label="Price Cadence" value={v.priceCadence} onChange={(x) => set({ priceCadence: x })} />
-        <TextField label="Logo Mark (1 character)" value={v.logoMark} onChange={(x) => set({ logoMark: x })} />
         <TextField label="Public Email" value={v.email} onChange={(x) => set({ email: x })} />
+        <TextField label="Phone" value={v.phone} onChange={(x) => set({ phone: x })} />
+        <TextField
+          label="WhatsApp Number (digits only, with country code)"
+          value={v.whatsappNumber}
+          onChange={(x) => set({ whatsappNumber: x })}
+          placeholder="919959993973"
+        />
+        <TextField
+          label="WhatsApp Greeting (pre-filled)"
+          value={v.whatsappGreeting}
+          onChange={(x) => set({ whatsappGreeting: x })}
+        />
         <TextField label="Domain" value={v.domain} onChange={(x) => set({ domain: x })} />
+        <TextField
+          label="Full Logo asset URL"
+          value={v.logoAsset}
+          onChange={(x) => set({ logoAsset: x })}
+        />
+        <TextField
+          label="Logo mark asset URL (nav)"
+          value={v.logoMarkAsset}
+          onChange={(x) => set({ logoMarkAsset: x })}
+        />
+        <TextField label="Fallback logo character" value={v.logoMark} onChange={(x) => set({ logoMark: x })} />
         <TextField label="FSSAI License (Marketer)" value={v.fssaiLicense} onChange={(x) => set({ fssaiLicense: x })} />
         <TextField
           label="FSSAI License (Manufacturer)"

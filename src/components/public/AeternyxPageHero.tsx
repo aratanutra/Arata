@@ -45,6 +45,7 @@ export default function AeternyxPageHero({ brand, page }: Props) {
             className="mt-4 text-sm font-medium uppercase tracking-widest text-gold-deep md:text-base"
           >
             {page.tagline}
+            <sup className="ml-0.5 text-[0.55em] font-medium">™</sup>
           </motion.p>
 
           <motion.p

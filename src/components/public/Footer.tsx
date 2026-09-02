@@ -73,11 +73,13 @@ export default function Footer({ brand, footer }: Props) {
       <div className="container-app">
         <div className="grid gap-12 md:grid-cols-4">
           <div>
-            <Link href="/" className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-sm font-semibold text-canvas">
-                {brand.logoMark}
-              </span>
-              <span className="text-lg font-semibold tracking-tight text-ink">{brand.company}</span>
+            <Link href="/" className="inline-flex items-start" aria-label={`${brand.company} home`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={brand.logoAsset}
+                alt={brand.company}
+                className="h-16 w-auto object-contain"
+              />
             </Link>
             <p className="mt-5 text-base text-ink-soft">{footer.tagline}</p>
             <a

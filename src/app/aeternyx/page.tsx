@@ -3,6 +3,7 @@ import { readContent } from "@/lib/content";
 import Nav from "@/components/public/Nav";
 import TrustBar from "@/components/public/TrustBar";
 import Product from "@/components/public/Product";
+import InteractiveTablet from "@/components/public/InteractiveTablet";
 import Ingredients from "@/components/public/Ingredients";
 import Science from "@/components/public/Science";
 import Benefits from "@/components/public/Benefits";
@@ -10,12 +11,13 @@ import Prescription from "@/components/public/Prescription";
 import Newsletter from "@/components/public/Newsletter";
 import Footer from "@/components/public/Footer";
 import ContactDialog from "@/components/public/ContactDialog";
+import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import AeternyxPageHero from "@/components/public/AeternyxPageHero";
 
 export const metadata: Metadata = {
-  title: "Aeternyx™ · Cellular Intelligence | Arata Nutraceuticals",
+  title: "AETERNYX® · Cellular Intelligence™ | Arata Nutraceuticals",
   description:
-    "The complete physician-formulated longevity protocol. Ten RCT-grade bioactives, five aging pathways, one daily capsule."
+    "The complete physician-formulated longevity protocol. Ten RCT-grade bioactives, five cellular ageing pathways, one daily tablet."
 };
 
 export default async function AeternyxPage() {
@@ -26,6 +28,7 @@ export default async function AeternyxPage() {
       <AeternyxPageHero brand={content.brand} page={content.aeternyxPage} />
       <TrustBar data={content.trustBar} />
       <Product brand={content.brand} product={content.product} />
+      <InteractiveTablet data={content.ingredientsSection} />
       <Ingredients data={content.ingredientsSection} />
       <Science data={content.science} />
       <Benefits data={content.benefits} />
@@ -33,6 +36,7 @@ export default async function AeternyxPage() {
       <Newsletter data={content.newsletter} />
       <Footer brand={content.brand} footer={content.footer} />
       <ContactDialog contactForm={content.contactForm} />
+      <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
     </main>
   );
 }
