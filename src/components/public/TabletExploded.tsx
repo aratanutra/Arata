@@ -225,11 +225,13 @@ const DISC_W = 54;
 const DISC_H = 96;
 const GAP = 10;
 const STAGE_W = 760;
-const STAGE_H = 280;
+const STAGE_H = 300;
 const CAPSULE_W = 480;
 const CAPSULE_H = 96;
-const CAPSULE_Y = STAGE_H / 2 - CAPSULE_H / 2 - 10;
-const DISC_Y = STAGE_H / 2 - 10;
+const CAPSULE_Y = STAGE_H / 2 - CAPSULE_H / 2 - 12;
+const DISC_Y = STAGE_H / 2 - 12;
+/** slight sketched tilt for the tablet + disc row, per reference */
+const TILT_DEG = -8;
 
 export default function TabletExploded({ data }: Props) {
   const items = data.items.slice(0, 10);
@@ -340,6 +342,7 @@ export default function TabletExploded({ data }: Props) {
 
           <AnimatePresence mode="wait">
             {open ? (
+              <g key="open-wrap" transform={`rotate(${TILT_DEG} ${STAGE_W / 2} ${DISC_Y})`}>
               <motion.g
                 key="open"
                 initial={{ opacity: 0 }}
@@ -409,14 +412,16 @@ export default function TabletExploded({ data }: Props) {
                   );
                 })}
               </motion.g>
+              </g>
             ) : (
+              <g key="closed-wrap" transform={`rotate(${TILT_DEG} ${STAGE_W / 2} ${STAGE_H / 2 - 12})`}>
               <motion.g
                 key="closed"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.85 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformOrigin: `${STAGE_W / 2}px ${STAGE_H / 2}px`, cursor: "pointer" }}
+                style={{ transformOrigin: `${STAGE_W / 2}px ${STAGE_H / 2 - 12}px`, cursor: "pointer" }}
                 onClick={() => toggleOpen()}
               >
                 <rect
@@ -454,6 +459,7 @@ export default function TabletExploded({ data }: Props) {
                   AETERNYX
                 </text>
               </motion.g>
+              </g>
             )}
           </AnimatePresence>
 
