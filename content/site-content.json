@@ -299,6 +299,66 @@
     "primaryCta": { "label": "Reserve", "href": "#newsletter" },
     "secondaryCta": { "label": "Read the Science", "href": "#science" }
   },
+  "productHero": {
+    "tag": "Longevity Protocol",
+    "endorsement": "Physician recommended",
+    "title": "AETERNYX",
+    "tagline": "Cellular Intelligence",
+    "lead": "The complete physician-formulated nutraceutical for adults over 30. Ten evidence-graded bioactives, one daily tablet, five cellular ageing pathways supported.",
+    "bullets": [
+      "10 clinical-grade bioactives in a single tablet",
+      "Physician formulated to RCT-graded dosing",
+      "Addresses 5 cellular ageing pathways",
+      "100% vegetarian, no fillers or binders",
+      "Manufactured in a GMP + HACCP certified facility"
+    ],
+    "priceLabel": "One-time",
+    "subscriptionLabel": "Subscribe monthly",
+    "subscriptionSavings": "Save 10%",
+    "priceOneTime": "₹2,500",
+    "priceSubscription": "₹2,250",
+    "cadence": "per month · 1×10 tablet strip · 30-day supply",
+    "primaryCta": { "label": "Reserve Your Batch", "href": "#newsletter" },
+    "secondaryCta": { "label": "Chat on WhatsApp", "href": "whatsapp" },
+    "shipLine": "Limited monthly batches · Ships across India within 5 business days",
+    "trustIcons": ["FSSAI Licensed", "Vegetarian", "GMP + HACCP", "Third-Party Tested"]
+  },
+  "howToUse": {
+    "eyebrow": "How to use",
+    "title": "One tablet, once a day. That is the entire protocol.",
+    "steps": [
+      { "icon": "pill", "title": "1 tablet daily", "detail": "Take one AETERNYX® tablet once every 24 hours." },
+      { "icon": "sun", "title": "With morning meal", "detail": "Fat-soluble actives (K2, D3, Astaxanthin, Tocotrienols) absorb best with a meal that includes fat." },
+      { "icon": "calendar", "title": "Continue for 90 days", "detail": "Serum levels stabilise across 8–12 weeks. Review with your physician after 90 days." },
+      { "icon": "store", "title": "Store cool and dry", "detail": "Keep the strip in a cool, dry, dark place. Protect from moisture and direct light." }
+    ],
+    "warning": "Do not exceed the recommended daily dose. Not for use during pregnancy or lactation without physician clearance."
+  },
+  "certifications": {
+    "eyebrow": "Certifications",
+    "title": "Manufactured to global standards.",
+    "subtitle": "AETERNYX® is produced at an ISO 22000:2018, ISO 9001:2015, ISO 14001:2015, WHO-GMP, and HACCP certified facility. Every batch is third-party tested before dispatch.",
+    "items": [
+      { "title": "FSSAI Licensed", "detail": "Marketer Lic. 13626999000569 · Manufacturer Lic. 10020045000187", "code": "FSSAI" },
+      { "title": "WHO-GMP + HACCP", "detail": "Good Manufacturing Practices and Hazard Analysis Critical Control Points certified.", "code": "GMP" },
+      { "title": "ISO Certified Facility", "detail": "ISO 22000:2018 (food safety), ISO 9001:2015 (quality), ISO 14001:2015 (environment).", "code": "ISO" },
+      { "title": "100% Vegetarian", "detail": "Plant-source or synthetic actives only. No animal-derived excipients.", "code": "VEG" }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Questions",
+    "title": "Answers before you ask.",
+    "items": [
+      { "q": "Who should take AETERNYX®?", "a": "Adults over 30 looking for a physician-formulated foundational nutraceutical. It is designed to be taken alongside a normal diet and any existing prescriptions. If you are pregnant, lactating, on blood thinners, or managing a serious condition, consult your physician before starting." },
+      { "q": "How long until I notice the effects?", "a": "Serum levels of the fat-soluble actives (D3, K2, Astaxanthin, Tocotrienols) stabilise across 8–12 weeks. Most subjective effects — energy, sleep quality, cognitive clarity — settle in that window. We recommend a full 90-day cycle for evaluation." },
+      { "q": "Can I take AETERNYX® with my other medicines?", "a": "The formulation contains no drug-active molecules and no supra-therapeutic doses. That said, Vitamin K2 can interact with warfarin and other coumarin anticoagulants — if you are on those, do not start AETERNYX® without your prescriber's clearance." },
+      { "q": "Is it safe to take long-term?", "a": "Every dose sits within the tolerable upper intake level (UL) established in the literature. The D3 + K2 pairing is specifically designed to make long-term supplementation safer than D3 alone. Annual physician review is still advisable." },
+      { "q": "Why one tablet rather than a stack of pills?", "a": "Compliance. Ten separate bottles is the reason most nutraceutical protocols fail. A single daily tablet is what we can guarantee our patients will actually take." },
+      { "q": "Is AETERNYX® vegetarian?", "a": "Yes. Every active is plant-derived or synthetic. The Vitamin D3 uses a vegetarian source (lichen-derived cholecalciferol). No gelatin, no animal excipients." },
+      { "q": "Are there any side effects?", "a": "At the doses used, side effects are uncommon. Some individuals report mild gastric warmth from Astaxanthin or mild yellowing of the palm (harmless, from Lycopene) at first. Take with food to minimise both." },
+      { "q": "Where is AETERNYX® manufactured?", "a": "AETERNYX® is manufactured by SunBeam Lifesciences Pvt. Ltd. in Puducherry, India — an ISO 22000/9001/14001, WHO-GMP, and HACCP certified facility. FSSAI licence 10020045000187." }
+    ]
+  },
   "about": {
     "hero": {
       "eyebrow": "About Us",

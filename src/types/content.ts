@@ -171,6 +171,41 @@ export type SiteContent = {
     primaryCta: CtaLink;
     secondaryCta: CtaLink;
   };
+  productHero: {
+    tag: string;
+    endorsement: string;
+    title: string;
+    tagline: string;
+    lead: string;
+    bullets: string[];
+    priceLabel: string;
+    subscriptionLabel: string;
+    subscriptionSavings: string;
+    priceOneTime: string;
+    priceSubscription: string;
+    cadence: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+    shipLine: string;
+    trustIcons: string[];
+  };
+  howToUse: {
+    eyebrow: string;
+    title: string;
+    steps: { icon: string; title: string; detail: string }[];
+    warning: string;
+  };
+  certifications: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    items: { title: string; detail: string; code: string }[];
+  };
+  faq: {
+    eyebrow: string;
+    title: string;
+    items: { q: string; a: string }[];
+  };
   about: {
     hero: {
       eyebrow: string;
