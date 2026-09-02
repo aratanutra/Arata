@@ -1,8 +1,8 @@
 import AdminSessionProvider from "@/components/admin/AdminSessionProvider";
 
 export const metadata = {
-  title: "Aeternyx™ Admin",
-  description: "Content management console for Aeternyx™"
+  title: "AETERNYX® Admin",
+  description: "Content management console for AETERNYX®"
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

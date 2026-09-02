@@ -59,7 +59,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       { id: "newsletter", label: "Newsletter" },
       { id: "contactForm", label: "Contact" },
       { id: "dossier", label: "Dossier" },
-      { id: "aeternyxPage", label: "Aeternyx Page" },
+      { id: "aeternyxPage", label: "AETERNYX Page" },
       { id: "about", label: "About Page" },
       { id: "footer", label: "Footer" }
     ],
@@ -71,7 +71,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       <header className="flex flex-col gap-4 border-b border-hairline pb-8 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-widest text-gold-deep">
-            Arata Nutraceuticals · Aeternyx™ Console
+            Arata Nutraceuticals · AETERNYX® Console
           </p>
           <h1 className="mt-2 text-5xl text-ink">Content Studio</h1>
           <p className="mt-2 text-sm text-muted">
@@ -858,7 +858,7 @@ function HomeFeaturedCard({ content, update }: CardProps) {
     <SectionCard
       id="homeFeatured"
       title="Home · Featured Product"
-      subtitle="The Aeternyx product card on the homepage"
+      subtitle="The AETERNYX product card on the homepage"
     >
       <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
@@ -1139,7 +1139,7 @@ function AeternyxPageCard({ content, update }: CardProps) {
   return (
     <SectionCard
       id="aeternyxPage"
-      title="Aeternyx Page Hero"
+      title="AETERNYX Page Hero"
       subtitle="Top of the dedicated /aeternyx product page"
     >
       <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />

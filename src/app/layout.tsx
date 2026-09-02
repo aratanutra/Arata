@@ -12,11 +12,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "AETERNYX® · Cellular Intelligence™ | Arata Nutraceuticals",
   description:
-    "Aeternyx™ is a physician-formulated longevity protocol: ten RCT-grade bioactives addressing five hallmarks of aging in a single daily capsule.",
+    "AETERNYX® is a physician-formulated longevity nutraceutical: ten RCT-graded bioactives across five cellular ageing pathways in a single daily tablet.",
   openGraph: {
     title: "AETERNYX® · Cellular Intelligence™",
     description:
-      "A single capsule. Ten bioactives. Five aging pathways. Engineered by physicians.",
+      "A single tablet. Ten bioactives. Five cellular ageing pathways. Engineered by physicians.",
     type: "website"
   },
   metadataBase: new URL("https://aeternyx.com")
