@@ -20,7 +20,6 @@ export type TrustBadge = { title: string; subtitle: string };
 
 export type FooterColumn = { title: string; links: NavLink[] };
 
-export type ContactFormType = { id: string; label: string };
 
 export type SiteContent = {
   brand: {
@@ -110,22 +109,6 @@ export type SiteContent = {
     founderName: string;
     founderTitle: string;
   };
-  newsletter: {
-    eyebrow: string;
-    title: string;
-    subtitle: string;
-    placeholder: string;
-    buttonLabel: string;
-    disclaimer: string;
-  };
-  contactForm: {
-    triggerLabel: string;
-    title: string;
-    description: string;
-    endpointUrl: string;
-    fallbackEmail: string;
-    types: ContactFormType[];
-  };
   aeternyxPage: {
     eyebrow: string;
     title: string;
@@ -141,12 +124,11 @@ export type SiteContent = {
     tagline: string;
     lead: string;
     bullets: string[];
-    priceLabel: string;
-    subscriptionLabel: string;
-    subscriptionSavings: string;
-    priceOneTime: string;
-    priceSubscription: string;
-    cadence: string;
+    mrpLabel: string;
+    mrp: string;
+    mrpNote: string;
+    netQuantity: string;
+    bestBefore: string;
     primaryCta: CtaLink;
     secondaryCta: CtaLink;
     shipLine: string;

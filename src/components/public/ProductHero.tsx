@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
@@ -20,28 +19,26 @@ function Tick() {
   );
 }
 
-function Stars() {
+function WhatsAppGlyph({ className }: { className?: string }) {
   return (
-    <span className="inline-flex items-center gap-0.5 text-gold-deep" aria-label="Composed to global standards">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor" aria-hidden>
-          <path d="M10 1l2.6 5.6 6.1.6-4.6 4.2 1.4 6L10 14.7 4.5 17.4l1.4-6L1.3 7.2l6.1-.6L10 1z" />
-        </svg>
-      ))}
-    </span>
+    <svg viewBox="0 0 32 32" className={className} fill="currentColor" aria-hidden>
+      <path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.4L4 29l7.8-1.8A11.9 11.9 0 0016 27c6.6 0 12-5.4 12-12S22.6 3 16 3zm5.5 15.2c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.4.2-.7.1c-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1s-.2-.5.1-.6c.1-.1.3-.4.5-.5s.2-.3.3-.5.1-.4 0-.5-.7-1.6-.9-2.2-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1.1 1-1.1 2.5 1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4s.3-1.3.2-1.4-.3-.2-.6-.4z"/>
+    </svg>
   );
 }
 
 export default function ProductHero({ brand, hero }: Props) {
-  const [subscribe, setSubscribe] = useState(true);
-  const price = subscribe ? hero.priceSubscription : hero.priceOneTime;
-
   const waHref = `https://wa.me/${brand.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
     brand.whatsappGreeting
   )}`;
 
-  const secondary =
-    hero.secondaryCta.href === "whatsapp" ? { ...hero.secondaryCta, href: waHref, external: true } : { ...hero.secondaryCta, external: false };
+  function resolveHref(href: string): { href: string; external: boolean } {
+    if (href === "whatsapp") return { href: waHref, external: true };
+    return { href, external: false };
+  }
+
+  const primary = resolveHref(hero.primaryCta.href);
+  const secondary = resolveHref(hero.secondaryCta.href);
 
   return (
     <section className="relative overflow-hidden bg-canvas pt-28 pb-16 md:pt-36 md:pb-24">
@@ -66,7 +63,7 @@ export default function ProductHero({ brand, hero }: Props) {
               <span className="h-1 w-1 rounded-full bg-hairline" />
               <span>10 Actives</span>
               <span className="h-1 w-1 rounded-full bg-hairline" />
-              <span>30-day supply</span>
+              <span>Vegetarian</span>
             </div>
           </motion.div>
 
@@ -82,7 +79,6 @@ export default function ProductHero({ brand, hero }: Props) {
                 {hero.tag}
               </span>
               <span className="inline-flex items-center gap-2 text-[12px] font-medium text-muted">
-                <Stars />
                 {hero.endorsement}
               </span>
             </div>
@@ -109,52 +105,44 @@ export default function ProductHero({ brand, hero }: Props) {
               ))}
             </ul>
 
-            <div className="mt-8 rounded-2xl border border-hairline bg-paper p-5">
-              {/* Purchase type toggle */}
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSubscribe(false)}
-                  className={`rounded-xl border px-3 py-3 text-left transition-all ${
-                    !subscribe
-                      ? "border-ink bg-canvas shadow-card"
-                      : "border-hairline bg-transparent hover:border-ink"
-                  }`}
-                >
+            <div className="mt-8 rounded-2xl border border-hairline bg-paper p-5 md:p-6">
+              <div className="flex items-baseline justify-between gap-4">
+                <div>
                   <div className="text-[11px] font-medium uppercase tracking-widest text-muted">
-                    {hero.priceLabel}
+                    {hero.mrpLabel}
                   </div>
-                  <div className="tnum mt-1 text-lg font-semibold tracking-tight text-ink">
-                    {hero.priceOneTime}
+                  <div className="tnum mt-1 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
+                    {hero.mrp}
                   </div>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSubscribe(true)}
-                  className={`relative rounded-xl border px-3 py-3 text-left transition-all ${
-                    subscribe
-                      ? "border-ink bg-canvas shadow-card"
-                      : "border-hairline bg-transparent hover:border-ink"
-                  }`}
-                >
-                  <span className="absolute -top-2 right-3 rounded-full bg-gold-deep px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-canvas">
-                    {hero.subscriptionSavings}
-                  </span>
-                  <div className="text-[11px] font-medium uppercase tracking-widest text-muted">
-                    {hero.subscriptionLabel}
+                  <div className="mt-1 text-[11px] uppercase tracking-widest text-muted">
+                    {hero.mrpNote}
                   </div>
-                  <div className="tnum mt-1 text-lg font-semibold tracking-tight text-ink">
-                    {hero.priceSubscription}
-                  </div>
-                </button>
+                </div>
+                <div className="text-right">
+                  <div className="text-[11px] font-medium uppercase tracking-widest text-muted">Net Qty</div>
+                  <div className="tnum mt-1 text-xl font-semibold tracking-tight text-ink">10 Tablets</div>
+                  <div className="mt-1 text-[10px] uppercase tracking-widest text-muted">per strip</div>
+                </div>
               </div>
 
-              <p className="mt-4 text-[12px] uppercase tracking-widest text-muted">
-                {hero.cadence}
+              <p className="mt-4 text-[12px] leading-relaxed text-muted">
+                <span className="font-semibold text-ink">{hero.netQuantity}</span>
+                <br />
+                {hero.bestBefore}
               </p>
 
               <div className="mt-5 flex flex-col gap-3">
-                {hero.primaryCta.href.startsWith("#") ? (
+                {primary.external ? (
+                  <a
+                    href={primary.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
+                  >
+                    <WhatsAppGlyph className="h-5 w-5" />
+                    {hero.primaryCta.label}
+                  </a>
+                ) : hero.primaryCta.href.startsWith("#") ? (
                   <a href={hero.primaryCta.href} className="btn-primary text-[15px]">
                     {hero.primaryCta.label} <span aria-hidden>→</span>
                   </a>
@@ -163,17 +151,25 @@ export default function ProductHero({ brand, hero }: Props) {
                     {hero.primaryCta.label} <span aria-hidden>→</span>
                   </Link>
                 )}
-                <a
-                  href={secondary.href}
-                  target={secondary.external ? "_blank" : undefined}
-                  rel={secondary.external ? "noopener noreferrer" : undefined}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-6 py-3 text-sm font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-paper"
-                >
-                  <svg viewBox="0 0 32 32" className="h-4 w-4 text-[#25D366]" fill="currentColor" aria-hidden>
-                    <path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.4L4 29l7.8-1.8A11.9 11.9 0 0016 27c6.6 0 12-5.4 12-12S22.6 3 16 3zm5.5 15.2c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.4.2-.7.1c-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1s-.2-.5.1-.6c.1-.1.3-.4.5-.5s.2-.3.3-.5.1-.4 0-.5-.7-1.6-.9-2.2-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1.1 1-1.1 2.5 1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4s.3-1.3.2-1.4-.3-.2-.6-.4z"/>
-                  </svg>
-                  {secondary.label}
-                </a>
+                {secondary.external ? (
+                  <a
+                    href={secondary.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-6 py-3 text-sm font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-paper"
+                  >
+                    <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
+                    {hero.secondaryCta.label}
+                  </a>
+                ) : hero.secondaryCta.href.startsWith("#") ? (
+                  <a href={hero.secondaryCta.href} className="btn-secondary">
+                    {hero.secondaryCta.label}
+                  </a>
+                ) : (
+                  <Link href={hero.secondaryCta.href} className="btn-secondary">
+                    {hero.secondaryCta.label}
+                  </Link>
+                )}
               </div>
 
               <p className="mt-4 text-[11px] leading-relaxed text-muted">
