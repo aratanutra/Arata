@@ -26,7 +26,7 @@ export default function AboutValues({ values }: { values: SiteContent["about"]["
               transition={{ duration: 0.55, delay: i * 0.06 }}
               className="card flex h-full flex-col gap-4 p-6"
             >
-              <span className="tnum text-[12px] font-semibold uppercase tracking-widest text-sage">
+              <span className="tnum text-[12px] font-semibold uppercase tracking-widest text-gold-deep">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>

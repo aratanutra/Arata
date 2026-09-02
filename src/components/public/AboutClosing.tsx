@@ -25,7 +25,7 @@ function Action({ href, label, variant }: { href: string; label: string; variant
 
 export default function AboutClosing({ data }: { data: SiteContent["about"]["closingCta"] }) {
   return (
-    <section className="relative bg-mist py-24 md:py-32">
+    <section className="relative bg-paper py-24 md:py-32">
       <div className="container-tight text-center">
         <motion.span
           initial={{ opacity: 0 }}

@@ -60,7 +60,7 @@ export default async function JournalPostPage({ params }: Params) {
           </header>
 
           {post.image ? (
-            <div className="mt-12 overflow-hidden rounded-3xl border border-hairline bg-mist">
+            <div className="mt-12 overflow-hidden rounded-3xl border border-hairline bg-paper">
               <div
                 className="aspect-[16/9] w-full"
                 style={{
@@ -83,7 +83,7 @@ export default async function JournalPostPage({ params }: Params) {
           <div className="mt-16 border-t border-hairline pt-8">
             <Link
               href="/#blog"
-              className="text-[12px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+              className="text-[12px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
             >
               ← More from the Journal
             </Link>

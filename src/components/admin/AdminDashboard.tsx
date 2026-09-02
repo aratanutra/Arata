@@ -70,12 +70,12 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
     <div className="mx-auto max-w-5xl px-6 py-12">
       <header className="flex flex-col gap-4 border-b border-hairline pb-8 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-[10px] uppercase tracking-widest text-sage">
+          <p className="text-[10px] uppercase tracking-widest text-gold-deep">
             Arata Nutraceuticals · Aeternyx™ Console
           </p>
           <h1 className="mt-2 text-5xl text-ink">Content Studio</h1>
           <p className="mt-2 text-sm text-muted">
-            Edit any field below. Changes are persisted to <code className="text-sage">/content/site-content.json</code>.
+            Edit any field below. Changes are persisted to <code className="text-gold-deep">/content/site-content.json</code>.
           </p>
         </div>
         <div className="flex items-center gap-4">
@@ -98,7 +98,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="whitespace-nowrap text-[10px] uppercase tracking-widest text-muted hover:text-sage"
+              className="whitespace-nowrap text-[10px] uppercase tracking-widest text-muted hover:text-gold-deep"
             >
               {s.label}
             </a>
@@ -106,7 +106,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         </div>
         <div className="flex items-center gap-3">
           {status.kind === "saved" ? (
-            <span className="text-[10px] uppercase tracking-widest text-sage">
+            <span className="text-[10px] uppercase tracking-widest text-gold-deep">
               ✓ Saved
             </span>
           ) : status.kind === "error" ? (
@@ -165,9 +165,37 @@ function BrandCard({ content, update }: CardProps) {
         <TextField label="Logo Mark (1 character)" value={v.logoMark} onChange={(x) => set({ logoMark: x })} />
         <TextField label="Public Email" value={v.email} onChange={(x) => set({ email: x })} />
         <TextField label="Domain" value={v.domain} onChange={(x) => set({ domain: x })} />
-        <TextField label="FSSAI License No." value={v.fssaiLicense} onChange={(x) => set({ fssaiLicense: x })} />
+        <TextField label="FSSAI License (Marketer)" value={v.fssaiLicense} onChange={(x) => set({ fssaiLicense: x })} />
+        <TextField
+          label="FSSAI License (Manufacturer)"
+          value={v.fssaiManufacturerLicense}
+          onChange={(x) => set({ fssaiManufacturerLicense: x })}
+        />
         <TextField label="FSSAI Category" value={v.fssaiCategory} onChange={(x) => set({ fssaiCategory: x })} />
       </div>
+      <TextField
+        label="Marketer address"
+        value={v.marketer}
+        onChange={(x) => set({ marketer: x })}
+        multiline
+      />
+      <TextField
+        label="Manufacturer address"
+        value={v.manufacturer}
+        onChange={(x) => set({ manufacturer: x })}
+        multiline
+      />
+      <label className="flex items-center gap-3 pt-1">
+        <input
+          type="checkbox"
+          checked={v.vegetarian}
+          onChange={(e) => set({ vegetarian: e.target.checked })}
+          className="h-4 w-4 accent-[#B8935E]"
+        />
+        <span className="text-[11px] font-medium uppercase tracking-widest text-muted">
+          100% Vegetarian (shows green-dot badge in footer)
+        </span>
+      </label>
     </SectionCard>
   );
 }
@@ -216,7 +244,7 @@ function NavCard({ content, update }: CardProps) {
           <button
             type="button"
             onClick={() => set({ links: [...v.links, { label: "New", href: "#" }] })}
-            className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+            className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
           >
             + Add link
           </button>
@@ -299,7 +327,7 @@ function TrustBarCard({ content, update }: CardProps) {
         onClick={() =>
           update("trustBar", { badges: [...v.badges, { title: "New Badge", subtitle: "Subtitle" }] })
         }
-        className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+        className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
       >
         + Add badge
       </button>
@@ -311,13 +339,23 @@ function ProductCard({ content, update }: CardProps) {
   const v = content.product;
   const set = (patch: Partial<SiteContent["product"]>) => update("product", { ...v, ...patch });
   return (
-    <SectionCard id="product" title="Product" subtitle="Split layout: capsule visual + stats">
+    <SectionCard id="product" title="Product" subtitle="Split layout: tablet strip visual + stats">
       <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
       <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} multiline rows={2} />
       <TextField label="Description" value={v.description} onChange={(x) => set({ description: x })} multiline />
       <TextField label="Price" value={v.price} onChange={(x) => set({ price: x })} />
       <TextField label="Cadence" value={v.cadence} onChange={(x) => set({ cadence: x })} />
-      <ImageUploader label="Capsule image (optional)" value={v.image} onChange={(url) => set({ image: url })} />
+      <TextField
+        label="Pack Form (shown under the tablet visual)"
+        value={v.packForm ?? ""}
+        onChange={(x) => set({ packForm: x })}
+      />
+      <TextField
+        label="Pack Label / carton spec"
+        value={v.packLabel ?? ""}
+        onChange={(x) => set({ packLabel: x })}
+      />
+      <ImageUploader label="Product image override (optional)" value={v.image} onChange={(url) => set({ image: url })} />
       <div>
         <label className="label-field">Stat Cards</label>
         {v.stats.map((s, i) => (
@@ -352,7 +390,7 @@ function ProductCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ stats: [...v.stats, { value: "0", label: "Label" }] })}
-          className="mt-2 text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="mt-2 text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add stat
         </button>
@@ -460,7 +498,7 @@ function IngredientsCard({ content, update }: CardProps) {
             ]
           })
         }
-        className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+        className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
       >
         + Add ingredient
       </button>
@@ -510,7 +548,7 @@ function ScienceCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ pathways: [...v.pathways, { name: "New pathway", detail: "Detail" }] })}
-          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add pathway
         </button>
@@ -571,7 +609,7 @@ function BenefitsCard({ content, update }: CardProps) {
           onClick={() =>
             set({ tiles: [...v.tiles, { icon: "cell", title: "New Tile", detail: "Detail" }] })
           }
-          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add tile
         </button>
@@ -628,7 +666,7 @@ function PrescriptionCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ specialties: [...v.specialties, "New specialty"] })}
-          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add specialty
         </button>
@@ -682,7 +720,7 @@ function PrescriptionCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ rxCard: { ...v.rxCard, lines: [...v.rxCard.lines, "New line"] } })}
-          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add line
         </button>
@@ -707,7 +745,7 @@ function BlogCard({ content, update }: CardProps) {
         {v.posts.map((p, i) => (
           <div key={p.id} className="rounded-xl border border-hairline p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase tracking-widest text-sage">
+              <span className="text-[10px] uppercase tracking-widest text-gold-deep">
                 Post #{i + 1} · id: {p.id}
               </span>
               <button
@@ -734,7 +772,7 @@ function BlogCard({ content, update }: CardProps) {
                 type="checkbox"
                 checked={p.published}
                 onChange={(e) => setPost(i, { published: e.target.checked })}
-                className="h-4 w-4 accent-[#2D7A5B]"
+                className="h-4 w-4 accent-[#B8935E]"
               />
               <span className="text-[10px] uppercase tracking-widest text-muted">
                 Published
@@ -759,7 +797,7 @@ function BlogCard({ content, update }: CardProps) {
               ]
             })
           }
-          className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add post
         </button>
@@ -835,7 +873,7 @@ function HomeFeaturedCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ highlights: [...v.highlights, { value: "0", label: "Label" }] })}
-          className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add highlight
         </button>
@@ -910,7 +948,7 @@ function HomeValuesCard({ content, update }: CardProps) {
       <button
         type="button"
         onClick={() => set({ items: [...v.items, { title: "New value", detail: "Detail" }] })}
-        className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+        className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
       >
         + Add value
       </button>
@@ -984,7 +1022,7 @@ function DossierCard({ content, update }: CardProps) {
               ]
             })
           }
-          className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add specialty
         </button>
@@ -1053,12 +1091,12 @@ function ContactFormCard({ content, update }: CardProps) {
         <button
           type="button"
           onClick={() => set({ types: [...v.types, { id: "new", label: "New type" }] })}
-          className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add enquiry type
         </button>
       </div>
-      <p className="rounded-xl bg-mist px-4 py-3 text-[13px] leading-relaxed text-muted">
+      <p className="rounded-xl bg-paper px-4 py-3 text-[13px] leading-relaxed text-muted">
         Special ids: <span className="font-medium text-ink">prescriber</span> and{" "}
         <span className="font-medium text-ink">sample</span> trigger extra fields (specialty, clinic, shipping
         address). The <span className="font-medium text-ink">sample</span> type collects a quantity.
@@ -1117,7 +1155,7 @@ function AboutCard({ content, update }: CardProps) {
       subtitle="Content of /about. Hero, story, values, closing CTA"
     >
       <div className="space-y-4 rounded-xl border border-hairline p-5">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Hero</p>
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">Hero</p>
         <TextField
           label="Eyebrow"
           value={v.hero.eyebrow}
@@ -1137,7 +1175,7 @@ function AboutCard({ content, update }: CardProps) {
       </div>
 
       <div className="space-y-4 rounded-xl border border-hairline p-5">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Story</p>
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">Story</p>
         <TextField
           label="Section Title"
           value={v.story.title}
@@ -1174,7 +1212,7 @@ function AboutCard({ content, update }: CardProps) {
             onClick={() =>
               set({ story: { ...v.story, paragraphs: [...v.story.paragraphs, ""] } })
             }
-            className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+            className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
           >
             + Add paragraph
           </button>
@@ -1182,7 +1220,7 @@ function AboutCard({ content, update }: CardProps) {
       </div>
 
       <div className="space-y-4 rounded-xl border border-hairline p-5">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Values</p>
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">Values</p>
         <TextField
           label="Section Title"
           value={v.values.title}
@@ -1228,14 +1266,14 @@ function AboutCard({ content, update }: CardProps) {
               values: { ...v.values, items: [...v.values.items, { title: "New value", detail: "Detail" }] }
             })
           }
-          className="text-[11px] font-medium uppercase tracking-widest text-sage hover:text-sage-deep"
+          className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
         >
           + Add value
         </button>
       </div>
 
       <div className="space-y-4 rounded-xl border border-hairline p-5">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-sage">Closing CTA</p>
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">Closing CTA</p>
         <TextField
           label="Eyebrow"
           value={v.closingCta.eyebrow}
@@ -1382,7 +1420,7 @@ function FooterCard({ content, update }: CardProps) {
               nextCols[ci] = { ...col, links: [...col.links, { label: "New", href: "#" }] };
               set({ columns: nextCols });
             }}
-            className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+            className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
           >
             + Add link
           </button>
@@ -1391,7 +1429,7 @@ function FooterCard({ content, update }: CardProps) {
       <button
         type="button"
         onClick={() => set({ columns: [...v.columns, { title: "New Column", links: [] }] })}
-        className="text-[10px] uppercase tracking-widest text-sage hover:text-sage-deep"
+        className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
       >
         + Add column
       </button>

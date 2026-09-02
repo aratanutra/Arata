@@ -5,7 +5,7 @@ import type { SiteContent } from "@/types/content";
 
 export default function Philosophy({ data }: { data: SiteContent["philosophy"] }) {
   return (
-    <section id="philosophy" className="relative overflow-hidden bg-mist py-28 md:py-44">
+    <section id="philosophy" className="relative overflow-hidden bg-paper py-28 md:py-44">
       <div className="container-tight relative text-center">
         <motion.span
           initial={{ opacity: 0 }}
@@ -24,9 +24,9 @@ export default function Philosophy({ data }: { data: SiteContent["philosophy"] }
           transition={{ duration: 0.9 }}
           className="mx-auto mt-8 max-w-4xl text-2xl font-medium leading-snug tracking-tight text-ink md:text-4xl"
         >
-          <span aria-hidden className="block text-3xl text-sage md:text-5xl">&ldquo;</span>
+          <span aria-hidden className="block text-3xl text-gold-deep md:text-5xl">&ldquo;</span>
           <span>{data.quote}</span>
-          <span aria-hidden className="block text-3xl text-sage md:text-5xl">&rdquo;</span>
+          <span aria-hidden className="block text-3xl text-gold-deep md:text-5xl">&rdquo;</span>
         </motion.blockquote>
 
         <motion.div

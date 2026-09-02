@@ -37,7 +37,7 @@ export default function ImageUploader({ label = "Image", value, onChange }: Prop
     <div>
       <label className="label-field">{label}</label>
       <div className="flex items-center gap-3">
-        <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-xl border border-hairline bg-mist">
+        <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-xl border border-hairline bg-paper">
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={value} alt="" className="h-full w-full object-cover" />
@@ -57,7 +57,7 @@ export default function ImageUploader({ label = "Image", value, onChange }: Prop
               type="button"
               onClick={() => inputRef.current?.click()}
               disabled={uploading}
-              className="text-[12px] font-medium text-sage hover:text-sage-deep disabled:opacity-50"
+              className="text-[12px] font-medium text-gold-deep hover:text-gold-deep disabled:opacity-50"
             >
               {uploading ? "Uploading…" : "Upload file"}
             </button>

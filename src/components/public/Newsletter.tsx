@@ -46,7 +46,7 @@ export default function Newsletter({ data }: { data: SiteContent["newsletter"] }
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mt-6 text-[12px] font-medium uppercase tracking-widest text-sage"
+              className="mt-6 text-[12px] font-medium uppercase tracking-widest text-gold-deep"
             >
               ✓ Reservation received. We will be in touch.
             </motion.p>

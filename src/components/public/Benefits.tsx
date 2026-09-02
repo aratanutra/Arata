@@ -45,7 +45,7 @@ const ICON_PATHS: Record<string, JSX.Element> = {
 function Icon({ name }: { name: string }) {
   const inner = ICON_PATHS[name] ?? ICON_PATHS.cell;
   return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5 text-sage-deep" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-5 w-5 text-gold-deep" aria-hidden>
       {inner}
     </svg>
   );
@@ -70,7 +70,7 @@ export default function Benefits({ data }: { data: SiteContent["benefits"] }) {
               transition={{ duration: 0.5, delay: (i % 4) * 0.06 }}
               className="card group flex h-full flex-col gap-6 p-7"
             >
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-sage-soft">
+              <div className="grid h-11 w-11 place-items-center rounded-xl bg-gold-soft">
                 <Icon name={tile.icon} />
               </div>
               <div>

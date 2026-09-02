@@ -8,7 +8,7 @@ function CellDiagram() {
     <svg viewBox="0 0 400 400" className="h-full w-full" role="img" aria-label="Cell-level mechanism diagram">
       <defs>
         <radialGradient id="cellGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#EDF5F0" />
+          <stop offset="0%" stopColor="#F2E9D2" />
           <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
         </radialGradient>
       </defs>
@@ -16,10 +16,10 @@ function CellDiagram() {
       <circle cx="200" cy="200" r="180" fill="none" stroke="#D2D2D7" strokeDasharray="2 6" />
       <circle cx="200" cy="200" r="150" fill="none" stroke="#D2D2D7" />
       <circle cx="200" cy="200" r="110" fill="url(#cellGlow)" />
-      <circle cx="200" cy="200" r="60" fill="none" stroke="#2D7A5B" strokeWidth="1" strokeOpacity="0.6" />
-      <circle cx="200" cy="200" r="28" fill="#EDF5F0" stroke="#2D7A5B" strokeWidth="1" />
+      <circle cx="200" cy="200" r="60" fill="none" stroke="#B8935E" strokeWidth="1" strokeOpacity="0.6" />
+      <circle cx="200" cy="200" r="28" fill="#F2E9D2" stroke="#B8935E" strokeWidth="1" />
 
-      <g stroke="#2D7A5B" strokeOpacity="0.85" fill="none">
+      <g stroke="#B8935E" strokeOpacity="0.85" fill="none">
         <ellipse cx="120" cy="140" rx="22" ry="10" />
         <ellipse cx="280" cy="260" rx="22" ry="10" />
         <ellipse cx="270" cy="120" rx="18" ry="8" />
@@ -37,7 +37,7 @@ function CellDiagram() {
         x="200"
         y="205"
         textAnchor="middle"
-        fill="#1F5C44"
+        fill="#8B6E44"
         fontFamily="Inter, sans-serif"
         fontWeight="600"
         fontSize="9"
@@ -73,7 +73,7 @@ export default function Science({ data }: { data: SiteContent["science"] }) {
                 transition={{ duration: 0.45, delay: i * 0.06 }}
                 className="flex gap-5"
               >
-                <span className="tnum mt-1 w-8 shrink-0 text-[11px] font-medium uppercase tracking-widest text-sage">
+                <span className="tnum mt-1 w-8 shrink-0 text-[11px] font-medium uppercase tracking-widest text-gold-deep">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="border-l border-hairline pl-5">

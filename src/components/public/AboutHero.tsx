@@ -8,7 +8,7 @@ export default function AboutHero({ hero }: { hero: SiteContent["about"]["hero"]
     <section className="relative overflow-hidden bg-canvas pt-32 pb-16 md:pt-40 md:pb-24">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] bg-[radial-gradient(ellipse_at_top,_rgba(45,122,91,0.06)_0%,_transparent_60%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] bg-[radial-gradient(ellipse_at_top,_rgba(184,147,94,0.06)_0%,_transparent_60%)]"
       />
       <div className="container-tight relative text-center">
         <motion.span

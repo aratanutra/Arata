@@ -5,7 +5,7 @@ import type { SiteContent } from "@/types/content";
 
 export default function HomeValues({ data }: { data: SiteContent["homeValues"] }) {
   return (
-    <section className="relative bg-mist py-24 md:py-32">
+    <section className="relative bg-paper py-24 md:py-32">
       <div className="container-app">
         <div className="max-w-2xl">
           <span className="eyebrow">{data.eyebrow}</span>
@@ -21,7 +21,7 @@ export default function HomeValues({ data }: { data: SiteContent["homeValues"] }
               transition={{ duration: 0.5, delay: i * 0.06 }}
               className="card flex h-full flex-col gap-4 p-6"
             >
-              <span className="tnum text-[12px] font-semibold uppercase tracking-widest text-sage">
+              <span className="tnum text-[12px] font-semibold uppercase tracking-widest text-gold-deep">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>

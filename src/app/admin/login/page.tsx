@@ -34,7 +34,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="grid min-h-screen place-items-center bg-mist px-6">
+    <div className="grid min-h-screen place-items-center bg-paper px-6">
       <div className="w-full max-w-md">
         <div className="text-center">
           <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-ink text-base font-semibold text-canvas">
