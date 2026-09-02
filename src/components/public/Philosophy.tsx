@@ -29,19 +29,25 @@ export default function Philosophy({ data }: { data: SiteContent["philosophy"] }
           <span aria-hidden className="block text-3xl text-gold-deep md:text-5xl">&rdquo;</span>
         </motion.blockquote>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-10 inline-flex flex-col items-center gap-2"
-        >
-          <span className="section-divider w-20" />
-          <span className="text-base font-semibold tracking-tight text-ink">{data.founderName}</span>
-          <span className="text-[11px] font-medium uppercase tracking-widest text-muted">
-            {data.founderTitle}
-          </span>
-        </motion.div>
+        {data.founderName || data.founderTitle ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-10 inline-flex flex-col items-center gap-2"
+          >
+            <span className="section-divider w-20" />
+            {data.founderName ? (
+              <span className="text-base font-semibold tracking-tight text-ink">{data.founderName}</span>
+            ) : null}
+            {data.founderTitle ? (
+              <span className="text-[11px] font-medium uppercase tracking-widest text-muted">
+                {data.founderTitle}
+              </span>
+            ) : null}
+          </motion.div>
+        ) : null}
       </div>
     </section>
   );
