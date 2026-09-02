@@ -157,7 +157,7 @@ export default function ContactDialog({ contactForm }: Props) {
 
             {submit.kind === "submitted" ? (
               <div className="px-8 py-12 text-center">
-                <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-sage-soft text-2xl text-sage-deep">
+                <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-gold-soft text-2xl text-gold-deep">
                   ✓
                 </div>
                 <h4 className="mt-5 text-xl font-semibold tracking-tight text-ink">
@@ -284,7 +284,7 @@ export default function ContactDialog({ contactForm }: Props) {
                 <div className="flex items-center justify-between gap-4 pt-2">
                   <p className="text-[12px] text-muted">
                     Or write directly to{" "}
-                    <a href={`mailto:${contactForm.fallbackEmail}`} className="text-sage hover:text-sage-deep">
+                    <a href={`mailto:${contactForm.fallbackEmail}`} className="text-gold-deep hover:text-gold-deep">
                       {contactForm.fallbackEmail}
                     </a>
                   </p>

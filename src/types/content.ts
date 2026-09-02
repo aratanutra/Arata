@@ -46,7 +46,11 @@ export type SiteContent = {
     email: string;
     domain: string;
     fssaiLicense: string;
+    fssaiManufacturerLicense: string;
     fssaiCategory: string;
+    manufacturer: string;
+    marketer: string;
+    vegetarian: boolean;
   };
   nav: {
     links: NavLink[];
@@ -86,6 +90,8 @@ export type SiteContent = {
     primaryCta: CtaLink;
     secondaryCta: CtaLink;
     image: string;
+    packForm?: string;
+    packLabel?: string;
   };
   ingredientsSection: {
     eyebrow: string;

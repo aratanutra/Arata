@@ -8,7 +8,7 @@ import { asset } from "@/lib/asset";
 export default function Blog({ data }: { data: SiteContent["blog"] }) {
   const visible = data.posts.filter((p) => p.published);
   return (
-    <section id="blog" className="relative bg-mist py-28 md:py-40">
+    <section id="blog" className="relative bg-paper py-28 md:py-40">
       <div className="container-app">
         <div className="flex items-end justify-between gap-6">
           <div className="max-w-xl">
@@ -44,7 +44,7 @@ export default function Blog({ data }: { data: SiteContent["blog"] }) {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-sage-deep">
+                  <h3 className="text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-gold-deep">
                     {post.title}
                   </h3>
                   <p className="mt-3 text-[14px] leading-relaxed text-muted">{post.excerpt}</p>
@@ -52,7 +52,7 @@ export default function Blog({ data }: { data: SiteContent["blog"] }) {
                     <span className="text-[11px] font-medium uppercase tracking-widest text-muted">
                       Read essay
                     </span>
-                    <span className="text-sage">→</span>
+                    <span className="text-gold-deep">→</span>
                   </div>
                 </div>
               </Link>

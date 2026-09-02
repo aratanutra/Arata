@@ -5,7 +5,7 @@ import type { SiteContent } from "@/types/content";
 
 export default function Ingredients({ data }: { data: SiteContent["ingredientsSection"] }) {
   return (
-    <section id="ingredients" className="relative bg-mist py-28 md:py-40">
+    <section id="ingredients" className="relative bg-paper py-28 md:py-40">
       <div className="container-app">
         <div className="max-w-2xl">
           <span className="eyebrow">{data.eyebrow}</span>
@@ -30,7 +30,7 @@ export default function Ingredients({ data }: { data: SiteContent["ingredientsSe
                   </span>
                   <h3 className="text-xl font-semibold tracking-tight text-ink">{ing.name}</h3>
                 </div>
-                <span className="shrink-0 rounded-full bg-sage-soft px-3 py-1 text-[12px] font-semibold tabular-nums tracking-tight text-sage-deep">
+                <span className="shrink-0 rounded-full bg-gold-soft px-3 py-1 text-[12px] font-semibold tabular-nums tracking-tight text-gold-deep">
                   {ing.dose}
                 </span>
               </div>

@@ -52,7 +52,7 @@ export default async function JournalIndex() {
                     </div>
                   </div>
                   <div className="p-6">
-                    <h2 className="text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-sage-deep">
+                    <h2 className="text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-gold-deep">
                       {post.title}
                     </h2>
                     <p className="mt-3 text-[14px] leading-relaxed text-muted">{post.excerpt}</p>
@@ -60,7 +60,7 @@ export default async function JournalIndex() {
                       <span className="text-[11px] font-medium uppercase tracking-widest text-muted">
                         Read essay
                       </span>
-                      <span className="text-sage">→</span>
+                      <span className="text-gold-deep">→</span>
                     </div>
                   </div>
                 </Link>

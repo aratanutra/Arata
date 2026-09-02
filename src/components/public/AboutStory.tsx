@@ -5,7 +5,7 @@ import type { SiteContent } from "@/types/content";
 
 export default function AboutStory({ story }: { story: SiteContent["about"]["story"] }) {
   return (
-    <section className="relative bg-mist py-24 md:py-32">
+    <section className="relative bg-paper py-24 md:py-32">
       <div className="container-tight">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}

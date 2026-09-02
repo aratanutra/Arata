@@ -13,7 +13,7 @@ export default function AeternyxPageHero({ brand, page }: Props) {
     <section className="relative overflow-hidden bg-canvas pt-32 pb-16 md:pt-40 md:pb-24">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] bg-[radial-gradient(ellipse_at_top,_rgba(45,122,91,0.06)_0%,_transparent_60%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] bg-[radial-gradient(ellipse_at_top,_rgba(184,147,94,0.10)_0%,_transparent_60%)]"
       />
       <div className="container-app relative">
         <div className="mx-auto max-w-3xl text-center">
@@ -30,9 +30,9 @@ export default function AeternyxPageHero({ brand, page }: Props) {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-5 text-5xl font-semibold tracking-tight text-ink md:text-7xl"
+            className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl"
           >
-            {page.title}
+            <span className="wordmark-gold">{page.title}</span>
             <sup className="ml-1 align-super text-[0.28em] font-medium text-muted">
               {brand.trademark}
             </sup>
@@ -42,7 +42,7 @@ export default function AeternyxPageHero({ brand, page }: Props) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-4 text-sm font-medium uppercase tracking-widest text-sage md:text-base"
+            className="mt-4 text-sm font-medium uppercase tracking-widest text-gold-deep md:text-base"
           >
             {page.tagline}
           </motion.p>

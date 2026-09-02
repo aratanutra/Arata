@@ -17,10 +17,10 @@ export default function SectionCard({ id, title, subtitle, defaultOpen = false, 
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-mist"
+        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-paper"
       >
         <div>
-          <div className="text-[11px] font-medium uppercase tracking-widest text-sage">{id}</div>
+          <div className="text-[11px] font-medium uppercase tracking-widest text-gold-deep">{id}</div>
           <h2 className="mt-1 text-xl font-semibold tracking-tight text-ink">{title}</h2>
           {subtitle ? <p className="mt-1 text-[14px] text-muted">{subtitle}</p> : null}
         </div>

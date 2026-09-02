@@ -35,7 +35,7 @@ export default function DossierPicker({ specialties, fallbackEmail, footnote }: 
             >
               <span
                 className={`text-[11px] font-medium uppercase tracking-widest ${
-                  isActive ? "text-sage" : "text-sage"
+                  isActive ? "text-gold-deep" : "text-gold-deep"
                 }`}
               >
                 Specialty
@@ -57,7 +57,7 @@ export default function DossierPicker({ specialties, fallbackEmail, footnote }: 
               <span
                 aria-hidden
                 className={`mt-auto text-[11px] uppercase tracking-widest ${
-                  isActive ? "text-canvas" : "text-sage"
+                  isActive ? "text-canvas" : "text-gold-deep"
                 }`}
               >
                 {isActive ? "Selected" : "Select →"}

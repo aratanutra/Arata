@@ -9,7 +9,7 @@
 html,
 body {
   background: #ffffff;
-  color: #1d1d1f;
+  color: #17203d;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv11", "ss03", "ss04";
@@ -20,8 +20,8 @@ html {
 }
 
 ::selection {
-  background: rgba(45, 122, 91, 0.18);
-  color: #1d1d1f;
+  background: rgba(184, 147, 94, 0.28);
+  color: #17203d;
 }
 
 @layer components {
@@ -32,7 +32,7 @@ html {
     @apply mx-auto w-full max-w-5xl px-6 md:px-10;
   }
   .eyebrow {
-    @apply text-[11px] font-medium uppercase tracking-widest text-sage;
+    @apply text-[11px] font-medium uppercase tracking-widest text-gold-deep;
   }
   .label-caps {
     @apply text-[11px] font-medium uppercase tracking-widest text-muted;
@@ -56,16 +56,19 @@ html {
     @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-canvas transition-all duration-200 hover:bg-ink-soft hover:shadow-card-hover;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-6 py-3 text-sm font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-mist;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-6 py-3 text-sm font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-paper;
   }
   .btn-link {
-    @apply inline-flex items-center gap-1.5 text-sm font-medium text-sage transition-colors hover:text-sage-deep;
+    @apply inline-flex items-center gap-1.5 text-sm font-medium text-gold-deep transition-colors hover:text-gold;
   }
   .card {
     @apply rounded-2xl border border-hairline bg-canvas transition-all duration-300;
   }
   .card-soft {
-    @apply rounded-2xl bg-mist transition-all duration-300;
+    @apply rounded-2xl bg-paper transition-all duration-300;
+  }
+  .card-cream {
+    @apply rounded-2xl bg-cream transition-all duration-300;
   }
   .card-elevated {
     @apply rounded-3xl bg-canvas shadow-card transition-all duration-300 hover:shadow-card-hover;
@@ -82,14 +85,23 @@ html {
   .nav-link {
     @apply text-[13px] font-medium text-ink-soft transition-colors hover:text-ink;
   }
+  .wordmark-gold {
+    background: linear-gradient(135deg, #b8935e 0%, #d4b884 45%, #8b6e44 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .wordmark-magenta {
+    color: #b21d5e;
+  }
 }
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #d2d2d7 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, #e2dcc9 50%, transparent 100%);
 }
 
-/* Tabular numerics for stats */
 .tnum {
   font-variant-numeric: tabular-nums;
 }

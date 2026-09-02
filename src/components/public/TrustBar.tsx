@@ -6,15 +6,15 @@ import type { SiteContent } from "@/types/content";
 function Tick() {
   return (
     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="11" stroke="#2D7A5B" strokeWidth="1.2" />
-      <path d="M7.5 12.4l3 3 6-6" stroke="#2D7A5B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="12" r="11" stroke="#B8935E" strokeWidth="1.2" />
+      <path d="M7.5 12.4l3 3 6-6" stroke="#B8935E" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 export default function TrustBar({ data }: { data: SiteContent["trustBar"] }) {
   return (
-    <section className="relative border-y border-hairline bg-mist">
+    <section className="relative border-y border-hairline bg-paper">
       <div className="container-app grid grid-cols-2 gap-x-6 gap-y-8 py-10 md:grid-cols-3 lg:grid-cols-5">
         {data.badges.map((badge, i) => (
           <motion.div

@@ -27,7 +27,7 @@ export default function Prescription({ data }: { data: SiteContent["prescription
                 transition={{ duration: 0.4, delay: i * 0.04 }}
                 className="flex items-center gap-3 text-[15px] text-ink"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-sage" />
+                <span className="h-1.5 w-1.5 rounded-full bg-gold" />
                 {s}
               </motion.li>
             ))}
@@ -49,7 +49,7 @@ export default function Prescription({ data }: { data: SiteContent["prescription
             <div className="relative">
               <div className="flex items-end justify-between">
                 <div>
-                  <div className="text-5xl font-semibold leading-none text-sage">{data.rxCard.header}</div>
+                  <div className="text-5xl font-semibold leading-none text-gold-deep">{data.rxCard.header}</div>
                   <div className="mt-1 text-[10px] font-medium uppercase tracking-widest text-muted">
                     ARATA Nutraceuticals
                   </div>
@@ -64,7 +64,7 @@ export default function Prescription({ data }: { data: SiteContent["prescription
               <ul className="mt-6 space-y-2 text-[15px] leading-snug text-ink">
                 {data.rxCard.lines.map((line, i) => (
                   <li key={i} className="flex gap-3">
-                    <span className="tnum text-[11px] font-semibold tracking-widest text-sage">
+                    <span className="tnum text-[11px] font-semibold tracking-widest text-gold-deep">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span>{line}</span>
