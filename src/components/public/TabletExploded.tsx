@@ -33,6 +33,20 @@ const BODY_LABELS: Record<string, string> = {
   shield: "Immune system"
 };
 
+/** Short display name for the disc label under each slice. */
+const SHORT_NAMES: Record<string, string> = {
+  "Co-enzyme Q10": "CoQ10",
+  "Trans-Resveratrol": "Resveratrol",
+  "Alpha-Lipoic Acid": "ALA",
+  "Vitamin C (L-Ascorbic Acid)": "Vitamin C",
+  "Vitamin E (Tocotrienols)": "Vitamin E",
+  Lycopene: "Lycopene",
+  Astaxanthin: "Astaxanthin",
+  "Vitamin D3 (Cholecalciferol)": "Vitamin D3",
+  "Vitamin K2-7 (MK-7)": "Vitamin K2",
+  "Selenium (Sodium selenite)": "Selenium"
+};
+
 /* ---------- Body-part anatomical icons ---------- */
 
 const BODY_ICONS: Record<string, JSX.Element> = {
@@ -207,15 +221,15 @@ function BodyGraphic({ part }: { part: string }) {
 
 /* ---------- Tablet visualisation ---------- */
 
-const DISC_W = 46;
+const DISC_W = 54;
 const DISC_H = 96;
-const GAP = 12;
-const STAGE_W = 700;
-const STAGE_H = 260;
-const CAPSULE_W = 420;
+const GAP = 10;
+const STAGE_W = 760;
+const STAGE_H = 280;
+const CAPSULE_W = 480;
 const CAPSULE_H = 96;
-const CAPSULE_Y = STAGE_H / 2 - CAPSULE_H / 2;
-const DISC_Y = STAGE_H / 2;
+const CAPSULE_Y = STAGE_H / 2 - CAPSULE_H / 2 - 10;
+const DISC_Y = STAGE_H / 2 - 10;
 
 export default function TabletExploded({ data }: Props) {
   const items = data.items.slice(0, 10);
@@ -333,10 +347,13 @@ export default function TabletExploded({ data }: Props) {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
-                {items.map((_ing, i) => {
+                {items.map((ing, i) => {
                   const cx = rowStartX + i * (DISC_W + GAP) + DISC_W / 2;
                   const selected = selectedIdx === i;
                   const dimmed = selectedIdx !== null && !selected;
+                  const shortName = SHORT_NAMES[ing.name] ?? ing.name;
+                  // scale font down for longer names so they fit under the disc
+                  const nameFontSize = shortName.length > 9 ? 8 : shortName.length > 6 ? 9 : 10;
                   return (
                     <motion.g
                       key={i}
@@ -381,13 +398,12 @@ export default function TabletExploded({ data }: Props) {
                         x={cx}
                         y={DISC_Y + DISC_H / 2 + 22}
                         textAnchor="middle"
-                        fill={selected ? "#17203D" : "#6B7085"}
+                        fill={selected ? "#17203D" : "#3C3C43"}
                         fontFamily="Inter, sans-serif"
-                        fontSize="11"
-                        fontWeight="700"
-                        letterSpacing="1"
+                        fontSize={nameFontSize}
+                        fontWeight={selected ? 700 : 600}
                       >
-                        {String(i + 1).padStart(2, "0")}
+                        {shortName}
                       </text>
                     </motion.g>
                   );
