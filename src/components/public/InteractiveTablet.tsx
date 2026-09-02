@@ -18,10 +18,11 @@ export default function InteractiveTablet({ data }: Props) {
           className="max-w-2xl"
         >
           <span className="eyebrow">Composition</span>
-          <h2 className="mt-4 heading-md">Open the tablet. See every ingredient.</h2>
+          <h2 className="mt-4 heading-md">One tablet. Ten actives in orbit.</h2>
           <p className="mt-4 body-base">
-            The AETERNYX™ tablet splits into ten discs. Each disc is a single active. Tap one to read
-            the dose and see where in the body it goes to work.
+            The AETERNYX™ tablet sits at the centre. Its ten actives orbit around it. The card
+            below cycles through each one automatically — tap any disc to hold it and read the dose,
+            mechanism, and the body system it acts on.
           </p>
         </motion.div>
 
