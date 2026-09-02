@@ -6,6 +6,7 @@ import Nav from "@/components/public/Nav";
 import Newsletter from "@/components/public/Newsletter";
 import Footer from "@/components/public/Footer";
 import ContactDialog from "@/components/public/ContactDialog";
+import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 
 export const metadata: Metadata = {
   title: "Journal · Arata Nutraceuticals",
@@ -73,6 +74,7 @@ export default async function JournalIndex() {
       <Newsletter data={content.newsletter} />
       <Footer brand={content.brand} footer={content.footer} />
       <ContactDialog contactForm={content.contactForm} />
+      <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
     </main>
   );
 }

@@ -71,10 +71,15 @@ export default function Nav({ brand, nav }: Props) {
       }`}
     >
       <div className="container-app flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-ink text-canvas text-sm font-semibold">
-            {brand.logoMark}
-          </span>
+        <Link href="/" className="flex items-center gap-2.5 group" aria-label={`${brand.company} home`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={brand.logoMarkAsset}
+            alt=""
+            className="h-9 w-9 object-contain"
+            width={36}
+            height={36}
+          />
           <span className="text-[15px] font-semibold tracking-tight text-ink">
             {brand.company}
           </span>

@@ -3,6 +3,7 @@ import { readContent } from "@/lib/content";
 import Nav from "@/components/public/Nav";
 import Footer from "@/components/public/Footer";
 import ContactDialog from "@/components/public/ContactDialog";
+import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import DossierPicker from "@/components/public/DossierPicker";
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default async function DossierPage() {
 
       <Footer brand={content.brand} footer={content.footer} />
       <ContactDialog contactForm={content.contactForm} />
+      <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
     </main>
   );
 }

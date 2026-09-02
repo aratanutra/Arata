@@ -9,6 +9,7 @@ import Blog from "@/components/public/Blog";
 import Newsletter from "@/components/public/Newsletter";
 import Footer from "@/components/public/Footer";
 import ContactDialog from "@/components/public/ContactDialog";
+import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 
 export default async function HomePage() {
   const content = await readContent();
@@ -24,6 +25,7 @@ export default async function HomePage() {
       <Newsletter data={content.newsletter} />
       <Footer brand={content.brand} footer={content.footer} />
       <ContactDialog contactForm={content.contactForm} />
+      <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
     </main>
   );
 }

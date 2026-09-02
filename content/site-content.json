@@ -1,25 +1,31 @@
 {
   "brand": {
-    "name": "Aeternyx",
+    "name": "AETERNYX",
     "trademark": "®",
+    "taglineTrademark": "™",
     "company": "Arata Nutraceuticals",
     "tagline": "Cellular Intelligence",
     "price": "₹2,500",
     "priceCadence": "/ month",
+    "logoAsset": "/brand/arata-logo.png",
+    "logoMarkAsset": "/brand/arata-mark.png",
     "logoMark": "A",
     "email": "aratanutra@gmail.com",
+    "phone": "+91 99599 93973",
+    "whatsappNumber": "919959993973",
+    "whatsappGreeting": "Hi, I would like to know more about AETERNYX®.",
     "domain": "aratanutra.com",
     "fssaiLicense": "13626999000569",
     "fssaiManufacturerLicense": "10020045000187",
     "fssaiCategory": "Nutraceutical",
-    "manufacturer": "SunReem Lifesciences Pvt. Ltd., R.S. No. 224, Mangadam Road, Vadamangalam, Villianur Commune, Puducherry 605102",
+    "manufacturer": "SunBeam Lifesciences Pvt. Ltd., R.S. No. 224, Mangadam Road, Vadamangalam, Villianur Commune, Puducherry 605102",
     "marketer": "Arata Nutraceuticals, Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana",
     "vegetarian": true
   },
   "nav": {
     "links": [
       { "label": "Home", "href": "/" },
-      { "label": "Aeternyx®", "href": "/aeternyx" },
+      { "label": "AETERNYX®", "href": "/aeternyx" },
       { "label": "About Us", "href": "/about" },
       { "label": "Contact", "href": "#contact" }
     ],
@@ -31,7 +37,7 @@
     "title": "Clinical longevity, engineered.",
     "tagline": "Cellular Intelligence",
     "subtitle": "A physician-led laboratory in Hyderabad building India's most clinically literate nutraceutical portfolio. Every molecule earned through randomised trials. Every dose matched to the trial that proved it.",
-    "primaryCta": { "label": "Explore Aeternyx®", "href": "/aeternyx" },
+    "primaryCta": { "label": "Explore AETERNYX®", "href": "/aeternyx" },
     "secondaryCta": { "label": "Our standard", "href": "/about" }
   },
   "trustBar": {
@@ -45,7 +51,7 @@
   },
   "homeFeatured": {
     "eyebrow": "Our first protocol",
-    "title": "Aeternyx",
+    "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
     "description": "One tablet. Ten bioactives. Five cellular ageing pathways. The complete physician-formulated nutraceutical for adults over 30.",
     "highlights": [
@@ -70,7 +76,7 @@
   "product": {
     "eyebrow": "The Daily Protocol",
     "title": "One tablet. The architecture of cellular longevity.",
-    "description": "Aeternyx® is a clinical-grade nutraceutical that converges ten evidence-graded molecules across the five hallmarks of cellular ageing: mitochondrial decline, oxidative stress, inflammaging, vascular calcium handling, and micronutrient adequacy. Each dose is mapped to a published human RCT.",
+    "description": "AETERNYX® is a clinical-grade nutraceutical that converges ten evidence-graded molecules across the five hallmarks of cellular ageing: mitochondrial decline, oxidative stress, inflammaging, vascular calcium handling, and micronutrient adequacy. Each dose is mapped to a published human RCT.",
     "stats": [
       { "value": "10", "label": "Bioactive Ingredients" },
       { "value": "5", "label": "Ageing Pathways" },
@@ -80,7 +86,7 @@
     "price": "₹2,500",
     "cadence": "per month · 1×10 tablets per strip · 30-day supply",
     "primaryCta": { "label": "Start Subscription", "href": "/#newsletter" },
-    "secondaryCta": { "label": "Speak to a Physician", "href": "#contact" },
+    "secondaryCta": { "label": "Read the Science", "href": "#science" },
     "image": "",
     "packForm": "1×10 tablet blister strip",
     "packLabel": "300 GSM ITC Saffire board carton with matt finish and spot UV"
@@ -145,7 +151,7 @@
   "science": {
     "eyebrow": "Mechanism",
     "title": "Five cellular ageing pathways. One convergent nutraceutical.",
-    "subtitle": "Cellular ageing is not one process. It is the cumulative drift of mitochondria, redox balance, signalling, calcium handling, and micronutrient status. Aeternyx® supports all five.",
+    "subtitle": "Cellular ageing is not one process. It is the cumulative drift of mitochondria, redox balance, signalling, calcium handling, and micronutrient status. AETERNYX® supports all five.",
     "pathways": [
       {
         "name": "Mitochondrial Decline",
@@ -185,14 +191,14 @@
   },
   "philosophy": {
     "eyebrow": "Founding Principle",
-    "quote": "We did not build Aeternyx to be a supplement. We built it to be the molecular floor on which a longer life is constructed. Every dose mapped to a randomised trial, every molecule earning its place. Cellular intelligence is not a marketing phrase. It is the standard.",
+    "quote": "We did not build AETERNYX to be a supplement. We built it to be the molecular floor on which a longer life is constructed. Every dose mapped to a randomised trial, every molecule earning its place. Cellular Intelligence is not a marketing phrase. It is the standard.",
     "founderName": "Dr. Rahul Gaddipati",
     "founderTitle": "Founder and Chief Formulator, Arata Nutraceuticals"
   },
   "prescription": {
     "eyebrow": "For Physicians",
     "title": "A nutraceutical your patients can take alongside their prescription.",
-    "subtitle": "Aeternyx® is built to integrate with mainstream clinical practice. No proprietary blends, no megadosing, no interactions outside the published literature. Specialists who recommend Aeternyx® include:",
+    "subtitle": "AETERNYX® is built to integrate with mainstream clinical practice. No proprietary blends, no megadosing, no interactions outside the published literature. Specialists who recommend AETERNYX® include:",
     "specialties": [
       "Cardiology",
       "Endocrinology",
@@ -208,7 +214,7 @@
       "patient": "Mr. / Mrs. _________________",
       "date": "Date: __ / __ / 20__",
       "lines": [
-        "Aeternyx®, 1 tablet",
+        "AETERNYX®, 1 tablet",
         "Once daily, with morning meal",
         "Continue for 90 days, review thereafter"
       ],
@@ -226,7 +232,7 @@
         "image": "/seed/blog-1.svg",
         "slug": "coq10-dosing",
         "published": true,
-        "body": "Most CoQ10 supplements in the Indian market contain 30mg or less. This is not a clinical dose. It is a marketing dose.\n\nThe Q-SYMBIO trial (Mortensen et al., 2014) randomised 420 patients with chronic heart failure to 300mg of CoQ10 daily or placebo and reported a 42 percent reduction in all-cause mortality at two years. The follow-up KiSel-10 trial in healthy elderly Swedes used 200mg of CoQ10 plus 200mcg of selenium daily for four years and reported a 53 percent reduction in cardiovascular mortality.\n\nAt 100mg, Aeternyx® sits at the floor of clinical effect: the dose at which serum CoQ10 reliably rises above the deficiency threshold in adults over 40. It is paired with 40mcg of selenium to complete the KiSel-10 synergy. Anything less is below the threshold at which the molecule does anything measurable in the literature."
+        "body": "Most CoQ10 supplements in the Indian market contain 30mg or less. This is not a clinical dose. It is a marketing dose.\n\nThe Q-SYMBIO trial (Mortensen et al., 2014) randomised 420 patients with chronic heart failure to 300mg of CoQ10 daily or placebo and reported a 42 percent reduction in all-cause mortality at two years. The follow-up KiSel-10 trial in healthy elderly Swedes used 200mg of CoQ10 plus 200mcg of selenium daily for four years and reported a 53 percent reduction in cardiovascular mortality.\n\nAt 100mg, AETERNYX® sits at the floor of clinical effect: the dose at which serum CoQ10 reliably rises above the deficiency threshold in adults over 40. It is paired with 40mcg of selenium to complete the KiSel-10 synergy. Anything less is below the threshold at which the molecule does anything measurable in the literature."
       },
       {
         "id": "p2",
@@ -235,7 +241,7 @@
         "image": "/seed/blog-2.svg",
         "slug": "d3-k2-paradox",
         "published": true,
-        "body": "Vitamin D3 raises serum calcium. That calcium has to go somewhere. In a K2-replete body, osteocalcin (a K2-dependent protein) carboxylates and routes the calcium into bone tissue, where it is wanted. In a K2-deficient body, that same calcium can drift into arterial walls, where it can become a substrate for atherosclerotic plaque calcification.\n\nThis is the calcium paradox, and it is the reason high-dose D3 supplementation without K2 has been associated with elevated coronary calcification scores in several observational cohorts.\n\nAeternyx® pairs every 650 IU of D3 with 45mcg of K2-7 (the MK-7 isoform, which has a 72-hour half-life versus MK-4's 8 hours). The molecules are not interchangeable. They are partners, and we will not ship D3 without K2."
+        "body": "Vitamin D3 raises serum calcium. That calcium has to go somewhere. In a K2-replete body, osteocalcin (a K2-dependent protein) carboxylates and routes the calcium into bone tissue, where it is wanted. In a K2-deficient body, that same calcium can drift into arterial walls, where it can become a substrate for atherosclerotic plaque calcification.\n\nThis is the calcium paradox, and it is the reason high-dose D3 supplementation without K2 has been associated with elevated coronary calcification scores in several observational cohorts.\n\nAETERNYX® pairs every 650 IU of D3 with 45mcg of K2-7 (the MK-7 isoform, which has a 72-hour half-life versus MK-4's 8 hours). The molecules are not interchangeable. They are partners, and we will not ship D3 without K2."
       },
       {
         "id": "p3",
@@ -244,13 +250,13 @@
         "image": "/seed/blog-3.svg",
         "slug": "astaxanthin-bbb",
         "published": true,
-        "body": "Astaxanthin is the carotenoid that gives salmon and flamingos their colour. It is also the only carotenoid known to cross both the blood-brain barrier and the blood-retina barrier in measurable concentrations.\n\nIts antioxidant capacity is approximately 6,000 times that of Vitamin C and 100 times that of Vitamin E in vitro. It also modulates NF-κB signalling and stabilises the mitochondrial inner membrane against oxidative leak.\n\nIn the cognition literature, 4 to 12mg of astaxanthin per day has been associated with improvements in working memory, reaction time, and macular pigment optical density. Aeternyx® includes 4mg, the floor of efficacy in those trials, dosed for daily sustainable use rather than acute studies."
+        "body": "Astaxanthin is the carotenoid that gives salmon and flamingos their colour. It is also the only carotenoid known to cross both the blood-brain barrier and the blood-retina barrier in measurable concentrations.\n\nIts antioxidant capacity is approximately 6,000 times that of Vitamin C and 100 times that of Vitamin E in vitro. It also modulates NF-κB signalling and stabilises the mitochondrial inner membrane against oxidative leak.\n\nIn the cognition literature, 4 to 12mg of astaxanthin per day has been associated with improvements in working memory, reaction time, and macular pigment optical density. AETERNYX® includes 4mg, the floor of efficacy in those trials, dosed for daily sustainable use rather than acute studies."
       }
     ]
   },
   "newsletter": {
     "eyebrow": "Reserve",
-    "title": "Join the Aeternyx® protocol.",
+    "title": "Join the AETERNYX® protocol.",
     "subtitle": "Limited monthly batches. Early access for physicians and founding subscribers.",
     "placeholder": "your@email.com",
     "buttonLabel": "Request Access",
@@ -259,7 +265,7 @@
   "contactForm": {
     "triggerLabel": "Contact",
     "title": "Get in touch",
-    "description": "Tell us about your practice, your patients, or your interest in Aeternyx®. We respond within two business days.",
+    "description": "Tell us about your practice, your patients, or your interest in AETERNYX®. We respond within two business days.",
     "endpointUrl": "",
     "fallbackEmail": "aratanutra@gmail.com",
     "types": [
@@ -272,7 +278,7 @@
   "dossier": {
     "eyebrow": "For Physicians",
     "title": "Clinical Dossier",
-    "subtitle": "Select your specialty to download the Aeternyx® clinical brief tailored to your practice. Each dossier summarises the ingredient evidence most relevant to your patient population.",
+    "subtitle": "Select your specialty to download the AETERNYX® clinical brief tailored to your practice. Each dossier summarises the ingredient evidence most relevant to your patient population.",
     "footnote": "Dossiers are intended for healthcare professionals only. They are not advertising material and are not intended for direct patient distribution.",
     "specialties": [
       { "name": "Cardiology", "summary": "CoQ10, K2-7, Lycopene, and Tocotrienols cardiovascular evidence pack.", "url": "" },
@@ -287,7 +293,7 @@
   },
   "aeternyxPage": {
     "eyebrow": "The Protocol",
-    "title": "Aeternyx",
+    "title": "AETERNYX",
     "tagline": "Cellular Intelligence",
     "subtitle": "A single tablet. Ten bioactives. Five cellular ageing pathways. The complete physician-formulated nutraceutical, dosed and audited to the standard of the published literature.",
     "primaryCta": { "label": "Reserve", "href": "#newsletter" },
@@ -297,14 +303,14 @@
     "hero": {
       "eyebrow": "About Us",
       "title": "We are Arata Nutraceuticals.",
-      "subtitle": "A physician-led longevity laboratory based in Hyderabad, building India's most clinically literate nutraceutical portfolio. Aeternyx® is our founding formulation."
+      "subtitle": "A physician-led longevity laboratory based in Hyderabad, building India's most clinically literate nutraceutical portfolio. AETERNYX® is our founding formulation."
     },
     "story": {
       "title": "Why we exist",
       "paragraphs": [
         "Arata Nutraceuticals was founded on a single conviction: the supplement industry in India had drifted dangerously far from the clinical literature. Bottles claimed everything, trials supported almost nothing. Doses were marketing artefacts. Excipients outweighed actives.",
         "We work backwards from the randomised trial. Every molecule in every Arata product is included because a peer-reviewed human RCT proved it does something measurable. Every dose matches the trial that earned it. Anything that cannot survive that test is not in the tablet.",
-        "Aeternyx® is the first of a planned portfolio of physician-formulated nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
+        "AETERNYX® is the first of a planned portfolio of physician-formulated nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
       ]
     },
     "values": {
@@ -318,8 +324,8 @@
     },
     "closingCta": {
       "eyebrow": "Begin",
-      "title": "Aeternyx® is the first protocol. Start there.",
-      "primaryCta": { "label": "Explore Aeternyx®", "href": "/aeternyx" },
+      "title": "AETERNYX® is the first protocol. Start there.",
+      "primaryCta": { "label": "Explore AETERNYX®", "href": "/aeternyx" },
       "secondaryCta": { "label": "Talk to us", "href": "#contact" }
     }
   },
@@ -327,7 +333,7 @@
     "tagline": "Cellular Intelligence, daily.",
     "columns": [
       {
-        "title": "Aeternyx®",
+        "title": "AETERNYX®",
         "links": [
           { "label": "Overview", "href": "/aeternyx" },
           { "label": "Ingredients", "href": "/aeternyx#ingredients" },
@@ -361,8 +367,8 @@
       }
     ],
     "address": "Arata Nutraceuticals · Hyderabad, India",
-    "rights": "© 2026 Arata Nutraceuticals. Aeternyx® is a registered trademark.",
+    "rights": "© 2026 Arata Nutraceuticals. AETERNYX® is a registered trademark.",
     "fssaiText": "FSSAI Lic. No.",
-    "complianceDisclaimer": "Aeternyx® is a nutraceutical food supplement classified under FSSAI (Health Supplements, Nutraceuticals, FSDU, FSMP, and Prebiotic and Probiotic Food) Regulations, 2022. It is not a drug. It is not intended to diagnose, treat, cure, or prevent any disease. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry, and dark place. Protect from light and moisture. Keep out of reach of children."
+    "complianceDisclaimer": "AETERNYX® is a nutraceutical food supplement classified under FSSAI (Health Supplements, Nutraceuticals, FSDU, FSMP, and Prebiotic and Probiotic Food) Regulations, 2022. It is not a drug. It is not intended to diagnose, treat, cure, or prevent any disease. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry, and dark place. Protect from light and moisture. Keep out of reach of children."
   }
 }
