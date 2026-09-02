@@ -77,7 +77,7 @@ export default function Prescription({ data }: { data: SiteContent["prescription
                 <div className="text-right">
                   <div className="text-[14px] font-semibold text-ink">{data.rxCard.signature}</div>
                   <div className="mt-1 text-[10px] font-medium uppercase tracking-widest text-muted">
-                    Aeternyx™ Prescriber Programme
+                    AETERNYX® Prescriber Programme
                   </div>
                 </div>
               </div>

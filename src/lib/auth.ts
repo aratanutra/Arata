@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
         const passwordMatch = credentials.password === adminPassword;
 
         if (emailMatch && passwordMatch) {
-          return { id: "admin", name: "Aeternyx Admin", email: adminEmail };
+          return { id: "admin", name: "AETERNYX Admin", email: adminEmail };
         }
         return null;
       }

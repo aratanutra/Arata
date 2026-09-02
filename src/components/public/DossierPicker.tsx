@@ -77,7 +77,7 @@ export default function DossierPicker({ specialties, fallbackEmail, footnote }: 
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="mt-8 card-elevated p-8 md:p-12"
           >
-            <span className="eyebrow">Aeternyx™ Clinical Brief</span>
+            <span className="eyebrow">AETERNYX® Clinical Brief</span>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-4xl">
               {selected.name} dossier
             </h2>
@@ -100,7 +100,7 @@ export default function DossierPicker({ specialties, fallbackEmail, footnote }: 
                   href={`mailto:${fallbackEmail}?subject=${encodeURIComponent(
                     `[Dossier request] ${selected.name}`
                   )}&body=${encodeURIComponent(
-                    `Please send the Aeternyx clinical dossier for: ${selected.name}.\n\nName:\nClinic / Hospital:\nMCI / state registration:`
+                    `Please send the AETERNYX® clinical dossier for: ${selected.name}.\n\nName:\nClinic / Hospital:\nMCI / state registration:`
                   )}`}
                   className="btn-primary"
                 >

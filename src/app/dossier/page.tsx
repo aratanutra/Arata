@@ -9,7 +9,7 @@ import DossierPicker from "@/components/public/DossierPicker";
 export const metadata: Metadata = {
   title: "Clinical Dossier · Arata Nutraceuticals",
   description:
-    "Download the Aeternyx™ clinical dossier tailored to your specialty. Intended for healthcare professionals."
+    "Download the AETERNYX® clinical dossier tailored to your specialty. Intended for healthcare professionals."
 };
 
 export default async function DossierPage() {
