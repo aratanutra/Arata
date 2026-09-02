@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import type { NavLink, SiteContent } from "@/types/content";
+import { asset } from "@/lib/asset";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -74,7 +75,7 @@ export default function Nav({ brand, nav }: Props) {
         <Link href="/" className="flex items-center gap-2.5 group" aria-label={`${brand.company} home`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={brand.logoMarkAsset}
+            src={asset(brand.logoMarkAsset)}
             alt=""
             className="h-9 w-9 object-contain"
             width={36}

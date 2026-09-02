@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { SiteContent } from "@/types/content";
+import { asset } from "@/lib/asset";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -71,12 +72,12 @@ export default function Footer({ brand, footer }: Props) {
   return (
     <footer className="relative border-t border-hairline bg-paper py-20">
       <div className="container-app">
-        <div className="grid gap-12 md:grid-cols-4">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1.4fr]">
           <div>
             <Link href="/" className="inline-flex items-start" aria-label={`${brand.company} home`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={brand.logoAsset}
+                src={asset(brand.logoAsset)}
                 alt={brand.company}
                 className="h-16 w-auto object-contain"
               />

@@ -7,8 +7,8 @@
     "tagline": "Cellular Intelligence",
     "price": "₹2,500",
     "priceCadence": "/ month",
-    "logoAsset": "/brand/arata-logo.png",
-    "logoMarkAsset": "/brand/arata-mark.png",
+    "logoAsset": "/brand/arata-logo-navy.png",
+    "logoMarkAsset": "/brand/arata-mark-navy.png",
     "logoMark": "A",
     "email": "aratanutra@gmail.com",
     "phone": "+91 99599 93973",
@@ -342,19 +342,9 @@
         ]
       },
       {
-        "title": "For Physicians",
-        "links": [
-          { "label": "Prescriber Programme", "href": "/aeternyx#prescription" },
-          { "label": "Clinical Dossier", "href": "/dossier" },
-          { "label": "Sample Request", "href": "#contact" }
-        ]
-      },
-      {
         "title": "Company",
         "links": [
-          { "label": "About Us", "href": "/about" },
-          { "label": "Journal", "href": "/journal" },
-          { "label": "Press Kit", "href": "#contact" }
+          { "label": "About Us", "href": "/about" }
         ]
       },
       {
