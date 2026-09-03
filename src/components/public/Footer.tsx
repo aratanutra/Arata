@@ -170,6 +170,57 @@ export default function Footer({ brand, footer }: Props) {
           </div>
         </div>
 
+        {/* Grievance officer + Order policies */}
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl border border-hairline bg-canvas/70 p-6">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+              {footer.grievanceOfficer.label}
+            </div>
+            <p className="mt-2 text-[13px] font-semibold tracking-tight text-ink">
+              {footer.grievanceOfficer.name}
+            </p>
+            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-ink-soft">
+              <a href={`mailto:${footer.grievanceOfficer.email}`} className="hover:text-ink">
+                {footer.grievanceOfficer.email}
+              </a>
+              <a
+                href={`tel:${footer.grievanceOfficer.phone.replace(/\s+/g, "")}`}
+                className="tnum hover:text-ink"
+              >
+                {footer.grievanceOfficer.phone}
+              </a>
+            </div>
+            <p className="mt-3 text-[12px] leading-relaxed text-muted">
+              {footer.grievanceOfficer.note}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-hairline bg-canvas/70 p-6">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+              {footer.policies.label}
+            </div>
+            <dl className="mt-3 space-y-3 text-[13px] leading-relaxed text-ink-soft">
+              <div>
+                <dt className="text-[11px] font-semibold uppercase tracking-widest text-ink">
+                  Returns
+                </dt>
+                <dd className="mt-1">{footer.policies.returns}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] font-semibold uppercase tracking-widest text-ink">
+                  Cancellation
+                </dt>
+                <dd className="mt-1">{footer.policies.cancellation}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] font-semibold uppercase tracking-widest text-ink">
+                  Delivery
+                </dt>
+                <dd className="mt-1">{footer.policies.delivery}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
         <div className="mt-10 flex flex-col gap-3 border-t border-hairline pt-8 text-muted md:flex-row md:items-center md:justify-between">
           <p className="text-[11px] uppercase tracking-widest">{footer.address}</p>
           <p className="text-[12px]">{footer.rights}</p>
