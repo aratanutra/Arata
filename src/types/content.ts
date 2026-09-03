@@ -179,5 +179,18 @@ export type SiteContent = {
     rights: string;
     fssaiText: string;
     complianceDisclaimer: string;
+    grievanceOfficer: {
+      label: string;
+      name: string;
+      email: string;
+      phone: string;
+      note: string;
+    };
+    policies: {
+      label: string;
+      returns: string;
+      cancellation: string;
+      delivery: string;
+    };
   };
 };

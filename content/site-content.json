@@ -318,8 +318,21 @@
       }
     ],
     "address": "Arata Nutraceuticals · Hyderabad, India",
-    "rights": "© 2026 Arata Nutraceuticals. AETERNYX™ is a registered trademark.",
+    "rights": "© 2026 Arata Nutraceuticals. AETERNYX™ is a trademark of Arata Nutraceuticals.",
     "fssaiText": "FSSAI Lic. No.",
-    "complianceDisclaimer": "AETERNYX™ is a nutraceutical food supplement classified under FSSAI (Health Supplements, Nutraceuticals, FSDU, FSMP, and Prebiotic and Probiotic Food) Regulations, 2022. It is not a drug. It is not intended to diagnose, treat, cure, or prevent any disease. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry, and dark place. Protect from light and moisture. Keep out of reach of children."
+    "complianceDisclaimer": "AETERNYX™ is a nutraceutical food supplement classified under FSSAI (Health Supplements, Nutraceuticals, FSDU, FSMP, and Prebiotic and Probiotic Food) Regulations, 2022. It is not a drug. It is not intended to diagnose, treat, cure, or prevent any disease. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry, and dark place. Protect from light and moisture. Keep out of reach of children.",
+    "grievanceOfficer": {
+      "label": "Grievance Officer",
+      "name": "Dr. Rahul Gaddipati",
+      "email": "aratanutra@gmail.com",
+      "phone": "+91 99599 93973",
+      "note": "Acknowledgement within 48 hours. Resolution within 30 days, in line with the Consumer Protection Act, 2019."
+    },
+    "policies": {
+      "label": "Order Policies",
+      "returns": "Damaged strip or wrong batch: message us on WhatsApp within 7 days of delivery, with photos of the strip and outer carton. We will arrange a replacement or full refund.",
+      "cancellation": "Cancel any order before dispatch by messaging us on WhatsApp. Once dispatched, cancellation is not possible — the returns process above applies.",
+      "delivery": "Shipped across India via courier within 5 business days of order confirmation. Delivery timelines vary by location. Tracking is shared on WhatsApp."
+    }
   }
 }

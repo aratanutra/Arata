@@ -1034,6 +1034,69 @@ function FooterCard({ content, update }: CardProps) {
         rows={5}
       />
 
+      <div className="space-y-4 rounded-xl border border-hairline p-5">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
+          Grievance Officer (Consumer Protection Act, 2019)
+        </p>
+        <div className="grid gap-5 md:grid-cols-2">
+          <TextField
+            label="Block Label"
+            value={v.grievanceOfficer.label}
+            onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, label: x } })}
+          />
+          <TextField
+            label="Officer Name"
+            value={v.grievanceOfficer.name}
+            onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, name: x } })}
+          />
+          <TextField
+            label="Email"
+            value={v.grievanceOfficer.email}
+            onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, email: x } })}
+          />
+          <TextField
+            label="Phone"
+            value={v.grievanceOfficer.phone}
+            onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, phone: x } })}
+          />
+        </div>
+        <TextField
+          label="Acknowledgement / resolution note"
+          value={v.grievanceOfficer.note}
+          onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, note: x } })}
+          multiline
+        />
+      </div>
+
+      <div className="space-y-4 rounded-xl border border-hairline p-5">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
+          Order Policies (Returns · Cancellation · Delivery)
+        </p>
+        <TextField
+          label="Block Label"
+          value={v.policies.label}
+          onChange={(x) => set({ policies: { ...v.policies, label: x } })}
+        />
+        <TextField
+          label="Returns policy"
+          value={v.policies.returns}
+          onChange={(x) => set({ policies: { ...v.policies, returns: x } })}
+          multiline
+        />
+        <TextField
+          label="Cancellation policy"
+          value={v.policies.cancellation}
+          onChange={(x) => set({ policies: { ...v.policies, cancellation: x } })}
+          multiline
+        />
+        <TextField
+          label="Delivery policy"
+          value={v.policies.delivery}
+          onChange={(x) => set({ policies: { ...v.policies, delivery: x } })}
+          multiline
+        />
+      </div>
+
       {v.columns.map((col, ci) => (
         <div key={ci} className="rounded-xl border border-hairline p-5 space-y-3">
           <div className="flex items-center justify-between">
