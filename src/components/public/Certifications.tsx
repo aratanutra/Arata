@@ -2,116 +2,29 @@
 
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
+import { asset } from "@/lib/asset";
 
-/* ---------- Logo marks ---------- */
+/* ---------- Logo marks (official brand assets) ---------- */
 
-function FssaiMark() {
-  // Stylised approximation of the regulatory FSSAI wordmark:
-  // navy "fssai" lettering on a cream chip with the F terminal check.
+function LogoChip({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-hairline bg-canvas">
-      <svg viewBox="0 0 96 48" className="h-9 w-auto" aria-label="FSSAI">
-        <g fill="#0E3D8F">
-          <path d="M8 12h14v6H14v6h6v6h-6v10H8V12Z" />
-          <path d="M30 34c0 4 3 6 8 6 4 0 7-2 7-5 0-3-3-4-8-5-7-2-11-4-11-9 0-6 5-9 12-9 5 0 10 2 12 6l-6 3c-1-2-3-4-6-4-3 0-6 1-6 4 0 2 3 3 8 4 8 2 12 5 12 10 0 6-5 10-13 10-8 0-13-3-15-9l6-2Z" />
-          <path d="M60 34c0 4 3 6 8 6 4 0 7-2 7-5 0-3-3-4-8-5-7-2-11-4-11-9 0-6 5-9 12-9 5 0 10 2 12 6l-6 3c-1-2-3-4-6-4-3 0-6 1-6 4 0 2 3 3 8 4 8 2 12 5 12 10 0 6-5 10-13 10-8 0-13-3-15-9l6-2Z" />
-        </g>
-        {/* small green check on the terminal to echo FSSAI's licensed mark */}
-        <path
-          d="M84 8l3 3 5-6"
-          stroke="#2E9A56"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-      </svg>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={asset(src)} alt={alt} className="h-11 w-11 object-contain" />
     </div>
   );
+}
+
+function FssaiMark() {
+  return <LogoChip src="/brand/certifications/fssai.png" alt="FSSAI Licensed" />;
 }
 
 function GmpMark() {
-  // Circular seal reminiscent of a WHO-GMP certification badge.
-  return (
-    <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-hairline bg-canvas">
-      <svg viewBox="0 0 64 64" className="h-12 w-12" aria-label="WHO-GMP + HACCP">
-        <defs>
-          <linearGradient id="gmpRing" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#B8935E" />
-            <stop offset="1" stopColor="#8B6E44" />
-          </linearGradient>
-        </defs>
-        <circle cx="32" cy="32" r="28" fill="none" stroke="url(#gmpRing)" strokeWidth="2" />
-        <circle cx="32" cy="32" r="22" fill="none" stroke="#8B6E44" strokeWidth="0.6" opacity="0.6" />
-        {/* laurel dots */}
-        <g fill="#8B6E44" opacity="0.6">
-          <circle cx="32" cy="6" r="1" />
-          <circle cx="58" cy="32" r="1" />
-          <circle cx="32" cy="58" r="1" />
-          <circle cx="6" cy="32" r="1" />
-        </g>
-        <text
-          x="32"
-          y="30"
-          textAnchor="middle"
-          fontSize="14"
-          fontWeight="800"
-          fill="#8B6E44"
-          fontFamily="ui-sans-serif, system-ui"
-          letterSpacing="0.5"
-        >
-          GMP
-        </text>
-        <text
-          x="32"
-          y="42"
-          textAnchor="middle"
-          fontSize="6.5"
-          fontWeight="700"
-          fill="#8B6E44"
-          fontFamily="ui-sans-serif, system-ui"
-          letterSpacing="2"
-        >
-          HACCP
-        </text>
-      </svg>
-    </div>
-  );
+  return <LogoChip src="/brand/certifications/gmp.png" alt="GMP Quality Certified" />;
 }
 
 function IsoMark() {
-  // Layered ISO badge with the three ISO clauses stacked.
-  return (
-    <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-hairline bg-canvas">
-      <svg viewBox="0 0 64 64" className="h-12 w-12" aria-label="ISO Certified">
-        <circle cx="32" cy="32" r="28" fill="none" stroke="#0E3D8F" strokeWidth="2" />
-        <circle cx="32" cy="32" r="22" fill="none" stroke="#0E3D8F" strokeWidth="0.6" opacity="0.4" />
-        <text
-          x="32"
-          y="24"
-          textAnchor="middle"
-          fontSize="10"
-          fontWeight="800"
-          fill="#0E3D8F"
-          fontFamily="ui-sans-serif, system-ui"
-          letterSpacing="1.5"
-        >
-          ISO
-        </text>
-        <g
-          fill="#0E3D8F"
-          fontSize="5.5"
-          fontWeight="700"
-          fontFamily="ui-sans-serif, system-ui"
-          textAnchor="middle"
-        >
-          <text x="32" y="34">9001</text>
-          <text x="32" y="42">14001</text>
-          <text x="32" y="50">22000</text>
-        </g>
-      </svg>
-    </div>
-  );
+  return <LogoChip src="/brand/certifications/iso.png" alt="ISO Certified" />;
 }
 
 function VegMark() {

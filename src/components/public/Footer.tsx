@@ -56,24 +56,13 @@ function VegLogo() {
 function FssaiBadge({ license }: { license: string }) {
   return (
     <div className="inline-flex items-center gap-3 rounded-xl border border-hairline bg-canvas px-4 py-3">
-      <div className="grid h-9 w-9 place-items-center rounded-lg bg-gold-soft">
-        <svg viewBox="0 0 24 24" className="h-5 w-5 text-gold-deep" fill="none" aria-hidden>
-          <path
-            d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6Z"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinejoin="round"
-            fill="none"
-          />
-          <path
-            d="M9 12l2.4 2.4L15.4 10"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          />
-        </svg>
+      <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg bg-canvas">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={asset("/brand/certifications/fssai.png")}
+          alt="FSSAI"
+          className="h-7 w-7 object-contain"
+        />
       </div>
       <div className="leading-tight">
         <div className="text-[10px] font-semibold uppercase tracking-widest text-ink">FSSAI</div>
