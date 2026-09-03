@@ -23,10 +23,10 @@ export default function HomeFeatured({ brand, data }: Props) {
         >
           <div className="grid gap-12 p-8 md:grid-cols-[1fr_1.1fr] md:gap-16 md:p-14 lg:p-20">
             <Carton3D
-              className="card-cream relative order-2 aspect-[4/5] w-full overflow-hidden md:order-1 md:aspect-auto md:h-full"
+              className="card-cream relative order-2 aspect-[4/5] w-full overflow-hidden md:aspect-auto md:h-full"
               showHint
             />
-            <div className="order-1 flex flex-col justify-center md:order-2">
+            <div className="order-1 flex flex-col justify-center">
               <span className="eyebrow">{data.eyebrow}</span>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink md:text-5xl">
                 <span className="wordmark-gold">{data.title}</span>
