@@ -7,14 +7,37 @@ import { Bounds, Center, Environment, OrbitControls, useGLTF } from "@react-thre
 import type { Group } from "three";
 import { asset } from "@/lib/asset";
 
-type Slide = { key: string; path: string; label: string };
+type Slide = {
+  key: string;
+  path: string;
+  label: string;
+  /** Resting rotation applied to the model group (radians). */
+  initialRotation: [number, number, number];
+};
 
 const SLIDES: Slide[] = [
-  { key: "carton", path: "/three/aeternyx-carton.glb", label: "Carton" },
-  { key: "blister", path: "/three/aeternyx-blister.glb", label: "Blister strip" }
+  {
+    key: "carton",
+    path: "/three/aeternyx-carton.glb",
+    label: "Carton",
+    initialRotation: [-0.05, -0.4, 0]
+  },
+  {
+    key: "blister",
+    path: "/three/aeternyx-blister.glb",
+    label: "Blister strip",
+    // Start showing the back (add π on Y to the default facing).
+    initialRotation: [-0.05, -0.4 + Math.PI, 0]
+  }
 ];
 
-function GLBModel({ path }: { path: string }) {
+function GLBModel({
+  path,
+  rotation
+}: {
+  path: string;
+  rotation: [number, number, number];
+}) {
   const groupRef = useRef<Group>(null);
   const { scene } = useGLTF(asset(path));
 
@@ -31,13 +54,21 @@ function GLBModel({ path }: { path: string }) {
   }, [scene]);
 
   return (
-    <group ref={groupRef} rotation={[-0.05, -0.4, 0]}>
+    <group ref={groupRef} rotation={rotation}>
       <primitive object={scene} />
     </group>
   );
 }
 
-function Scene({ path, enableZoom }: { path: string; enableZoom: boolean }) {
+function Scene({
+  path,
+  rotation,
+  enableZoom
+}: {
+  path: string;
+  rotation: [number, number, number];
+  enableZoom: boolean;
+}) {
   return (
     <>
       <ambientLight intensity={0.55} />
@@ -52,7 +83,7 @@ function Scene({ path, enableZoom }: { path: string; enableZoom: boolean }) {
       <Suspense fallback={null}>
         <Bounds key={path} fit clip observe margin={1.15}>
           <Center>
-            <GLBModel path={path} />
+            <GLBModel path={path} rotation={rotation} />
           </Center>
         </Bounds>
         <Environment preset="studio" />
@@ -71,7 +102,15 @@ function Scene({ path, enableZoom }: { path: string; enableZoom: boolean }) {
   );
 }
 
-function ViewerCanvas({ path, enableZoom }: { path: string; enableZoom: boolean }) {
+function ViewerCanvas({
+  path,
+  rotation,
+  enableZoom
+}: {
+  path: string;
+  rotation: [number, number, number];
+  enableZoom: boolean;
+}) {
   return (
     <Canvas
       camera={{ position: [1.8, 0.6, 2.6], fov: 40 }}
@@ -79,7 +118,7 @@ function ViewerCanvas({ path, enableZoom }: { path: string; enableZoom: boolean 
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true }}
     >
-      <Scene path={path} enableZoom={enableZoom} />
+      <Scene path={path} rotation={rotation} enableZoom={enableZoom} />
     </Canvas>
   );
 }
@@ -227,7 +266,7 @@ export default function Product3DSlider({
   return (
     <>
       <div className={className}>
-        <ViewerCanvas path={current.path} enableZoom={false} />
+        <ViewerCanvas path={current.path} rotation={current.initialRotation} enableZoom={false} />
         <SlideChrome index={index} onChange={setIndex} />
 
         <button
@@ -273,7 +312,7 @@ export default function Product3DSlider({
               </button>
             </div>
             <div className="relative mt-3 flex-1 overflow-hidden rounded-2xl bg-cream">
-              <ViewerCanvas path={current.path} enableZoom />
+              <ViewerCanvas path={current.path} rotation={current.initialRotation} enableZoom />
               <SlideChrome index={index} onChange={setIndex} />
             </div>
           </motion.div>
