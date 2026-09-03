@@ -5,28 +5,44 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { Box3, Vector3 } from "three";
 import { asset } from "@/lib/asset";
+import PanZoomImage from "./PanZoomImage";
 
-type Slide = {
+type ModelSlide = {
+  kind: "model";
   key: string;
-  path: string;
   label: string;
-  /** Resting rotation applied to the model group (radians). */
+  hint: string;
+  path: string;
   initialRotation: [number, number, number];
 };
 
+type ImageSlide = {
+  kind: "image";
+  key: string;
+  label: string;
+  hint: string;
+  src: string;
+  alt: string;
+};
+
+type Slide = ModelSlide | ImageSlide;
+
 const SLIDES: Slide[] = [
   {
+    kind: "model",
     key: "carton",
-    path: "/three/aeternyx-carton.glb",
     label: "Carton",
+    hint: "Drag to rotate · Pinch or scroll to zoom",
+    path: "/three/aeternyx-carton.glb",
     initialRotation: [-0.05, -0.4, 0]
   },
   {
-    key: "blister",
-    path: "/three/aeternyx-blister.glb",
-    label: "Blister strip",
-    // Start showing the back (add π on Y to the default facing).
-    initialRotation: [-0.05, -0.4 + Math.PI, 0]
+    kind: "image",
+    key: "label",
+    label: "Blister label",
+    hint: "Pinch or scroll to zoom · Drag to pan · Double-tap to reset",
+    src: "/product/aeternyx-back-panel.jpg",
+    alt: "AETERNYX blister label — composition, nutrition, storage, FSSAI"
   }
 ];
 
@@ -142,14 +158,18 @@ export default function Product3DSlider({
 
   return (
     <div className={className}>
-      <Canvas
-        camera={{ position: [1.4, 0.5, 2.2], fov: 42 }}
-        shadows
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <Scene path={current.path} rotation={current.initialRotation} />
-      </Canvas>
+      {current.kind === "model" ? (
+        <Canvas
+          camera={{ position: [1.4, 0.5, 2.2], fov: 42 }}
+          shadows
+          dpr={[1, 2]}
+          gl={{ antialias: true, alpha: true }}
+        >
+          <Scene path={current.path} rotation={current.initialRotation} />
+        </Canvas>
+      ) : (
+        <PanZoomImage src={asset(current.src)} alt={current.alt} />
+      )}
 
       {/* Prev / next arrows */}
       <button
@@ -169,7 +189,7 @@ export default function Product3DSlider({
         <Arrow dir="right" />
       </button>
 
-      {/* Dot indicator + optional hint */}
+      {/* Dot indicator + hint */}
       <div className="pointer-events-none absolute inset-x-0 bottom-4 flex flex-col items-center gap-2">
         <div className="pointer-events-auto flex items-center gap-1.5">
           {SLIDES.map((s, i) => (
@@ -187,7 +207,7 @@ export default function Product3DSlider({
         </div>
         {showHint ? (
           <span className="text-[10px] font-medium uppercase tracking-widest text-muted">
-            Drag to rotate · Pinch or scroll to zoom
+            {current.hint}
           </span>
         ) : null}
       </div>
@@ -195,4 +215,6 @@ export default function Product3DSlider({
   );
 }
 
-SLIDES.forEach((s) => useGLTF.preload(asset(s.path)));
+SLIDES.forEach((s) => {
+  if (s.kind === "model") useGLTF.preload(asset(s.path));
+});
