@@ -56,7 +56,7 @@ export default function ProductHero({ brand, hero }: Props) {
             className="relative"
           >
             <Product3DSlider
-              className="card-cream relative aspect-[4/5] w-full overflow-hidden"
+              className="relative aspect-[4/5] w-full overflow-hidden"
               showHint={false}
             />
             <div className="mt-4 flex items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-muted">
