@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
-import { Box3, Vector3, type Object3D } from "three";
+import { Box3, SRGBColorSpace, Vector3, type Object3D } from "three";
 import { SkeletonUtils } from "three-stdlib";
 import { asset } from "@/lib/asset";
 
@@ -40,10 +40,24 @@ function CartonModel() {
     cloned.traverse((child) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const anyChild = child as any;
-      if (anyChild.isMesh) {
-        anyChild.castShadow = true;
-        anyChild.receiveShadow = true;
-        if (anyChild.material) anyChild.material.needsUpdate = true;
+      if (!anyChild.isMesh) return;
+      anyChild.castShadow = true;
+      anyChild.receiveShadow = true;
+      const materials = Array.isArray(anyChild.material)
+        ? anyChild.material
+        : anyChild.material
+          ? [anyChild.material]
+          : [];
+      for (const m of materials) {
+        // Matte print carton look — tame the shine that washes navy → grey
+        if ("roughness" in m) m.roughness = 0.85;
+        if ("metalness" in m) m.metalness = 0;
+        // Dial down environment reflection so the printed colours dominate
+        if ("envMapIntensity" in m) m.envMapIntensity = 0.35;
+        // Belt & braces: base-colour textures render as sRGB
+        if (m.map) m.map.colorSpace = SRGBColorSpace;
+        if (m.emissiveMap) m.emissiveMap.colorSpace = SRGBColorSpace;
+        m.needsUpdate = true;
       }
     });
   }, [cloned]);
@@ -70,18 +84,18 @@ function Scene() {
 
   return (
     <>
-      <ambientLight intensity={0.6} />
+      <ambientLight intensity={0.35} />
       <directionalLight
         position={[3, 4, 5]}
-        intensity={1.15}
+        intensity={0.9}
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-      <directionalLight position={[-3, 2, -4]} intensity={0.4} color="#f5d6a8" />
+      <directionalLight position={[-3, 2, -4]} intensity={0.25} color="#f5d6a8" />
       <Suspense fallback={null}>
         <CartonModel />
-        <Environment preset="studio" />
+        <Environment preset="apartment" />
       </Suspense>
       <OrbitControls
         ref={controlsRef}
@@ -117,6 +131,7 @@ export default function Carton3D({
         shadows
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
+        flat
       >
         <Scene />
       </Canvas>
