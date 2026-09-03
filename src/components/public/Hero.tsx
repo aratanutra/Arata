@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { CtaLink, SiteContent } from "@/types/content";
-import TabletStrip from "./TabletStrip";
+import Carton3D from "./Carton3D";
 
 type Props = {
   hero: SiteContent["hero"];
@@ -91,7 +91,10 @@ export default function Hero({ hero }: Props) {
           transition={{ duration: 1.0, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mt-16 flex justify-center md:mt-24"
         >
-          <TabletStrip size="lg" />
+          <Carton3D
+            className="relative mx-auto aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-3xl md:aspect-[5/4]"
+            showHint
+          />
         </motion.div>
       </div>
     </section>
