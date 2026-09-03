@@ -1,22 +1,27 @@
 "use client";
 
-import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
-import { Box3, Vector3 } from "three";
+import { Box3, Vector3, type Object3D } from "three";
+import { SkeletonUtils } from "three-stdlib";
 import { asset } from "@/lib/asset";
 
 const MODEL_PATH = "/three/aeternyx-carton.glb";
 
-/** Fixed on-screen "size" for the model's longest dimension, in scene units. */
-const TARGET_SIZE = 1.7;
+/** Longest-dimension target in scene units so the model reliably fills the frame. */
+const TARGET_SIZE = 2.4;
 
 function CartonModel() {
-  const gltf = useGLTF(asset(MODEL_PATH));
-  const scene = gltf.scene;
+  const { scene } = useGLTF(asset(MODEL_PATH));
+
+  // Clone per-instance so multiple viewers on the same page don't compete for
+  // the single cached Object3D (each was mutating the shared scale/position).
+  const cloned = useMemo(() => SkeletonUtils.clone(scene) as Object3D, [scene]);
 
   const transform = useMemo(() => {
-    const box = new Box3().setFromObject(scene);
+    cloned.updateMatrixWorld(true);
+    const box = new Box3().setFromObject(cloned);
     const size = box.getSize(new Vector3());
     const center = box.getCenter(new Vector3());
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
@@ -29,10 +34,10 @@ function CartonModel() {
         -center.z * scale
       ] as [number, number, number]
     };
-  }, [scene]);
+  }, [cloned]);
 
-  useLayoutEffect(() => {
-    scene.traverse((child) => {
+  useMemo(() => {
+    cloned.traverse((child) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const anyChild = child as any;
       if (anyChild.isMesh) {
@@ -41,11 +46,11 @@ function CartonModel() {
         if (anyChild.material) anyChild.material.needsUpdate = true;
       }
     });
-  }, [scene]);
+  }, [cloned]);
 
   return (
     <group rotation={[-0.05, -0.4, 0]}>
-      <primitive object={scene} position={transform.offset} scale={transform.scale} />
+      <primitive object={cloned} position={transform.offset} scale={transform.scale} />
     </group>
   );
 }
@@ -108,7 +113,7 @@ export default function Carton3D({
   return (
     <div className={className}>
       <Canvas
-        camera={{ position: [1.4, 0.5, 2.2], fov: 42 }}
+        camera={{ position: [1.2, 0.35, 1.9], fov: 38 }}
         shadows
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
