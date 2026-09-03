@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useLayoutEffect, useMemo } from "react";
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { Box3, Vector3 } from "three";
@@ -51,6 +51,18 @@ function CartonModel() {
 }
 
 function Scene() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const controlsRef = useRef<any>(null);
+  const [autoRotate, setAutoRotate] = useState(true);
+
+  useEffect(() => {
+    const c = controlsRef.current;
+    if (!c) return;
+    const stop = () => setAutoRotate(false);
+    c.addEventListener("start", stop);
+    return () => c.removeEventListener("start", stop);
+  }, []);
+
   return (
     <>
       <ambientLight intensity={0.6} />
@@ -67,8 +79,11 @@ function Scene() {
         <Environment preset="studio" />
       </Suspense>
       <OrbitControls
+        ref={controlsRef}
         enablePan={false}
         enableZoom
+        autoRotate={autoRotate}
+        autoRotateSpeed={0.6}
         minDistance={1.4}
         maxDistance={4.5}
         minPolarAngle={Math.PI / 5}
@@ -87,7 +102,7 @@ type Carton3DProps = {
 };
 
 export default function Carton3D({
-  className = "relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-cream md:aspect-[16/10]",
+  className = "relative aspect-[4/3] w-full overflow-hidden rounded-3xl md:aspect-[16/10]",
   showHint = true
 }: Carton3DProps = {}) {
   return (
