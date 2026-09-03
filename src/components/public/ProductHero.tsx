@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
-import Carton3D from "./Carton3D";
+import Product3DSlider from "./Product3DSlider";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -55,7 +55,7 @@ export default function ProductHero({ brand, hero }: Props) {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative"
           >
-            <Carton3D
+            <Product3DSlider
               className="card-cream relative aspect-[4/5] w-full overflow-hidden"
               showHint={false}
             />
