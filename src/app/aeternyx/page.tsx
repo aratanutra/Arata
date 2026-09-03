@@ -6,6 +6,7 @@ import TrustBar from "@/components/public/TrustBar";
 import InteractiveTablet from "@/components/public/InteractiveTablet";
 import Carton3D from "@/components/public/Carton3D";
 import Ingredients from "@/components/public/Ingredients";
+import MetricsPanel from "@/components/public/MetricsPanel";
 import HowToUse from "@/components/public/HowToUse";
 import Benefits from "@/components/public/Benefits";
 import Science from "@/components/public/Science";
@@ -44,6 +45,7 @@ export default async function AeternyxPage() {
         </div>
       </section>
       <Ingredients data={content.ingredientsSection} />
+      <MetricsPanel data={content.metricsPanel} />
       <HowToUse data={content.howToUse} />
       <Benefits data={content.benefits} />
       <Science data={content.science} />
