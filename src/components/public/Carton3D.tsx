@@ -10,7 +10,7 @@ import { asset } from "@/lib/asset";
 const MODEL_PATH = "/three/aeternyx-carton.glb";
 
 /** Longest-dimension target in scene units so the model reliably fills the frame. */
-const TARGET_SIZE = 2.4;
+const TARGET_SIZE = 1.4;
 
 function CartonModel() {
   const { scene } = useGLTF(asset(MODEL_PATH));
@@ -113,7 +113,7 @@ export default function Carton3D({
   return (
     <div className={className}>
       <Canvas
-        camera={{ position: [1.2, 0.35, 1.9], fov: 38 }}
+        camera={{ position: [1.5, 0.5, 2.5], fov: 42 }}
         shadows
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}

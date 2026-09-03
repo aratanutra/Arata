@@ -48,7 +48,7 @@ const SLIDES: Slide[] = [
 ];
 
 /** Longest-dimension target size (scene units) so every GLB reads at the same visual weight. */
-const TARGET_SIZE = 2.4;
+const TARGET_SIZE = 1.4;
 
 function GLBModel({
   path,
@@ -186,7 +186,7 @@ export default function Product3DSlider({
     <div className={className}>
       {current.kind === "model" ? (
         <Canvas
-          camera={{ position: [1.2, 0.35, 1.9], fov: 38 }}
+          camera={{ position: [1.5, 0.5, 2.5], fov: 42 }}
           shadows
           dpr={[1, 2]}
           gl={{ antialias: true, alpha: true }}
