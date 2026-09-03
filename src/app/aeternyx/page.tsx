@@ -4,6 +4,7 @@ import Nav from "@/components/public/Nav";
 import ProductHero from "@/components/public/ProductHero";
 import TrustBar from "@/components/public/TrustBar";
 import InteractiveTablet from "@/components/public/InteractiveTablet";
+import Carton3D from "@/components/public/Carton3D";
 import Ingredients from "@/components/public/Ingredients";
 import HowToUse from "@/components/public/HowToUse";
 import Benefits from "@/components/public/Benefits";
@@ -27,6 +28,21 @@ export default async function AeternyxPage() {
       <ProductHero brand={content.brand} hero={content.productHero} />
       <TrustBar data={content.trustBar} />
       <InteractiveTablet data={content.ingredientsSection} />
+      <section id="carton" className="relative overflow-hidden bg-canvas py-24 md:py-32">
+        <div className="container-app">
+          <div className="max-w-2xl">
+            <span className="eyebrow">Pack in Hand</span>
+            <h2 className="mt-4 heading-md">The AETERNYX™ carton, in your hand.</h2>
+            <p className="mt-4 body-base">
+              Rotate the pack to inspect every side — the panel copy, the composition table,
+              storage lines, and the FSSAI marks are the same you&rsquo;ll receive at your door.
+            </p>
+          </div>
+          <div className="mt-12">
+            <Carton3D />
+          </div>
+        </div>
+      </section>
       <Ingredients data={content.ingredientsSection} />
       <HowToUse data={content.howToUse} />
       <Benefits data={content.benefits} />
