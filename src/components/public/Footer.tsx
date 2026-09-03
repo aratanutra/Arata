@@ -55,8 +55,8 @@ function VegLogo() {
 
 function FssaiBadge({ license }: { license: string }) {
   return (
-    <div className="inline-flex items-center gap-3 rounded-xl border border-hairline bg-canvas px-4 py-3">
-      <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg bg-canvas">
+    <div className="inline-flex items-center gap-3 rounded-xl border border-hairline bg-canvas px-4 py-2.5">
+      <div className="grid h-8 w-8 place-items-center overflow-hidden rounded-lg bg-canvas">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={asset("/brand/certifications/fssai.png")}
@@ -66,7 +66,7 @@ function FssaiBadge({ license }: { license: string }) {
       </div>
       <div className="leading-tight">
         <div className="text-[10px] font-semibold uppercase tracking-widest text-ink">FSSAI</div>
-        <div className="tnum text-[12px] font-medium text-muted">Lic. {license}</div>
+        <div className="tnum text-[11px] font-medium text-muted">Lic. {license}</div>
       </div>
     </div>
   );
@@ -77,31 +77,32 @@ export default function Footer({ brand, footer }: Props) {
     brand.whatsappGreeting
   )}`;
   return (
-    <footer className="relative border-t border-hairline bg-paper py-20">
+    <footer className="relative border-t border-hairline bg-paper pt-12 pb-10 md:pt-14 md:pb-12">
       <div className="container-app">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1.4fr]">
+        {/* Top: brand + 3 nav columns, tight 4-up grid on md+ so nothing wraps */}
+        <div className="grid gap-10 md:grid-cols-[1.6fr_repeat(3,1fr)] md:gap-8 md:gap-y-10">
+          {/* Brand */}
           <div>
-            <Link href="/" className="inline-flex items-start" aria-label={`${brand.company} home`}>
+            <Link
+              href="/"
+              className="inline-flex items-center"
+              aria-label={`${brand.company} home`}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={asset(brand.logoAsset)}
                 alt={brand.company}
-                className="h-16 w-auto object-contain"
+                className="h-20 w-auto object-contain md:h-24"
               />
             </Link>
-            <p className="mt-5 text-base text-ink-soft">{footer.tagline}</p>
-            <a
-              href={`mailto:${brand.email}`}
-              className="mt-3 inline-block text-[13px] text-muted transition-colors hover:text-ink"
-            >
-              {brand.email}
-            </a>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <p className="mt-4 text-[15px] leading-relaxed text-ink">{footer.tagline}</p>
+
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
               <FssaiBadge license={brand.fssaiLicense} />
               {brand.vegetarian ? (
-                <div className="inline-flex items-center gap-2 rounded-xl border border-hairline bg-canvas px-3 py-3">
+                <div className="inline-flex items-center gap-2 rounded-xl border border-hairline bg-canvas px-3 py-2.5">
                   <VegLogo />
-                  <span className="text-[11px] font-semibold uppercase tracking-widest text-ink">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-ink">
                     Vegetarian
                   </span>
                 </div>
@@ -109,12 +110,13 @@ export default function Footer({ brand, footer }: Props) {
             </div>
           </div>
 
+          {/* Nav columns */}
           {footer.columns.map((col) => (
             <div key={col.title}>
               <h4 className="text-[11px] font-semibold uppercase tracking-widest text-ink">
                 {col.title}
               </h4>
-              <ul className="mt-5 space-y-3">
+              <ul className="mt-4 space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <FooterLink href={l.href} waHref={waHref}>
@@ -127,8 +129,9 @@ export default function Footer({ brand, footer }: Props) {
           ))}
         </div>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-6">
+        {/* Marketed / Manufactured / FSSAI Disclosure */}
+        <div className="mt-12 grid gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
             <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               Marketed by
             </div>
@@ -137,7 +140,7 @@ export default function Footer({ brand, footer }: Props) {
               {footer.fssaiText} {brand.fssaiLicense}
             </p>
           </div>
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-6">
+          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
             <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               Manufactured by
             </div>
@@ -146,7 +149,7 @@ export default function Footer({ brand, footer }: Props) {
               {footer.fssaiText} {brand.fssaiManufacturerLicense}
             </p>
           </div>
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-6">
+          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
             <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               FSSAI Disclosure
             </div>
@@ -160,30 +163,25 @@ export default function Footer({ brand, footer }: Props) {
         </div>
 
         {/* Grievance officer + Order policies */}
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-6">
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
             <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               {footer.grievanceOfficer.label}
             </div>
             <p className="mt-2 text-[13px] font-semibold tracking-tight text-ink">
               {footer.grievanceOfficer.name}
             </p>
-            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-ink-soft">
-              <a href={`mailto:${footer.grievanceOfficer.email}`} className="hover:text-ink">
-                {footer.grievanceOfficer.email}
-              </a>
-              <a
-                href={`tel:${footer.grievanceOfficer.phone.replace(/\s+/g, "")}`}
-                className="tnum hover:text-ink"
-              >
-                {footer.grievanceOfficer.phone}
-              </a>
-            </div>
-            <p className="mt-3 text-[12px] leading-relaxed text-muted">
+            <a
+              href={`tel:${footer.grievanceOfficer.phone.replace(/\s+/g, "")}`}
+              className="tnum mt-1 inline-block text-[12px] text-ink-soft hover:text-ink"
+            >
+              {footer.grievanceOfficer.phone}
+            </a>
+            <p className="mt-2 text-[12px] leading-relaxed text-muted">
               {footer.grievanceOfficer.note}
             </p>
           </div>
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-6">
+          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
             <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               {footer.policies.label}
             </div>
@@ -210,7 +208,7 @@ export default function Footer({ brand, footer }: Props) {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-hairline pt-8 text-muted md:flex-row md:items-center md:justify-between">
+        <div className="mt-8 flex flex-col gap-3 border-t border-hairline pt-6 text-muted md:flex-row md:items-center md:justify-between">
           <p className="text-[11px] uppercase tracking-widest">{footer.address}</p>
           <p className="text-[12px]">{footer.rights}</p>
         </div>
