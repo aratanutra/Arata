@@ -140,6 +140,14 @@ export type SiteContent = {
     steps: { icon: string; title: string; detail: string }[];
     warning: string;
   };
+  metricsPanel: {
+    eyebrow: string;
+    title: string;
+    paragraph: string;
+    footnote: string;
+    pills: { value: string; unit?: string; label: string }[];
+    usage: { icon: string; title: string; detail: string }[];
+  };
   certifications: {
     eyebrow: string;
     title: string;

@@ -236,6 +236,23 @@
     ],
     "warning": "Do not exceed the recommended daily dose. Not intended for use during pregnancy or lactation without medical clearance."
   },
+  "metricsPanel": {
+    "eyebrow": "Composition at a glance",
+    "title": "Ten molecules. Five pathways. One tablet.",
+    "paragraph": "AETERNYX™ converges ten evidence-graded bioactives across five cellular wellness pathways — mitochondrial energy, oxidative balance, membrane integrity, immune capacity, and vascular calcium handling. Every molecule dosed with the published evidence in mind. Every tablet calibrated for daily, sustainable use.",
+    "footnote": "Composition metrics reflect the AETERNYX™ formulation. Not intended to diagnose, treat, cure, or prevent any disease.",
+    "pills": [
+      { "value": "10", "label": "Evidence-graded bioactives" },
+      { "value": "5", "label": "Cellular wellness pathways" },
+      { "value": "24", "unit": "mo", "label": "Best-before shelf life" },
+      { "value": "1", "unit": "/day", "label": "Tablet, once daily" }
+    ],
+    "usage": [
+      { "icon": "sun", "title": "Dosage", "detail": "Take one tablet daily, preferably with breakfast." },
+      { "icon": "drop", "title": "Directions", "detail": "Swallow whole with a glass of water. Do not chew or crush the tablet." },
+      { "icon": "warning", "title": "Precautions", "detail": "Not for children under 18, pregnant, or nursing women. Consult your healthcare professional before use if you have any medical condition or are on medication." }
+    ]
+  },
   "certifications": {
     "eyebrow": "Certifications",
     "title": "Manufactured to global standards.",
