@@ -72,9 +72,17 @@ function Scene() {
   );
 }
 
-export default function Carton3D() {
+type Carton3DProps = {
+  className?: string;
+  showHint?: boolean;
+};
+
+export default function Carton3D({
+  className = "relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-cream md:aspect-[16/10]",
+  showHint = true
+}: Carton3DProps = {}) {
   return (
-    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-cream md:aspect-[16/10]">
+    <div className={className}>
       <Canvas
         camera={{ position: [1.8, 0.6, 2.6], fov: 40 }}
         shadows
@@ -83,9 +91,11 @@ export default function Carton3D() {
       >
         <Scene />
       </Canvas>
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 text-center text-[11px] font-medium uppercase tracking-widest text-muted">
-        Drag to rotate
-      </div>
+      {showHint ? (
+        <div className="pointer-events-none absolute inset-x-0 bottom-4 text-center text-[11px] font-medium uppercase tracking-widest text-muted">
+          Drag to rotate
+        </div>
+      ) : null}
     </div>
   );
 }

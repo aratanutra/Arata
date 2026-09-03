@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
-import TabletStrip from "./TabletStrip";
+import Carton3D from "./Carton3D";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -55,11 +55,12 @@ export default function ProductHero({ brand, hero }: Props) {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative"
           >
-            <div className="card-cream flex aspect-[4/5] items-center justify-center overflow-hidden p-6 md:p-10">
-              <TabletStrip size="lg" />
-            </div>
+            <Carton3D
+              className="card-cream relative aspect-[4/5] w-full overflow-hidden"
+              showHint={false}
+            />
             <div className="mt-4 flex items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-muted">
-              <span>1×10 Tablet Strip</span>
+              <span>Drag to rotate</span>
               <span className="h-1 w-1 rounded-full bg-hairline" />
               <span>10 Actives</span>
               <span className="h-1 w-1 rounded-full bg-hairline" />
