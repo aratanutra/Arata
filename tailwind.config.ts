@@ -43,6 +43,13 @@ const config: Config = {
           "Iowan Old Style",
           "Palatino",
           "serif"
+        ],
+        script: [
+          "var(--font-script)",
+          "Caveat",
+          "Bradley Hand",
+          "Segoe Script",
+          "cursive"
         ]
       },
       fontSize: {
