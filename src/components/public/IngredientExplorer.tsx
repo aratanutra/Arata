@@ -43,14 +43,30 @@ export default function IngredientExplorer({ data }: Props) {
         const doc = el?.contentDocument;
         if (!doc || !doc.body) return;
 
-        // Neutralise the artifact's viewport-height baseline so the body
-        // wraps its content tightly.
+        // Neutralise the artifact's viewport-height baseline so the body wraps
+        // content tightly. We intentionally do NOT force overflow:hidden — the
+        // artifact draws absolutely-positioned graphics (anatomy diagrams) that
+        // need to render outside the flow, and clipping was hiding them on
+        // narrow viewports.
         const override = doc.createElement("style");
         override.textContent =
-          "html, body { min-height: 0 !important; height: auto !important; overflow: hidden !important; }";
+          "html, body { min-height: 0 !important; height: auto !important; }";
         doc.head.appendChild(override);
 
         fitHeight(doc);
+
+        // Kick the artifact's own ResizeObserver / autoplay loop after we've
+        // finished sizing the iframe. Mobile Safari sometimes misses the very
+        // first resize event that fires before layout stabilises.
+        const kick = () => {
+          try {
+            el?.contentWindow?.dispatchEvent(new Event("resize"));
+          } catch {
+            /* noop */
+          }
+        };
+        setTimeout(kick, 200);
+        setTimeout(kick, 900);
 
         resizeObserver = new ResizeObserver(() => fitHeight(doc));
         resizeObserver.observe(doc.body);

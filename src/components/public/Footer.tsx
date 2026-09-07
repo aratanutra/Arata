@@ -13,8 +13,9 @@ export default function Footer({ brand, footer }: Props) {
   return (
     <footer className="relative border-t border-hairline bg-paper pt-12 pb-10 md:pt-16 md:pb-12">
       <div className="container-app">
-        {/* Top: brand (left) · Marketed/Manufactured addresses (right) — tighter gutter */}
-        <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] md:gap-10 lg:gap-14">
+        {/* Top: brand (left) · Marketed/Manufactured addresses (right) — narrow brand col
+            so the addresses hug the logo instead of drifting to the far right. */}
+        <div className="grid gap-8 md:grid-cols-[minmax(0,320px)_minmax(0,1fr)] md:gap-8 lg:gap-10">
           <div>
             <Link
               href="/"
@@ -94,9 +95,9 @@ export default function Footer({ brand, footer }: Props) {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col gap-1.5 border-t border-hairline pt-4 text-muted md:flex-row md:items-center md:justify-between">
-          <p className="text-[9px] uppercase tracking-[0.18em]">{footer.address}</p>
-          <p className="text-[10px] tracking-tight">{footer.rights}</p>
+        <div className="mt-4 flex flex-col gap-1 border-t border-hairline pt-3 text-muted md:flex-row md:items-center md:justify-between">
+          <p className="text-[8px] uppercase tracking-[0.2em]">{footer.address}</p>
+          <p className="text-[9px] tracking-tight">{footer.rights}</p>
         </div>
       </div>
     </footer>
