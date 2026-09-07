@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
 import { asset } from "@/lib/asset";
@@ -39,10 +39,6 @@ function advanceOne(w: Window | null) {
  */
 export default function IngredientExplorer({ data }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  const onManualAdvance = useCallback(() => {
-    advanceOne(iframeRef.current?.contentWindow ?? null);
-  }, []);
 
   useEffect(() => {
     const el = iframeRef.current;
@@ -172,25 +168,6 @@ export default function IngredientExplorer({ data }: Props) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             {...({ fetchpriority: "high" } as any)}
           />
-          {/* Manual advance — fallback if iOS throttles the auto driver.
-              Corner button, feels like a "next" chevron for the pill cycle. */}
-          <button
-            type="button"
-            onClick={onManualAdvance}
-            aria-label="Show next ingredient"
-            className="absolute right-3 top-3 z-10 inline-flex h-10 items-center gap-1.5 rounded-full border border-hairline/70 bg-canvas/90 pl-3 pr-3.5 text-[11px] font-semibold uppercase tracking-widest text-ink shadow-sm backdrop-blur-sm transition-colors hover:bg-canvas md:right-4 md:top-4"
-          >
-            Next
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden>
-              <path
-                d="M9 5l7 7-7 7"
-                stroke="currentColor"
-                strokeWidth="1.9"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
         </motion.div>
       </div>
     </section>
