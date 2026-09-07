@@ -61,44 +61,47 @@ export default function AeternyxFloat({
             exit={{ opacity: 0, scale: 0.6, y: -20 }}
             className="relative flex items-center justify-end"
           >
-            {/* "Click me" cue — sits to the LEFT of the tablet */}
+            {/* "Click me" cue — sits ABOVE the tablet with a curved arrow
+                looping down into the pill. Absolutely positioned so it
+                doesn't push the tablet layout around. */}
             <AnimatePresence>
               {showCue ? (
                 <motion.div
                   key="cue"
-                  initial={{ opacity: 0, x: 6 }}
+                  initial={{ opacity: 0, y: -6 }}
                   animate={{
                     opacity: 1,
-                    x: 0,
                     y: [0, -3, 0],
                     transition: {
                       opacity: { duration: 0.3 },
-                      x: { duration: 0.3 },
                       y: { duration: 1.8, repeat: Infinity, ease: "easeInOut" }
                     }
                   }}
-                  exit={{ opacity: 0, x: 6, transition: { duration: 0.2 } }}
-                  className="pointer-events-none mr-1 flex items-center gap-1.5 md:mr-2 md:gap-2"
+                  exit={{ opacity: 0, y: -6, transition: { duration: 0.2 } }}
+                  className="pointer-events-none absolute -top-14 right-4 flex flex-col items-end md:-top-16 md:right-6"
                 >
-                  <span className="font-script text-[22px] font-semibold leading-none text-ink md:text-[30px]">
+                  <span className="font-script text-[24px] font-semibold leading-none text-ink md:text-[32px]">
                     Click me
                   </span>
-                  {/* Simple hand-drawn horizontal arrow → tablet */}
+                  {/* Hand-drawn curved arrow looping down and into the tablet */}
                   <svg
-                    viewBox="0 0 60 24"
-                    className="h-[22px] w-[48px] md:h-[28px] md:w-[64px]"
+                    viewBox="0 0 70 46"
+                    className="-mt-1 h-[38px] w-[58px] md:h-[46px] md:w-[70px]"
                     fill="none"
                     aria-hidden
                   >
+                    {/* Curve starts near the script's tail, arcs up-right,
+                        then down into the tablet top. */}
                     <path
-                      d="M4 12 C 20 10, 34 14, 54 12"
+                      d="M8 8 C 30 -4, 62 6, 58 38"
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
                       className="text-ink"
                     />
+                    {/* Arrowhead pointing DOWN into the tablet */}
                     <path
-                      d="M46 5 L 55 12 L 46 19"
+                      d="M51 32 L 58 41 L 65 32"
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
