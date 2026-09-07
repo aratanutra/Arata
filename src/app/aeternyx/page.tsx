@@ -24,9 +24,9 @@ export default async function AeternyxPage() {
   return (
     <main className="relative bg-canvas">
       <Nav brand={content.brand} nav={content.nav} />
+      <IngredientExplorer data={content.ingredientsSection} />
       <ProductHero brand={content.brand} hero={content.productHero} />
       <TrustBar data={content.trustBar} />
-      <IngredientExplorer data={content.ingredientsSection} />
       <MetricsPanel data={content.metricsPanel} />
       <HowToUse data={content.howToUse} />
       <Benefits data={content.benefits} />
