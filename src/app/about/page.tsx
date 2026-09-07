@@ -4,6 +4,7 @@ import Nav from "@/components/public/Nav";
 import Philosophy from "@/components/public/Philosophy";
 import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
+import AeternyxFloat from "@/components/public/AeternyxFloat";
 import AboutHero from "@/components/public/AboutHero";
 import AboutStory from "@/components/public/AboutStory";
 import AboutValues from "@/components/public/AboutValues";
@@ -27,6 +28,7 @@ export default async function AboutPage() {
       <AboutClosing data={content.about.closingCta} brand={content.brand} />
       <Footer brand={content.brand} footer={content.footer} />
       <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
+      <AeternyxFloat />
     </main>
   );
 }
