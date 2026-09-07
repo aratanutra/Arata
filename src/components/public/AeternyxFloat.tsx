@@ -43,9 +43,19 @@ export default function AeternyxFloat({
           <motion.div
             key="aeternyx-tablet"
             initial={{ opacity: 0, scale: 0.6, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: [0, -8, 0],
+              rotate: [-1.2, 1.2, -1.2],
+              transition: {
+                opacity: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+                scale: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+                y: { duration: 3.4, repeat: Infinity, ease: "easeInOut" },
+                rotate: { duration: 4.6, repeat: Infinity, ease: "easeInOut" }
+              }
+            }}
             exit={{ opacity: 0, scale: 0.6, y: 20 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="relative flex items-center"
           >
             {/* Tablet */}
