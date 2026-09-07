@@ -78,29 +78,29 @@ export default function AeternyxFloat({
                     }
                   }}
                   exit={{ opacity: 0, x: 6, transition: { duration: 0.2 } }}
-                  className="pointer-events-none mr-1 flex items-center md:mr-2"
+                  className="pointer-events-none -mr-1 flex items-center md:mr-0"
                 >
-                  <span className="mr-1 font-script text-[20px] font-semibold leading-none text-ink md:text-[28px]">
+                  <span className="font-script text-[20px] font-semibold leading-none text-ink md:text-[28px]">
                     Click me
                   </span>
-                  {/* Hand-drawn curved arrow pointing RIGHT into the tablet */}
+                  {/* Hand-drawn arrow — short arc from the script pointing RIGHT into the tablet */}
                   <svg
-                    viewBox="0 0 90 60"
-                    className="h-[40px] w-[56px] md:h-[54px] md:w-[80px]"
+                    viewBox="0 0 60 40"
+                    className="ml-0.5 h-[32px] w-[42px] md:h-[42px] md:w-[58px]"
                     fill="none"
                     aria-hidden
                   >
-                    {/* Curve arcs from the script down and to the right, ending at the pill's left edge */}
+                    {/* Curve arcs from the "Click me" tail down and straight into the pill */}
                     <path
-                      d="M8 12 C 40 8, 66 22, 82 46"
+                      d="M4 8 C 22 4, 40 14, 54 22"
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
                       className="text-ink"
                     />
-                    {/* Arrowhead pointing down-right at the tablet */}
+                    {/* Arrowhead pointing RIGHT at the tablet */}
                     <path
-                      d="M86 42 L 82 48 L 76 44"
+                      d="M48 15 L 55 22 L 48 29"
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
