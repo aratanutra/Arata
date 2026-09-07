@@ -11,48 +11,19 @@ type Props = {
 
 export default function Footer({ brand, footer }: Props) {
   return (
-    <footer className="relative border-t border-hairline bg-paper pt-12 pb-10 md:pt-16 md:pb-12">
+    <footer className="relative border-t border-hairline bg-paper pt-12 pb-8 md:pt-16 md:pb-10">
       <div className="container-app">
-        {/* Top: brand (natural width, left) · addresses as two side-by-side columns.
-            Using flex-shrink so the brand block never stretches past its content and
-            the addresses sit right after it — no more empty gutter. */}
-        <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-12 lg:gap-16">
-          <div className="md:shrink-0">
-            <Link
-              href="/"
-              className="inline-flex items-center"
-              aria-label={`${brand.company} home`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={asset(brand.logoAsset)}
-                alt={brand.company}
-                className="h-28 w-auto object-contain md:h-32"
-              />
-            </Link>
-            <p className="mt-4 text-[14px] leading-relaxed text-ink">{footer.tagline}</p>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 md:flex-1 md:gap-10">
-            <div>
-              <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
-                Marketed by
-              </h4>
-              <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{brand.marketer}</p>
-              <p className="tnum mt-1 text-[11px] uppercase tracking-widest text-muted">
-                {footer.fssaiText} {brand.fssaiLicense}
-              </p>
-            </div>
-            <div>
-              <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
-                Manufactured by
-              </h4>
-              <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{brand.manufacturer}</p>
-              <p className="tnum mt-1 text-[11px] uppercase tracking-widest text-muted">
-                {footer.fssaiText} {brand.fssaiManufacturerLicense}
-              </p>
-            </div>
-          </div>
+        {/* Top: brand block only (logo + tagline). Full width, no addresses here. */}
+        <div>
+          <Link href="/" className="inline-flex items-center" aria-label={`${brand.company} home`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset(brand.logoAsset)}
+              alt={brand.company}
+              className="h-28 w-auto object-contain md:h-32"
+            />
+          </Link>
+          <p className="mt-4 text-[15px] leading-relaxed text-ink">{footer.tagline}</p>
         </div>
 
         {/* Compliance strip: FSSAI Disclosure + Order Policies */}
@@ -96,8 +67,30 @@ export default function Footer({ brand, footer }: Props) {
           </div>
         </div>
 
+        {/* Small-font Marketed by / Manufactured by strip */}
+        <div className="mt-6 grid gap-4 border-t border-hairline pt-4 sm:grid-cols-2 sm:gap-8">
+          <p className="text-[10px] leading-relaxed text-muted md:text-[11px]">
+            <span className="font-semibold uppercase tracking-widest text-gold-deep">
+              Marketed by
+            </span>{" "}
+            <span className="text-ink-soft">{brand.marketer}</span>{" "}
+            <span className="tnum uppercase tracking-widest">
+              · {footer.fssaiText} {brand.fssaiLicense}
+            </span>
+          </p>
+          <p className="text-[10px] leading-relaxed text-muted md:text-[11px]">
+            <span className="font-semibold uppercase tracking-widest text-gold-deep">
+              Manufactured by
+            </span>{" "}
+            <span className="text-ink-soft">{brand.manufacturer}</span>{" "}
+            <span className="tnum uppercase tracking-widest">
+              · {footer.fssaiText} {brand.fssaiManufacturerLicense}
+            </span>
+          </p>
+        </div>
+
         <div className="mt-4 flex flex-col gap-1 border-t border-hairline pt-3 text-muted md:flex-row md:items-center md:justify-between">
-          <p className="text-[8px] uppercase tracking-[0.2em]">{footer.address}</p>
+          <p className="text-[9px] uppercase tracking-[0.2em]">{footer.address}</p>
           <p className="text-[9px] tracking-tight">{footer.rights}</p>
         </div>
       </div>
