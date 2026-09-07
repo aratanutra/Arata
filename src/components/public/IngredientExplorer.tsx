@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
 import { asset } from "@/lib/asset";
@@ -9,10 +10,66 @@ type Props = { data: SiteContent["ingredientsSection"] };
 /**
  * Standalone bundled ingredient-explorer artifact (React app packaged into
  * one self-contained HTML file, ~1.3 MB with all assets embedded).
- * Mounted lazily via <iframe> so it doesn't add to the initial page bundle
- * and doesn't parse until the section approaches the viewport.
+ *
+ * Mounted via a same-origin <iframe> whose height auto-fits its content —
+ * that removes the inner scroll bar that was fighting the outer page scroll
+ * on mobile. The artifact ships with `body { min-height: 100vh }`; we
+ * override that on load so scrollHeight reflects real content.
  */
 export default function IngredientExplorer({ data }: Props) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    const el = iframeRef.current;
+    if (!el) return;
+
+    let resizeObserver: ResizeObserver | null = null;
+    let raf = 0;
+
+    function fitHeight(doc: Document) {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        if (!el) return;
+        const next = Math.max(
+          doc.body?.scrollHeight ?? 0,
+          doc.documentElement?.scrollHeight ?? 0
+        );
+        if (next > 0) el.style.height = `${next}px`;
+      });
+    }
+
+    function attach() {
+      try {
+        const doc = el?.contentDocument;
+        if (!doc || !doc.body) return;
+
+        // Neutralise the artifact's viewport-height baseline so the body
+        // wraps its content tightly.
+        const override = doc.createElement("style");
+        override.textContent =
+          "html, body { min-height: 0 !important; height: auto !important; overflow: hidden !important; }";
+        doc.head.appendChild(override);
+
+        fitHeight(doc);
+
+        resizeObserver = new ResizeObserver(() => fitHeight(doc));
+        resizeObserver.observe(doc.body);
+      } catch {
+        /* cross-origin (shouldn't happen for same-origin asset) — keep fallback height */
+      }
+    }
+
+    // Attach after the iframe finishes loading; also try immediately in case it's already loaded.
+    el.addEventListener("load", attach);
+    if (el.contentDocument?.readyState === "complete") attach();
+
+    return () => {
+      el.removeEventListener("load", attach);
+      resizeObserver?.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <section id="composition" className="relative overflow-hidden bg-paper py-24 md:py-32">
       <div className="container-app">
@@ -36,11 +93,13 @@ export default function IngredientExplorer({ data }: Props) {
           className="mt-12 overflow-hidden rounded-3xl border border-hairline bg-canvas shadow-sm"
         >
           <iframe
+            ref={iframeRef}
             src={asset("/ingredient-explorer.html")}
             title="AETERNYX Ingredient Explorer"
             loading="lazy"
-            className="block h-[720px] w-full md:h-[820px] lg:h-[880px]"
-            style={{ border: 0 }}
+            scrolling="no"
+            className="block w-full"
+            style={{ border: 0, height: 720 }}
             allow="clipboard-write"
           />
         </motion.div>
