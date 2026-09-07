@@ -13,10 +13,11 @@ export default function Footer({ brand, footer }: Props) {
   return (
     <footer className="relative border-t border-hairline bg-paper pt-12 pb-10 md:pt-16 md:pb-12">
       <div className="container-app">
-        {/* Top: brand (left) · Marketed/Manufactured addresses (right) — narrow brand col
-            so the addresses hug the logo instead of drifting to the far right. */}
-        <div className="grid gap-8 md:grid-cols-[minmax(0,320px)_minmax(0,1fr)] md:gap-8 lg:gap-10">
-          <div>
+        {/* Top: brand (natural width, left) · addresses as two side-by-side columns.
+            Using flex-shrink so the brand block never stretches past its content and
+            the addresses sit right after it — no more empty gutter. */}
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-12 lg:gap-16">
+          <div className="md:shrink-0">
             <Link
               href="/"
               className="inline-flex items-center"
@@ -26,18 +27,18 @@ export default function Footer({ brand, footer }: Props) {
               <img
                 src={asset(brand.logoAsset)}
                 alt={brand.company}
-                className="h-28 w-auto object-contain md:h-36"
+                className="h-28 w-auto object-contain md:h-32"
               />
             </Link>
-            <p className="mt-4 text-[15px] leading-relaxed text-ink">{footer.tagline}</p>
+            <p className="mt-4 text-[14px] leading-relaxed text-ink">{footer.tagline}</p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-1">
+          <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 md:flex-1 md:gap-10">
             <div>
               <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
                 Marketed by
               </h4>
-              <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{brand.marketer}</p>
+              <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{brand.marketer}</p>
               <p className="tnum mt-1 text-[11px] uppercase tracking-widest text-muted">
                 {footer.fssaiText} {brand.fssaiLicense}
               </p>
@@ -46,7 +47,7 @@ export default function Footer({ brand, footer }: Props) {
               <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
                 Manufactured by
               </h4>
-              <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{brand.manufacturer}</p>
+              <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{brand.manufacturer}</p>
               <p className="tnum mt-1 text-[11px] uppercase tracking-widest text-muted">
                 {footer.fssaiText} {brand.fssaiManufacturerLicense}
               </p>
