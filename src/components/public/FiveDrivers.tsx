@@ -73,7 +73,7 @@ export default function FiveDrivers({ data }: Props) {
         >
           <span className="eyebrow">{data.eyebrow}</span>
           <h2 className="mt-4 heading-md">{data.title}</h2>
-          <p className="mt-4 body-base">{data.subtitle}</p>
+          {/* Subtitle intentionally omitted — the artifact opens with the same line. */}
         </motion.div>
 
         <motion.div
