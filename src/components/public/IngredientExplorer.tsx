@@ -159,10 +159,7 @@ export default function IngredientExplorer({ data }: Props) {
   }, []);
 
   return (
-    <section
-      id="composition"
-      className="relative hidden overflow-hidden bg-paper py-24 md:block md:py-32"
-    >
+    <section id="composition" className="relative overflow-hidden bg-paper py-24 md:py-32">
       <div className="container-app">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
