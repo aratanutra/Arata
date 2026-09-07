@@ -129,13 +129,12 @@ export default function Nav({ brand, nav }: Props) {
           <span className="text-[15px] font-semibold tracking-tight text-ink">{brand.company}</span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-7">
-          {nav.links.map((link) => (
-            <NavItem key={link.href} link={link} active={isActive(link.href)} />
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-7">
+            {nav.links.map((link) => (
+              <NavItem key={link.href} link={link} active={isActive(link.href)} />
+            ))}
+          </nav>
           {showCta ? <span className="hidden md:inline-flex">{renderCta()}</span> : null}
           <button
             type="button"

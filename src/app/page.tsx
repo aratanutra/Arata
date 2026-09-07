@@ -7,6 +7,7 @@ import HomeValues from "@/components/public/HomeValues";
 import Philosophy from "@/components/public/Philosophy";
 import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
+import AeternyxFloat from "@/components/public/AeternyxFloat";
 
 export default async function HomePage() {
   const content = await readContent();
@@ -20,6 +21,7 @@ export default async function HomePage() {
       <Philosophy data={content.philosophy} />
       <Footer brand={content.brand} footer={content.footer} />
       <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
+      <AeternyxFloat />
     </main>
   );
 }
