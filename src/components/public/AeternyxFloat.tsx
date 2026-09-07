@@ -40,7 +40,7 @@ export default function AeternyxFloat({
   if (suppressed) return null;
 
   return (
-    <div className="fixed right-4 top-24 z-[90] md:right-8 md:top-32">
+    <div className="fixed bottom-6 left-4 z-[90] md:bottom-auto md:left-auto md:right-8 md:top-32">
       <AnimatePresence>
         {visible ? (
           <motion.div
@@ -78,7 +78,7 @@ export default function AeternyxFloat({
                     }
                   }}
                   exit={{ opacity: 0, x: 6, transition: { duration: 0.2 } }}
-                  className="pointer-events-none mr-1 flex items-center md:mr-2"
+                  className="pointer-events-none mr-1 hidden items-center md:mr-2 md:flex"
                 >
                   <span className="mr-1 font-script text-[24px] font-semibold leading-none text-ink md:text-[28px]">
                     Click me
