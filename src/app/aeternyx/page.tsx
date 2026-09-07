@@ -3,7 +3,7 @@ import { readContent } from "@/lib/content";
 import Nav from "@/components/public/Nav";
 import ProductHero from "@/components/public/ProductHero";
 import TrustBar from "@/components/public/TrustBar";
-import StoryMobile from "@/components/public/StoryMobile";
+import IngredientExplorer from "@/components/public/IngredientExplorer";
 import CompositionTable from "@/components/public/CompositionTable";
 import MetricsPanel from "@/components/public/MetricsPanel";
 import HowToUse from "@/components/public/HowToUse";
@@ -25,7 +25,7 @@ export default async function AeternyxPage() {
   return (
     <main className="relative bg-canvas">
       <Nav brand={content.brand} nav={content.nav} />
-      <StoryMobile />
+      <IngredientExplorer data={content.ingredientsSection} />
       <CompositionTable data={content.compositionTable} />
       <ProductHero brand={content.brand} hero={content.productHero} />
       <TrustBar data={content.trustBar} />
