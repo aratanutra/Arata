@@ -148,6 +148,20 @@ export type SiteContent = {
     pills: { value: string; unit?: string; label: string }[];
     usage: { icon: string; title: string; detail: string }[];
   };
+  compositionTable: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    servingSize: string;
+    servingsPerPack: string;
+    targetConsumer: string;
+    compositionHeaders: string[];
+    composition: { name: string; qty: string; rdaMen: string; rdaWomen: string }[];
+    nutritionTitle: string;
+    nutritionHeaders: string[];
+    nutrition: { name: string; qty: string; rda: string }[];
+    notes: string[];
+  };
   certifications: {
     eyebrow: string;
     title: string;
