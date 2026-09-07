@@ -38,6 +38,10 @@ export default function IngredientExplorer({ data }: Props) {
       });
     }
 
+    let keepaliveInterval = 0;
+    let viewObserver: IntersectionObserver | null = null;
+    let inView = true;
+
     function attach() {
       try {
         const doc = el?.contentDocument;
@@ -55,9 +59,11 @@ export default function IngredientExplorer({ data }: Props) {
 
         fitHeight(doc);
 
-        // Kick the artifact's own ResizeObserver / autoplay loop after we've
-        // finished sizing the iframe. Mobile Safari sometimes misses the very
-        // first resize event that fires before layout stabilises.
+        // Wake the artifact's own ResizeObserver / autoplay loop by dispatching
+        // resize events into its window. iOS Safari throttles setTimeout inside
+        // iframes when the outer page is scrolling, so we also fire a periodic
+        // ping while the iframe is on-screen — cheap heartbeat that keeps the
+        // animation loop from drifting into the throttled state.
         const kick = () => {
           try {
             el?.contentWindow?.dispatchEvent(new Event("resize"));
@@ -67,12 +73,29 @@ export default function IngredientExplorer({ data }: Props) {
         };
         setTimeout(kick, 200);
         setTimeout(kick, 900);
+        setTimeout(kick, 1800);
+
+        keepaliveInterval = window.setInterval(() => {
+          if (inView) kick();
+        }, 2500);
 
         resizeObserver = new ResizeObserver(() => fitHeight(doc));
         resizeObserver.observe(doc.body);
       } catch {
         /* cross-origin (shouldn't happen for same-origin asset) — keep fallback height */
       }
+    }
+
+    // Track visibility so the keepalive stops when the iframe is off-screen.
+    if ("IntersectionObserver" in window) {
+      viewObserver = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (entry) inView = entry.isIntersecting;
+        },
+        { rootMargin: "200px" }
+      );
+      viewObserver.observe(el);
     }
 
     // Attach after the iframe finishes loading; also try immediately in case it's already loaded.
@@ -82,6 +105,8 @@ export default function IngredientExplorer({ data }: Props) {
     return () => {
       el.removeEventListener("load", attach);
       resizeObserver?.disconnect();
+      viewObserver?.disconnect();
+      if (keepaliveInterval) clearInterval(keepaliveInterval);
       cancelAnimationFrame(raf);
     };
   }, []);
