@@ -7,9 +7,10 @@ import { asset } from "@/lib/asset";
 /**
  * "AETERNYX — Inside one tablet" — a bundled story artifact (self-contained
  * HTML with all assets embedded). Rendered as an iframe that auto-fits its
- * content height so it doesn't get an inner scroll trap on mobile.
+ * content height so it doesn't get an inner scroll trap on any viewport.
  *
- * Mobile-only: hidden on md+ via a Tailwind wrapper.
+ * Visible on every breakpoint — replaces the older IngredientExplorer as
+ * the primary formulation section.
  */
 export default function StoryMobile() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -63,8 +64,8 @@ export default function StoryMobile() {
 
   return (
     <section
-      id="story-mobile"
-      className="relative overflow-hidden bg-canvas py-12 md:hidden"
+      id="story"
+      className="relative overflow-hidden bg-canvas py-12 md:py-20"
     >
       <div className="container-app">
         <motion.div
