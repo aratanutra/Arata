@@ -78,34 +78,31 @@ export default function AeternyxFloat({
                     }
                   }}
                   exit={{ opacity: 0, x: 6, transition: { duration: 0.2 } }}
-                  className="pointer-events-none -mr-1 flex items-center md:mr-0"
+                  className="pointer-events-none mr-1 flex items-center gap-1.5 md:mr-2 md:gap-2"
                 >
-                  <span className="font-script text-[20px] font-semibold leading-none text-ink md:text-[28px]">
+                  <span className="font-script text-[22px] font-semibold leading-none text-ink md:text-[30px]">
                     Click me
                   </span>
-                  {/* Hand-drawn arrow — short arc from the script pointing RIGHT into the tablet */}
+                  {/* Simple hand-drawn horizontal arrow → tablet */}
                   <svg
-                    viewBox="0 0 60 40"
-                    className="ml-0.5 h-[32px] w-[42px] md:h-[42px] md:w-[58px]"
+                    viewBox="0 0 60 24"
+                    className="h-[22px] w-[48px] md:h-[28px] md:w-[64px]"
                     fill="none"
                     aria-hidden
                   >
-                    {/* Curve arcs from the "Click me" tail down and straight into the pill */}
                     <path
-                      d="M4 8 C 22 4, 40 14, 54 22"
+                      d="M4 12 C 20 10, 34 14, 54 12"
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
                       className="text-ink"
                     />
-                    {/* Arrowhead pointing RIGHT at the tablet */}
                     <path
-                      d="M48 15 L 55 22 L 48 29"
+                      d="M46 5 L 55 12 L 46 19"
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      fill="none"
                       className="text-ink"
                     />
                   </svg>
