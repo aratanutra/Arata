@@ -11,7 +11,17 @@ type PlayerHooks = {
   __aeternyxPlayerPlay?: (n: number) => void;
   __aeternyxPlayerState?: () => number | null | undefined;
   __aeternyxPlayerCount?: () => number;
+  __aeternyxLastPause?: number;
 };
+
+/** How long to hold after a user interaction before autoplay resumes. */
+const IDLE_MS = 5000;
+
+/** How long to hold the resting pack before autoplay first begins. */
+const START_DELAY_MS = 3000;
+
+/** Cycle interval between ingredients once autoplay is running. */
+const CYCLE_MS = 3000;
 
 function advanceOne(w: Window | null) {
   try {
@@ -25,6 +35,17 @@ function advanceOne(w: Window | null) {
     return true;
   } catch {
     return false;
+  }
+}
+
+/** ms since the last time the user interacted with the artifact, or Infinity if never. */
+function timeSinceLastPause(w: Window | null): number {
+  try {
+    const t = (w as unknown as PlayerHooks)?.__aeternyxLastPause;
+    if (typeof t !== "number") return Infinity;
+    return Date.now() - t;
+  } catch {
+    return Infinity;
   }
 }
 
@@ -90,11 +111,13 @@ export default function IngredientExplorer({ data }: Props) {
 
     // Parent-side autoplay driver: iOS Safari throttles setTimeout/setInterval
     // inside iframes (even RAF), but the PARENT document's RAF runs at native
-    // frame rate whenever the tab is visible. Every 3 s we call into the
-    // iframe's exposed play() to force the next ingredient.
+    // frame rate whenever the tab is visible. Every CYCLE_MS we call into the
+    // iframe's exposed play() to force the next ingredient — but only if the
+    // user hasn't interacted in the last IDLE_MS (so tap-to-hold works).
     function drive() {
       const now = performance.now();
-      if (inView && now - lastAdvanceAt > 3000) {
+      const idle = timeSinceLastPause(el?.contentWindow ?? null);
+      if (inView && now - lastAdvanceAt > CYCLE_MS && idle > IDLE_MS) {
         if (advanceOne(el?.contentWindow ?? null)) {
           lastAdvanceAt = now;
         }
@@ -117,12 +140,13 @@ export default function IngredientExplorer({ data }: Props) {
     el.addEventListener("load", attach);
     if (el.contentDocument?.readyState === "complete") attach();
 
-    // Start the parent-side driver after a beat so the artifact has time to
-    // expose its play() hooks on window.
+    // Start the parent-side driver after the same START_DELAY_MS the artifact
+    // uses for its own initial autoplay, so both wake up at the same moment
+    // and the pack visibly holds still for 3 s before cycling begins.
     const driverStart = window.setTimeout(() => {
       lastAdvanceAt = performance.now();
       driverRaf = requestAnimationFrame(drive);
-    }, 1500);
+    }, START_DELAY_MS);
 
     return () => {
       el.removeEventListener("load", attach);
