@@ -40,7 +40,7 @@ export default function AeternyxFloat({
   if (suppressed) return null;
 
   return (
-    <div className="fixed bottom-6 left-4 z-[90] md:bottom-auto md:left-auto md:right-8 md:top-32">
+    <div className="fixed right-3 top-20 z-[90] md:right-8 md:top-32">
       <AnimatePresence>
         {visible ? (
           <motion.div
@@ -78,15 +78,15 @@ export default function AeternyxFloat({
                     }
                   }}
                   exit={{ opacity: 0, x: 6, transition: { duration: 0.2 } }}
-                  className="pointer-events-none mr-1 hidden items-center md:mr-2 md:flex"
+                  className="pointer-events-none mr-1 flex items-center md:mr-2"
                 >
-                  <span className="mr-1 font-script text-[24px] font-semibold leading-none text-ink md:text-[28px]">
+                  <span className="mr-1 font-script text-[20px] font-semibold leading-none text-ink md:text-[28px]">
                     Click me
                   </span>
                   {/* Hand-drawn curved arrow pointing RIGHT into the tablet */}
                   <svg
                     viewBox="0 0 90 60"
-                    className="h-[48px] w-[70px] md:h-[54px] md:w-[80px]"
+                    className="h-[40px] w-[56px] md:h-[54px] md:w-[80px]"
                     fill="none"
                     aria-hidden
                   >
@@ -119,7 +119,7 @@ export default function AeternyxFloat({
               aria-label={`Explore ${label}`}
               onMouseEnter={() => setShowCue(false)}
               onClick={() => setShowCue(false)}
-              className="group relative flex h-[64px] w-[168px] items-center justify-center overflow-hidden rounded-[32px] shadow-[0_18px_36px_-14px_rgba(200,105,20,0.55)] transition-transform duration-200 hover:scale-[1.04] hover:shadow-[0_22px_44px_-14px_rgba(200,105,20,0.75)] md:h-[68px] md:w-[184px]"
+              className="group relative flex h-[54px] w-[140px] items-center justify-center overflow-hidden rounded-[28px] shadow-[0_14px_28px_-12px_rgba(200,105,20,0.55)] transition-transform duration-200 hover:scale-[1.04] hover:shadow-[0_22px_44px_-14px_rgba(200,105,20,0.75)] md:h-[68px] md:w-[184px] md:rounded-[32px]"
               style={{
                 background:
                   "radial-gradient(120% 100% at 30% 20%, #F4A65C 0%, #E88F3A 40%, #C86F1C 100%)"
@@ -141,7 +141,7 @@ export default function AeternyxFloat({
                 className="pointer-events-none absolute inset-y-3 left-1/2 w-px -translate-x-1/2 bg-black/25"
               />
               {/* Wordmark */}
-              <span className="relative z-10 text-[13px] font-semibold tracking-[0.24em] text-white/95 drop-shadow-[0_1px_1px_rgba(120,50,0,0.4)] md:text-[14px]">
+              <span className="relative z-10 text-[11px] font-semibold tracking-[0.22em] text-white/95 drop-shadow-[0_1px_1px_rgba(120,50,0,0.4)] md:text-[14px] md:tracking-[0.24em]">
                 {label}
               </span>
             </Link>
