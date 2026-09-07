@@ -133,8 +133,8 @@
       },
       {
         "name": "Vitamin D3 (Cholecalciferol)",
-        "dose": "650 IU",
-        "description": "Contributes to healthy vitamin D status in adults. Supports immune, cardiovascular, and bone function. 33.33% RDA."
+        "dose": "600 IU",
+        "description": "Contributes to healthy vitamin D status in adults. Supports immune, cardiovascular, and bone function. 100% RDA."
       },
       {
         "name": "Vitamin K2-7 (MK-7)",
@@ -252,6 +252,44 @@
       { "icon": "sun", "title": "Dosage", "detail": "Take one tablet daily, preferably with breakfast." },
       { "icon": "drop", "title": "Directions", "detail": "Swallow whole with a glass of water. Do not chew or crush the tablet." },
       { "icon": "warning", "title": "Precautions", "detail": "Not for children under 18, pregnant, or nursing women. Consult your healthcare professional before use if you have any medical condition or are on medication." }
+    ]
+  },
+  "compositionTable": {
+    "eyebrow": "Label composition",
+    "title": "Composition per tablet",
+    "subtitle": "Values printed on every AETERNYX® strip. Percentage RDA calculated as per ICMR guideline.",
+    "servingSize": "1 Tablet",
+    "servingsPerPack": "10 Tablets",
+    "targetConsumer": "Men & Women",
+    "compositionHeaders": ["Ingredient", "Qty. Per Serving", "%RDA (Men)", "%RDA (Women)"],
+    "composition": [
+      { "name": "Co-enzyme Q10", "qty": "100 mg", "rdaMen": "33.33", "rdaWomen": "33.33" },
+      { "name": "Resveratrol", "qty": "100 mg", "rdaMen": "**", "rdaWomen": "**" },
+      { "name": "Alpha-lipoic acid", "qty": "50 mg", "rdaMen": "**", "rdaWomen": "**" },
+      { "name": "Vitamin C (L-Ascorbic Acid)", "qty": "40 mg", "rdaMen": "50.00", "rdaWomen": "61.53" },
+      { "name": "Vitamin E (Tocotrienols)", "qty": "10 mg", "rdaMen": "100.00", "rdaWomen": "100.00" },
+      { "name": "Lycopene", "qty": "4 mg", "rdaMen": "**", "rdaWomen": "**" },
+      { "name": "Astaxanthin", "qty": "4 mg", "rdaMen": "33.33", "rdaWomen": "33.33" },
+      { "name": "Vitamin D (Vitamin D3) (Cholecalciferol) (Veg Source)", "qty": "600 IU", "rdaMen": "100.00", "rdaWomen": "100.00" },
+      { "name": "Vitamin K2 (MK-7)", "qty": "45 mcg", "rdaMen": "81.81", "rdaWomen": "81.81" },
+      { "name": "Selenium (Sodium selenite)", "qty": "40 mcg", "rdaMen": "100.00", "rdaWomen": "100.00" }
+    ],
+    "nutritionTitle": "Nutritional Information per Serving of Tablet (Approx.)",
+    "nutritionHeaders": ["Nutrient", "Qty. Per Serving", "%RDA"],
+    "nutrition": [
+      { "name": "Energy", "qty": "2.41 Kcal", "rda": "0.12" },
+      { "name": "Protein", "qty": "0.01 g", "rda": "0.02" },
+      { "name": "Carbohydrate", "qty": "0.59 g", "rda": "**" },
+      { "name": "Total Sugars", "qty": "0.00 g", "rda": "**" },
+      { "name": "Added Sugars", "qty": "0.00 g", "rda": "0.00" },
+      { "name": "Total Fat", "qty": "0.00 g", "rda": "0.00" },
+      { "name": "Cholesterol", "qty": "0.00 mg", "rda": "**" },
+      { "name": "Sodium", "qty": "2.07 mg", "rda": "0.10" }
+    ],
+    "notes": [
+      "** % RDA not established",
+      "% RDA calculated as per ICMR guideline",
+      "Not for medicinal use."
     ]
   },
   "certifications": {
