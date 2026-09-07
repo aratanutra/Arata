@@ -191,7 +191,7 @@
   },
   "philosophy": {
     "eyebrow": "Founding Principle",
-    "quote": "We did not build AETERNYX™ to be a supplement. We built it to be the molecular floor on which a longer life is constructed. Every dose composed with the published evidence in mind, every molecule earning its place. Cellular Intelligence™ is not a marketing phrase. It is the standard.",
+    "quote": "AETERNYX™ isn't just another supplement — it's a foundation for longer, healthier years. Every dose is backed by published evidence. Every molecule earns its place. Cellular Intelligence™ isn't a slogan. It's the standard we hold every ingredient to.",
     "founderName": "",
     "founderTitle": ""
   },
@@ -283,7 +283,7 @@
     "hero": {
       "eyebrow": "About Us",
       "title": "We are Arata Nutraceuticals.",
-      "subtitle": "A specialist healthspan brand based in Hyderabad, building India's most rigorously composed nutraceutical portfolio. AETERNYX™ is our founding formulation."
+      "subtitle": "Building India's most rigorously composed nutraceutical portfolio. AETERNYX™ is our founding formulation."
     },
     "story": {
       "title": "Why we exist",
@@ -304,7 +304,7 @@
     },
     "closingCta": {
       "eyebrow": "Begin",
-      "title": "AETERNYX™ is the first protocol. Start there.",
+      "title": "Start with AETERNYX™.",
       "primaryCta": { "label": "Explore AETERNYX™", "href": "/aeternyx" },
       "secondaryCta": { "label": "Talk to us on WhatsApp", "href": "whatsapp" }
     }
