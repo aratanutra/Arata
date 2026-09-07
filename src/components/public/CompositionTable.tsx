@@ -28,18 +28,51 @@ export default function CompositionTable({ data }: Props) {
           transition={{ duration: 0.7 }}
           className="mt-10 grid gap-6 md:mt-12 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-8"
         >
-          {/* Composition table */}
+          {/* Composition — card list on mobile, table on sm+ */}
           <div className="overflow-hidden rounded-2xl border border-hairline bg-paper">
             <div className="border-b border-hairline px-5 py-4 md:px-6">
               <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
                 Nutraceutical
               </div>
-              <div className="mt-1 text-[12px] uppercase tracking-widest text-muted">
+              <div className="mt-1 text-[11px] uppercase tracking-widest text-muted">
                 Target consumer group: {data.targetConsumer}
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[520px] text-left text-[13px] text-ink">
+
+            {/* Mobile: card list */}
+            <ul className="divide-y divide-hairline sm:hidden">
+              {data.composition.map((row) => (
+                <li key={row.name} className="px-5 py-3">
+                  <div className="text-[13px] font-medium leading-snug text-ink">
+                    {row.name}
+                  </div>
+                  <div className="mt-1.5 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-[11px] uppercase tracking-widest text-muted">
+                    <span>
+                      Qty{" "}
+                      <span className="tnum ml-0.5 text-[13px] normal-case tracking-tight text-ink">
+                        {row.qty}
+                      </span>
+                    </span>
+                    <span>
+                      %RDA Men{" "}
+                      <span className="tnum ml-0.5 text-[13px] normal-case tracking-tight text-ink-soft">
+                        {row.rdaMen}
+                      </span>
+                    </span>
+                    <span>
+                      %RDA Women{" "}
+                      <span className="tnum ml-0.5 text-[13px] normal-case tracking-tight text-ink-soft">
+                        {row.rdaWomen}
+                      </span>
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {/* Tablet / desktop: table */}
+            <div className="hidden overflow-x-auto sm:block">
+              <table className="w-full text-left text-[13px] text-ink">
                 <thead className="bg-canvas/60">
                   <tr>
                     {data.compositionHeaders.map((h, i) => (
@@ -56,10 +89,7 @@ export default function CompositionTable({ data }: Props) {
                 </thead>
                 <tbody>
                   {data.composition.map((row, i) => (
-                    <tr
-                      key={row.name}
-                      className={i % 2 === 1 ? "bg-canvas/40" : ""}
-                    >
+                    <tr key={row.name} className={i % 2 === 1 ? "bg-canvas/40" : ""}>
                       <td className="px-5 py-2.5 leading-snug text-ink-soft md:px-6">
                         {row.name}
                       </td>
@@ -97,7 +127,27 @@ export default function CompositionTable({ data }: Props) {
                   </span>
                 </div>
               </div>
-              <div className="overflow-x-auto">
+
+              {/* Mobile: compact rows */}
+              <ul className="divide-y divide-hairline sm:hidden">
+                {data.nutrition.map((row) => (
+                  <li
+                    key={row.name}
+                    className="flex items-baseline justify-between gap-4 px-5 py-2.5"
+                  >
+                    <span className="text-[13px] text-ink-soft">{row.name}</span>
+                    <span className="flex items-baseline gap-3">
+                      <span className="tnum text-[13px] text-ink">{row.qty}</span>
+                      <span className="tnum text-[11px] uppercase tracking-widest text-muted">
+                        {row.rda}%
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Tablet / desktop: table */}
+              <div className="hidden overflow-x-auto sm:block">
                 <table className="w-full text-left text-[13px] text-ink">
                   <thead className="bg-canvas/60">
                     <tr>
@@ -115,10 +165,7 @@ export default function CompositionTable({ data }: Props) {
                   </thead>
                   <tbody>
                     {data.nutrition.map((row, i) => (
-                      <tr
-                        key={row.name}
-                        className={i % 2 === 1 ? "bg-canvas/40" : ""}
-                      >
+                      <tr key={row.name} className={i % 2 === 1 ? "bg-canvas/40" : ""}>
                         <td className="px-5 py-2 leading-snug text-ink-soft md:px-6">
                           {row.name}
                         </td>
