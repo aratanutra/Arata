@@ -112,11 +112,13 @@ export default function IngredientExplorer({ data }: Props) {
             ref={iframeRef}
             src={asset("/ingredient-explorer.html")}
             title="AETERNYX Ingredient Explorer"
-            loading="lazy"
+            loading="eager"
             scrolling="no"
             className="block w-full"
             style={{ border: 0, height: 720 }}
             allow="clipboard-write"
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            {...({ fetchpriority: "high" } as any)}
           />
         </motion.div>
       </div>
