@@ -224,7 +224,7 @@
     "primaryCta": { "label": "Order now", "href": "whatsapp" },
     "secondaryCta": { "label": "Read the Science", "href": "#science" },
     "shipLine": "Batch, MFG date, and expiry printed on each strip. Delivery details confirmed on WhatsApp.",
-    "trustIcons": ["FSSAI Licensed", "Vegetarian", "GMP + HACCP", "Third-Party Tested"]
+    "trustIcons": ["Vegetarian", "GMP + HACCP"]
   },
   "howToUse": {
     "eyebrow": "How to use",
