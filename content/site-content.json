@@ -1,7 +1,7 @@
 {
   "brand": {
     "name": "AETERNYX",
-    "trademark": "™",
+    "trademark": "®",
     "taglineTrademark": "™",
     "company": "Arata Nutraceuticals",
     "tagline": "Cellular Intelligence",
@@ -13,7 +13,7 @@
     "email": "aratanutra@gmail.com",
     "phone": "+91 99599 93973",
     "whatsappNumber": "919959993973",
-    "whatsappGreeting": "Hi, I would like to know more about AETERNYX™.",
+    "whatsappGreeting": "Hi, I would like to know more about AETERNYX®.",
     "domain": "aratanutra.com",
     "fssaiLicense": "13626999000569",
     "fssaiManufacturerLicense": "10020045000187",
@@ -25,7 +25,7 @@
   "nav": {
     "links": [
       { "label": "Home", "href": "/" },
-      { "label": "AETERNYX™", "href": "/aeternyx" },
+      { "label": "AETERNYX®", "href": "/aeternyx" },
       { "label": "About Us", "href": "/about" },
       { "label": "Contact", "href": "whatsapp" }
     ],
@@ -37,7 +37,7 @@
     "title": "Healthspan, engineered.",
     "tagline": "Cellular Intelligence",
     "subtitle": "Building India's most rigorously composed nutraceutical portfolio. Every molecule earns its place through published evidence. Every dose calibrated for daily, sustainable use.",
-    "primaryCta": { "label": "Explore AETERNYX™", "href": "/aeternyx" },
+    "primaryCta": { "label": "Explore AETERNYX®", "href": "/aeternyx" },
     "secondaryCta": { "label": "Our standard", "href": "/about" }
   },
   "trustBar": {
@@ -76,7 +76,7 @@
   "product": {
     "eyebrow": "The Daily Protocol",
     "title": "One tablet. The architecture of cellular healthspan.",
-    "description": "AETERNYX™ is a research-graded nutraceutical that converges ten evidence-graded molecules across the five hallmarks of cellular ageing: mitochondrial decline, oxidative stress, inflammaging, vascular calcium handling, and micronutrient adequacy. Each dose is calibrated for daily sustainable use.",
+    "description": "AETERNYX® is a research-graded nutraceutical that converges ten evidence-graded molecules across the five hallmarks of cellular ageing: mitochondrial decline, oxidative stress, inflammaging, vascular calcium handling, and micronutrient adequacy. Each dose is calibrated for daily sustainable use.",
     "stats": [
       { "value": "10", "label": "Bioactive Ingredients" },
       { "value": "5", "label": "Ageing Pathways" },
@@ -151,7 +151,7 @@
   "science": {
     "eyebrow": "Mechanism",
     "title": "Five cellular wellness pathways. One convergent nutraceutical.",
-    "subtitle": "Cellular ageing is not one process. It is the cumulative drift of mitochondria, redox balance, signalling, calcium handling, and micronutrient status. AETERNYX™ supports all five.",
+    "subtitle": "Cellular ageing is not one process. It is the cumulative drift of mitochondria, redox balance, signalling, calcium handling, and micronutrient status. AETERNYX® supports all five.",
     "pathways": [
       {
         "name": "Mitochondrial Decline",
@@ -191,7 +191,7 @@
   },
   "philosophy": {
     "eyebrow": "Founding Principle",
-    "quote": "AETERNYX™ isn't just another supplement — it's a foundation for longer, healthier years. Every dose is backed by published evidence. Every molecule earns its place. Cellular Intelligence™ isn't a slogan. It's the standard we hold every ingredient to.",
+    "quote": "AETERNYX® isn't just another supplement — it's a foundation for longer, healthier years. Every dose is backed by published evidence. Every molecule earns its place. Cellular Intelligence™ isn't a slogan. It's the standard we hold every ingredient to.",
     "founderName": "",
     "founderTitle": ""
   },
@@ -230,7 +230,7 @@
     "eyebrow": "How to use",
     "title": "One tablet, once a day. That is the entire protocol.",
     "steps": [
-      { "icon": "pill", "title": "1 tablet daily", "detail": "Take one AETERNYX™ tablet once every 24 hours." },
+      { "icon": "pill", "title": "1 tablet daily", "detail": "Take one AETERNYX® tablet once every 24 hours." },
       { "icon": "sun", "title": "With morning meal", "detail": "Fat-soluble actives (K2, D3, Astaxanthin, Tocotrienols) absorb best with a meal that includes fat." },
       { "icon": "calendar", "title": "Continue for 90 days", "detail": "Serum levels stabilise across 8–12 weeks. Reassess after 90 days." },
       { "icon": "store", "title": "Store cool and dry", "detail": "Keep the strip in a cool, dry, dark place. Protect from moisture and direct light." }
@@ -240,8 +240,8 @@
   "metricsPanel": {
     "eyebrow": "Composition at a glance",
     "title": "Ten molecules. Five pathways. One tablet.",
-    "paragraph": "AETERNYX™ converges ten evidence-graded bioactives across five cellular wellness pathways — mitochondrial energy, oxidative balance, membrane integrity, immune capacity, and vascular calcium handling. Every molecule dosed with the published evidence in mind. Every tablet calibrated for daily, sustainable use.",
-    "footnote": "Composition metrics reflect the AETERNYX™ formulation. Not intended to diagnose, treat, cure, or prevent any disease.",
+    "paragraph": "AETERNYX® converges ten evidence-graded bioactives across five cellular wellness pathways — mitochondrial energy, oxidative balance, membrane integrity, immune capacity, and vascular calcium handling. Every molecule dosed with the published evidence in mind. Every tablet calibrated for daily, sustainable use.",
+    "footnote": "Composition metrics reflect the AETERNYX® formulation. Not intended to diagnose, treat, cure, or prevent any disease.",
     "pills": [
       { "value": "10", "label": "Evidence-graded bioactives" },
       { "value": "5", "label": "Cellular wellness pathways" },
@@ -257,7 +257,7 @@
   "certifications": {
     "eyebrow": "Certifications",
     "title": "Manufactured to global standards.",
-    "subtitle": "AETERNYX™ is produced at an ISO 22000:2018, ISO 9001:2015, ISO 14001:2015, WHO-GMP, and HACCP certified facility. Every batch is third-party tested before dispatch.",
+    "subtitle": "AETERNYX® is produced at an ISO 22000:2018, ISO 9001:2015, ISO 14001:2015, WHO-GMP, and HACCP certified facility. Every batch is third-party tested before dispatch.",
     "items": [
       { "title": "FSSAI Licensed", "detail": "Marketer Lic. 13626999000569 · Manufacturer Lic. 10020045000187", "code": "FSSAI" },
       { "title": "WHO-GMP + HACCP", "detail": "Good Manufacturing Practices and Hazard Analysis Critical Control Points certified.", "code": "GMP" },
@@ -269,28 +269,28 @@
     "eyebrow": "Questions",
     "title": "Answers before you ask.",
     "items": [
-      { "q": "Who should take AETERNYX™?", "a": "Adults over 30 looking for an expertly composed foundational healthspan nutraceutical. It is designed to be taken alongside a normal diet. If you are pregnant, lactating, on blood thinners, or managing a serious condition, get medical clearance before starting." },
+      { "q": "Who should take AETERNYX®?", "a": "Adults over 30 looking for an expertly composed foundational healthspan nutraceutical. It is designed to be taken alongside a normal diet. If you are pregnant, lactating, on blood thinners, or managing a serious condition, get medical clearance before starting." },
       { "q": "How long until I notice the effects?", "a": "Serum levels of the fat-soluble actives (D3, K2, Astaxanthin, Tocotrienols) stabilise across 8–12 weeks. Most subjective effects — energy, sleep quality, cognitive clarity — settle in that window. Give it a full 90-day cycle before evaluating." },
-      { "q": "Can I take AETERNYX™ with my other medicines?", "a": "The formulation contains no drug actives and no supra-therapeutic doses. That said, Vitamin K2 can interact with warfarin and other coumarin anticoagulants — if you are on those, get medical clearance before starting." },
+      { "q": "Can I take AETERNYX® with my other medicines?", "a": "The formulation contains no drug actives and no supra-therapeutic doses. That said, Vitamin K2 can interact with warfarin and other coumarin anticoagulants — if you are on those, get medical clearance before starting." },
       { "q": "Is it safe to take long-term?", "a": "Every dose sits within the tolerable upper intake level (UL) established in the evidence base. The D3 + K2 pairing is specifically designed to make long-term supplementation safer than D3 alone. Annual medical review is still advisable." },
       { "q": "Why one tablet rather than a stack of pills?", "a": "Compliance. Ten separate bottles is the reason most nutraceutical protocols fail. A single daily tablet is what actually gets taken every day." },
-      { "q": "Is AETERNYX™ vegetarian?", "a": "Yes. Every active is plant-derived or synthetic. The Vitamin D3 uses a vegetarian source (lichen-derived cholecalciferol). No gelatin, no animal excipients." },
+      { "q": "Is AETERNYX® vegetarian?", "a": "Yes. Every active is plant-derived or synthetic. The Vitamin D3 uses a vegetarian source (lichen-derived cholecalciferol). No gelatin, no animal excipients." },
       { "q": "Are there any side effects?", "a": "At the doses used, side effects are uncommon. Some individuals report mild gastric warmth from Astaxanthin or mild yellowing of the palm (harmless, from Lycopene) at first. Take with food to minimise both." },
-      { "q": "Where is AETERNYX™ manufactured?", "a": "AETERNYX™ is manufactured by SunBeam Lifesciences Pvt. Ltd. in Puducherry, India — an ISO 22000/9001/14001, WHO-GMP, and HACCP certified facility. FSSAI licence 10020045000187." }
+      { "q": "Where is AETERNYX® manufactured?", "a": "AETERNYX® is manufactured by SunBeam Lifesciences Pvt. Ltd. in Puducherry, India — an ISO 22000/9001/14001, WHO-GMP, and HACCP certified facility. FSSAI licence 10020045000187." }
     ]
   },
   "about": {
     "hero": {
       "eyebrow": "About Us",
       "title": "We are Arata Nutraceuticals.",
-      "subtitle": "Building India's most rigorously composed nutraceutical portfolio. AETERNYX™ is our founding formulation."
+      "subtitle": "Building India's most rigorously composed nutraceutical portfolio. AETERNYX® is our founding formulation."
     },
     "story": {
       "title": "Why we exist",
       "paragraphs": [
         "Arata Nutraceuticals was founded on a single conviction: the supplement industry in India had drifted dangerously far from the published evidence. Bottles claimed everything, evidence supported almost nothing. Doses were marketing artefacts. Excipients outweighed actives.",
         "We work backwards from the published evidence. Every molecule in every Arata product is included because there is a defensible reason for it to be there, at the dose it is at. Anything that cannot survive that test is not in the tablet.",
-        "AETERNYX™ is the first of a planned portfolio of expertly composed healthspan nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
+        "AETERNYX® is the first of a planned portfolio of expertly composed healthspan nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
       ]
     },
     "values": {
@@ -304,8 +304,8 @@
     },
     "closingCta": {
       "eyebrow": "Begin",
-      "title": "Start with AETERNYX™.",
-      "primaryCta": { "label": "Explore AETERNYX™", "href": "/aeternyx" },
+      "title": "Start with AETERNYX®.",
+      "primaryCta": { "label": "Explore AETERNYX®", "href": "/aeternyx" },
       "secondaryCta": { "label": "Talk to us on WhatsApp", "href": "whatsapp" }
     }
   },
@@ -313,7 +313,7 @@
     "tagline": "Cellular Intelligence, daily.",
     "columns": [
       {
-        "title": "AETERNYX™",
+        "title": "AETERNYX®",
         "links": [
           { "label": "Overview", "href": "/aeternyx" },
           { "label": "Ingredients", "href": "/aeternyx#ingredients" },
@@ -336,9 +336,9 @@
       }
     ],
     "address": "Arata Nutraceuticals · India",
-    "rights": "© 2026 Arata Nutraceuticals. AETERNYX™ is a trademark of Arata Nutraceuticals.",
+    "rights": "© 2026 Arata Nutraceuticals. AETERNYX® is a trademark of Arata Nutraceuticals.",
     "fssaiText": "FSSAI Lic. No.",
-    "complianceDisclaimer": "AETERNYX™ is a nutraceutical food supplement classified under FSSAI (Health Supplements, Nutraceuticals, FSDU, FSMP, and Prebiotic and Probiotic Food) Regulations, 2022. It is not a drug. It is not intended to diagnose, treat, cure, or prevent any disease. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry, and dark place. Protect from light and moisture. Keep out of reach of children.",
+    "complianceDisclaimer": "AETERNYX® is a nutraceutical food supplement classified under FSSAI (Health Supplements, Nutraceuticals, FSDU, FSMP, and Prebiotic and Probiotic Food) Regulations, 2022. It is not a drug. It is not intended to diagnose, treat, cure, or prevent any disease. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry, and dark place. Protect from light and moisture. Keep out of reach of children.",
     "grievanceOfficer": {
       "label": "Grievance",
       "name": "",

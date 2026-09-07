@@ -24,7 +24,7 @@ export default function MetricsPanel({ data }: Props) {
             className="max-w-md"
           >
             <p className="body-base">
-              AETERNYX™ converges{" "}
+              AETERNYX® converges{" "}
               <span className="font-semibold text-gold-deep">ten evidence-graded bioactives</span>{" "}
               across{" "}
               <span className="font-semibold text-gold-deep">five cellular wellness pathways</span>{" "}
