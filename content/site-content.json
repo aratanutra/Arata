@@ -26,7 +26,8 @@
     "links": [
       { "label": "Home", "href": "/" },
       { "label": "AETERNYX™", "href": "/aeternyx" },
-      { "label": "About Us", "href": "/about" }
+      { "label": "About Us", "href": "/about" },
+      { "label": "Contact", "href": "whatsapp" }
     ],
     "ctaLabel": "",
     "ctaHref": ""

@@ -28,14 +28,29 @@ function NavItem({
   link,
   active,
   onClick,
-  size = "sm"
+  size = "sm",
+  waHref
 }: {
   link: NavLink;
   active: boolean;
   onClick?: () => void;
   size?: "sm" | "lg";
+  waHref?: string;
 }) {
   const className = `${size === "lg" ? "text-base" : ""} nav-link ${active ? "text-ink" : ""}`;
+  if (link.href === "whatsapp" && waHref) {
+    return (
+      <a
+        href={waHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClick}
+        className={className}
+      >
+        {link.label}
+      </a>
+    );
+  }
   if (isHashOnly(link.href)) {
     return (
       <a href={link.href} onClick={onClick} className={className}>
@@ -129,26 +144,33 @@ export default function Nav({ brand, nav }: Props) {
           <span className="text-[15px] font-semibold tracking-tight text-ink">{brand.company}</span>
         </Link>
 
-        <div className="flex items-center gap-7">
-          <nav className="hidden lg:flex items-center gap-7">
-            {nav.links.map((link) => (
-              <NavItem key={link.href} link={link} active={isActive(link.href)} />
-            ))}
-          </nav>
+        <div className="flex items-center gap-3">
           {showCta ? <span className="hidden md:inline-flex">{renderCta()}</span> : null}
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
-            className="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-ink"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink transition-colors hover:bg-paper"
           >
-            <span className="block h-px w-4 bg-ink relative before:absolute before:-top-1.5 before:left-0 before:h-px before:w-4 before:bg-ink after:absolute after:top-1.5 after:left-0 after:h-px after:w-4 after:bg-ink" />
+            {mobileOpen ? (
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
+                <path
+                  d="M6 6l12 12M18 6 6 18"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                />
+              </svg>
+            ) : (
+              <span className="block h-px w-4 bg-ink relative before:absolute before:-top-1.5 before:left-0 before:h-px before:w-4 before:bg-ink after:absolute after:top-1.5 after:left-0 after:h-px after:w-4 after:bg-ink" />
+            )}
           </button>
         </div>
       </div>
 
       {mobileOpen ? (
-        <div className="lg:hidden border-t border-hairline bg-canvas">
+        <div className="border-t border-hairline bg-canvas">
           <div className="container-app flex flex-col gap-4 py-6">
             {nav.links.map((link) => (
               <NavItem
@@ -157,6 +179,7 @@ export default function Nav({ brand, nav }: Props) {
                 active={isActive(link.href)}
                 onClick={() => setMobileOpen(false)}
                 size="lg"
+                waHref={waHref}
               />
             ))}
             {renderCta(() => setMobileOpen(false), "mt-2 justify-center py-3")}
