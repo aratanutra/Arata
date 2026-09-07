@@ -8,7 +8,7 @@ import CompositionTable from "@/components/public/CompositionTable";
 import MetricsPanel from "@/components/public/MetricsPanel";
 import HowToUse from "@/components/public/HowToUse";
 import Benefits from "@/components/public/Benefits";
-import Science from "@/components/public/Science";
+import FiveDrivers from "@/components/public/FiveDrivers";
 import Certifications from "@/components/public/Certifications";
 import Faq from "@/components/public/Faq";
 import Footer from "@/components/public/Footer";
@@ -32,7 +32,7 @@ export default async function AeternyxPage() {
       <MetricsPanel data={content.metricsPanel} />
       <HowToUse data={content.howToUse} />
       <Benefits data={content.benefits} />
-      <Science data={content.science} />
+      <FiveDrivers data={content.science} />
       <Certifications data={content.certifications} />
       <Faq data={content.faq} />
       <Footer brand={content.brand} footer={content.footer} />
