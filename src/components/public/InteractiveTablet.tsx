@@ -20,7 +20,7 @@ export default function InteractiveTablet({ data }: Props) {
           <span className="eyebrow">Composition</span>
           <h2 className="mt-4 heading-md">One tablet. Ten actives in orbit.</h2>
           <p className="mt-4 body-base">
-            The AETERNYX™ tablet is the nucleus. Its ten actives orbit around it across three
+            The AETERNYX® tablet is the nucleus. Its ten actives orbit around it across three
             crossing rings. The card below cycles through each active automatically — tap any disc
             to hold it and read the dose, mechanism, and the body system it acts on.
           </p>

@@ -66,7 +66,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       <header className="flex flex-col gap-4 border-b border-hairline pb-8 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-widest text-gold-deep">
-            Arata Nutraceuticals · AETERNYX™ Console
+            Arata Nutraceuticals · AETERNYX® Console
           </p>
           <h1 className="mt-2 text-5xl text-ink">Content Studio</h1>
           <p className="mt-2 text-sm text-muted">
