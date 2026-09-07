@@ -76,13 +76,14 @@ export default function Footer({ brand, footer }: Props) {
   const waHref = `https://wa.me/${brand.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
     brand.whatsappGreeting
   )}`;
+
   return (
-    <footer className="relative border-t border-hairline bg-paper pt-12 pb-10 md:pt-14 md:pb-12">
+    <footer className="relative border-t border-hairline bg-paper pt-12 pb-10 md:pt-16 md:pb-12">
       <div className="container-app">
-        {/* Top: brand + 3 nav columns, tight 4-up grid on md+ so nothing wraps */}
-        <div className="grid gap-10 md:grid-cols-[1.6fr_repeat(3,1fr)] md:gap-8 md:gap-y-10">
-          {/* Brand */}
-          <div>
+        {/* Top row: brand (big) + compliance addresses + nav — no more empty middle */}
+        <div className="grid gap-10 md:grid-cols-12 md:gap-8">
+          {/* Brand — takes 5 cols on desktop; big logo carries the weight */}
+          <div className="md:col-span-5">
             <Link
               href="/"
               className="inline-flex items-center"
@@ -92,11 +93,10 @@ export default function Footer({ brand, footer }: Props) {
               <img
                 src={asset(brand.logoAsset)}
                 alt={brand.company}
-                className="h-20 w-auto object-contain md:h-24"
+                className="h-28 w-auto object-contain md:h-36"
               />
             </Link>
-            <p className="mt-4 text-[15px] leading-relaxed text-ink">{footer.tagline}</p>
-
+            <p className="mt-5 text-[15px] leading-relaxed text-ink">{footer.tagline}</p>
             <div className="mt-5 flex flex-wrap items-center gap-2.5">
               <FssaiBadge license={brand.fssaiLicense} />
               {brand.vegetarian ? (
@@ -110,45 +110,51 @@ export default function Footer({ brand, footer }: Props) {
             </div>
           </div>
 
-          {/* Nav columns */}
-          {footer.columns.map((col) => (
-            <div key={col.title}>
-              <h4 className="text-[11px] font-semibold uppercase tracking-widest text-ink">
-                {col.title}
+          {/* Marketed + Manufactured addresses now live inline in the top row */}
+          <div className="md:col-span-4">
+            <div>
+              <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                Marketed by
               </h4>
-              <ul className="mt-4 space-y-2.5">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <FooterLink href={l.href} waHref={waHref}>
-                      {l.label}
-                    </FooterLink>
-                  </li>
-                ))}
-              </ul>
+              <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{brand.marketer}</p>
+              <p className="tnum mt-1 text-[11px] uppercase tracking-widest text-muted">
+                {footer.fssaiText} {brand.fssaiLicense}
+              </p>
             </div>
-          ))}
+            <div className="mt-5">
+              <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                Manufactured by
+              </h4>
+              <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{brand.manufacturer}</p>
+              <p className="tnum mt-1 text-[11px] uppercase tracking-widest text-muted">
+                {footer.fssaiText} {brand.fssaiManufacturerLicense}
+              </p>
+            </div>
+          </div>
+
+          {/* Nav — stacked into a single narrower column */}
+          <div className="grid gap-6 md:col-span-3 md:grid-cols-1">
+            {footer.columns.map((col) => (
+              <div key={col.title}>
+                <h4 className="text-[11px] font-semibold uppercase tracking-widest text-ink">
+                  {col.title}
+                </h4>
+                <ul className="mt-3 space-y-2.5">
+                  {col.links.map((l) => (
+                    <li key={l.label}>
+                      <FooterLink href={l.href} waHref={waHref}>
+                        {l.label}
+                      </FooterLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Marketed / Manufactured / FSSAI Disclosure */}
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
-            <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
-              Marketed by
-            </div>
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{brand.marketer}</p>
-            <p className="mt-2 tnum text-[11px] uppercase tracking-widest text-muted">
-              {footer.fssaiText} {brand.fssaiLicense}
-            </p>
-          </div>
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
-            <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
-              Manufactured by
-            </div>
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{brand.manufacturer}</p>
-            <p className="mt-2 tnum text-[11px] uppercase tracking-widest text-muted">
-              {footer.fssaiText} {brand.fssaiManufacturerLicense}
-            </p>
-          </div>
+        {/* Compliance strip: FSSAI Disclosure + Grievance + Order Policies */}
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
             <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               FSSAI Disclosure
@@ -160,20 +166,14 @@ export default function Footer({ brand, footer }: Props) {
               Category: {brand.fssaiCategory}
             </p>
           </div>
-        </div>
 
-        {/* Grievance officer + Order policies */}
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
             <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               {footer.grievanceOfficer.label}
             </div>
-            <p className="mt-2 text-[13px] font-semibold tracking-tight text-ink">
-              {footer.grievanceOfficer.name}
-            </p>
             <a
               href={`tel:${footer.grievanceOfficer.phone.replace(/\s+/g, "")}`}
-              className="tnum mt-1 inline-block text-[12px] text-ink-soft hover:text-ink"
+              className="tnum mt-2 inline-block text-[13px] font-semibold text-ink hover:text-gold-deep"
             >
               {footer.grievanceOfficer.phone}
             </a>
@@ -181,6 +181,7 @@ export default function Footer({ brand, footer }: Props) {
               {footer.grievanceOfficer.note}
             </p>
           </div>
+
           <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
             <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               {footer.policies.label}

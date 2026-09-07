@@ -247,7 +247,7 @@ export default function Product3DSlider({
           ))}
         </div>
         {showHint ? (
-          <span className="text-[10px] font-medium uppercase tracking-widest text-muted">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.2em] text-ink-soft md:text-[13px]">
             {current.hint}
           </span>
         ) : null}
