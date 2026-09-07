@@ -60,8 +60,6 @@ export default function ProductHero({ brand, hero }: Props) {
               showHint={false}
             />
             <div className="mt-4 flex items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-muted">
-              <span>Drag to rotate</span>
-              <span className="h-1 w-1 rounded-full bg-hairline" />
               <span>10 Actives</span>
               <span className="h-1 w-1 rounded-full bg-hairline" />
               <span>Vegetarian</span>
