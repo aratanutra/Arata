@@ -37,6 +37,7 @@ export type SiteContent = {
     phone: string;
     whatsappNumber: string;
     whatsappGreeting: string;
+    whatsappOrderMessage: string;
     domain: string;
     fssaiLicense: string;
     fssaiManufacturerLicense: string;

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { NavLink, SiteContent } from "@/types/content";
 import { asset } from "@/lib/asset";
 
@@ -29,26 +29,29 @@ function NavItem({
   active,
   onClick,
   size = "sm",
-  waHref
+  onWhatsAppRequest
 }: {
   link: NavLink;
   active: boolean;
   onClick?: () => void;
   size?: "sm" | "lg";
-  waHref?: string;
+  onWhatsAppRequest?: () => void;
 }) {
   const className = `${size === "lg" ? "text-base" : ""} nav-link ${active ? "text-ink" : ""}`;
-  if (link.href === "whatsapp" && waHref) {
+  if (link.href === "whatsapp") {
+    // Contact link: open the WhatsApp/Email chooser instead of jumping straight
+    // to WhatsApp. onWhatsAppRequest is Nav's opener; onClick closes the drawer.
     return (
-      <a
-        href={waHref}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={onClick}
-        className={className}
+      <button
+        type="button"
+        onClick={() => {
+          onClick?.();
+          onWhatsAppRequest?.();
+        }}
+        className={`${className} text-left`}
       >
         {link.label}
-      </a>
+      </button>
     );
   }
   if (isHashOnly(link.href)) {
@@ -65,10 +68,48 @@ function NavItem({
   );
 }
 
+function EmailGlyph({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden>
+      <rect
+        x="3"
+        y="5"
+        width="18"
+        height="14"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M4 7l8 6 8-6"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function Nav({ brand, nav }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (!contactOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setContactOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [contactOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -179,13 +220,95 @@ export default function Nav({ brand, nav }: Props) {
                 active={isActive(link.href)}
                 onClick={() => setMobileOpen(false)}
                 size="lg"
-                waHref={waHref}
+                onWhatsAppRequest={() => setContactOpen(true)}
               />
             ))}
             {renderCta(() => setMobileOpen(false), "mt-2 justify-center py-3")}
           </div>
         </div>
       ) : null}
+
+      {/* Contact chooser — how would you like to reach us? */}
+      <AnimatePresence>
+        {contactOpen ? (
+          <motion.div
+            key="contact-chooser"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] flex items-end justify-center bg-ink-deep/60 p-4 backdrop-blur-sm md:items-center"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setContactOpen(false);
+            }}
+          >
+            <motion.div
+              initial={{ y: 24, scale: 0.98, opacity: 0 }}
+              animate={{ y: 0, scale: 1, opacity: 1 }}
+              exit={{ y: 24, scale: 0.98, opacity: 0 }}
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full max-w-sm overflow-hidden rounded-3xl border border-hairline bg-canvas p-6 shadow-xl md:p-8"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                    Contact us
+                  </div>
+                  <h3 className="mt-1 text-lg font-semibold tracking-tight text-ink md:text-xl">
+                    How would you like to reach us?
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  aria-label="Close"
+                  onClick={() => setContactOpen(false)}
+                  className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-hairline text-ink transition-colors hover:bg-paper"
+                >
+                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden>
+                    <path
+                      d="M6 6l12 12M18 6L6 18"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="mt-5 flex flex-col gap-3">
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setContactOpen(false)}
+                  className="inline-flex items-center gap-3 rounded-2xl bg-[#25D366] px-5 py-4 text-white shadow-[0_10px_28px_-10px_rgba(37,211,102,0.55)] transition-transform duration-200 hover:scale-[1.01]"
+                >
+                  <WhatsAppGlyph className="h-6 w-6 shrink-0" />
+                  <div className="text-left leading-tight">
+                    <div className="text-[13px] font-semibold">WhatsApp</div>
+                    <div className="mt-0.5 text-[11px] opacity-90">
+                      Fastest — usually replies same day
+                    </div>
+                  </div>
+                </a>
+                <a
+                  href={`mailto:${brand.email}?subject=${encodeURIComponent(
+                    "AETERNYX® enquiry"
+                  )}&body=${encodeURIComponent(brand.whatsappGreeting)}`}
+                  onClick={() => setContactOpen(false)}
+                  className="inline-flex items-center gap-3 rounded-2xl border border-hairline bg-canvas px-5 py-4 text-ink transition-colors hover:bg-paper"
+                >
+                  <EmailGlyph className="h-6 w-6 shrink-0 text-gold-deep" />
+                  <div className="text-left leading-tight">
+                    <div className="text-[13px] font-semibold">Email</div>
+                    <div className="mt-0.5 text-[11px] text-muted">{brand.email}</div>
+                  </div>
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </motion.header>
   );
 }

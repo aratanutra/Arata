@@ -28,12 +28,15 @@ function WhatsAppGlyph({ className }: { className?: string }) {
 }
 
 export default function ProductHero({ brand, hero }: Props) {
-  const waHref = `https://wa.me/${brand.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
-    brand.whatsappGreeting
+  // Order-now flow: WhatsApp opens with the ORDER greeting, not the generic
+  // "know more" greeting the nav Contact link uses.
+  const digits = brand.whatsappNumber.replace(/\D/g, "");
+  const waOrderHref = `https://wa.me/${digits}?text=${encodeURIComponent(
+    brand.whatsappOrderMessage
   )}`;
 
   function resolveHref(href: string): { href: string; external: boolean } {
-    if (href === "whatsapp") return { href: waHref, external: true };
+    if (href === "whatsapp") return { href: waOrderHref, external: true };
     return { href, external: false };
   }
 
