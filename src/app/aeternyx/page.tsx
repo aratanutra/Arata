@@ -4,7 +4,6 @@ import Nav from "@/components/public/Nav";
 import ProductHero from "@/components/public/ProductHero";
 import TrustBar from "@/components/public/TrustBar";
 import IngredientExplorer from "@/components/public/IngredientExplorer";
-import Ingredients from "@/components/public/Ingredients";
 import MetricsPanel from "@/components/public/MetricsPanel";
 import HowToUse from "@/components/public/HowToUse";
 import Benefits from "@/components/public/Benefits";
@@ -28,7 +27,6 @@ export default async function AeternyxPage() {
       <ProductHero brand={content.brand} hero={content.productHero} />
       <TrustBar data={content.trustBar} />
       <IngredientExplorer data={content.ingredientsSection} />
-      <Ingredients data={content.ingredientsSection} />
       <MetricsPanel data={content.metricsPanel} />
       <HowToUse data={content.howToUse} />
       <Benefits data={content.benefits} />
