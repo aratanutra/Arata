@@ -136,7 +136,7 @@ export default function Carton3D({
         <Scene />
       </Canvas>
       {showHint ? (
-        <div className="pointer-events-none absolute inset-x-0 bottom-4 text-center text-[10px] font-medium uppercase tracking-widest text-muted">
+        <div className="pointer-events-none absolute inset-x-0 bottom-5 text-center text-[12px] font-semibold uppercase tracking-[0.2em] text-ink-soft md:text-[13px]">
           Drag to rotate · Pinch or scroll to zoom
         </div>
       ) : null}
