@@ -1,11 +1,32 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
 import { asset } from "@/lib/asset";
 
 type Props = { data: SiteContent["ingredientsSection"] };
+
+type PlayerHooks = {
+  __aeternyxPlayerPlay?: (n: number) => void;
+  __aeternyxPlayerState?: () => number | null | undefined;
+  __aeternyxPlayerCount?: () => number;
+};
+
+function advanceOne(w: Window | null) {
+  try {
+    const hooks = w as unknown as PlayerHooks;
+    const play = hooks?.__aeternyxPlayerPlay;
+    if (typeof play !== "function") return false;
+    const cur = hooks?.__aeternyxPlayerState?.();
+    const total = hooks?.__aeternyxPlayerCount?.() || 10;
+    const next = (cur === null || cur === undefined ? 0 : (cur + 1) % total) + 1;
+    play(next);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Standalone bundled ingredient-explorer artifact (React app packaged into
@@ -18,6 +39,10 @@ type Props = { data: SiteContent["ingredientsSection"] };
  */
 export default function IngredientExplorer({ data }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const onManualAdvance = useCallback(() => {
+    advanceOne(iframeRef.current?.contentWindow ?? null);
+  }, []);
 
   useEffect(() => {
     const el = iframeRef.current;
@@ -74,26 +99,8 @@ export default function IngredientExplorer({ data }: Props) {
     function drive() {
       const now = performance.now();
       if (inView && now - lastAdvanceAt > 3000) {
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const w = el?.contentWindow as unknown as {
-            __aeternyxPlayerPlay?: (n: number) => void;
-            __aeternyxPlayerState?: () => number | null | undefined;
-            __aeternyxPlayerCount?: () => number;
-          } | null;
-          const play = w?.__aeternyxPlayerPlay;
-          const stateFn = w?.__aeternyxPlayerState;
-          const countFn = w?.__aeternyxPlayerCount;
-          if (typeof play === "function") {
-            const cur = stateFn ? stateFn() : null;
-            const total = (countFn ? countFn() : 10) || 10;
-            const next =
-              (cur === null || cur === undefined ? 0 : (cur + 1) % total) + 1;
-            play(next);
-            lastAdvanceAt = now;
-          }
-        } catch {
-          /* noop */
+        if (advanceOne(el?.contentWindow ?? null)) {
+          lastAdvanceAt = now;
         }
       }
       driverRaf = requestAnimationFrame(drive);
@@ -151,7 +158,7 @@ export default function IngredientExplorer({ data }: Props) {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-12 overflow-hidden rounded-3xl border border-hairline bg-canvas shadow-sm"
+          className="relative mt-12 overflow-hidden rounded-3xl border border-hairline bg-canvas shadow-sm"
         >
           <iframe
             ref={iframeRef}
@@ -165,6 +172,25 @@ export default function IngredientExplorer({ data }: Props) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             {...({ fetchpriority: "high" } as any)}
           />
+          {/* Manual advance — fallback if iOS throttles the auto driver.
+              Corner button, feels like a "next" chevron for the pill cycle. */}
+          <button
+            type="button"
+            onClick={onManualAdvance}
+            aria-label="Show next ingredient"
+            className="absolute right-3 top-3 z-10 inline-flex h-10 items-center gap-1.5 rounded-full border border-hairline/70 bg-canvas/90 pl-3 pr-3.5 text-[11px] font-semibold uppercase tracking-widest text-ink shadow-sm backdrop-blur-sm transition-colors hover:bg-canvas md:right-4 md:top-4"
+          >
+            Next
+            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden>
+              <path
+                d="M9 5l7 7-7 7"
+                stroke="currentColor"
+                strokeWidth="1.9"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         </motion.div>
       </div>
     </section>
