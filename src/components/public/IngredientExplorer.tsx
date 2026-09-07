@@ -38,9 +38,10 @@ export default function IngredientExplorer({ data }: Props) {
       });
     }
 
-    let keepaliveInterval = 0;
     let viewObserver: IntersectionObserver | null = null;
     let inView = true;
+    let driverRaf = 0;
+    let lastAdvanceAt = 0;
 
     function attach() {
       try {
@@ -59,26 +60,6 @@ export default function IngredientExplorer({ data }: Props) {
 
         fitHeight(doc);
 
-        // Wake the artifact's own ResizeObserver / autoplay loop by dispatching
-        // resize events into its window. iOS Safari throttles setTimeout inside
-        // iframes when the outer page is scrolling, so we also fire a periodic
-        // ping while the iframe is on-screen — cheap heartbeat that keeps the
-        // animation loop from drifting into the throttled state.
-        const kick = () => {
-          try {
-            el?.contentWindow?.dispatchEvent(new Event("resize"));
-          } catch {
-            /* noop */
-          }
-        };
-        setTimeout(kick, 200);
-        setTimeout(kick, 900);
-        setTimeout(kick, 1800);
-
-        keepaliveInterval = window.setInterval(() => {
-          if (inView) kick();
-        }, 2500);
-
         resizeObserver = new ResizeObserver(() => fitHeight(doc));
         resizeObserver.observe(doc.body);
       } catch {
@@ -86,7 +67,38 @@ export default function IngredientExplorer({ data }: Props) {
       }
     }
 
-    // Track visibility so the keepalive stops when the iframe is off-screen.
+    // Parent-side autoplay driver: iOS Safari throttles setTimeout/setInterval
+    // inside iframes (even RAF), but the PARENT document's RAF runs at native
+    // frame rate whenever the tab is visible. Every 3 s we call into the
+    // iframe's exposed play() to force the next ingredient.
+    function drive() {
+      const now = performance.now();
+      if (inView && now - lastAdvanceAt > 3000) {
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const w = el?.contentWindow as unknown as {
+            __aeternyxPlayerPlay?: (n: number) => void;
+            __aeternyxPlayerState?: () => number | null | undefined;
+            __aeternyxPlayerCount?: () => number;
+          } | null;
+          const play = w?.__aeternyxPlayerPlay;
+          const stateFn = w?.__aeternyxPlayerState;
+          const countFn = w?.__aeternyxPlayerCount;
+          if (typeof play === "function") {
+            const cur = stateFn ? stateFn() : null;
+            const total = (countFn ? countFn() : 10) || 10;
+            const next =
+              (cur === null || cur === undefined ? 0 : (cur + 1) % total) + 1;
+            play(next);
+            lastAdvanceAt = now;
+          }
+        } catch {
+          /* noop */
+        }
+      }
+      driverRaf = requestAnimationFrame(drive);
+    }
+
     if ("IntersectionObserver" in window) {
       viewObserver = new IntersectionObserver(
         (entries) => {
@@ -102,12 +114,20 @@ export default function IngredientExplorer({ data }: Props) {
     el.addEventListener("load", attach);
     if (el.contentDocument?.readyState === "complete") attach();
 
+    // Start the parent-side driver after a beat so the artifact has time to
+    // expose its play() hooks on window.
+    const driverStart = window.setTimeout(() => {
+      lastAdvanceAt = performance.now();
+      driverRaf = requestAnimationFrame(drive);
+    }, 1500);
+
     return () => {
       el.removeEventListener("load", attach);
       resizeObserver?.disconnect();
       viewObserver?.disconnect();
-      if (keepaliveInterval) clearInterval(keepaliveInterval);
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(driverRaf);
+      clearTimeout(driverStart);
     };
   }, []);
 
