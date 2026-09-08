@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
 import Product3DSlider from "./Product3DSlider";
 
-/** Hand-off duration before we send the viewer to WhatsApp. Matches the chime. */
-const ORDER_HANDOFF_MS = 2200;
+/** Hand-off duration before we send the viewer to WhatsApp. Matches the applause. */
+const ORDER_HANDOFF_MS = 3000;
 
 type Props = {
   brand: SiteContent["brand"];
@@ -57,8 +57,10 @@ export default function ProductHero({ brand, hero }: Props) {
 
   const [ordering, setOrdering] = useState(false);
 
-  // Order-now feedback: a short burst of "claps" synthesized via Web Audio API
-  // (filtered noise pops) — sounds like applause without needing an audio file.
+  // Order-now feedback: LOUD cheering applause. Two synthesised layers stack
+  // to sound like a real crowd rather than one pair of hands.
+  //   Layer A: sustained band-passed noise wash — the "crowd hum"
+  //   Layer B: ~50 filtered clap bursts scattered at random over the window
   function playOrderClaps() {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,33 +69,62 @@ export default function ProductHero({ brand, hero }: Props) {
       const ctx = new AC();
       if (ctx.state === "suspended") ctx.resume().catch(() => {});
       const now = ctx.currentTime;
-      // 7 clap bursts over ~1.8 s, slightly randomised so it feels human.
-      const CLAP_COUNT = 7;
+      const duration = 2.6;
+
+      // ——— Layer A: sustained crowd-noise wash ————————————————————
+      const sampleRate = ctx.sampleRate;
+      const bufSize = Math.floor(sampleRate * duration);
+      const buf = ctx.createBuffer(1, bufSize, sampleRate);
+      const data = buf.getChannelData(0);
+      // Amplitude envelope: 60 ms rise, then held, 350 ms decay.
+      const rise = 0.06 * sampleRate;
+      const tail = 0.35 * sampleRate;
+      for (let i = 0; i < bufSize; i++) {
+        let env = 1;
+        if (i < rise) env = i / rise;
+        else if (i > bufSize - tail) env = (bufSize - i) / tail;
+        data[i] = (Math.random() * 2 - 1) * env;
+      }
+      const wash = ctx.createBufferSource();
+      wash.buffer = buf;
+      const bp = ctx.createBiquadFilter();
+      bp.type = "bandpass";
+      bp.frequency.value = 2200;
+      bp.Q.value = 0.55;
+      const washGain = ctx.createGain();
+      washGain.gain.value = 0.55; // sustained crowd body
+      wash.connect(bp);
+      bp.connect(washGain);
+      washGain.connect(ctx.destination);
+      wash.start(now);
+      wash.stop(now + duration);
+
+      // ——— Layer B: individual clap peaks scattered over the window ——
+      const CLAP_COUNT = 50;
       for (let i = 0; i < CLAP_COUNT; i++) {
-        const time = now + i * 0.16 + Math.random() * 0.05;
-        // Short noise burst — 40 ms of white noise
-        const bufSize = Math.floor(ctx.sampleRate * 0.04);
-        const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
-        const data = buf.getChannelData(0);
-        for (let j = 0; j < bufSize; j++) data[j] = Math.random() * 2 - 1;
+        const t = now + 0.03 + Math.random() * (duration - 0.35);
+        const csize = Math.floor(sampleRate * 0.03);
+        const cbuf = ctx.createBuffer(1, csize, sampleRate);
+        const cd = cbuf.getChannelData(0);
+        for (let j = 0; j < csize; j++) cd[j] = Math.random() * 2 - 1;
         const src = ctx.createBufferSource();
-        src.buffer = buf;
-        // High-pass gives it clap timbre (bright, snappy)
+        src.buffer = cbuf;
         const hp = ctx.createBiquadFilter();
         hp.type = "highpass";
-        hp.frequency.value = 800 + Math.random() * 500;
-        // Peak envelope: very fast attack, fast decay
-        const gain = ctx.createGain();
-        gain.gain.setValueAtTime(0.0001, time);
-        gain.gain.exponentialRampToValueAtTime(0.32, time + 0.003);
-        gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.09);
+        hp.frequency.value = 900 + Math.random() * 900;
+        const g = ctx.createGain();
+        const peak = 0.42 + Math.random() * 0.25;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(peak, t + 0.003);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
         src.connect(hp);
-        hp.connect(gain);
-        gain.connect(ctx.destination);
-        src.start(time);
-        src.stop(time + 0.11);
+        hp.connect(g);
+        g.connect(ctx.destination);
+        src.start(t);
+        src.stop(t + 0.09);
       }
-      window.setTimeout(() => ctx.close().catch(() => {}), 2200);
+
+      window.setTimeout(() => ctx.close().catch(() => {}), duration * 1000 + 200);
     } catch {
       /* audio unavailable — silently skip */
     }
@@ -103,26 +134,88 @@ export default function ProductHero({ brand, hero }: Props) {
     try {
       const mod = await import("canvas-confetti");
       const confetti = mod.default;
-      const colours = ["#E88F3A", "#F4A65C", "#17203D", "#B8935E", "#F2E9D2"];
+      const colours = [
+        "#E88F3A",
+        "#F4A65C",
+        "#F7C87A",
+        "#17203D",
+        "#B8935E",
+        "#F2E9D2",
+        "#25D366"
+      ];
+
+      // 1) Big central burst — the "opening pop".
       confetti({
-        particleCount: 90,
-        spread: 70,
-        startVelocity: 40,
-        origin: { y: 0.7 },
+        particleCount: 220,
+        spread: 90,
+        startVelocity: 55,
+        origin: { x: 0.5, y: 0.65 },
         colors: colours,
-        scalar: 0.9
+        scalar: 1.1
       });
-      // A second gentler wave a beat later for depth.
+
+      // 2) Left cannon, angled toward the centre.
       window.setTimeout(() => {
         confetti({
-          particleCount: 60,
-          spread: 100,
-          startVelocity: 32,
-          origin: { y: 0.6 },
+          particleCount: 140,
+          angle: 60,
+          spread: 65,
+          startVelocity: 60,
+          origin: { x: 0, y: 0.75 },
           colors: colours,
-          scalar: 0.8
+          scalar: 1
         });
-      }, 350);
+      }, 180);
+
+      // 3) Right cannon, mirror of the left.
+      window.setTimeout(() => {
+        confetti({
+          particleCount: 140,
+          angle: 120,
+          spread: 65,
+          startVelocity: 60,
+          origin: { x: 1, y: 0.75 },
+          colors: colours,
+          scalar: 1
+        });
+      }, 260);
+
+      // 4) Rain from the top of the viewport.
+      window.setTimeout(() => {
+        confetti({
+          particleCount: 200,
+          spread: 120,
+          startVelocity: 22,
+          origin: { x: 0.5, y: 0 },
+          gravity: 0.65,
+          colors: colours,
+          scalar: 0.95
+        });
+      }, 550);
+
+      // 5) Second big central burst — the crowd "roar".
+      window.setTimeout(() => {
+        confetti({
+          particleCount: 220,
+          spread: 130,
+          startVelocity: 50,
+          origin: { x: 0.5, y: 0.55 },
+          colors: colours,
+          scalar: 1.05
+        });
+      }, 900);
+
+      // 6) Tail flourish — smaller sparkles keep the moment alive.
+      window.setTimeout(() => {
+        confetti({
+          particleCount: 120,
+          spread: 100,
+          startVelocity: 45,
+          origin: { x: 0.5, y: 0.7 },
+          colors: colours,
+          scalar: 0.85
+        });
+      }, 1500);
     } catch {
       /* confetti library missing — skip gracefully */
     }
