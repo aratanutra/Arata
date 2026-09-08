@@ -21,7 +21,7 @@ type Props = {
  */
 export default function AeternyxFloat({
   label = "AETERNYX",
-  href = "/aeternyx"
+  href = "/aeternyx#buy"
 }: Props = {}) {
   const [visible, setVisible] = useState(false);
   const [showCue, setShowCue] = useState(false);
@@ -36,11 +36,15 @@ export default function AeternyxFloat({
     };
   }, []);
 
-  const suppressed = pathname === href || pathname.startsWith(`${href}/`);
+  // Strip the hash fragment so we suppress the floater on /aeternyx itself
+  // regardless of which anchor it points to.
+  const hrefPath = href.split("#")[0];
+  const suppressed =
+    pathname === hrefPath || pathname.startsWith(`${hrefPath}/`);
   if (suppressed) return null;
 
   return (
-    <div className="fixed right-3 top-20 z-[90] md:right-8 md:top-32">
+    <div className="fixed right-3 top-16 z-[90] md:right-8 md:top-20">
       <AnimatePresence>
         {visible ? (
           <motion.div

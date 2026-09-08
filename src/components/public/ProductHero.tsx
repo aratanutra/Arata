@@ -52,8 +52,47 @@ export default function ProductHero({ brand, hero }: Props) {
   const primary = resolveHref(hero.primaryCta.href);
   const secondary = resolveHref(hero.secondaryCta.href);
 
+  // Order-now feedback: a short warm chime synthesized via Web Audio API
+  // so there's no external file or CDN dependency. ~2 s total.
+  function playOrderChime() {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const AC =
+        window.AudioContext || (window as any).webkitAudioContext;
+      if (!AC) return;
+      const ctx = new AC();
+      // Some iOS/Chrome contexts start suspended until a user gesture. This
+      // handler IS a user gesture, so resume() will succeed silently.
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
+      const now = ctx.currentTime;
+      // C5, E5, G5 arpeggio — brief major-chord ascent
+      const notes = [523.25, 659.25, 783.99];
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        const start = now + i * 0.22;
+        const end = start + 1.4;
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.14, start + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, end);
+        osc.start(start);
+        osc.stop(end + 0.05);
+      });
+      window.setTimeout(() => ctx.close().catch(() => {}), 2200);
+    } catch {
+      /* audio unavailable — silently skip */
+    }
+  }
+
   return (
-    <section className="relative overflow-hidden bg-canvas pt-28 pb-16 md:pt-36 md:pb-24">
+    <section
+      id="buy"
+      className="relative overflow-hidden bg-canvas pt-28 pb-16 md:pt-36 md:pb-24"
+    >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[45vh] bg-[radial-gradient(ellipse_at_top,_rgba(184,147,94,0.10)_0%,_transparent_60%)]"
@@ -205,6 +244,7 @@ export default function ProductHero({ brand, hero }: Props) {
                     href={primary.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={playOrderChime}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
                   >
                     <WhatsAppGlyph className="h-5 w-5" />
