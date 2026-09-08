@@ -16,7 +16,11 @@ export default async function HomePage() {
       <Nav brand={content.brand} nav={content.nav} />
       <Hero hero={content.hero} />
       <TrustBar data={content.trustBar} />
-      <HomeFeatured data={content.homeFeatured} brand={content.brand} />
+      <HomeFeatured
+        data={content.homeFeatured}
+        brand={content.brand}
+        hero={content.productHero}
+      />
       <HomeValues data={content.homeValues} />
       <Philosophy data={content.philosophy} />
       <Footer brand={content.brand} footer={content.footer} />
