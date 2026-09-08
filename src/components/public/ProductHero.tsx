@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
@@ -28,12 +29,20 @@ function WhatsAppGlyph({ className }: { className?: string }) {
 }
 
 export default function ProductHero({ brand, hero }: Props) {
-  // Order-now flow: WhatsApp opens with the ORDER greeting, not the generic
-  // "know more" greeting the nav Contact link uses.
   const digits = brand.whatsappNumber.replace(/\D/g, "");
-  const waOrderHref = `https://wa.me/${digits}?text=${encodeURIComponent(
-    brand.whatsappOrderMessage
-  )}`;
+  const packs = hero.packs?.length ? hero.packs : [];
+  const defaultIndex = packs.length > 1 ? 1 : 0; // pick the 30-day as default when available
+  const [selectedIdx, setSelectedIdx] = useState(defaultIndex);
+  const selectedPack = packs[selectedIdx];
+
+  // Order-now flow: WhatsApp opens with the SELECTED PACK's message. Falls back
+  // to the generic order greeting if packs aren't configured.
+  const waOrderMessage = selectedPack?.waMessage ?? brand.whatsappOrderMessage;
+  const waOrderHref = useMemo(
+    () =>
+      `https://wa.me/${digits}?text=${encodeURIComponent(waOrderMessage)}`,
+    [digits, waOrderMessage]
+  );
 
   function resolveHref(href: string): { href: string; external: boolean } {
     if (href === "whatsapp") return { href: waOrderHref, external: true };
@@ -108,22 +117,79 @@ export default function ProductHero({ brand, hero }: Props) {
             </ul>
 
             <div className="mt-8 rounded-2xl border border-hairline bg-paper p-5 md:p-6">
+              {/* Pack selector — pill row on wider viewports, stacks on mobile */}
+              {packs.length > 1 ? (
+                <div className="mb-5">
+                  <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                    Pick your pack
+                  </div>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                    {packs.map((pack, i) => {
+                      const active = i === selectedIdx;
+                      return (
+                        <button
+                          key={pack.id}
+                          type="button"
+                          onClick={() => setSelectedIdx(i)}
+                          aria-pressed={active}
+                          className={`relative flex flex-col items-start rounded-xl border px-3 py-2.5 text-left transition-colors ${
+                            active
+                              ? "border-ink bg-canvas shadow-sm"
+                              : "border-hairline bg-canvas/60 hover:border-ink/60"
+                          }`}
+                        >
+                          {pack.badge ? (
+                            <span className="absolute -top-2 right-2 rounded-full bg-gold-deep px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-white">
+                              {pack.badge}
+                            </span>
+                          ) : null}
+                          <span className="text-[13px] font-semibold text-ink">
+                            {pack.label}
+                          </span>
+                          <span className="mt-0.5 text-[11px] leading-snug text-muted">
+                            {pack.sublabel}
+                          </span>
+                          {pack.discountLabel ? (
+                            <span className="mt-1 inline-block rounded bg-gold-soft px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                              {pack.discountLabel}
+                            </span>
+                          ) : null}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
+
               <div className="flex items-baseline justify-between gap-4">
                 <div>
                   <div className="text-[11px] font-medium uppercase tracking-widest text-muted">
                     {hero.mrpLabel}
                   </div>
-                  <div className="tnum mt-1 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
-                    {hero.mrp}
+                  <div className="tnum mt-1 flex items-baseline gap-3">
+                    <span className="text-4xl font-semibold tracking-tight text-ink md:text-5xl">
+                      {selectedPack?.price ?? hero.mrp}
+                    </span>
+                    {selectedPack?.priceOriginal ? (
+                      <span className="text-lg font-medium text-muted line-through">
+                        {selectedPack.priceOriginal}
+                      </span>
+                    ) : null}
                   </div>
                   <div className="mt-1 text-[11px] uppercase tracking-widest text-muted">
                     {hero.mrpNote}
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[11px] font-medium uppercase tracking-widest text-muted">Net Qty</div>
-                  <div className="tnum mt-1 text-xl font-semibold tracking-tight text-ink">10 Tablets</div>
-                  <div className="mt-1 text-[10px] uppercase tracking-widest text-muted">per strip</div>
+                  <div className="text-[11px] font-medium uppercase tracking-widest text-muted">
+                    Pack
+                  </div>
+                  <div className="tnum mt-1 text-xl font-semibold tracking-tight text-ink">
+                    {selectedPack?.label ?? "1 Strip"}
+                  </div>
+                  <div className="mt-1 text-[10px] uppercase tracking-widest text-muted">
+                    {selectedPack?.sublabel ?? "10-day supply"}
+                  </div>
                 </div>
               </div>
 

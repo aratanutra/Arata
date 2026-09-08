@@ -134,6 +134,17 @@ export type SiteContent = {
     secondaryCta: CtaLink;
     shipLine: string;
     trustIcons: string[];
+    packs: {
+      id: string;
+      label: string;
+      sublabel: string;
+      priceOriginal: string;
+      price: string;
+      priceNumber: number;
+      discountLabel: string;
+      badge?: string;
+      waMessage: string;
+    }[];
   };
   howToUse: {
     eyebrow: string;
