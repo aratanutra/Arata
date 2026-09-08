@@ -143,7 +143,7 @@ export default function ProductHero({ brand, hero }: Props) {
   return (
     <section
       id="buy"
-      className="relative overflow-hidden bg-canvas pt-28 pb-16 md:pt-36 md:pb-24"
+      className="relative scroll-mt-16 overflow-hidden bg-canvas pt-28 pb-16 md:scroll-mt-20 md:pt-36 md:pb-24"
     >
       <div
         aria-hidden
