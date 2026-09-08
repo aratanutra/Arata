@@ -81,7 +81,7 @@ export default function AeternyxFloat({
                   className="pointer-events-none absolute -top-14 right-4 flex flex-col items-end md:-top-16 md:right-6"
                 >
                   <span className="font-script text-[24px] font-semibold leading-none text-ink md:text-[32px]">
-                    Click me
+                    Buy me
                   </span>
                   {/* Hand-drawn curved arrow looping down and into the tablet */}
                   <svg
