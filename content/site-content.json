@@ -235,7 +235,9 @@
         "price": "₹800",
         "priceNumber": 800,
         "discountLabel": "",
-        "waMessage": "Hi, I would like to order AETERNYX® — 1 strip (10-day supply)."
+        "shippingLabel": "+ shipping",
+        "shippingFree": false,
+        "waMessage": "Hi, I would like to order AETERNYX® — 1 strip (10-day supply). Please share shipping charges."
       },
       {
         "id": "monthly",
@@ -245,7 +247,9 @@
         "price": "₹2,352",
         "priceNumber": 2352,
         "discountLabel": "Save 2%",
-        "waMessage": "Hi, I would like to order AETERNYX® — 3 strips (30-day supply)."
+        "shippingLabel": "Free shipping",
+        "shippingFree": true,
+        "waMessage": "Hi, I would like to order AETERNYX® — 3 strips (30-day supply). Free shipping."
       },
       {
         "id": "box",
@@ -255,8 +259,10 @@
         "price": "₹7,200",
         "priceNumber": 7200,
         "discountLabel": "Save 10%",
+        "shippingLabel": "Free shipping",
+        "shippingFree": true,
         "badge": "Best value",
-        "waMessage": "Hi, I would like to order AETERNYX® — 1 box (100-day supply, 10 strips)."
+        "waMessage": "Hi, I would like to order AETERNYX® — 1 box (100-day supply, 10 strips). Free shipping."
       }
     ]
   },

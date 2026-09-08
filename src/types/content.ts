@@ -142,6 +142,8 @@ export type SiteContent = {
       price: string;
       priceNumber: number;
       discountLabel: string;
+      shippingLabel: string;
+      shippingFree: boolean;
       badge?: string;
       waMessage: string;
     }[];
