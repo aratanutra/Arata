@@ -175,11 +175,24 @@ export default function ProductHero({ brand, hero }: Props) {
                           <span className="mt-0.5 text-[11px] leading-snug text-muted">
                             {pack.sublabel}
                           </span>
-                          {pack.discountLabel ? (
-                            <span className="mt-1 inline-block rounded bg-gold-soft px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
-                              {pack.discountLabel}
-                            </span>
-                          ) : null}
+                          <div className="mt-1 flex flex-wrap items-center gap-1">
+                            {pack.discountLabel ? (
+                              <span className="inline-block rounded bg-gold-soft px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                                {pack.discountLabel}
+                              </span>
+                            ) : null}
+                            {pack.shippingLabel ? (
+                              <span
+                                className={`inline-block rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${
+                                  pack.shippingFree
+                                    ? "bg-emerald-100 text-emerald-800"
+                                    : "bg-hairline/60 text-muted"
+                                }`}
+                              >
+                                {pack.shippingLabel}
+                              </span>
+                            ) : null}
+                          </div>
                         </button>
                       );
                     })}
@@ -202,8 +215,19 @@ export default function ProductHero({ brand, hero }: Props) {
                       </span>
                     ) : null}
                   </div>
-                  <div className="mt-1 text-[11px] uppercase tracking-widest text-muted">
-                    {hero.mrpNote}
+                  <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] uppercase tracking-widest text-muted">
+                    <span>{hero.mrpNote}</span>
+                    {selectedPack?.shippingLabel ? (
+                      <span
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                          selectedPack.shippingFree
+                            ? "bg-emerald-100 text-emerald-800"
+                            : "bg-hairline/60 text-ink-soft"
+                        }`}
+                      >
+                        {selectedPack.shippingLabel}
+                      </span>
+                    ) : null}
                   </div>
                 </div>
                 <div className="text-right">
