@@ -225,7 +225,40 @@
     "primaryCta": { "label": "Order now", "href": "whatsapp" },
     "secondaryCta": { "label": "Read the Science", "href": "#science" },
     "shipLine": "Batch, MFG date, and expiry printed on each strip. Delivery details confirmed on WhatsApp.",
-    "trustIcons": ["Vegetarian", "GMP + HACCP"]
+    "trustIcons": ["Vegetarian", "GMP + HACCP"],
+    "packs": [
+      {
+        "id": "single",
+        "label": "1 Strip",
+        "sublabel": "10-day supply · 10 tablets",
+        "priceOriginal": "",
+        "price": "₹800",
+        "priceNumber": 800,
+        "discountLabel": "",
+        "waMessage": "Hi, I would like to order AETERNYX® — 1 strip (10-day supply)."
+      },
+      {
+        "id": "monthly",
+        "label": "3 Strips",
+        "sublabel": "30-day supply · 30 tablets",
+        "priceOriginal": "₹2,400",
+        "price": "₹2,352",
+        "priceNumber": 2352,
+        "discountLabel": "Save 2%",
+        "waMessage": "Hi, I would like to order AETERNYX® — 3 strips (30-day supply)."
+      },
+      {
+        "id": "box",
+        "label": "1 Box",
+        "sublabel": "100-day supply · 10 strips · 100 tablets",
+        "priceOriginal": "₹8,000",
+        "price": "₹7,200",
+        "priceNumber": 7200,
+        "discountLabel": "Save 10%",
+        "badge": "Best value",
+        "waMessage": "Hi, I would like to order AETERNYX® — 1 box (100-day supply, 10 strips)."
+      }
+    ]
   },
   "howToUse": {
     "eyebrow": "How to use",
