@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
-import Carton3D from "./Carton3D";
+import HomeOrderCard from "./HomeOrderCard";
 
 type Props = {
   brand: SiteContent["brand"];
   data: SiteContent["homeFeatured"];
+  hero: SiteContent["productHero"];
 };
 
-export default function HomeFeatured({ brand, data }: Props) {
+export default function HomeFeatured({ brand, data, hero }: Props) {
   return (
     <section className="relative bg-canvas py-24 md:py-32">
       <div className="container-app">
@@ -21,11 +22,7 @@ export default function HomeFeatured({ brand, data }: Props) {
           transition={{ duration: 0.7 }}
           className="card-elevated overflow-hidden"
         >
-          <div className="grid gap-12 p-8 md:grid-cols-[1fr_1.1fr] md:gap-16 md:p-14 lg:p-20">
-            <Carton3D
-              className="relative order-2 aspect-[4/5] w-full overflow-hidden md:aspect-auto md:h-full"
-              showHint
-            />
+          <div className="grid gap-12 p-8 md:grid-cols-[1.1fr_1fr] md:gap-16 md:p-14 lg:p-20">
             <div className="order-1 flex flex-col justify-center">
               <span className="eyebrow">{data.eyebrow}</span>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink md:text-5xl">
@@ -56,14 +53,15 @@ export default function HomeFeatured({ brand, data }: Props) {
               </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href={data.primaryCta.href} className="btn-primary">
-                  {data.primaryCta.label}
-                </Link>
                 <Link href={data.secondaryCta.href} className="btn-link">
                   {data.secondaryCta.label}
                   <span aria-hidden>→</span>
                 </Link>
               </div>
+            </div>
+
+            <div className="order-2">
+              <HomeOrderCard brand={brand} hero={hero} />
             </div>
           </div>
         </motion.div>
