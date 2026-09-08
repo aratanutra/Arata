@@ -235,9 +235,9 @@
         "price": "₹800",
         "priceNumber": 800,
         "discountLabel": "",
-        "shippingLabel": "+ shipping",
+        "shippingLabel": "+ ₹150 shipping",
         "shippingFree": false,
-        "waMessage": "Hi, I would like to order AETERNYX® — 1 strip (10-day supply). Please share shipping charges."
+        "waMessage": "Hi, I would like to order AETERNYX® — 1 strip (10-day supply). Shipping: ₹150."
       },
       {
         "id": "monthly",
