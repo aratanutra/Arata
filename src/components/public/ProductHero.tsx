@@ -41,10 +41,20 @@ export default function ProductHero({ brand, hero }: Props) {
   // Order-now flow: WhatsApp opens with the SELECTED PACK's message. Falls back
   // to the generic order greeting if packs aren't configured.
   const waOrderMessage = selectedPack?.waMessage ?? brand.whatsappOrderMessage;
+  const encodedText = useMemo(
+    () => encodeURIComponent(waOrderMessage),
+    [waOrderMessage]
+  );
+  // Anchor href (JS-off fallback + accessibility) — the wa.me universal link.
   const waOrderHref = useMemo(
-    () =>
-      `https://wa.me/${digits}?text=${encodeURIComponent(waOrderMessage)}`,
-    [digits, waOrderMessage]
+    () => `https://wa.me/${digits}?text=${encodedText}`,
+    [digits, encodedText]
+  );
+  // Preferred deep link — opens the installed app directly on mobile, no
+  // intermediate api.whatsapp.com landing page with a Download prompt.
+  const waAppHref = useMemo(
+    () => `whatsapp://send?phone=${digits}&text=${encodedText}`,
+    [digits, encodedText]
   );
 
   function resolveHref(href: string): { href: string; external: boolean } {
@@ -226,12 +236,20 @@ export default function ProductHero({ brand, hero }: Props) {
     if (ordering) return;
     setOrdering(true);
     // Celebration stays on the current page — claps + confetti — then the tab
-    // navigates to WhatsApp. Same-tab hand-off avoids the intermediate blank
-    // popup users were seeing before the sound finished.
+    // hands off to WhatsApp. Try the whatsapp:// deep link first so the app
+    // opens straight away; fall back to wa.me a beat later if the browser
+    // didn't manage to launch the app (rare when WhatsApp is installed).
     playOrderClaps();
     void fireConfetti();
     window.setTimeout(() => {
-      window.location.href = waOrderHref;
+      window.location.href = waAppHref;
+      window.setTimeout(() => {
+        // If we're still on the page, the deep link didn't fire — fall back
+        // to wa.me so the order still lands.
+        if (document.visibilityState === "visible") {
+          window.location.href = waOrderHref;
+        }
+      }, 900);
     }, ORDER_HANDOFF_MS);
   }
 
