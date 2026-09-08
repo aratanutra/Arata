@@ -35,23 +35,14 @@ export default function ProductHero({ brand, hero }: Props) {
   const [selectedIdx, setSelectedIdx] = useState(defaultIndex);
   const selectedPack = packs[selectedIdx];
 
-  // Order-now flow: WhatsApp opens with the SELECTED PACK's message. Falls back
-  // to the generic order greeting if packs aren't configured.
+  // Order-now flow: WhatsApp opens with the SELECTED PACK's message. Uses the
+  // same universal wa.me link that the WhatsApp floater and Contact chooser
+  // use — no custom scheme, no confirmation prompt.
   const waOrderMessage = selectedPack?.waMessage ?? brand.whatsappOrderMessage;
-  const encodedText = useMemo(
-    () => encodeURIComponent(waOrderMessage),
-    [waOrderMessage]
-  );
-  // Anchor href (JS-off fallback + accessibility) — the wa.me universal link.
   const waOrderHref = useMemo(
-    () => `https://wa.me/${digits}?text=${encodedText}`,
-    [digits, encodedText]
-  );
-  // Preferred deep link — opens the installed app directly on mobile, no
-  // intermediate api.whatsapp.com landing page with a Download prompt.
-  const waAppHref = useMemo(
-    () => `whatsapp://send?phone=${digits}&text=${encodedText}`,
-    [digits, encodedText]
+    () =>
+      `https://wa.me/${digits}?text=${encodeURIComponent(waOrderMessage)}`,
+    [digits, waOrderMessage]
   );
 
   function resolveHref(href: string): { href: string; external: boolean } {
@@ -62,18 +53,6 @@ export default function ProductHero({ brand, hero }: Props) {
   const primary = resolveHref(hero.primaryCta.href);
   const secondary = resolveHref(hero.secondaryCta.href);
 
-  // Order-now hand-off: try the whatsapp:// deep link first so the app opens
-  // straight away (no api.whatsapp.com landing page), then fall back to wa.me
-  // if the deep link didn't launch the app.
-  function handleOrderClick(e: React.MouseEvent<HTMLAnchorElement>) {
-    e.preventDefault();
-    window.location.href = waAppHref;
-    window.setTimeout(() => {
-      if (document.visibilityState === "visible") {
-        window.location.href = waOrderHref;
-      }
-    }, 700);
-  }
 
   return (
     <section
@@ -255,7 +234,6 @@ export default function ProductHero({ brand, hero }: Props) {
                     href={primary.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={handleOrderClick}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
                   >
                     <WhatsAppGlyph className="h-5 w-5" />
