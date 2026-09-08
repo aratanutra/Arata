@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { asset } from "@/lib/asset";
 
 type Props = {
   label?: string;
@@ -117,9 +117,10 @@ export default function AeternyxFloat({
               ) : null}
             </AnimatePresence>
 
-            {/* Tablet */}
-            <Link
-              href={href}
+            {/* Tablet — plain <a> (not next/link) so the browser handles the
+                #buy hash natively and reliably scrolls to the pack selector. */}
+            <a
+              href={asset(href)}
               aria-label={`Explore ${label}`}
               onMouseEnter={() => setShowCue(false)}
               onClick={() => setShowCue(false)}
@@ -148,7 +149,7 @@ export default function AeternyxFloat({
               <span className="relative z-10 text-[11px] font-semibold tracking-[0.22em] text-white/95 drop-shadow-[0_1px_1px_rgba(120,50,0,0.4)] md:text-[14px] md:tracking-[0.24em]">
                 {label}
               </span>
-            </Link>
+            </a>
           </motion.div>
         ) : null}
       </AnimatePresence>
