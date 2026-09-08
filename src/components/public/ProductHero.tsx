@@ -57,9 +57,9 @@ export default function ProductHero({ brand, hero }: Props) {
 
   const [ordering, setOrdering] = useState(false);
 
-  // Order-now feedback: a short warm chime synthesized via Web Audio API
-  // so there's no external file or CDN dependency. ~2 s total.
-  function playOrderChime() {
+  // Order-now feedback: a short burst of "claps" synthesized via Web Audio API
+  // (filtered noise pops) — sounds like applause without needing an audio file.
+  function playOrderClaps() {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const AC = window.AudioContext || (window as any).webkitAudioContext;
@@ -67,23 +67,32 @@ export default function ProductHero({ brand, hero }: Props) {
       const ctx = new AC();
       if (ctx.state === "suspended") ctx.resume().catch(() => {});
       const now = ctx.currentTime;
-      // C5, E5, G5 arpeggio — brief major-chord ascent
-      const notes = [523.25, 659.25, 783.99];
-      notes.forEach((freq, i) => {
-        const osc = ctx.createOscillator();
+      // 7 clap bursts over ~1.8 s, slightly randomised so it feels human.
+      const CLAP_COUNT = 7;
+      for (let i = 0; i < CLAP_COUNT; i++) {
+        const time = now + i * 0.16 + Math.random() * 0.05;
+        // Short noise burst — 40 ms of white noise
+        const bufSize = Math.floor(ctx.sampleRate * 0.04);
+        const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let j = 0; j < bufSize; j++) data[j] = Math.random() * 2 - 1;
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        // High-pass gives it clap timbre (bright, snappy)
+        const hp = ctx.createBiquadFilter();
+        hp.type = "highpass";
+        hp.frequency.value = 800 + Math.random() * 500;
+        // Peak envelope: very fast attack, fast decay
         const gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.value = freq;
-        osc.connect(gain);
+        gain.gain.setValueAtTime(0.0001, time);
+        gain.gain.exponentialRampToValueAtTime(0.32, time + 0.003);
+        gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.09);
+        src.connect(hp);
+        hp.connect(gain);
         gain.connect(ctx.destination);
-        const start = now + i * 0.22;
-        const end = start + 1.4;
-        gain.gain.setValueAtTime(0.0001, start);
-        gain.gain.exponentialRampToValueAtTime(0.14, start + 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.0001, end);
-        osc.start(start);
-        osc.stop(end + 0.05);
-      });
+        src.start(time);
+        src.stop(time + 0.11);
+      }
       window.setTimeout(() => ctx.close().catch(() => {}), 2200);
     } catch {
       /* audio unavailable — silently skip */
@@ -123,20 +132,13 @@ export default function ProductHero({ brand, hero }: Props) {
     e.preventDefault();
     if (ordering) return;
     setOrdering(true);
-    // Reserve a tab NOW (inside the user gesture) so browsers don't block the
-    // popup when we assign its location after the confetti + chime.
-    const win = window.open("about:blank", "_blank");
-    playOrderChime();
+    // Celebration stays on the current page — claps + confetti — then the tab
+    // navigates to WhatsApp. Same-tab hand-off avoids the intermediate blank
+    // popup users were seeing before the sound finished.
+    playOrderClaps();
     void fireConfetti();
     window.setTimeout(() => {
-      if (win && !win.closed) {
-        win.location.href = waOrderHref;
-      } else {
-        // Fallback if the reserved tab was blocked/closed — send this tab.
-        window.location.href = waOrderHref;
-      }
-      // Re-enable after the hand-off so a subsequent click still works.
-      window.setTimeout(() => setOrdering(false), 400);
+      window.location.href = waOrderHref;
     }, ORDER_HANDOFF_MS);
   }
 
