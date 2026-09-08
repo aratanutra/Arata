@@ -6,6 +6,9 @@ import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
 import Product3DSlider from "./Product3DSlider";
 
+/** Hand-off duration before we send the viewer to WhatsApp. Matches the chime. */
+const ORDER_HANDOFF_MS = 2200;
+
 type Props = {
   brand: SiteContent["brand"];
   hero: SiteContent["productHero"];
@@ -52,17 +55,16 @@ export default function ProductHero({ brand, hero }: Props) {
   const primary = resolveHref(hero.primaryCta.href);
   const secondary = resolveHref(hero.secondaryCta.href);
 
+  const [ordering, setOrdering] = useState(false);
+
   // Order-now feedback: a short warm chime synthesized via Web Audio API
   // so there's no external file or CDN dependency. ~2 s total.
   function playOrderChime() {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const AC =
-        window.AudioContext || (window as any).webkitAudioContext;
+      const AC = window.AudioContext || (window as any).webkitAudioContext;
       if (!AC) return;
       const ctx = new AC();
-      // Some iOS/Chrome contexts start suspended until a user gesture. This
-      // handler IS a user gesture, so resume() will succeed silently.
       if (ctx.state === "suspended") ctx.resume().catch(() => {});
       const now = ctx.currentTime;
       // C5, E5, G5 arpeggio — brief major-chord ascent
@@ -86,6 +88,56 @@ export default function ProductHero({ brand, hero }: Props) {
     } catch {
       /* audio unavailable — silently skip */
     }
+  }
+
+  async function fireConfetti() {
+    try {
+      const mod = await import("canvas-confetti");
+      const confetti = mod.default;
+      const colours = ["#E88F3A", "#F4A65C", "#17203D", "#B8935E", "#F2E9D2"];
+      confetti({
+        particleCount: 90,
+        spread: 70,
+        startVelocity: 40,
+        origin: { y: 0.7 },
+        colors: colours,
+        scalar: 0.9
+      });
+      // A second gentler wave a beat later for depth.
+      window.setTimeout(() => {
+        confetti({
+          particleCount: 60,
+          spread: 100,
+          startVelocity: 32,
+          origin: { y: 0.6 },
+          colors: colours,
+          scalar: 0.8
+        });
+      }, 350);
+    } catch {
+      /* confetti library missing — skip gracefully */
+    }
+  }
+
+  function handleOrderClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    if (ordering) return;
+    setOrdering(true);
+    // Reserve a tab NOW (inside the user gesture) so browsers don't block the
+    // popup when we assign its location after the confetti + chime.
+    const win = window.open("about:blank", "_blank");
+    playOrderChime();
+    void fireConfetti();
+    window.setTimeout(() => {
+      if (win && !win.closed) {
+        win.location.href = waOrderHref;
+      } else {
+        // Fallback if the reserved tab was blocked/closed — send this tab.
+        window.location.href = waOrderHref;
+      }
+      // Re-enable after the hand-off so a subsequent click still works.
+      window.setTimeout(() => setOrdering(false), 400);
+    }, ORDER_HANDOFF_MS);
   }
 
   return (
@@ -244,11 +296,14 @@ export default function ProductHero({ brand, hero }: Props) {
                     href={primary.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={playOrderChime}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
+                    onClick={handleOrderClick}
+                    aria-disabled={ordering}
+                    className={`inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover ${
+                      ordering ? "pointer-events-none opacity-90" : ""
+                    }`}
                   >
                     <WhatsAppGlyph className="h-5 w-5" />
-                    {hero.primaryCta.label}
+                    {ordering ? "Opening WhatsApp…" : hero.primaryCta.label}
                   </a>
                 ) : hero.primaryCta.href.startsWith("#") ? (
                   <a href={hero.primaryCta.href} className="btn-primary text-[15px]">
