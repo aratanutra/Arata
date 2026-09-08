@@ -82,7 +82,7 @@ export default function AeternyxFloat({
                     }
                   }}
                   exit={{ opacity: 0, y: -6, transition: { duration: 0.2 } }}
-                  className="pointer-events-none absolute -top-14 right-4 flex flex-col items-end md:-top-16 md:right-6"
+                  className="pointer-events-none absolute -top-14 left-0 flex flex-col items-start md:-top-16 md:left-2"
                 >
                   <span className="font-script text-[24px] font-semibold leading-none text-ink md:text-[32px]">
                     Buy me
