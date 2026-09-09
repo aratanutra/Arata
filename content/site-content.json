@@ -271,7 +271,7 @@
     "title": "One tablet, once a day. That is the entire protocol.",
     "steps": [
       { "icon": "pill", "title": "1 tablet daily", "detail": "Take one AETERNYX® tablet once every 24 hours." },
-      { "icon": "sun", "title": "With any meal", "detail": "Take it with any meal that includes some fat — the fat-soluble actives (K2, D3, Astaxanthin, Tocotrienols) absorb best that way." },
+      { "icon": "moon", "title": "After dinner or heaviest meal", "detail": "Take it after dinner, or the heaviest meal of your day — the fat-soluble actives (K2, D3, Astaxanthin, Tocotrienols) absorb best with a meal that includes fat." },
       { "icon": "calendar", "title": "Continue for 90 days", "detail": "Serum levels stabilise across 8–12 weeks. Reassess after 90 days." },
       { "icon": "store", "title": "Store cool and dry", "detail": "Keep the strip in a cool, dry, dark place. Protect from moisture and direct light." }
     ],
