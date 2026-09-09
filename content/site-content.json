@@ -273,9 +273,9 @@
       { "icon": "pill", "title": "1 tablet daily", "detail": "Take one AETERNYX® tablet once every 24 hours." },
       { "icon": "moon", "title": "After dinner or heaviest meal of the day", "detail": "Take it after dinner, or the heaviest meal of your day — the fat-soluble actives (K2, D3, Astaxanthin, Tocotrienols) absorb best with a meal that includes fat." },
       { "icon": "calendar", "title": "Continue for 90 days", "detail": "Serum levels stabilise across 8–12 weeks. Reassess after 90 days." },
-      { "icon": "store", "title": "Store cool and dry", "detail": "Keep the strip in a cool, dry, dark place. Protect from moisture and direct light." }
+      { "icon": "store", "title": "Store cool, dry, dark", "detail": "Store in a cool, dry and dark place. Protect from light and moisture. Keep out of reach of children." }
     ],
-    "warning": "Do not exceed the recommended daily dose. Not intended for use during pregnancy or lactation without medical clearance."
+    "warning": "Not to exceed the recommended daily usage. Not intended for use during pregnancy or lactation without medical clearance. Appropriate overages are added to compensate for loss on storage."
   },
   "metricsPanel": {
     "eyebrow": "Composition at a glance",
@@ -289,7 +289,7 @@
       { "value": "1", "unit": "/day", "label": "Tablet, once daily" }
     ],
     "usage": [
-      { "icon": "sun", "title": "Dosage", "detail": "Take one tablet daily, preferably with breakfast." },
+      { "icon": "sun", "title": "Dosage", "detail": "One tablet per day. Take after dinner or the heaviest meal of the day. Not to exceed the recommended daily usage." },
       { "icon": "drop", "title": "Directions", "detail": "Swallow whole with a glass of water. Do not chew or crush the tablet." },
       { "icon": "warning", "title": "Precautions", "detail": "Not for children under 18, pregnant, or nursing women. Consult your healthcare professional before use if you have any medical condition or are on medication." }
     ]
@@ -329,6 +329,7 @@
     "notes": [
       "** % RDA not established",
       "% RDA calculated as per ICMR guideline",
+      "Appropriate overages added to compensate for loss on storage.",
       "Not for medicinal use."
     ]
   },
