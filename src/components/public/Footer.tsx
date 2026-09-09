@@ -89,6 +89,23 @@ export default function Footer({ brand, footer }: Props) {
           </p>
         </div>
 
+        {footer.policies.links?.length ? (
+          <nav
+            aria-label="Policies"
+            className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-hairline pt-4 text-[11px] font-medium uppercase tracking-widest text-muted"
+          >
+            {footer.policies.links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="hover:text-gold-deep"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        ) : null}
+
         <div className="mt-4 flex flex-col gap-1 border-t border-hairline pt-3 text-muted md:flex-row md:items-center md:justify-between">
           <p className="text-[9px] uppercase tracking-[0.2em]">{footer.address}</p>
           <p className="text-[9px] tracking-tight">{footer.rights}</p>
