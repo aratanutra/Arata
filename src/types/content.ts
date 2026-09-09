@@ -227,6 +227,38 @@ export type SiteContent = {
       returns: string;
       cancellation: string;
       delivery: string;
+      links: NavLink[];
     };
   };
+  policies: {
+    updatedAt: string;
+    grievance: {
+      designation: string;
+      company: string;
+      address: string;
+      email: string;
+      phone: string;
+      hours: string;
+    };
+    terms: PolicyDocument;
+    privacy: PolicyDocument;
+    refundCancellation: PolicyDocument;
+    returns: PolicyDocument;
+    shipping: PolicyDocument;
+  };
+};
+
+export type PolicySection = {
+  heading?: string;
+  intro?: string;
+  paragraphs?: string[];
+  list?: { ordered: boolean; items: string[] };
+};
+
+export type PolicyDocument = {
+  slug: string;
+  title: string;
+  eyebrow: string;
+  summary: string;
+  sections: PolicySection[];
 };
