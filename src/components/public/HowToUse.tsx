@@ -25,6 +25,22 @@ const ICON_PATHS: Record<string, JSX.Element> = {
       </g>
     </>
   ),
+  moon: (
+    <path
+      d="M20 14.5A8 8 0 019.5 4a1 1 0 00-1.2-1.2 9.5 9.5 0 1012.9 12.9 1 1 0 00-1.2-1.2z"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      fill="none"
+      strokeLinejoin="round"
+    />
+  ),
+  utensils: (
+    <>
+      <path d="M7 3v8a2 2 0 002 2v8" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 3v6M9 3v6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M17 3c-1.5 0-3 1.5-3 4.5S15.5 12 17 12v9" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
   calendar: (
     <>
       <rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" strokeWidth="1.4" fill="none" />
