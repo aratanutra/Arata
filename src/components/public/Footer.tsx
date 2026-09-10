@@ -26,45 +26,17 @@ export default function Footer({ brand, footer }: Props) {
           <p className="mt-4 text-[15px] leading-relaxed text-ink">{footer.tagline}</p>
         </div>
 
-        {/* Compliance strip: FSSAI Disclosure + Order Policies */}
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
-            <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
-              FSSAI Disclosure
-            </div>
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">
-              {footer.complianceDisclaimer}
-            </p>
-            <p className="mt-2 text-[11px] uppercase tracking-widest text-muted">
-              Category: {brand.fssaiCategory}
-            </p>
+        {/* Compliance strip: FSSAI Disclosure */}
+        <div className="mt-10 rounded-2xl border border-hairline bg-canvas/70 p-5">
+          <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+            FSSAI Disclosure
           </div>
-
-          <div className="rounded-2xl border border-hairline bg-canvas/70 p-5">
-            <div className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
-              {footer.policies.label}
-            </div>
-            <dl className="mt-3 space-y-3 text-[13px] leading-relaxed text-ink-soft">
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-widest text-ink">
-                  Returns
-                </dt>
-                <dd className="mt-1">{footer.policies.returns}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-widest text-ink">
-                  Cancellation
-                </dt>
-                <dd className="mt-1">{footer.policies.cancellation}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-widest text-ink">
-                  Delivery
-                </dt>
-                <dd className="mt-1">{footer.policies.delivery}</dd>
-              </div>
-            </dl>
-          </div>
+          <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">
+            {footer.complianceDisclaimer}
+          </p>
+          <p className="mt-2 text-[11px] uppercase tracking-widest text-muted">
+            Category: {brand.fssaiCategory}
+          </p>
         </div>
 
         {/* Small-font Marketed by / Manufactured by strip */}
