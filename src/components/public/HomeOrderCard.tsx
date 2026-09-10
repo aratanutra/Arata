@@ -123,12 +123,16 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
         <div
           role="status"
           aria-live="polite"
-          className="mt-5 rounded-xl border border-hairline bg-canvas p-4"
+          className="relative mt-5 overflow-hidden rounded-xl border border-gold-deep/40 bg-gradient-to-br from-gold-soft/70 via-canvas to-canvas p-4"
         >
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-gold-deep/15 blur-2xl"
+          />
           <div className="flex items-center gap-2">
             <span
               aria-hidden
-              className="inline-block h-2 w-2 rounded-full bg-gold-deep"
+              className="inline-flex h-2 w-2 rounded-full bg-gold-deep animate-pulse"
             />
             <span className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
               {orderStatus.heading}
@@ -141,17 +145,17 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
             type="button"
             disabled
             aria-disabled
-            className="mt-3 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-hairline/70 px-4 py-2.5 text-[13px] font-semibold text-muted"
+            className="mt-3 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-gold-deep/90 px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm"
           >
-            Orders reopen {orderStatus.opensAt}
+            {orderStatus.buttonLabel}
           </button>
           <a
             href={waNotifyHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full border border-hairline bg-paper px-4 py-2.5 text-[13px] font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-canvas"
+            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-[13px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
           >
-            <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
+            <WhatsAppGlyph className="h-4 w-4" />
             {orderStatus.notifyLabel}
           </a>
         </div>

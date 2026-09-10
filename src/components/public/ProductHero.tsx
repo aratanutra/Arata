@@ -241,12 +241,16 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                   <div
                     role="status"
                     aria-live="polite"
-                    className="rounded-2xl border border-hairline bg-canvas p-4 md:p-5"
+                    className="relative overflow-hidden rounded-2xl border border-gold-deep/40 bg-gradient-to-br from-gold-soft/70 via-canvas to-canvas p-5 md:p-6"
                   >
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gold-deep/15 blur-2xl"
+                    />
                     <div className="flex items-center gap-2">
                       <span
                         aria-hidden
-                        className="inline-block h-2 w-2 rounded-full bg-gold-deep"
+                        className="inline-flex h-2 w-2 rounded-full bg-gold-deep animate-pulse"
                       />
                       <span className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
                         {orderStatus.heading}
@@ -259,17 +263,17 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                       type="button"
                       disabled
                       aria-disabled
-                      className="mt-4 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-hairline/70 px-6 py-3 text-[15px] font-semibold text-muted"
+                      className="mt-4 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-gold-deep/90 px-6 py-3 text-[15px] font-semibold text-white shadow-sm"
                     >
-                      Orders reopen {orderStatus.opensAt}
+                      {orderStatus.buttonLabel}
                     </button>
                     <a
                       href={waNotifyHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-hairline bg-paper px-6 py-3 text-sm font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-canvas"
+                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
                     >
-                      <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
+                      <WhatsAppGlyph className="h-5 w-5" />
                       {orderStatus.notifyLabel}
                     </a>
                   </div>

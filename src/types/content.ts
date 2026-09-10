@@ -52,6 +52,7 @@ export type SiteContent = {
     opensAtISO?: string;
     heading: string;
     message: string;
+    buttonLabel: string;
     notifyLabel: string;
     notifyMessage: string;
   };

@@ -27,10 +27,11 @@
     "blocked": true,
     "opensAt": "Tuesday, 20 October 2026",
     "opensAtISO": "2026-10-20",
-    "heading": "Orders temporarily paused",
-    "message": "We are preparing our next dispatch batch. Orders will reopen on Tuesday, 20 October 2026. Thank you for your patience.",
-    "notifyLabel": "Notify me on WhatsApp",
-    "notifyMessage": "Hi, please notify me when AETERNYX® orders reopen on 20 October 2026."
+    "heading": "Launching 20 October 2026",
+    "message": "The wait is nearly over. AETERNYX® — India's most rigorously composed healthspan nutraceutical — opens for orders on Tuesday, 20 October 2026. Be among the first to receive a strip from our founding batch.",
+    "buttonLabel": "Launching Tuesday, 20 October 2026",
+    "notifyLabel": "Reserve yours on WhatsApp",
+    "notifyMessage": "Hi! I'd like to reserve AETERNYX® for launch day (Tuesday, 20 October 2026). Please save a strip from the founding batch for me."
   },
   "nav": {
     "links": [
