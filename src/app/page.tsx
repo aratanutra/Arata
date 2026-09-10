@@ -20,6 +20,7 @@ export default async function HomePage() {
         data={content.homeFeatured}
         brand={content.brand}
         hero={content.productHero}
+        orderStatus={content.orderStatus}
       />
       <HomeValues data={content.homeValues} />
       <Philosophy data={content.philosophy} />

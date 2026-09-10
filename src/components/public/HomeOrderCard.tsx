@@ -6,6 +6,7 @@ import type { SiteContent } from "@/types/content";
 type Props = {
   brand: SiteContent["brand"];
   hero: SiteContent["productHero"];
+  orderStatus: SiteContent["orderStatus"];
 };
 
 function WhatsAppGlyph({ className }: { className?: string }) {
@@ -21,7 +22,7 @@ function WhatsAppGlyph({ className }: { className?: string }) {
  * Uses productHero.packs data so the same three packs and messages that
  * appear on /aeternyx power this card too.
  */
-export default function HomeOrderCard({ brand, hero }: Props) {
+export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
   const digits = brand.whatsappNumber.replace(/\D/g, "");
   const packs = hero.packs?.length ? hero.packs : [];
   const defaultIndex = packs.length > 1 ? 1 : 0;
@@ -31,6 +32,10 @@ export default function HomeOrderCard({ brand, hero }: Props) {
   const waHref = useMemo(
     () => `https://wa.me/${digits}?text=${encodeURIComponent(waMessage)}`,
     [digits, waMessage]
+  );
+  const waNotifyHref = useMemo(
+    () => `https://wa.me/${digits}?text=${encodeURIComponent(orderStatus.notifyMessage)}`,
+    [digits, orderStatus.notifyMessage]
   );
 
   return (
@@ -114,15 +119,53 @@ export default function HomeOrderCard({ brand, hero }: Props) {
         </div>
       </div>
 
-      <a
-        href={waHref}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
-      >
-        <WhatsAppGlyph className="h-5 w-5" />
-        Order now
-      </a>
+      {orderStatus.blocked ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="mt-5 rounded-xl border border-hairline bg-canvas p-4"
+        >
+          <div className="flex items-center gap-2">
+            <span
+              aria-hidden
+              className="inline-block h-2 w-2 rounded-full bg-gold-deep"
+            />
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+              {orderStatus.heading}
+            </span>
+          </div>
+          <p className="mt-2 text-[13px] leading-relaxed text-ink">
+            {orderStatus.message}
+          </p>
+          <button
+            type="button"
+            disabled
+            aria-disabled
+            className="mt-3 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-hairline/70 px-4 py-2.5 text-[13px] font-semibold text-muted"
+          >
+            Orders reopen {orderStatus.opensAt}
+          </button>
+          <a
+            href={waNotifyHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full border border-hairline bg-paper px-4 py-2.5 text-[13px] font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-canvas"
+          >
+            <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
+            {orderStatus.notifyLabel}
+          </a>
+        </div>
+      ) : (
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
+        >
+          <WhatsAppGlyph className="h-5 w-5" />
+          Order now
+        </a>
+      )}
       <p className="mt-3 text-[11px] leading-relaxed text-muted">
         {hero.shipLine}
       </p>

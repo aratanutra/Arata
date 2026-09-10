@@ -27,7 +27,7 @@ export default async function AeternyxPage() {
       <Nav brand={content.brand} nav={content.nav} />
       <IngredientExplorer data={content.ingredientsSection} />
       <CompositionTable data={content.compositionTable} />
-      <ProductHero brand={content.brand} hero={content.productHero} />
+      <ProductHero brand={content.brand} hero={content.productHero} orderStatus={content.orderStatus} />
       <TrustBar data={content.trustBar} />
       <MetricsPanel data={content.metricsPanel} />
       <HowToUse data={content.howToUse} />
