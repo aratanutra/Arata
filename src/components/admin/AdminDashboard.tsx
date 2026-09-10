@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { signOut } from "next-auth/react";
 import type { SiteContent, Ingredient } from "@/types/content";
 import SectionCard from "./SectionCard";
-import { TextField } from "./Field";
+import { TextField, ToggleField } from "./Field";
 import ImageUploader from "./ImageUploader";
 
 type Props = {
@@ -44,6 +44,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
   const sections = useMemo(
     () => [
       { id: "brand", label: "Brand" },
+      { id: "orderStatus", label: "Order Status" },
       { id: "nav", label: "Navigation" },
       { id: "hero", label: "Hero" },
       { id: "trustBar", label: "Trust Bar" },
@@ -117,6 +118,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
 
       <div className="mt-8 space-y-4">
         <BrandCard content={content} update={update} />
+        <OrderStatusCard content={content} update={update} />
         <NavCard content={content} update={update} />
         <HeroCard content={content} update={update} />
         <TrustBarCard content={content} update={update} />
@@ -213,6 +215,73 @@ function BrandCard({ content, update }: CardProps) {
           100% Vegetarian (shows green-dot badge in footer)
         </span>
       </label>
+    </SectionCard>
+  );
+}
+
+function OrderStatusCard({ content, update }: CardProps) {
+  const v = content.orderStatus;
+  const set = (patch: Partial<SiteContent["orderStatus"]>) =>
+    update("orderStatus", { ...v, ...patch });
+  return (
+    <SectionCard
+      id="orderStatus"
+      title="Order Status"
+      subtitle="Toggle the launch/pause card that replaces the Order-now button on the product and home pages."
+      defaultOpen={v.blocked}
+    >
+      <ToggleField
+        label="Block ordering"
+        value={v.blocked}
+        onChange={(x) => set({ blocked: x })}
+        onLabel="Orders blocked"
+        offLabel="Orders live"
+        hint="When ON, both order surfaces (home order card + /aeternyx purchase panel) show the launch notice below instead of the green Order-now WhatsApp button. Flip OFF and the pack selector + Order-now button return."
+      />
+      <TextField
+        label="Reopens on (display)"
+        value={v.opensAt}
+        onChange={(x) => set({ opensAt: x })}
+        placeholder="Tuesday, 20 October 2026"
+      />
+      <TextField
+        label="Reopens on (ISO date, machine-readable)"
+        value={v.opensAtISO ?? ""}
+        onChange={(x) => set({ opensAtISO: x })}
+        placeholder="2026-10-20"
+      />
+      <TextField
+        label="Heading (small caps pill above the message)"
+        value={v.heading}
+        onChange={(x) => set({ heading: x })}
+        placeholder="Launching 20 October 2026"
+      />
+      <TextField
+        label="Message shown to customer"
+        value={v.message}
+        onChange={(x) => set({ message: x })}
+        multiline
+        rows={4}
+      />
+      <TextField
+        label="Disabled button label"
+        value={v.buttonLabel}
+        onChange={(x) => set({ buttonLabel: x })}
+        placeholder="Launching Tuesday, 20 October 2026"
+      />
+      <TextField
+        label="Notify-me WhatsApp button label"
+        value={v.notifyLabel}
+        onChange={(x) => set({ notifyLabel: x })}
+        placeholder="Reserve yours on WhatsApp"
+      />
+      <TextField
+        label="Notify-me WhatsApp pre-filled message"
+        value={v.notifyMessage}
+        onChange={(x) => set({ notifyMessage: x })}
+        multiline
+        rows={3}
+      />
     </SectionCard>
   );
 }
