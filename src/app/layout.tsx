@@ -17,16 +17,33 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "AETERNYX™ · Cellular Intelligence™ | Arata Nutraceuticals",
+  metadataBase: new URL("https://aratanutra.com"),
+  title: "AETERNYX® · Cellular Intelligence™ | Arata Nutraceuticals",
   description:
-    "AETERNYX™ is an expertly composed healthspan nutraceutical: ten evidence-graded bioactives across five cellular wellness pathways in a single daily tablet.",
+    "AETERNYX® is an expertly composed healthspan nutraceutical: ten evidence-graded bioactives across five cellular wellness pathways in a single daily tablet.",
   openGraph: {
-    title: "AETERNYX™ · Cellular Intelligence™",
+    type: "website",
+    url: "https://aratanutra.com",
+    siteName: "Arata Nutraceuticals",
+    title: "AETERNYX® · Cellular Intelligence™",
     description:
-      "A single tablet. Ten bioactives. Five cellular ageing pathways. Composed to global standards.",
-    type: "website"
+      "One tablet, opened up — ten evidence-graded bioactives across five cellular ageing pathways.",
+    images: [
+      {
+        url: "/aeternyx-og.png",
+        width: 1200,
+        height: 630,
+        alt: "AETERNYX® — one tablet opened up, showing ten bioactives inside."
+      }
+    ]
   },
-  metadataBase: new URL("https://aeternyx.com")
+  twitter: {
+    card: "summary_large_image",
+    title: "AETERNYX® · Cellular Intelligence™",
+    description:
+      "One tablet, opened up — ten evidence-graded bioactives across five cellular ageing pathways.",
+    images: ["/aeternyx-og.png"]
+  }
 };
 
 export default function RootLayout({
