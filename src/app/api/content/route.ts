@@ -48,7 +48,7 @@ export async function POST(req: Request) {
 
   // Preferred path on Netlify: durable KV via Netlify Blobs, no external
   // credentials required. writeContent() handles the Blobs write when
-  // process.env.NETLIFY is set.
+  // isBlobsAvailable() is true (Netlify runtime).
   if (isBlobsAvailable()) {
     try {
       await writeContent(body);
@@ -60,7 +60,15 @@ export async function POST(req: Request) {
       });
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Blobs write failed";
-      return NextResponse.json({ error: msg }, { status: 502 });
+      // On Netlify the disk fallback below would hit EROFS. Return the
+      // real Blobs error so the operator can see what to fix.
+      return NextResponse.json(
+        {
+          error: `Netlify Blobs save failed: ${msg}`,
+          hint: "If this persists, add NETLIFY_SITE_ID and NETLIFY_API_TOKEN env vars (see README) or fall back to the GITHUB_TOKEN path."
+        },
+        { status: 502 }
+      );
     }
   }
 
