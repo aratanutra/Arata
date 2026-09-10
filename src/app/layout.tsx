@@ -30,7 +30,9 @@ export const metadata: Metadata = {
       "One tablet, opened up — ten evidence-graded bioactives across five cellular ageing pathways.",
     images: [
       {
-        url: "/aeternyx-og.png",
+        url: "/aeternyx-og.jpg",
+        secureUrl: "https://aratanutra.com/aeternyx-og.jpg",
+        type: "image/jpeg",
         width: 1200,
         height: 630,
         alt: "AETERNYX® — one tablet opened up, showing ten bioactives inside."
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
     title: "AETERNYX® · Cellular Intelligence™",
     description:
       "One tablet, opened up — ten evidence-graded bioactives across five cellular ageing pathways.",
-    images: ["/aeternyx-og.png"]
+    images: ["/aeternyx-og.jpg"]
   }
 };
 
