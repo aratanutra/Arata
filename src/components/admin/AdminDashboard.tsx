@@ -12,7 +12,11 @@ type Props = {
   adminEmail: string;
 };
 
-type Status = { kind: "idle" } | { kind: "saving" } | { kind: "saved" } | { kind: "error"; msg: string };
+type Status =
+  | { kind: "idle" }
+  | { kind: "saving" }
+  | { kind: "saved"; note?: string }
+  | { kind: "error"; msg: string };
 
 export default function AdminDashboard({ initialContent, adminEmail }: Props) {
   const [content, setContent] = useState<SiteContent>(initialContent);
@@ -30,12 +34,21 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(content)
       });
+      const payload = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        mode?: "github" | "local";
+        note?: string;
+      };
       if (!res.ok) {
-        const { error } = (await res.json().catch(() => ({}))) as { error?: string };
-        throw new Error(error ?? `Save failed (${res.status})`);
+        throw new Error(payload.error ?? `Save failed (${res.status})`);
       }
-      setStatus({ kind: "saved" });
-      setTimeout(() => setStatus({ kind: "idle" }), 2400);
+      const note =
+        payload.note ??
+        (payload.mode === "github"
+          ? "Committed. Live in ~90 s."
+          : undefined);
+      setStatus({ kind: "saved", note });
+      setTimeout(() => setStatus({ kind: "idle" }), 5000);
     } catch (e) {
       setStatus({ kind: "error", msg: e instanceof Error ? e.message : "Save failed" });
     }
@@ -103,7 +116,7 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
         <div className="flex items-center gap-3">
           {status.kind === "saved" ? (
             <span className="text-[10px] uppercase tracking-widest text-gold-deep">
-              ✓ Saved
+              ✓ Saved{status.note ? ` — ${status.note}` : ""}
             </span>
           ) : status.kind === "error" ? (
             <span className="text-[10px] uppercase tracking-widest text-red-500">
