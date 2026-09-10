@@ -23,6 +23,15 @@
     "marketer": "Arata Nutraceuticals, Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana",
     "vegetarian": true
   },
+  "orderStatus": {
+    "blocked": true,
+    "opensAt": "Tuesday, 20 October 2026",
+    "opensAtISO": "2026-10-20",
+    "heading": "Orders temporarily paused",
+    "message": "We are preparing our next dispatch batch. Orders will reopen on Tuesday, 20 October 2026. Thank you for your patience.",
+    "notifyLabel": "Notify me on WhatsApp",
+    "notifyMessage": "Hi, please notify me when AETERNYX® orders reopen on 20 October 2026."
+  },
   "nav": {
     "links": [
       { "label": "Home", "href": "/" },

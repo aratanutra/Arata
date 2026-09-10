@@ -9,6 +9,7 @@ import Product3DSlider from "./Product3DSlider";
 type Props = {
   brand: SiteContent["brand"];
   hero: SiteContent["productHero"];
+  orderStatus: SiteContent["orderStatus"];
 };
 
 function Tick() {
@@ -28,7 +29,7 @@ function WhatsAppGlyph({ className }: { className?: string }) {
   );
 }
 
-export default function ProductHero({ brand, hero }: Props) {
+export default function ProductHero({ brand, hero, orderStatus }: Props) {
   const digits = brand.whatsappNumber.replace(/\D/g, "");
   const packs = hero.packs?.length ? hero.packs : [];
   const defaultIndex = packs.length > 1 ? 1 : 0; // pick the 30-day as default when available
@@ -45,6 +46,12 @@ export default function ProductHero({ brand, hero }: Props) {
     [digits, waOrderMessage]
   );
 
+  const waNotifyHref = useMemo(
+    () =>
+      `https://wa.me/${digits}?text=${encodeURIComponent(orderStatus.notifyMessage)}`,
+    [digits, orderStatus.notifyMessage]
+  );
+
   function resolveHref(href: string): { href: string; external: boolean } {
     if (href === "whatsapp") return { href: waOrderHref, external: true };
     return { href, external: false };
@@ -52,6 +59,7 @@ export default function ProductHero({ brand, hero }: Props) {
 
   const primary = resolveHref(hero.primaryCta.href);
   const secondary = resolveHref(hero.secondaryCta.href);
+  const isOrderCta = hero.primaryCta.href === "whatsapp";
 
 
   return (
@@ -229,7 +237,43 @@ export default function ProductHero({ brand, hero }: Props) {
               </p>
 
               <div className="mt-5 flex flex-col gap-3">
-                {primary.external ? (
+                {orderStatus.blocked && isOrderCta ? (
+                  <div
+                    role="status"
+                    aria-live="polite"
+                    className="rounded-2xl border border-hairline bg-canvas p-4 md:p-5"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span
+                        aria-hidden
+                        className="inline-block h-2 w-2 rounded-full bg-gold-deep"
+                      />
+                      <span className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
+                        {orderStatus.heading}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-[14px] leading-relaxed text-ink md:text-[15px]">
+                      {orderStatus.message}
+                    </p>
+                    <button
+                      type="button"
+                      disabled
+                      aria-disabled
+                      className="mt-4 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-hairline/70 px-6 py-3 text-[15px] font-semibold text-muted"
+                    >
+                      Orders reopen {orderStatus.opensAt}
+                    </button>
+                    <a
+                      href={waNotifyHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-hairline bg-paper px-6 py-3 text-sm font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-canvas"
+                    >
+                      <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
+                      {orderStatus.notifyLabel}
+                    </a>
+                  </div>
+                ) : primary.external ? (
                   <a
                     href={primary.href}
                     target="_blank"

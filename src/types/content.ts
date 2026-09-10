@@ -46,6 +46,15 @@ export type SiteContent = {
     marketer: string;
     vegetarian: boolean;
   };
+  orderStatus: {
+    blocked: boolean;
+    opensAt: string;
+    opensAtISO?: string;
+    heading: string;
+    message: string;
+    notifyLabel: string;
+    notifyMessage: string;
+  };
   nav: {
     links: NavLink[];
     ctaLabel: string;

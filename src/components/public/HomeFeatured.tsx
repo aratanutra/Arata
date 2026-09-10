@@ -9,9 +9,10 @@ type Props = {
   brand: SiteContent["brand"];
   data: SiteContent["homeFeatured"];
   hero: SiteContent["productHero"];
+  orderStatus: SiteContent["orderStatus"];
 };
 
-export default function HomeFeatured({ brand, data, hero }: Props) {
+export default function HomeFeatured({ brand, data, hero, orderStatus }: Props) {
   return (
     <section className="relative bg-canvas py-24 md:py-32">
       <div className="container-app">
@@ -61,7 +62,7 @@ export default function HomeFeatured({ brand, data, hero }: Props) {
             </div>
 
             <div className="order-2">
-              <HomeOrderCard brand={brand} hero={hero} />
+              <HomeOrderCard brand={brand} hero={hero} orderStatus={orderStatus} />
             </div>
           </div>
         </motion.div>
