@@ -9,6 +9,8 @@ import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import AeternyxFloat from "@/components/public/AeternyxFloat";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const content = await readContent();
   return (

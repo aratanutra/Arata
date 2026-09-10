@@ -81,16 +81,23 @@ To edit content **without** the admin UI: hand-edit `content/site-content.json` 
    - `ADMIN_PASSWORD`
    - `NEXTAUTH_SECRET`
    - `NEXTAUTH_URL` (your Netlify URL or custom domain — e.g. `https://aratanutra.com`)
-   - `GITHUB_TOKEN` (fine-grained PAT with **Contents: Read & write** on `aratanutra/Arata`) — required for admin saves to persist. Without it, the admin returns 500 on Save because Netlify function filesystems are read-only.
 5. Deploy. Netlify auto-detects Next.js and applies `@netlify/plugin-nextjs`, so admin, API routes, and middleware all work.
 
 ### How admin saves persist
 
-The `/api/content` and `/api/upload` routes commit directly to `main` via the GitHub Contents API (`src/lib/github.ts`). Every admin save becomes a real git commit → Netlify auto-builds → the new content is live in ~90 s. Audit trail lives in the git log. Reverting a bad edit is a `git revert` away.
+`/api/content` writes to **Netlify Blobs** (`src/lib/blobs.ts`) — Netlify's built-in KV store. No env var setup required: on Netlify runtime the SDK auto-discovers credentials. On save, the API route writes the JSON to Blobs and calls `revalidatePath()` for every public route that reads content, so the change is visible within seconds.
 
-If `GITHUB_TOKEN` is not set, both routes fall back to writing to the local filesystem — fine for `npm run dev`, broken in production.
+Public pages that read `readContent()` set `export const dynamic = "force-dynamic"` so each request re-reads from Blobs.
 
-Optional overrides (rarely needed):
+Fallback chain (in `/api/content` route):
+
+1. **Netlify Blobs** (default in production) — chosen when `process.env.NETLIFY === "true"`.
+2. **GitHub commit** — used when `GITHUB_TOKEN` is set (a fine-grained PAT with Contents: Read & write on `aratanutra/Arata`). Slower (waits for Netlify rebuild) but versions edits in git.
+3. **Local filesystem** — used when neither is available (i.e. `npm run dev` without either setup).
+
+Note: Blobs edits are **not** in git. Every deploy from `main` still ships whatever's committed in `content/site-content.json`; if the two drift and you rebuild, admin edits held only in Blobs will not be overwritten (readContent prefers Blobs) but the deploy artifact and Blobs are separate stores. For durable git-versioned edits, set `GITHUB_TOKEN` — the route will prefer that path.
+
+Optional GitHub-path overrides (rarely needed):
 - `GITHUB_REPO_OWNER` (default `aratanutra`)
 - `GITHUB_REPO_NAME` (default `Arata`)
 - `GITHUB_CONTENT_BRANCH` (default `main`)

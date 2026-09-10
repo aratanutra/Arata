@@ -14,6 +14,8 @@ import Faq from "@/components/public/Faq";
 import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "AETERNYX® · Cellular Intelligence™ | Arata Nutraceuticals",
   description:

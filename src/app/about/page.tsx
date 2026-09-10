@@ -10,6 +10,8 @@ import AboutStory from "@/components/public/AboutStory";
 import AboutValues from "@/components/public/AboutValues";
 import AboutClosing from "@/components/public/AboutClosing";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "About Us · Arata Nutraceuticals",
   description:
