@@ -6,6 +6,8 @@ import PolicyPage from "@/components/public/PolicyPage";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import AeternyxFloat from "@/components/public/AeternyxFloat";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Terms & Conditions · Arata Nutraceuticals",
   description:
