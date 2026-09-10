@@ -81,9 +81,20 @@ To edit content **without** the admin UI: hand-edit `content/site-content.json` 
    - `ADMIN_PASSWORD`
    - `NEXTAUTH_SECRET`
    - `NEXTAUTH_URL` (your Netlify URL or custom domain — e.g. `https://aratanutra.com`)
+   - `GITHUB_TOKEN` (fine-grained PAT with **Contents: Read & write** on `aratanutra/Arata`) — required for admin saves to persist. Without it, the admin returns 500 on Save because Netlify function filesystems are read-only.
 5. Deploy. Netlify auto-detects Next.js and applies `@netlify/plugin-nextjs`, so admin, API routes, and middleware all work.
 
-> **Note on the JSON content store:** writes from the admin panel persist to the deployed function's filesystem. On Netlify (and most serverless hosts) these writes do **not** survive deploys. For durable production writes, swap `src/lib/content.ts` to a database, Netlify Blobs, or GitHub commits via Octokit. For a single-author site, hand-editing `site-content.json` and pushing to `main` is the most reliable workflow.
+### How admin saves persist
+
+The `/api/content` and `/api/upload` routes commit directly to `main` via the GitHub Contents API (`src/lib/github.ts`). Every admin save becomes a real git commit → Netlify auto-builds → the new content is live in ~90 s. Audit trail lives in the git log. Reverting a bad edit is a `git revert` away.
+
+If `GITHUB_TOKEN` is not set, both routes fall back to writing to the local filesystem — fine for `npm run dev`, broken in production.
+
+Optional overrides (rarely needed):
+- `GITHUB_REPO_OWNER` (default `aratanutra`)
+- `GITHUB_REPO_NAME` (default `Arata`)
+- `GITHUB_CONTENT_BRANCH` (default `main`)
+- `GITHUB_CONTENT_PATH` (default `content/site-content.json`)
 
 ## Custom domain
 

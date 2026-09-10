@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { promises as fs } from "fs";
 import path from "path";
 import { authOptions } from "@/lib/auth";
+import { commitBinary, githubCommitEnabled } from "@/lib/github";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -38,12 +39,34 @@ export async function POST(req: Request) {
     .slice(0, 40) || "upload";
   const filename = `${safeBase}-${Date.now()}${ext}`;
 
+  const authorEmail =
+    (session.user?.email as string | undefined) ?? "admin@aratanutra.com";
+
+  if (githubCommitEnabled()) {
+    try {
+      await commitBinary(
+        `public/uploads/${filename}`,
+        bytes,
+        authorEmail,
+        `upload ${filename}`
+      );
+      return NextResponse.json({
+        url: `/uploads/${filename}`,
+        mode: "github",
+        note: "Committed. Available on the live site after Netlify rebuilds (~90 s)."
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Upload commit failed";
+      return NextResponse.json({ error: msg }, { status: 502 });
+    }
+  }
+
   const uploadsDir = path.join(process.cwd(), "public", "uploads");
   await fs.mkdir(uploadsDir, { recursive: true });
   const target = path.join(uploadsDir, filename);
   await fs.writeFile(target, bytes);
 
-  return NextResponse.json({ url: `/uploads/${filename}` });
+  return NextResponse.json({ url: `/uploads/${filename}`, mode: "local" });
 }
 
 function mimeToExt(mime: string): string {
