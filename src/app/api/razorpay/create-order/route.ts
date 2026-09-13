@@ -16,8 +16,15 @@ const MAX_PAISE = 100_00_000; // ₹1,00,000 — a soft ceiling; raise if you se
 
 export async function POST(req: Request) {
   if (!razorpayConfigured()) {
+    const missing = [
+      process.env.RAZORPAY_KEY_ID ? null : "RAZORPAY_KEY_ID",
+      process.env.RAZORPAY_KEY_SECRET ? null : "RAZORPAY_KEY_SECRET"
+    ].filter(Boolean);
     return NextResponse.json(
-      { error: "Razorpay is not configured on the server (missing RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET)." },
+      {
+        error: `Razorpay is not configured on the server. Missing: ${missing.join(", ") || "(check names + scope)"}.`,
+        hint: "Verify at /api/razorpay/health"
+      },
       { status: 500 }
     );
   }
