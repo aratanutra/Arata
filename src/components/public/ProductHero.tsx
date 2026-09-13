@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
 import Product3DSlider from "./Product3DSlider";
+import RazorpayCheckoutButton from "./RazorpayCheckoutButton";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -60,6 +61,15 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
   const primary = resolveHref(hero.primaryCta.href);
   const secondary = resolveHref(hero.secondaryCta.href);
   const isOrderCta = hero.primaryCta.href === "whatsapp";
+
+  const totalPaise = selectedPack
+    ? (selectedPack.priceNumber + (selectedPack.shippingCost ?? 0)) * 100
+    : 0;
+  const totalRupees = totalPaise / 100;
+  const inrFormatter = useMemo(
+    () => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }),
+    []
+  );
 
 
   return (
@@ -277,6 +287,31 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                       {orderStatus.notifyLabel}
                     </a>
                   </div>
+                ) : isOrderCta && selectedPack ? (
+                  <>
+                    <RazorpayCheckoutButton
+                      amountPaise={totalPaise}
+                      productName={`AETERNYX® — ${selectedPack.label}`}
+                      description={`${selectedPack.sublabel}${selectedPack.shippingFree ? " · Free shipping" : ` · Shipping ${inrFormatter.format(selectedPack.shippingCost ?? 0)}`}`}
+                      receipt={`aet-${selectedPack.id}-${Date.now()}`}
+                      notes={{
+                        pack: selectedPack.id,
+                        packLabel: selectedPack.label,
+                        shipping: selectedPack.shippingFree ? "free" : String(selectedPack.shippingCost ?? 0)
+                      }}
+                      label={`Pay ${inrFormatter.format(totalRupees)} · Buy now`}
+                      className="w-full"
+                    />
+                    <a
+                      href={primary.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-6 py-3 text-[13px] font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-paper"
+                    >
+                      <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
+                      Prefer WhatsApp? Order via chat
+                    </a>
+                  </>
                 ) : primary.external ? (
                   <a
                     href={primary.href}

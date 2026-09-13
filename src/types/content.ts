@@ -151,6 +151,7 @@ export type SiteContent = {
       priceOriginal: string;
       price: string;
       priceNumber: number;
+      shippingCost: number;
       discountLabel: string;
       shippingLabel: string;
       shippingFree: boolean;

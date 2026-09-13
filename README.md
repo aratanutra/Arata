@@ -81,7 +81,19 @@ To edit content **without** the admin UI: hand-edit `content/site-content.json` 
    - `ADMIN_PASSWORD`
    - `NEXTAUTH_SECRET`
    - `NEXTAUTH_URL` (your Netlify URL or custom domain — e.g. `https://aratanutra.com`)
+   - `RAZORPAY_KEY_ID` (test-mode: `rzp_test_...`, live: `rzp_live_...`)
+   - `RAZORPAY_KEY_SECRET` (server-only — do NOT prefix with `NEXT_PUBLIC_`)
 5. Deploy. Netlify auto-detects Next.js and applies `@netlify/plugin-nextjs`, so admin, API routes, and middleware all work.
+
+### Razorpay checkout
+
+- Server routes:
+  - `POST /api/razorpay/create-order` — takes `{ amount, currency?, receipt?, notes? }` where `amount` is paise (integer, ≥ 100). Returns `{ orderId, amount, currency, keyId }`. `keyId` comes from the server so no `NEXT_PUBLIC_RAZORPAY_KEY_ID` is required.
+  - `POST /api/razorpay/verify-payment` — HMAC-SHA256 verifies the `{ razorpay_order_id, razorpay_payment_id, razorpay_signature }` returned by the checkout modal. Constant-time compare; returns `{ verified: true }` only on match.
+- Client component: `src/components/public/RazorpayCheckoutButton.tsx` — loads `checkout.js`, calls create-order, opens the modal, verifies the signature, and reports success / dismiss / payment.failed via `onVerified` / `onFailed` callbacks.
+- Wired into: `ProductHero` (the `#buy` panel on `/aeternyx`) and `HomeOrderCard` (the home order window). Only rendered when `orderStatus.blocked` is `false` — while orders are paused, the launch card takes over as before.
+- Test cards: <https://razorpay.com/docs/payments/payments/test-card-details/>. A safe one for the test-mode key: `4111 1111 1111 1111` · any future date · any CVV · OTP `1234`.
+- Amount charged = `selectedPack.priceNumber + selectedPack.shippingCost` (in rupees), converted to paise. Pack shipping cost lives in `content/site-content.json` under `productHero.packs[*].shippingCost` — edit there to change what customers pay.
 
 ### How admin saves persist
 

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { SiteContent } from "@/types/content";
+import RazorpayCheckoutButton from "./RazorpayCheckoutButton";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -37,6 +38,20 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
     () => `https://wa.me/${digits}?text=${encodeURIComponent(orderStatus.notifyMessage)}`,
     [digits, orderStatus.notifyMessage]
   );
+
+  const inrFormatter = useMemo(
+    () =>
+      new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+      }),
+    []
+  );
+  const totalPaise = selectedPack
+    ? (selectedPack.priceNumber + (selectedPack.shippingCost ?? 0)) * 100
+    : 0;
+  const totalRupees = totalPaise / 100;
 
   return (
     <div className="flex h-full flex-col rounded-2xl border border-hairline bg-paper p-5 md:p-6">
@@ -159,17 +174,32 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
             {orderStatus.notifyLabel}
           </a>
         </div>
-      ) : (
-        <a
-          href={waHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
-        >
-          <WhatsAppGlyph className="h-5 w-5" />
-          Order now
-        </a>
-      )}
+      ) : selectedPack ? (
+        <div className="mt-5 flex flex-col gap-2">
+          <RazorpayCheckoutButton
+            amountPaise={totalPaise}
+            productName={`AETERNYX® — ${selectedPack.label}`}
+            description={`${selectedPack.sublabel}${selectedPack.shippingFree ? " · Free shipping" : ` · Shipping ${inrFormatter.format(selectedPack.shippingCost ?? 0)}`}`}
+            receipt={`aet-${selectedPack.id}-${Date.now()}`}
+            notes={{
+              pack: selectedPack.id,
+              packLabel: selectedPack.label,
+              shipping: selectedPack.shippingFree ? "free" : String(selectedPack.shippingCost ?? 0)
+            }}
+            label={`Pay ${inrFormatter.format(totalRupees)} · Buy now`}
+            className="w-full"
+          />
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-4 py-2.5 text-[12px] font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-paper"
+          >
+            <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
+            Prefer WhatsApp? Order via chat
+          </a>
+        </div>
+      ) : null}
       <p className="mt-3 text-[11px] leading-relaxed text-muted">
         {hero.shipLine}
       </p>
