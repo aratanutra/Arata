@@ -57,8 +57,7 @@ export async function POST(req: Request) {
       amount,
       currency,
       receipt,
-      notes,
-      payment_capture: true
+      notes
     });
 
     return NextResponse.json({
@@ -69,8 +68,32 @@ export async function POST(req: Request) {
       keyId: razorpayKeyId()
     });
   } catch (err) {
-    const msg = err instanceof Error ? err.message : "Razorpay order creation failed";
-    const status = /auth|unauthor/i.test(msg) ? 401 : 500;
-    return NextResponse.json({ error: msg }, { status });
+    // Razorpay's SDK throws { statusCode, error: { code, description, ... } }
+    // — a plain object, not an Error. Handle both shapes so the real reason
+    // is surfaced instead of a generic fallback.
+    const rzp = err as {
+      statusCode?: number;
+      error?: { code?: string; description?: string; reason?: string; field?: string };
+    };
+    const rzpDesc = rzp?.error?.description;
+    const rzpCode = rzp?.error?.code;
+    const msg =
+      rzpDesc ??
+      (err instanceof Error ? err.message : null) ??
+      "Razorpay order creation failed";
+    const status =
+      typeof rzp?.statusCode === "number"
+        ? rzp.statusCode
+        : /auth|unauthor/i.test(msg)
+          ? 401
+          : 500;
+
+    // Server-side log so we can grep Netlify function logs for the raw payload.
+    console.error("[razorpay.create-order]", JSON.stringify({ msg, code: rzpCode, statusCode: status, raw: rzp }));
+
+    return NextResponse.json(
+      { error: msg, code: rzpCode, statusCode: status },
+      { status: status >= 400 && status < 600 ? status : 500 }
+    );
   }
 }
