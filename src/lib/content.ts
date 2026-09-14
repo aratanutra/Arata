@@ -11,17 +11,39 @@ async function readFromDisk(): Promise<SiteContent> {
 }
 
 /**
- * Read the current site content, preferring the Netlify Blobs copy
- * (the durable store admin edits write to). Falls back to the
- * committed JSON on disk when Blobs is unset or the site has never
- * been saved from the admin.
+ * Read the current site content. On Netlify, admin edits live in Blobs
+ * and win, but disk (the committed JSON) provides defaults — so any
+ * new field we add via git shows up even if the Blobs snapshot is
+ * from an older schema (e.g. an old snapshot missing productHero.packs
+ * shippingCost).
  */
 export async function readContent(): Promise<SiteContent> {
-  if (isBlobsAvailable()) {
-    const blob = await readContentBlob<SiteContent>();
-    if (blob) return blob;
+  const disk = await readFromDisk();
+  if (!isBlobsAvailable()) return disk;
+
+  const blob = await readContentBlob<SiteContent>();
+  if (!blob) return disk;
+
+  // Shallow merge at the top level: any section only in disk (new field
+  // shipped via git) flows through; any section admin has edited (in
+  // Blobs) wins.
+  const merged: SiteContent = { ...disk, ...blob };
+
+  // Packs are edited in code, not admin, so let disk supply defaults per
+  // pack id — this fills in fields like `shippingCost` on stale Blobs
+  // snapshots without wiping any admin overrides.
+  if (blob.productHero?.packs && disk.productHero?.packs) {
+    merged.productHero = {
+      ...disk.productHero,
+      ...blob.productHero,
+      packs: blob.productHero.packs.map((p) => {
+        const diskPack = disk.productHero.packs.find((d) => d.id === p.id);
+        return diskPack ? { ...diskPack, ...p } : p;
+      })
+    };
   }
-  return readFromDisk();
+
+  return merged;
 }
 
 /**
