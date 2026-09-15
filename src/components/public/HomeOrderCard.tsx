@@ -111,17 +111,30 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
       <div className="mt-5 flex items-baseline justify-between gap-3">
         <div>
           <div className="text-[10px] font-medium uppercase tracking-widest text-muted">
-            {hero.mrpLabel}
+            You pay
           </div>
           <div className="tnum mt-0.5 flex items-baseline gap-2">
             <span className="text-3xl font-semibold tracking-tight text-ink md:text-4xl">
-              {selectedPack?.price ?? hero.mrp}
+              {inrFormatter.format(totalRupees)}
             </span>
-            {selectedPack?.priceOriginal ? (
-              <span className="text-base font-medium text-muted line-through">
-                {selectedPack.priceOriginal}
-              </span>
-            ) : null}
+          </div>
+          <div className="mt-1 space-y-0.5 text-[11px] leading-relaxed text-muted">
+            <div className="flex items-center gap-2">
+              <span className="uppercase tracking-widest text-[9px]">{hero.mrpLabel}</span>
+              <span className="tnum text-ink">{selectedPack?.price ?? hero.mrp}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="uppercase tracking-widest text-[9px]">Shipping</span>
+              {selectedPack?.shippingFree ? (
+                <span className="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-emerald-800">
+                  Free
+                </span>
+              ) : (
+                <span className="tnum text-ink">
+                  {inrFormatter.format(selectedPack?.shippingCost ?? 0)}
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <div className="text-right">
@@ -178,15 +191,17 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
         <div className="mt-5 flex flex-col gap-2">
           <RazorpayCheckoutButton
             amountPaise={totalPaise}
-            productName={`AETERNYX® — ${selectedPack.label}`}
+            productPaise={(selectedPack.priceNumber ?? 0) * 100}
+            shippingPaise={(selectedPack.shippingCost ?? 0) * 100}
+            pack={{
+              id: selectedPack.id,
+              label: selectedPack.label,
+              sublabel: selectedPack.sublabel
+            }}
+            productName="AETERNYX®"
             description={`${selectedPack.sublabel}${selectedPack.shippingFree ? " · Free shipping" : ` · Shipping ${inrFormatter.format(selectedPack.shippingCost ?? 0)}`}`}
             receipt={`aet-${selectedPack.id}-${Date.now()}`}
-            notes={{
-              pack: selectedPack.id,
-              packLabel: selectedPack.label,
-              shipping: selectedPack.shippingFree ? "free" : String(selectedPack.shippingCost ?? 0)
-            }}
-            label={`Pay ${inrFormatter.format(totalRupees)} · Buy now`}
+            label={`Buy now · ${inrFormatter.format(totalRupees)}`}
             className="w-full"
           />
           <a

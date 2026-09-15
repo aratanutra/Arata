@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import CheckoutModal, { type CheckoutFormValues } from "./CheckoutModal";
 
 type CreateOrderResponse = {
   orderId: string;
@@ -16,36 +17,28 @@ export type RazorpaySuccess = {
 };
 
 type Props = {
-  /** Amount to charge in the smallest currency unit (paise for INR). Integer, ≥ 100. */
   amountPaise: number;
+  productPaise: number;
+  shippingPaise: number;
   currency?: string;
-  /** Short receipt/reference (≤ 40 chars); a timestamped default is used when omitted. */
   receipt?: string;
-  /** Optional Razorpay `notes` — surfaces in the dashboard, useful for pack ids etc. */
-  notes?: Record<string, string>;
-  /** Product name shown in the checkout modal. */
+  pack: { id: string; label: string; sublabel: string };
   productName: string;
-  /** Line under the product name in the checkout modal. */
   description?: string;
-  /** Brand name shown in the checkout modal header. */
   brandName?: string;
-  /** Theme colour for the checkout modal — brand gold by default. */
   themeColor?: string;
-  /** Prefill contact details when known. */
-  prefill?: { name?: string; email?: string; contact?: string };
-  /** Button label. */
   label?: string;
-  /** Extra classes appended to the button. */
   className?: string;
-  /** Called after `/api/razorpay/verify-payment` returns verified. */
   onVerified?: (result: RazorpaySuccess) => void;
-  /** Called on user dismiss, payment.failed, or any error. */
   onFailed?: (err: { code?: string; description: string }) => void;
 };
 
 declare global {
   interface Window {
-    Razorpay?: new (options: unknown) => { open: () => void; on: (event: string, cb: (payload: unknown) => void) => void };
+    Razorpay?: new (options: unknown) => {
+      open: () => void;
+      on: (event: string, cb: (payload: unknown) => void) => void;
+    };
   }
 }
 
@@ -73,131 +66,206 @@ function loadRazorpayScript(): Promise<boolean> {
 
 export default function RazorpayCheckoutButton({
   amountPaise,
+  productPaise,
+  shippingPaise,
   currency = "INR",
   receipt,
-  notes,
+  pack,
   productName,
   description,
   brandName = "Arata Nutraceuticals",
   themeColor = "#B8935E",
-  prefill,
-  label = "Pay & buy now",
+  label = "Buy now",
   className = "",
   onVerified,
   onFailed
 }: Props) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [confirmation, setConfirmation] = useState<null | { paymentId: string; orderId: string }>(null);
 
-  const handleClick = useCallback(async () => {
-    if (busy) return;
-    setBusy(true);
-    setError(null);
-    try {
-      const scriptLoaded = await loadRazorpayScript();
-      if (!scriptLoaded) throw new Error("Unable to load Razorpay checkout. Check your network and try again.");
+  const inr = useMemo(
+    () =>
+      new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+      }),
+    []
+  );
 
-      // 1) Create an order on the server.
-      const createRes = await fetch("/api/razorpay/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: amountPaise, currency, receipt, notes })
-      });
-      const createBody = (await createRes.json().catch(() => ({}))) as
-        | CreateOrderResponse
-        | { error?: string };
-      if (!createRes.ok || !("orderId" in createBody)) {
-        const msg = (createBody as { error?: string }).error ?? "Could not create order.";
-        throw new Error(msg);
-      }
+  const summaryLines = useMemo(
+    () => [
+      `${pack.label} · ${pack.sublabel}`,
+      `Product ${inr.format(productPaise / 100)}${shippingPaise > 0 ? ` · Shipping ${inr.format(shippingPaise / 100)}` : " · Free shipping"}`
+    ],
+    [inr, pack.label, pack.sublabel, productPaise, shippingPaise]
+  );
 
-      const options = {
-        key: createBody.keyId,
-        amount: createBody.amount,
-        currency: createBody.currency,
-        order_id: createBody.orderId,
-        name: brandName,
-        description: description ?? productName,
-        theme: { color: themeColor },
-        prefill,
-        modal: {
-          ondismiss: () => {
-            setBusy(false);
-            onFailed?.({ description: "Payment was cancelled." });
-          }
-        },
-        handler: async (resp: RazorpaySuccess) => {
-          try {
-            const verifyRes = await fetch("/api/razorpay/verify-payment", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(resp)
-            });
-            const verifyBody = (await verifyRes.json().catch(() => ({}))) as {
-              verified?: boolean;
-              error?: string;
-            };
-            if (!verifyRes.ok || !verifyBody.verified) {
-              throw new Error(verifyBody.error ?? "Payment verification failed.");
+  const handleOpen = useCallback(() => {
+    setSubmitError(null);
+    setConfirmation(null);
+    setModalOpen(true);
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    if (submitting) return;
+    setModalOpen(false);
+  }, [submitting]);
+
+  const handleSubmit = useCallback(
+    async (values: CheckoutFormValues) => {
+      setSubmitting(true);
+      setSubmitError(null);
+      try {
+        const scriptLoaded = await loadRazorpayScript();
+        if (!scriptLoaded)
+          throw new Error("Unable to load Razorpay checkout. Check your network and try again.");
+
+        const createRes = await fetch("/api/razorpay/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: amountPaise,
+            currency,
+            receipt,
+            pack,
+            breakdown: { productPaise, shippingPaise },
+            customer: {
+              name: values.name.trim(),
+              email: values.email.trim().toLowerCase(),
+              phone: values.phone.replace(/\D/g, ""),
+              address1: values.address1.trim(),
+              address2: values.address2.trim(),
+              city: values.city.trim(),
+              state: values.state,
+              pincode: values.pincode
             }
-            onVerified?.(resp);
-          } catch (err) {
-            const msg = err instanceof Error ? err.message : "Verification failed.";
-            setError(msg);
-            onFailed?.({ description: msg });
-          } finally {
-            setBusy(false);
-          }
+          })
+        });
+        const createBody = (await createRes.json().catch(() => ({}))) as
+          | CreateOrderResponse
+          | { error?: string };
+        if (!createRes.ok || !("orderId" in createBody)) {
+          const msg = (createBody as { error?: string }).error ?? "Could not create order.";
+          throw new Error(msg);
         }
-      };
 
-      if (!window.Razorpay) throw new Error("Razorpay failed to initialise.");
-      const rzp = new window.Razorpay(options);
-      rzp.on("payment.failed", (payload: unknown) => {
-        const desc =
-          (payload as { error?: { description?: string; code?: string } })?.error?.description ??
-          "Payment failed.";
-        const code = (payload as { error?: { description?: string; code?: string } })?.error?.code;
-        setError(desc);
-        setBusy(false);
-        onFailed?.({ code, description: desc });
-      });
-      rzp.open();
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Payment could not be started.";
-      setError(msg);
-      setBusy(false);
-      onFailed?.({ description: msg });
-    }
-  }, [
-    amountPaise,
-    brandName,
-    busy,
-    currency,
-    description,
-    notes,
-    onFailed,
-    onVerified,
-    prefill,
-    productName,
-    receipt,
-    themeColor
-  ]);
+        const options = {
+          key: createBody.keyId,
+          amount: createBody.amount,
+          currency: createBody.currency,
+          order_id: createBody.orderId,
+          name: brandName,
+          description: description ?? productName,
+          theme: { color: themeColor },
+          prefill: {
+            name: values.name,
+            email: values.email,
+            contact: values.phone
+          },
+          modal: {
+            ondismiss: () => {
+              setSubmitting(false);
+              onFailed?.({ description: "Payment was cancelled." });
+            }
+          },
+          handler: async (resp: RazorpaySuccess) => {
+            try {
+              const verifyRes = await fetch("/api/razorpay/verify-payment", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(resp)
+              });
+              const verifyBody = (await verifyRes.json().catch(() => ({}))) as {
+                verified?: boolean;
+                error?: string;
+              };
+              if (!verifyRes.ok || !verifyBody.verified) {
+                throw new Error(verifyBody.error ?? "Payment verification failed.");
+              }
+              setConfirmation({ paymentId: resp.razorpay_payment_id, orderId: resp.razorpay_order_id });
+              setModalOpen(false);
+              onVerified?.(resp);
+            } catch (err) {
+              const msg = err instanceof Error ? err.message : "Verification failed.";
+              setSubmitError(msg);
+              onFailed?.({ description: msg });
+            } finally {
+              setSubmitting(false);
+            }
+          }
+        };
+
+        if (!window.Razorpay) throw new Error("Razorpay failed to initialise.");
+        const rzp = new window.Razorpay(options);
+        rzp.on("payment.failed", (payload: unknown) => {
+          const desc =
+            (payload as { error?: { description?: string; code?: string } })?.error?.description ??
+            "Payment failed.";
+          const code = (payload as { error?: { description?: string; code?: string } })?.error?.code;
+          setSubmitError(desc);
+          setSubmitting(false);
+          onFailed?.({ code, description: desc });
+        });
+        rzp.open();
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Payment could not be started.";
+        setSubmitError(msg);
+        setSubmitting(false);
+        onFailed?.({ description: msg });
+      }
+    },
+    [
+      amountPaise,
+      brandName,
+      currency,
+      description,
+      onFailed,
+      onVerified,
+      pack,
+      productName,
+      productPaise,
+      receipt,
+      shippingPaise,
+      themeColor
+    ]
+  );
 
   return (
     <>
       <button
         type="button"
-        onClick={handleClick}
-        disabled={busy}
-        aria-busy={busy}
-        className={`inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-canvas transition-all duration-200 hover:brightness-110 hover:shadow-card-hover disabled:cursor-wait disabled:opacity-70 ${className}`}
+        onClick={handleOpen}
+        className={`inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-canvas transition-all duration-200 hover:brightness-110 hover:shadow-card-hover ${className}`}
       >
-        {busy ? "Opening secure checkout…" : label}
+        {label}
       </button>
-      {error ? (
-        <p className="mt-2 text-[12px] leading-relaxed text-red-600">{error}</p>
+
+      {confirmation ? (
+        <div className="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
+          <div className="text-[11px] font-semibold uppercase tracking-widest">Payment received</div>
+          <p className="mt-1 text-[13px]">
+            Thank you! Your order is confirmed. We&apos;ll send tracking to you within 5 business days.
+          </p>
+          <p className="mt-2 text-[11px] tnum text-emerald-800">
+            Payment ID: <span className="font-mono">{confirmation.paymentId}</span>
+          </p>
+        </div>
       ) : null}
+
+      <CheckoutModal
+        open={modalOpen}
+        title={`${pack.label} — ${productName}`}
+        summaryLines={summaryLines}
+        totalLabel={inr.format(amountPaise / 100)}
+        onCancel={handleCancel}
+        onSubmit={handleSubmit}
+        submitting={submitting}
+        submitError={submitError}
+        submitLabel={`Pay ${inr.format(amountPaise / 100)} securely`}
+      />
     </>
   );
 }

@@ -91,6 +91,9 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
           <span className="text-[10px] uppercase tracking-widest text-muted">
             {adminEmail}
           </span>
+          <a href="/admin/orders" className="btn-secondary text-[13px]">
+            Orders →
+          </a>
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: "/admin/login" })}

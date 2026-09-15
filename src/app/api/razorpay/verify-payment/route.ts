@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { razorpayConfigured, verifyPaymentSignature } from "@/lib/razorpay";
+import { markOrderPaid, ordersEnabled, getOrder } from "@/lib/orders";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -48,9 +49,42 @@ export async function POST(req: Request) {
     );
   }
 
+  // Signature verified — persist the paid status alongside the order
+  // details we saved during create-order. Failure here shouldn't cause
+  // the customer to see an error (their money moved fine); it just
+  // means the admin view is stale until we retry.
+  let paidOrder = null;
+  if (ordersEnabled()) {
+    try {
+      paidOrder = await markOrderPaid(orderId, paymentId);
+      if (!paidOrder) {
+        // No stored record — try to at least fetch it so we can log a
+        // gap; the payment is still valid.
+        const existing = await getOrder(orderId);
+        console.warn("[verify-payment] order not found in Blobs", { orderId, existingIsNull: !existing });
+      }
+    } catch (err) {
+      console.error("[orders.markPaid]", err instanceof Error ? err.message : err);
+    }
+  }
+
   return NextResponse.json({
     verified: true,
     orderId,
-    paymentId
+    paymentId,
+    order: paidOrder
+      ? {
+          receipt: paidOrder.receipt,
+          amount: paidOrder.amount,
+          currency: paidOrder.currency,
+          pack: paidOrder.pack,
+          customer: {
+            name: paidOrder.customer.name,
+            city: paidOrder.customer.city,
+            state: paidOrder.customer.state,
+            pincode: paidOrder.customer.pincode
+          }
+        }
+      : undefined
   });
 }

@@ -200,31 +200,36 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
               <div className="flex items-baseline justify-between gap-4">
                 <div>
                   <div className="text-[11px] font-medium uppercase tracking-widest text-muted">
-                    {hero.mrpLabel}
+                    You pay
                   </div>
                   <div className="tnum mt-1 flex items-baseline gap-3">
                     <span className="text-4xl font-semibold tracking-tight text-ink md:text-5xl">
-                      {selectedPack?.price ?? hero.mrp}
+                      {inrFormatter.format(totalRupees)}
                     </span>
-                    {selectedPack?.priceOriginal ? (
-                      <span className="text-lg font-medium text-muted line-through">
-                        {selectedPack.priceOriginal}
-                      </span>
-                    ) : null}
                   </div>
-                  <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] uppercase tracking-widest text-muted">
-                    <span>{hero.mrpNote}</span>
-                    {selectedPack?.shippingLabel ? (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                          selectedPack.shippingFree
-                            ? "bg-emerald-100 text-emerald-800"
-                            : "bg-hairline/60 text-ink-soft"
-                        }`}
-                      >
-                        {selectedPack.shippingLabel}
-                      </span>
-                    ) : null}
+                  <div className="mt-1 space-y-0.5 text-[12px] leading-relaxed text-muted">
+                    <div className="flex items-center gap-2">
+                      <span className="uppercase tracking-widest text-[10px]">{hero.mrpLabel}</span>
+                      <span className="tnum text-ink">{selectedPack?.price ?? hero.mrp}</span>
+                      {selectedPack?.priceOriginal ? (
+                        <span className="tnum text-muted line-through">
+                          {selectedPack.priceOriginal}
+                        </span>
+                      ) : null}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="uppercase tracking-widest text-[10px]">Shipping</span>
+                      {selectedPack?.shippingFree ? (
+                        <span className="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-emerald-800">
+                          Free
+                        </span>
+                      ) : (
+                        <span className="tnum text-ink">
+                          {inrFormatter.format(selectedPack?.shippingCost ?? 0)}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-widest">{hero.mrpNote}</div>
                   </div>
                 </div>
                 <div className="text-right">
@@ -291,15 +296,17 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                   <>
                     <RazorpayCheckoutButton
                       amountPaise={totalPaise}
-                      productName={`AETERNYX® — ${selectedPack.label}`}
+                      productPaise={(selectedPack.priceNumber ?? 0) * 100}
+                      shippingPaise={(selectedPack.shippingCost ?? 0) * 100}
+                      pack={{
+                        id: selectedPack.id,
+                        label: selectedPack.label,
+                        sublabel: selectedPack.sublabel
+                      }}
+                      productName="AETERNYX®"
                       description={`${selectedPack.sublabel}${selectedPack.shippingFree ? " · Free shipping" : ` · Shipping ${inrFormatter.format(selectedPack.shippingCost ?? 0)}`}`}
                       receipt={`aet-${selectedPack.id}-${Date.now()}`}
-                      notes={{
-                        pack: selectedPack.id,
-                        packLabel: selectedPack.label,
-                        shipping: selectedPack.shippingFree ? "free" : String(selectedPack.shippingCost ?? 0)
-                      }}
-                      label={`Pay ${inrFormatter.format(totalRupees)} · Buy now`}
+                      label={`Buy now · ${inrFormatter.format(totalRupees)}`}
                       className="w-full"
                     />
                     <a

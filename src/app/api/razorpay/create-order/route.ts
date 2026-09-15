@@ -1,18 +1,53 @@
 import { NextResponse } from "next/server";
 import { razorpayClient, razorpayConfigured, razorpayKeyId } from "@/lib/razorpay";
+import { ordersEnabled, saveOrder, type CustomerInfo, type StoredOrder } from "@/lib/orders";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+
+type PackInfo = { id: string; label: string; sublabel?: string };
+type BreakdownInfo = { productPaise: number; shippingPaise: number };
 
 type Body = {
   amount?: unknown;
   currency?: unknown;
   receipt?: unknown;
   notes?: unknown;
+  customer?: unknown;
+  pack?: unknown;
+  breakdown?: unknown;
 };
 
 const MIN_PAISE = 100;
-const MAX_PAISE = 100_00_000; // ₹1,00,000 — a soft ceiling; raise if you sell higher-priced packs
+const MAX_PAISE = 100_00_000;
+
+function isString(v: unknown): v is string {
+  return typeof v === "string" && v.length > 0;
+}
+
+function validateCustomer(input: unknown): CustomerInfo | { error: string } {
+  if (!input || typeof input !== "object") return { error: "Customer details are required." };
+  const c = input as Record<string, unknown>;
+
+  const name = isString(c.name) ? c.name.trim() : "";
+  const email = isString(c.email) ? c.email.trim().toLowerCase() : "";
+  const phone = isString(c.phone) ? c.phone.replace(/\D/g, "") : "";
+  const address1 = isString(c.address1) ? c.address1.trim() : "";
+  const address2 = isString(c.address2) ? c.address2.trim() : "";
+  const city = isString(c.city) ? c.city.trim() : "";
+  const state = isString(c.state) ? c.state.trim() : "";
+  const pincode = isString(c.pincode) ? c.pincode.replace(/\D/g, "") : "";
+
+  if (name.length < 2) return { error: "Full name is required (min 2 characters)." };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Enter a valid email." };
+  if (phone.length < 10 || phone.length > 13) return { error: "Enter a valid phone number." };
+  if (address1.length < 4) return { error: "Enter a complete address." };
+  if (city.length < 2) return { error: "City is required." };
+  if (state.length < 2) return { error: "State is required." };
+  if (!/^\d{6}$/.test(pincode)) return { error: "PIN code must be 6 digits." };
+
+  return { name, email, phone, address1, address2: address2 || undefined, city, state, pincode };
+}
 
 export async function POST(req: Request) {
   if (!razorpayConfigured()) {
@@ -44,13 +79,44 @@ export async function POST(req: Request) {
     );
   }
 
+  const customerCheck = validateCustomer(body.customer);
+  if ("error" in customerCheck) {
+    return NextResponse.json({ error: customerCheck.error }, { status: 400 });
+  }
+  const customer = customerCheck;
+
   const currency = typeof body.currency === "string" ? body.currency : "INR";
   const receipt =
     typeof body.receipt === "string" && body.receipt.length > 0
       ? body.receipt.slice(0, 40)
       : `rcpt_${Date.now()}`;
-  const notes =
-    body.notes && typeof body.notes === "object" ? (body.notes as Record<string, string>) : undefined;
+
+  const packInput = body.pack as Record<string, unknown> | undefined;
+  const pack: PackInfo = {
+    id: isString(packInput?.id) ? (packInput!.id as string) : "unknown",
+    label: isString(packInput?.label) ? (packInput!.label as string) : "AETERNYX",
+    sublabel: isString(packInput?.sublabel) ? (packInput!.sublabel as string) : undefined
+  };
+
+  const breakdownInput = body.breakdown as Record<string, unknown> | undefined;
+  const breakdown: BreakdownInfo = {
+    productPaise: Number(breakdownInput?.productPaise) || 0,
+    shippingPaise: Number(breakdownInput?.shippingPaise) || 0
+  };
+
+  // Razorpay notes cap at 15 keys, 256 chars per value.
+  const notes: Record<string, string> = {
+    ...(typeof body.notes === "object" && body.notes ? (body.notes as Record<string, string>) : {}),
+    customer_name: customer.name.slice(0, 240),
+    customer_email: customer.email.slice(0, 240),
+    customer_phone: customer.phone.slice(0, 240),
+    ship_address: `${customer.address1}${customer.address2 ? ", " + customer.address2 : ""}`.slice(0, 240),
+    ship_city: customer.city.slice(0, 240),
+    ship_state: customer.state.slice(0, 240),
+    ship_pincode: customer.pincode.slice(0, 240),
+    pack_id: pack.id.slice(0, 240),
+    pack_label: pack.label.slice(0, 240)
+  };
 
   try {
     const order = await razorpayClient().orders.create({
@@ -60,6 +126,29 @@ export async function POST(req: Request) {
       notes
     });
 
+    // Best-effort persist to Blobs so /admin/orders and verify-payment
+    // can look this order up later. Failure here should not block the
+    // Razorpay hand-off — payment can still succeed and the dashboard
+    // has the notes.
+    if (ordersEnabled()) {
+      try {
+        const stored: StoredOrder = {
+          orderId: order.id,
+          receipt: order.receipt ?? receipt,
+          amount: typeof order.amount === "number" ? order.amount : amount,
+          currency: order.currency ?? currency,
+          pack,
+          breakdown,
+          customer,
+          status: "created",
+          createdAt: new Date().toISOString()
+        };
+        await saveOrder(stored);
+      } catch (persistErr) {
+        console.error("[orders.saveOrder]", persistErr instanceof Error ? persistErr.message : persistErr);
+      }
+    }
+
     return NextResponse.json({
       orderId: order.id,
       amount: order.amount,
@@ -68,9 +157,6 @@ export async function POST(req: Request) {
       keyId: razorpayKeyId()
     });
   } catch (err) {
-    // Razorpay's SDK throws { statusCode, error: { code, description, ... } }
-    // — a plain object, not an Error. Handle both shapes so the real reason
-    // is surfaced instead of a generic fallback.
     const rzp = err as {
       statusCode?: number;
       error?: { code?: string; description?: string; reason?: string; field?: string };
@@ -88,8 +174,10 @@ export async function POST(req: Request) {
           ? 401
           : 500;
 
-    // Server-side log so we can grep Netlify function logs for the raw payload.
-    console.error("[razorpay.create-order]", JSON.stringify({ msg, code: rzpCode, statusCode: status, raw: rzp }));
+    console.error(
+      "[razorpay.create-order]",
+      JSON.stringify({ msg, code: rzpCode, statusCode: status, raw: rzp })
+    );
 
     return NextResponse.json(
       { error: msg, code: rzpCode, statusCode: status },
