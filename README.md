@@ -60,7 +60,12 @@ Visit:
 
 ```dotenv
 ADMIN_EMAIL=admin@aratanutra.com
-ADMIN_PASSWORD=change-me
+# Preferred — bcrypt hash. Generate one locally:
+#   node -e "console.log(require('bcryptjs').hashSync('yourpass', 12))"
+ADMIN_PASSWORD_HASH=$2a$12$....
+# Legacy fallback (plaintext) — only used if ADMIN_PASSWORD_HASH is unset.
+# Auth logs a warning when this path is taken.
+# ADMIN_PASSWORD=change-me
 NEXTAUTH_SECRET=<openssl rand -base64 32>
 NEXTAUTH_URL=http://localhost:3000
 ```
@@ -78,12 +83,39 @@ To edit content **without** the admin UI: hand-edit `content/site-content.json` 
 3. Build command: `npm run build` · Publish directory: `.next` (already in `netlify.toml`).
 4. **Site settings → Environment variables** — add:
    - `ADMIN_EMAIL`
-   - `ADMIN_PASSWORD`
+   - `ADMIN_PASSWORD_HASH` (preferred; bcrypt) — or `ADMIN_PASSWORD` (legacy plaintext, fallback only)
    - `NEXTAUTH_SECRET`
    - `NEXTAUTH_URL` (your Netlify URL or custom domain — e.g. `https://aratanutra.com`)
    - `RAZORPAY_KEY_ID` (test-mode: `rzp_test_...`, live: `rzp_live_...`)
    - `RAZORPAY_KEY_SECRET` (server-only — do NOT prefix with `NEXT_PUBLIC_`)
 5. Deploy. Netlify auto-detects Next.js and applies `@netlify/plugin-nextjs`, so admin, API routes, and middleware all work.
+
+### Staging / branch deploys (test payments without burning live fees)
+
+Netlify runs a full deploy on every push. To test the checkout without charging real cards:
+
+1. Netlify → **Site configuration → Build & deploy → Branches and deploy contexts**. Add `claude/aeternyx-nextjs-site-WXBgB` (or any working branch) under **Branch deploys**. Netlify starts serving that branch at `<branch>--<sitename>.netlify.app`.
+2. **Environment variables** → for both `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, switch the value type to **"Different value for each deploy context"**:
+   - `Production` → `rzp_live_...` (charges real cards)
+   - `Branch deploys` → `rzp_test_...` (test mode, no fees)
+   - `Deploy Previews` → `rzp_test_...` (test mode)
+3. On the branch URL, click Pay and use test card `4111 1111 1111 1111` · any future date · any CVV · OTP `1234`. No money moves.
+4. When you're ready to publish, tell Claude to `push it` and the change lands on `main` → the production URL is what customers see.
+
+### Security posture
+
+- **Admin auth**: password stored as a bcrypt hash (`ADMIN_PASSWORD_HASH`); constant-time compare on the legacy plaintext path so nothing about the correct password leaks through response timing.
+- **Payment integrity**: Razorpay signature verified with HMAC-SHA256 in constant time (`crypto.timingSafeEqual`).
+- **Rate limiting**: in-memory sliding-window limits on `POST /api/razorpay/create-order` (10/min/IP) and `POST /api/razorpay/verify-payment` (20/min/IP). Per-instance only; for stronger guarantees front the routes with Netlify Edge Functions or Cloudflare.
+- **HTTP headers**: `Strict-Transport-Security`, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` set both in `next.config.mjs` (for the Next runtime) and `netlify.toml` (for CDN-served assets). `X-Powered-By: Next.js` suppressed.
+- **Content Security Policy**: intentionally not enabled yet — CSP interacts with Razorpay's inline scripts and Next.js's hydration; enabling without a staging URL to validate would risk breaking checkout. Turn on after the branch-deploy URL exists.
+- **Dependency updates**: Dependabot opens PRs weekly (`.github/dependabot.yml`) for npm and GitHub Actions.
+- **Code review**: `.github/CODEOWNERS` requires review on `auth.ts`, `razorpay.ts`, `ratelimit.ts`, every API route, middleware, and both deploy configs.
+
+**Still requires a manual dashboard step (Claude can't do these):**
+- GitHub → Settings → Branches → protect `main` (require PR review, disallow force pushes, require the Netlify deploy check).
+- Netlify → Site configuration → deploy notifications for the security scan.
+- Razorpay → Account Settings → Webhooks → configure a webhook to `https://aratanutra.com/api/razorpay/webhook` if you want async payment updates (not implemented yet — say the word).
 
 ### Razorpay checkout
 

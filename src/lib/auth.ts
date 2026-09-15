@@ -1,5 +1,42 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+
+/**
+ * Compare a plaintext attempt against the configured admin password.
+ *
+ * Preferred: ADMIN_PASSWORD_HASH — a bcrypt hash. Generate one locally:
+ *   node -e "console.log(require('bcryptjs').hashSync('yourpass', 12))"
+ *
+ * Legacy: ADMIN_PASSWORD — plaintext, used only when the hash isn't set,
+ * with a runtime warning so it's obvious we should migrate.
+ */
+async function verifyAdminPassword(input: string): Promise<boolean> {
+  const hash = process.env.ADMIN_PASSWORD_HASH?.trim();
+  if (hash) {
+    try {
+      return await bcrypt.compare(input, hash);
+    } catch {
+      return false;
+    }
+  }
+  const plain = process.env.ADMIN_PASSWORD?.trim();
+  if (plain) {
+    if (!process.env.ADMIN_PASSWORD_HASH) {
+      console.warn(
+        "[auth] Using ADMIN_PASSWORD (plaintext). Switch to ADMIN_PASSWORD_HASH — see README."
+      );
+    }
+    // Constant-time compare so string length or early divergence can't leak.
+    const a = Buffer.from(input, "utf8");
+    const b = Buffer.from(plain, "utf8");
+    if (a.length !== b.length) return false;
+    let diff = 0;
+    for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
+    return diff === 0;
+  }
+  return false;
+}
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
@@ -13,20 +50,18 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         const adminEmail = process.env.ADMIN_EMAIL;
-        const adminPassword = process.env.ADMIN_PASSWORD;
-
-        if (!adminEmail || !adminPassword) return null;
+        if (!adminEmail) return null;
         if (!credentials?.email || !credentials?.password) return null;
 
         const emailMatch =
           credentials.email.trim().toLowerCase() ===
           adminEmail.trim().toLowerCase();
-        const passwordMatch = credentials.password === adminPassword;
+        if (!emailMatch) return null;
 
-        if (emailMatch && passwordMatch) {
-          return { id: "admin", name: "AETERNYX Admin", email: adminEmail };
-        }
-        return null;
+        const passwordMatch = await verifyAdminPassword(credentials.password);
+        if (!passwordMatch) return null;
+
+        return { id: "admin", name: "AETERNYX Admin", email: adminEmail };
       }
     })
   ],

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { razorpayClient, razorpayConfigured, razorpayKeyId } from "@/lib/razorpay";
 import { ordersEnabled, saveOrder, type CustomerInfo, type StoredOrder } from "@/lib/orders";
+import { clientIp, rateLimit } from "@/lib/ratelimit";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -50,6 +51,21 @@ function validateCustomer(input: unknown): CustomerInfo | { error: string } {
 }
 
 export async function POST(req: Request) {
+  // Rate limit before doing anything expensive. 10 order-creations
+  // per minute per IP is more than enough for a real buyer bouncing
+  // between packs and well below any abuse threshold.
+  const ip = clientIp(req);
+  const rl = rateLimit(`create-order:${ip}`, 10, 60_000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please wait a moment and try again." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil(rl.retryAfterMs / 1000)) }
+      }
+    );
+  }
+
   if (!razorpayConfigured()) {
     const missing = [
       process.env.RAZORPAY_KEY_ID ? null : "RAZORPAY_KEY_ID",

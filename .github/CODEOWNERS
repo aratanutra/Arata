@@ -1,0 +1,12 @@
+# Global owner — every PR reviewed by the repo owner by default.
+* @aratanutra
+
+# Security-sensitive surfaces: NEVER merge without an explicit owner review.
+/src/lib/auth.ts            @aratanutra
+/src/lib/razorpay.ts        @aratanutra
+/src/lib/ratelimit.ts       @aratanutra
+/src/app/api/**             @aratanutra
+/middleware.ts              @aratanutra
+/next.config.mjs            @aratanutra
+/netlify.toml               @aratanutra
+/.github/**                 @aratanutra

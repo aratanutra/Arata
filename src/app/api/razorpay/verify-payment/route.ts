@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { razorpayConfigured, verifyPaymentSignature } from "@/lib/razorpay";
 import { markOrderPaid, ordersEnabled, getOrder } from "@/lib/orders";
+import { clientIp, rateLimit } from "@/lib/ratelimit";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -12,6 +13,18 @@ type Body = {
 };
 
 export async function POST(req: Request) {
+  const ip = clientIp(req);
+  const rl = rateLimit(`verify-payment:${ip}`, 20, 60_000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many verification attempts. Please wait a moment." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil(rl.retryAfterMs / 1000)) }
+      }
+    );
+  }
+
   if (!razorpayConfigured()) {
     return NextResponse.json(
       { error: "Razorpay is not configured on the server." },

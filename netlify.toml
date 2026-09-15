@@ -20,3 +20,17 @@
   for = "/seed/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"
+
+# Baseline security headers applied to every response served by Netlify's
+# CDN (mirrors what next.config.mjs adds through the Next runtime, so any
+# static file Netlify serves without the plugin still gets the same
+# hardening).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(self \"https://checkout.razorpay.com\"), interest-cohort=()"
+    X-DNS-Prefetch-Control = "on"
