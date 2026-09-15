@@ -115,7 +115,11 @@ Netlify runs a full deploy on every push. To test the checkout without charging 
 **Still requires a manual dashboard step (Claude can't do these):**
 - GitHub → Settings → Branches → protect `main` (require PR review, disallow force pushes, require the Netlify deploy check).
 - Netlify → Site configuration → deploy notifications for the security scan.
-- Razorpay → Account Settings → Webhooks → configure a webhook to `https://aratanutra.com/api/razorpay/webhook` if you want async payment updates (not implemented yet — say the word).
+- Razorpay → Account Settings → Webhooks → configure a webhook to `https://aratanutra.com/api/razorpay/webhook`. Subscribe to `payment.captured`, `payment.failed`, `refund.created`, `refund.processed`. Set a webhook secret (long random string) and mirror it into the Netlify env var `RAZORPAY_WEBHOOK_SECRET`.
+
+### Password hash migration (bcrypt)
+
+Once signed in as admin, visit `/admin/tools/hash-password` (also linked from the Content Studio header). Enter the password you want to use, click Generate, copy the `$2a$12$…` hash. In Netlify → Environment variables → add `ADMIN_PASSWORD_HASH` with that value (Secret, Runtime scope), then delete the old `ADMIN_PASSWORD`. Trigger a deploy. Login continues to work with the same email + password; auth just uses the hash path now.
 
 ### Razorpay checkout
 

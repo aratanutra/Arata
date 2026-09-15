@@ -94,6 +94,12 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
           <a href="/admin/orders" className="btn-secondary text-[13px]">
             Orders →
           </a>
+          <a
+            href="/admin/tools/hash-password"
+            className="text-[11px] uppercase tracking-widest text-muted hover:text-ink"
+          >
+            Password hash
+          </a>
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: "/admin/login" })}

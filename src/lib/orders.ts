@@ -29,7 +29,7 @@ export type StoredOrder = {
     shippingPaise: number;
   };
   customer: CustomerInfo;
-  status: "created" | "paid" | "failed";
+  status: "created" | "paid" | "failed" | "refunded";
   createdAt: string;
   paidAt?: string;
   paymentId?: string;
@@ -72,12 +72,26 @@ export async function markOrderPaid(
 ): Promise<StoredOrder | null> {
   const existing = await getOrder(orderId);
   if (!existing) return null;
+  // If already marked (idempotent — same payment_id), don't overwrite.
+  if (existing.status === "paid" && existing.paymentId === paymentId) return existing;
   const updated: StoredOrder = {
     ...existing,
     status: "paid",
     paymentId,
-    paidAt: new Date().toISOString()
+    paidAt: existing.paidAt ?? new Date().toISOString()
   };
+  await saveOrder(updated);
+  return updated;
+}
+
+export async function markOrderStatus(
+  orderId: string,
+  status: StoredOrder["status"],
+  extra: Partial<StoredOrder> = {}
+): Promise<StoredOrder | null> {
+  const existing = await getOrder(orderId);
+  if (!existing) return null;
+  const updated: StoredOrder = { ...existing, ...extra, status };
   await saveOrder(updated);
   return updated;
 }
