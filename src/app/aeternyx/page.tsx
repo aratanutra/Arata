@@ -13,6 +13,7 @@ import Certifications from "@/components/public/Certifications";
 import Faq from "@/components/public/Faq";
 import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
+import LaunchBanner from "@/components/public/LaunchBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,7 @@ export default async function AeternyxPage() {
   const content = await readContent();
   return (
     <main className="relative bg-canvas">
+      <LaunchBanner banner={content.launchBanner} orderStatus={content.orderStatus} />
       <Nav brand={content.brand} nav={content.nav} />
       <IngredientExplorer data={content.ingredientsSection} />
       <CompositionTable data={content.compositionTable} />

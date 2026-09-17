@@ -56,6 +56,12 @@ export type SiteContent = {
     notifyLabel: string;
     notifyMessage: string;
   };
+  launchBanner: {
+    enabled: boolean;
+    text: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+  };
   nav: {
     links: NavLink[];
     ctaLabel: string;

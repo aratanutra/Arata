@@ -8,6 +8,7 @@ import Philosophy from "@/components/public/Philosophy";
 import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import AeternyxFloat from "@/components/public/AeternyxFloat";
+import LaunchBanner from "@/components/public/LaunchBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +16,7 @@ export default async function HomePage() {
   const content = await readContent();
   return (
     <main className="relative overflow-hidden bg-canvas">
+      <LaunchBanner banner={content.launchBanner} orderStatus={content.orderStatus} />
       <Nav brand={content.brand} nav={content.nav} />
       <Hero hero={content.hero} />
       <TrustBar data={content.trustBar} />
