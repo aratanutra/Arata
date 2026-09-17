@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@netlify/blobs": "^11.0.3",
-    "@react-three/drei": "^10.7.8",
+    "@react-three/drei": "^9.117.3",
     "@react-three/fiber": "^8.17.10",
     "@types/canvas-confetti": "^1.9.0",
     "bcryptjs": "2.4.3",

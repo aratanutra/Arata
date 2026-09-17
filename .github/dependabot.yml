@@ -29,6 +29,16 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "react-dom"
         update-types: ["version-update:semver-major"]
+      # react-three trio + eslint majors are held — they need code
+      # migrations, not just a lockfile bump.
+      - dependency-name: "@react-three/drei"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@react-three/fiber"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "three"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
