@@ -117,6 +117,31 @@ Netlify runs a full deploy on every push. To test the checkout without charging 
 - Netlify → Site configuration → deploy notifications for the security scan.
 - Razorpay → Account Settings → Webhooks → configure a webhook to `https://aratanutra.com/api/razorpay/webhook`. Subscribe to `payment.captured`, `payment.failed`, `refund.created`, `refund.processed`. Set a webhook secret (long random string) and mirror it into the Netlify env var `RAZORPAY_WEBHOOK_SECRET`.
 
+### Transactional emails (Resend)
+
+`/api/razorpay/verify-payment` and `/api/razorpay/webhook` both send email after a successful payment (idempotent — whichever fires second is a no-op):
+
+- **Order confirmation** to the customer (order summary + shipping address + payment id).
+- **New-order alert** to the admin inbox with a deep link to `/admin/orders`.
+
+The admin's **"Mark shipped"** button in `/admin/orders` also fires a **shipping notification** email carrying the tracking URL + courier.
+
+Set these env vars on Netlify:
+- `RESEND_API_KEY` (secret) — from https://resend.com → API Keys → create with "Sending access."
+- `FROM_EMAIL` — e.g. `orders@aratanutra.com`. Verify the domain in Resend → Domains for production reputation. Until verified, sends fall back to Resend's shared `onboarding@resend.dev`.
+- `FROM_NAME` (default `Arata Nutraceuticals`).
+- `REPLY_TO_EMAIL` — optional. Where "reply to this email" lands (defaults to none).
+- `ADMIN_ALERT_EMAIL` — where new-order alerts go. Falls back to `ADMIN_EMAIL` if unset.
+
+### Analytics (GA4 + Meta Pixel + DPDP consent)
+
+Neither loads until a visitor accepts the cookie banner. Config:
+
+- `NEXT_PUBLIC_GA4_MEASUREMENT_ID` — `G-XXXXXXXXXX` from Google Analytics 4.
+- `NEXT_PUBLIC_META_PIXEL_ID` — numeric pixel id from Meta Business.
+
+Either or both optional; only what's configured loads. Consent state lives in the visitor's browser (`localStorage → arata:analytics-consent`).
+
 ### Password hash migration (bcrypt)
 
 Once signed in as admin, visit `/admin/tools/hash-password` (also linked from the Content Studio header). Enter the password you want to use, click Generate, copy the `$2a$12$…` hash. In Netlify → Environment variables → add `ADMIN_PASSWORD_HASH` with that value (Secret, Runtime scope), then delete the old `ADMIN_PASSWORD`. Trigger a deploy. Login continues to work with the same email + password; auth just uses the hash path now.
