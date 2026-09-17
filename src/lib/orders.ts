@@ -29,10 +29,19 @@ export type StoredOrder = {
     shippingPaise: number;
   };
   customer: CustomerInfo;
-  status: "created" | "paid" | "failed" | "refunded";
+  status: "created" | "paid" | "failed" | "refunded" | "shipped";
   createdAt: string;
   paidAt?: string;
   paymentId?: string;
+  // Fulfillment
+  shippedAt?: string;
+  trackingUrl?: string;
+  courier?: string;
+  // Idempotent email markers — only send each email once even if
+  // verify-payment and webhook both fire.
+  confirmationEmailSentAt?: string;
+  adminAlertSentAt?: string;
+  shippingEmailSentAt?: string;
 };
 
 const STORE_NAME = "orders";

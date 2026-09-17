@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { listOrders, ordersEnabled, type StoredOrder } from "@/lib/orders";
 import Link from "next/link";
+import OrderShipAction from "@/components/admin/OrderShipAction";
 
 export const dynamic = "force-dynamic";
 
@@ -16,11 +17,13 @@ function StatusBadge({ status }: { status: StoredOrder["status"] }) {
   const styles =
     status === "paid"
       ? "bg-emerald-100 text-emerald-800"
-      : status === "failed"
-        ? "bg-red-100 text-red-700"
-        : status === "refunded"
-          ? "bg-amber-100 text-amber-800"
-          : "bg-hairline/60 text-ink-soft";
+      : status === "shipped"
+        ? "bg-sky-100 text-sky-800"
+        : status === "failed"
+          ? "bg-red-100 text-red-700"
+          : status === "refunded"
+            ? "bg-amber-100 text-amber-800"
+            : "bg-hairline/60 text-ink-soft";
   return (
     <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${styles}`}>
       {status}
@@ -118,12 +121,33 @@ export default async function AdminOrdersPage() {
                   <p className="mt-2 text-[11px] text-muted">
                     Created {new Date(o.createdAt).toLocaleString("en-IN")}
                     {o.paidAt ? ` · Paid ${new Date(o.paidAt).toLocaleString("en-IN")}` : ""}
+                    {o.shippedAt ? ` · Shipped ${new Date(o.shippedAt).toLocaleString("en-IN")}` : ""}
                   </p>
                   {o.paymentId ? (
                     <p className="mt-1 text-[11px] tnum text-muted">Payment ID: {o.paymentId}</p>
                   ) : null}
+                  {o.trackingUrl ? (
+                    <p className="mt-1 text-[11px] text-muted">
+                      {o.courier ? `${o.courier} · ` : ""}
+                      <a
+                        href={o.trackingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline decoration-hairline underline-offset-2 hover:text-ink"
+                      >
+                        {o.trackingUrl}
+                      </a>
+                    </p>
+                  ) : null}
                 </div>
               </div>
+
+              <OrderShipAction
+                orderId={o.orderId}
+                initialTrackingUrl={o.trackingUrl}
+                initialCourier={o.courier}
+                status={o.status}
+              />
             </article>
           ))}
         </div>

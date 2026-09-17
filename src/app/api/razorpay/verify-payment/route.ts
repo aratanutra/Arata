@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
 import { razorpayConfigured, verifyPaymentSignature } from "@/lib/razorpay";
-import { markOrderPaid, ordersEnabled, getOrder } from "@/lib/orders";
+import {
+  markOrderPaid,
+  ordersEnabled,
+  getOrder,
+  saveOrder,
+  type StoredOrder
+} from "@/lib/orders";
 import { clientIp, rateLimit } from "@/lib/ratelimit";
+import { sendAdminNewOrderAlert, sendOrderConfirmation } from "@/lib/email";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -66,7 +73,7 @@ export async function POST(req: Request) {
   // details we saved during create-order. Failure here shouldn't cause
   // the customer to see an error (their money moved fine); it just
   // means the admin view is stale until we retry.
-  let paidOrder = null;
+  let paidOrder: StoredOrder | null = null;
   if (ordersEnabled()) {
     try {
       paidOrder = await markOrderPaid(orderId, paymentId);
@@ -78,6 +85,24 @@ export async function POST(req: Request) {
       }
     } catch (err) {
       console.error("[orders.markPaid]", err instanceof Error ? err.message : err);
+    }
+  }
+
+  // Fire-and-track transactional emails. Idempotent via *SentAt
+  // markers on the StoredOrder — the webhook may also try; whichever
+  // arrives second becomes a no-op.
+  if (paidOrder && !paidOrder.confirmationEmailSentAt) {
+    const res = await sendOrderConfirmation(paidOrder);
+    if (res.ok) {
+      paidOrder = { ...paidOrder, confirmationEmailSentAt: new Date().toISOString() };
+      await saveOrder(paidOrder);
+    }
+  }
+  if (paidOrder && !paidOrder.adminAlertSentAt) {
+    const res = await sendAdminNewOrderAlert(paidOrder);
+    if (res.ok) {
+      paidOrder = { ...paidOrder, adminAlertSentAt: new Date().toISOString() };
+      await saveOrder(paidOrder);
     }
   }
 

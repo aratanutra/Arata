@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { createHmac, timingSafeEqual } from "crypto";
-import { getOrder, markOrderPaid, markOrderStatus, ordersEnabled } from "@/lib/orders";
+import {
+  getOrder,
+  markOrderPaid,
+  markOrderStatus,
+  ordersEnabled,
+  saveOrder
+} from "@/lib/orders";
+import { sendAdminNewOrderAlert, sendOrderConfirmation } from "@/lib/email";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -70,7 +77,23 @@ export async function POST(req: Request) {
       case "payment.captured": {
         const payment = body.payload?.payment?.entity;
         if (payment?.order_id && payment?.id) {
-          await markOrderPaid(payment.order_id, payment.id);
+          let paid = await markOrderPaid(payment.order_id, payment.id);
+          // Idempotent email fallback for the case where the customer's
+          // browser died before /verify-payment could fire.
+          if (paid && !paid.confirmationEmailSentAt) {
+            const res = await sendOrderConfirmation(paid);
+            if (res.ok) {
+              paid = { ...paid, confirmationEmailSentAt: new Date().toISOString() };
+              await saveOrder(paid);
+            }
+          }
+          if (paid && !paid.adminAlertSentAt) {
+            const res = await sendAdminNewOrderAlert(paid);
+            if (res.ok) {
+              paid = { ...paid, adminAlertSentAt: new Date().toISOString() };
+              await saveOrder(paid);
+            }
+          }
         }
         break;
       }

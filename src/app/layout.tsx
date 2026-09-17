@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Caveat } from "next/font/google";
 import "./globals.css";
+import Analytics from "@/components/public/Analytics";
+import CookieConsent from "@/components/public/CookieConsent";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -55,7 +57,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${caveat.variable}`}>
-      <body className="font-sans bg-canvas text-ink antialiased">{children}</body>
+      <body className="font-sans bg-canvas text-ink antialiased">
+        {children}
+        <Analytics />
+        <CookieConsent />
+      </body>
     </html>
   );
 }

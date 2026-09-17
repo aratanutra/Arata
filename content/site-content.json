@@ -33,6 +33,12 @@
     "notifyLabel": "Reserve yours on WhatsApp",
     "notifyMessage": "Hi! I'd like to reserve AETERNYX® for launch day (Tuesday, 20 October 2026). Please save a strip from the founding batch for me."
   },
+  "launchBanner": {
+    "enabled": true,
+    "text": "Founding batch now shipping · Free shipping on 3-strip and box",
+    "ctaLabel": "Order AETERNYX®",
+    "ctaHref": "/aeternyx#buy"
+  },
   "nav": {
     "links": [
       { "label": "Home", "href": "/" },
