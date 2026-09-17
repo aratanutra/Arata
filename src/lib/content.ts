@@ -11,12 +11,35 @@ async function readFromDisk(): Promise<SiteContent> {
 }
 
 /**
- * Read the current site content. On Netlify, admin edits live in Blobs
- * and win, but disk (the committed JSON) provides defaults — so any
- * new field we add via git shows up even if the Blobs snapshot is
- * from an older schema (e.g. an old snapshot missing productHero.packs
- * shippingCost).
+ * Top-level SiteContent sections the admin console at /admin can
+ * actually edit. Anything in this set is read from the Netlify Blobs
+ * snapshot (so admin edits persist). Anything NOT in this set is
+ * always read from the committed JSON on disk, so schema-shipped
+ * copy changes (e.g. productHero.bestBefore, metricsPanel pill values)
+ * go live the moment they're merged to main — no stale Blobs snapshot
+ * can shadow them.
+ *
+ * Keep in sync with the section list rendered by
+ * src/components/admin/AdminDashboard.tsx.
  */
+const ADMIN_EDITABLE_SECTIONS = new Set<keyof SiteContent>([
+  "brand",
+  "orderStatus",
+  "nav",
+  "hero",
+  "trustBar",
+  "homeFeatured",
+  "homeValues",
+  "product",
+  "ingredientsSection",
+  "science",
+  "benefits",
+  "philosophy",
+  "aeternyxPage",
+  "about",
+  "footer"
+]);
+
 export async function readContent(): Promise<SiteContent> {
   const disk = await readFromDisk();
   if (!isBlobsAvailable()) return disk;
@@ -24,23 +47,14 @@ export async function readContent(): Promise<SiteContent> {
   const blob = await readContentBlob<SiteContent>();
   if (!blob) return disk;
 
-  // Shallow merge at the top level: any section only in disk (new field
-  // shipped via git) flows through; any section admin has edited (in
-  // Blobs) wins.
-  const merged: SiteContent = { ...disk, ...blob };
-
-  // Packs are edited in code, not admin, so let disk supply defaults per
-  // pack id — this fills in fields like `shippingCost` on stale Blobs
-  // snapshots without wiping any admin overrides.
-  if (blob.productHero?.packs && disk.productHero?.packs) {
-    merged.productHero = {
-      ...disk.productHero,
-      ...blob.productHero,
-      packs: blob.productHero.packs.map((p) => {
-        const diskPack = disk.productHero.packs.find((d) => d.id === p.id);
-        return diskPack ? { ...diskPack, ...p } : p;
-      })
-    };
+  // Start from disk (always fresh). Overlay only sections the admin
+  // is allowed to edit — everything else falls through from git.
+  const merged = { ...disk } as SiteContent;
+  for (const key of ADMIN_EDITABLE_SECTIONS) {
+    const blobSection = (blob as Partial<SiteContent>)[key];
+    if (blobSection !== undefined) {
+      (merged as unknown as Record<string, unknown>)[key] = blobSection;
+    }
   }
 
   return merged;
