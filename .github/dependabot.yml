@@ -39,6 +39,21 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
+      # eslint-config-next tracks next's major; hold until next itself
+      # is upgraded (also held above).
+      - dependency-name: "eslint-config-next"
+        update-types: ["version-update:semver-major"]
+      # typescript 6+ requires code + tsconfig changes; hold.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # Tailwind 4 is a from-scratch rewrite (CSS-based config); hold
+      # until a proper migration PR touches globals.css + tailwind.config.
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      # @types/node majors mirror Node LTS releases; only bump when the
+      # actual runtime moves (Netlify config).
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
