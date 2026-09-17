@@ -54,6 +54,13 @@ updates:
       # actual runtime moves (Netlify config).
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # bcryptjs 3 switches to ESM-first modules which can silently
+      # break the Netlify Next.js runtime import path. Hold until we
+      # can validate on a preview.
+      - dependency-name: "bcryptjs"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/bcryptjs"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
