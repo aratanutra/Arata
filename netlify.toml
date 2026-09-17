@@ -5,6 +5,17 @@
 [build.environment]
   NODE_VERSION = "20"
 
+  # Netlify's build-output secrets scanner matches env-var VALUES
+  # against every committed file. Our public contact email
+  # (aratanutra@gmail.com) also happens to be the value of ADMIN_EMAIL
+  # and ADMIN_ALERT_EMAIL, so every legitimate occurrence in
+  # content/site-content.json + policy pages trips the scanner.
+  # ADMIN_PASSWORD_HASH gets false-positived when its bcrypt string
+  # embeds in the Next.js server-runtime trace. All three are
+  # server-only, never inlined into the client bundle, so omitting
+  # them from the scan is safe.
+  SECRETS_SCAN_OMIT_KEYS = "ADMIN_EMAIL,ADMIN_ALERT_EMAIL,ADMIN_PASSWORD_HASH"
+
 # The official @netlify/plugin-nextjs is installed automatically by Netlify
 # when it detects a Next.js project, so we do not need to declare it here.
 # It serves App Router pages, API routes, middleware (NextAuth) and Image
