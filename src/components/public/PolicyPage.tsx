@@ -75,10 +75,20 @@ export default function PolicyPage({ document, grievance, updatedAt, showGrievan
                 Grievance Officer
               </h2>
               <p className="mt-3 text-[14px] leading-relaxed text-ink-soft md:text-[15px]">
-                In accordance with the Information Technology Act, 2000 and the rules made
-                thereunder, the details of the Grievance Officer are provided below.
+                In accordance with the Information Technology Act, 2000, the Information
+                Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021,
+                the Consumer Protection (E-Commerce) Rules, 2020, and the Digital Personal
+                Data Protection Act, 2023, the details of the Grievance Officer are provided below.
               </p>
               <dl className="mt-5 grid gap-3 text-[14px] leading-relaxed text-ink-soft md:grid-cols-2 md:text-[15px]">
+                {grievance.name ? (
+                  <div>
+                    <dt className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
+                      Name
+                    </dt>
+                    <dd className="mt-1">{grievance.name}</dd>
+                  </div>
+                ) : null}
                 <div>
                   <dt className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
                     Designation
@@ -123,6 +133,11 @@ export default function PolicyPage({ document, grievance, updatedAt, showGrievan
                   <dd className="mt-1">{grievance.hours}</dd>
                 </div>
               </dl>
+              {grievance.responseTimes?.note ? (
+                <p className="mt-5 border-t border-hairline pt-4 text-[13px] leading-relaxed text-ink-soft md:text-[14px]">
+                  {grievance.responseTimes.note}
+                </p>
+              ) : null}
             </div>
           ) : null}
         </div>
