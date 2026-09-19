@@ -58,7 +58,6 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
     () => [
       { id: "brand", label: "Brand" },
       { id: "orderStatus", label: "Order Status" },
-      { id: "nav", label: "Navigation" },
       { id: "hero", label: "Hero" },
       { id: "trustBar", label: "Trust Bar" },
       { id: "product", label: "Product" },
@@ -141,7 +140,6 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       <div className="mt-8 space-y-4">
         <BrandCard content={content} update={update} />
         <OrderStatusCard content={content} update={update} />
-        <NavCard content={content} update={update} />
         <HeroCard content={content} update={update} />
         <TrustBarCard content={content} update={update} />
         <ProductCard content={content} update={update} />
@@ -304,60 +302,6 @@ function OrderStatusCard({ content, update }: CardProps) {
         multiline
         rows={3}
       />
-    </SectionCard>
-  );
-}
-
-function NavCard({ content, update }: CardProps) {
-  const v = content.nav;
-  const set = (patch: Partial<SiteContent["nav"]>) => update("nav", { ...v, ...patch });
-  return (
-    <SectionCard id="nav" title="Navigation" subtitle="Header links + reservation CTA">
-      <div className="grid gap-5 md:grid-cols-2">
-        <TextField label="CTA Label" value={v.ctaLabel} onChange={(x) => set({ ctaLabel: x })} />
-        <TextField label="CTA Href" value={v.ctaHref} onChange={(x) => set({ ctaHref: x })} />
-      </div>
-      <div>
-        <label className="label-field">Links</label>
-        <div className="space-y-3">
-          {v.links.map((link, i) => (
-            <div key={i} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
-              <input
-                className="input-clean"
-                value={link.label}
-                onChange={(e) => {
-                  const next = [...v.links];
-                  next[i] = { ...link, label: e.target.value };
-                  set({ links: next });
-                }}
-              />
-              <input
-                className="input-clean"
-                value={link.href}
-                onChange={(e) => {
-                  const next = [...v.links];
-                  next[i] = { ...link, href: e.target.value };
-                  set({ links: next });
-                }}
-              />
-              <button
-                type="button"
-                onClick={() => set({ links: v.links.filter((_, j) => j !== i) })}
-                className="text-[10px] uppercase tracking-widest text-red-500"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => set({ links: [...v.links, { label: "New", href: "#" }] })}
-            className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-          >
-            + Add link
-          </button>
-        </div>
-      </div>
     </SectionCard>
   );
 }

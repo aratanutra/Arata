@@ -25,7 +25,6 @@ async function readFromDisk(): Promise<SiteContent> {
 const ADMIN_EDITABLE_SECTIONS = new Set<keyof SiteContent>([
   "brand",
   "orderStatus",
-  "nav",
   "hero",
   "trustBar",
   "homeFeatured",
