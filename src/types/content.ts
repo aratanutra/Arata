@@ -250,12 +250,22 @@ export type SiteContent = {
   policies: {
     updatedAt: string;
     grievance: {
+      name?: string;
       designation: string;
       company: string;
       address: string;
       email: string;
       phone: string;
       hours: string;
+      responseTimes?: {
+        acknowledgeHours: number;
+        resolveDays: number;
+        note: string;
+      };
+    };
+    medicalDisclaimer?: {
+      heading: string;
+      paragraphs: string[];
     };
     terms: PolicyDocument;
     privacy: PolicyDocument;
