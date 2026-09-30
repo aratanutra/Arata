@@ -44,6 +44,8 @@ export default async function AeternyxPage() {
     description:
       "An expertly composed healthspan nutraceutical: ten evidence-graded bioactives across five cellular ageing pathways in a single daily vegetarian tablet.",
     image: "https://aratanutra.com/aeternyx-og.jpg",
+    sku: "AETERNYX-STRIP-10",
+    mpn: "AETERNYX-B01",
     brand: {
       "@type": "Brand",
       name: "AETERNYX"
@@ -62,6 +64,7 @@ export default async function AeternyxPage() {
       url: "https://aratanutra.com/aeternyx",
       priceCurrency: "INR",
       price: content.productHero.packs?.[0]?.priceNumber ?? 800,
+      priceValidUntil: "2027-10-20",
       availability: content.orderStatus.blocked
         ? "https://schema.org/PreOrder"
         : "https://schema.org/InStock",
@@ -70,6 +73,42 @@ export default async function AeternyxPage() {
       seller: {
         "@type": "Organization",
         name: "Arata Nutraceuticals"
+      },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "IN",
+        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 2,
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/FreeReturn",
+        merchantReturnLink: "https://aratanutra.com/return-policy"
+      },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "IN"
+        },
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: content.productHero.packs?.[0]?.shippingCost ?? 0,
+          currency: "INR"
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 1,
+            maxValue: 2,
+            unitCode: "DAY"
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 3,
+            maxValue: 7,
+            unitCode: "DAY"
+          }
+        }
       }
     }
   };

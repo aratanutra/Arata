@@ -129,6 +129,7 @@ const organizationJsonLd = {
     }
   ],
   sameAs: [
+    "https://www.instagram.com/aeternyx.nutra/",
     "https://www.facebook.com/profile.php?id=61590023834198",
     "https://www.facebook.com/profile.php?id=61590015399900"
   ]
