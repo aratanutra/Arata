@@ -13,9 +13,19 @@ import AboutClosing from "@/components/public/AboutClosing";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "About Us · Arata Nutraceuticals",
+  title: "About Arata Nutraceuticals — evidence-first healthspan from Hyderabad",
   description:
-    "Arata Nutraceuticals is building India's most rigorously composed nutraceutical portfolio."
+    "Arata Nutraceuticals is building India's most rigorously composed nutraceutical portfolio — audited to global standards, dosed to matter, made for the long game.",
+  alternates: {
+    canonical: "/about"
+  },
+  openGraph: {
+    type: "website",
+    url: "https://aratanutra.com/about",
+    title: "About Arata Nutraceuticals",
+    description:
+      "Evidence-first healthspan brand from Hyderabad. Rigorously composed, expertly dosed, made for the long game."
+  }
 };
 
 export default async function AboutPage() {

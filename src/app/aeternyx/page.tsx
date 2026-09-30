@@ -18,15 +18,87 @@ import LaunchBanner from "@/components/public/LaunchBanner";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "AETERNYX® · Cellular Intelligence™ | Arata Nutraceuticals",
+  title: "AETERNYX® — The single healthspan tablet · Composition, science, price",
   description:
-    "The complete expertly composed healthspan nutraceutical. Ten evidence-graded bioactives, five cellular wellness pathways, one daily tablet. M.R.P. ₹800 per strip of 10 tablets."
+    "Ten evidence-graded bioactives in one vegetarian tablet — supporting NAD⁺, sirtuin, mitochondrial, redox and inflammatory pathways of cellular ageing. FSSAI-licensed. M.R.P. ₹800 per strip of 10 tablets.",
+  alternates: {
+    canonical: "/aeternyx"
+  },
+  openGraph: {
+    type: "website",
+    url: "https://aratanutra.com/aeternyx",
+    title: "AETERNYX® — The single healthspan tablet",
+    description:
+      "Ten evidence-graded bioactives across five cellular ageing pathways in one daily vegetarian tablet."
+  }
 };
 
 export default async function AeternyxPage() {
   const content = await readContent();
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "AETERNYX®",
+    alternateName: "AETERNYX Cellular Intelligence",
+    description:
+      "An expertly composed healthspan nutraceutical: ten evidence-graded bioactives across five cellular ageing pathways in a single daily vegetarian tablet.",
+    image: "https://aratanutra.com/aeternyx-og.jpg",
+    brand: {
+      "@type": "Brand",
+      name: "AETERNYX"
+    },
+    manufacturer: {
+      "@type": "Organization",
+      name: "Arata Nutraceuticals"
+    },
+    category: "Health & Wellness > Nutraceutical",
+    audience: {
+      "@type": "PeopleAudience",
+      suggestedMinAge: 18
+    },
+    offers: {
+      "@type": "Offer",
+      url: "https://aratanutra.com/aeternyx",
+      priceCurrency: "INR",
+      price: content.productHero.packs?.[0]?.priceNumber ?? 800,
+      availability: content.orderStatus.blocked
+        ? "https://schema.org/PreOrder"
+        : "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+      areaServed: "IN",
+      seller: {
+        "@type": "Organization",
+        name: "Arata Nutraceuticals"
+      }
+    }
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faq.items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a
+      }
+    }))
+  };
+
   return (
     <main className="relative bg-canvas">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <LaunchBanner banner={content.launchBanner} orderStatus={content.orderStatus} />
       <Nav brand={content.brand} nav={content.nav} />
       <IngredientExplorer data={content.ingredientsSection} />
