@@ -8,9 +8,19 @@ import AeternyxFloat from "@/components/public/AeternyxFloat";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Contact · Arata Nutraceuticals",
+  title: "Contact Arata Nutraceuticals — support, WhatsApp, grievance officer",
   description:
-    "How to reach Arata Nutraceuticals — customer support, WhatsApp, grievance officer for consumer, content and personal-data complaints."
+    "How to reach Arata Nutraceuticals — customer support, WhatsApp, and the Grievance Officer & Data Protection Officer for consumer, content and personal-data complaints.",
+  alternates: {
+    canonical: "/contact"
+  },
+  openGraph: {
+    type: "website",
+    url: "https://aratanutra.com/contact",
+    title: "Contact Arata Nutraceuticals",
+    description:
+      "Customer support, WhatsApp, and the Grievance Officer & Data Protection Officer for Arata Nutraceuticals."
+  }
 };
 
 function WhatsAppGlyph({ className }: { className?: string }) {
