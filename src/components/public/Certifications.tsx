@@ -10,7 +10,7 @@ function LogoChip({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-hairline bg-canvas">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={asset(src)} alt={alt} className="h-11 w-11 object-contain" />
+      <img src={asset(src)} alt={alt} className="h-11 w-11 object-contain" width={44} height={44} />
     </div>
   );
 }

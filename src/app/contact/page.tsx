@@ -8,7 +8,9 @@ import AeternyxFloat from "@/components/public/AeternyxFloat";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Contact Arata Nutraceuticals — support, WhatsApp, grievance officer",
+  title: {
+    absolute: "Contact Arata Nutraceuticals — support & grievance"
+  },
   description:
     "How to reach Arata Nutraceuticals — customer support, WhatsApp, and the Grievance Officer & Data Protection Officer for consumer, content and personal-data complaints.",
   alternates: {

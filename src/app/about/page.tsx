@@ -13,7 +13,9 @@ import AboutClosing from "@/components/public/AboutClosing";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "About Arata Nutraceuticals — evidence-first healthspan from Hyderabad",
+  title: {
+    absolute: "About Arata Nutraceuticals — evidence-first healthspan"
+  },
   description:
     "Arata Nutraceuticals is building India's most rigorously composed nutraceutical portfolio — audited to global standards, dosed to matter, made for the long game.",
   alternates: {

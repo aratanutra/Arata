@@ -27,7 +27,7 @@ export default function TrustBar({ data }: { data: SiteContent["trustBar"] }) {
           >
             <Tick />
             <div>
-              <h3 className="text-[13px] font-semibold tracking-tight text-ink">{badge.title}</h3>
+              <div className="text-[13px] font-semibold tracking-tight text-ink">{badge.title}</div>
               <p className="mt-1 text-[12px] leading-snug text-muted">{badge.subtitle}</p>
             </div>
           </motion.div>
