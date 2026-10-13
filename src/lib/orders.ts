@@ -37,6 +37,8 @@ export type StoredOrder = {
   shippedAt?: string;
   trackingUrl?: string;
   courier?: string;
+  awbNumber?: string;
+  expectedDeliveryDate?: string;
   // Idempotent email markers — only send each email once even if
   // verify-payment and webhook both fire.
   confirmationEmailSentAt?: string;
