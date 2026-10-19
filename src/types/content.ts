@@ -55,6 +55,7 @@ export type SiteContent = {
     buttonLabel: string;
     notifyLabel: string;
     notifyMessage: string;
+    useWhatsAppOrders?: boolean;
   };
   launchBanner: {
     enabled: boolean;

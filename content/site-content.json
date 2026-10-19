@@ -31,7 +31,8 @@
     "message": "The wait is nearly over. AETERNYX® — India's most rigorously composed healthspan nutraceutical — opens for orders on Tuesday, 20 October 2026. Be among the first to receive a strip from our founding batch.",
     "buttonLabel": "Launching Tuesday, 20 October 2026",
     "notifyLabel": "Reserve yours on WhatsApp",
-    "notifyMessage": "Hi! I'd like to reserve AETERNYX® for launch day (Tuesday, 20 October 2026). Please save a strip from the founding batch for me."
+    "notifyMessage": "Hi! I'd like to reserve AETERNYX® for launch day (Tuesday, 20 October 2026). Please save a strip from the founding batch for me.",
+    "useWhatsAppOrders": true
   },
   "launchBanner": {
     "enabled": true,

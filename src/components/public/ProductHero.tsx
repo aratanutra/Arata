@@ -294,30 +294,44 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                   </div>
                 ) : isOrderCta && selectedPack ? (
                   <>
-                    <RazorpayCheckoutButton
-                      amountPaise={totalPaise}
-                      productPaise={(selectedPack.priceNumber ?? 0) * 100}
-                      shippingPaise={(selectedPack.shippingCost ?? 0) * 100}
-                      pack={{
-                        id: selectedPack.id,
-                        label: selectedPack.label,
-                        sublabel: selectedPack.sublabel
-                      }}
-                      productName="AETERNYX®"
-                      description={`${selectedPack.sublabel}${selectedPack.shippingFree ? " · Free shipping" : ` · Shipping ${inrFormatter.format(selectedPack.shippingCost ?? 0)}`}`}
-                      receipt={`aet-${selectedPack.id}-${Date.now()}`}
-                      label={`Buy now · ${inrFormatter.format(totalRupees)}`}
-                      className="w-full"
-                    />
-                    <a
-                      href={primary.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-6 py-3 text-[13px] font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-paper"
-                    >
-                      <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
-                      Prefer WhatsApp? Order via chat
-                    </a>
+                    {orderStatus.useWhatsAppOrders ? (
+                      <a
+                        href={primary.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
+                      >
+                        <WhatsAppGlyph className="h-5 w-5" />
+                        Order on WhatsApp · {inrFormatter.format(totalRupees)}
+                      </a>
+                    ) : (
+                      <>
+                        <RazorpayCheckoutButton
+                          amountPaise={totalPaise}
+                          productPaise={(selectedPack.priceNumber ?? 0) * 100}
+                          shippingPaise={(selectedPack.shippingCost ?? 0) * 100}
+                          pack={{
+                            id: selectedPack.id,
+                            label: selectedPack.label,
+                            sublabel: selectedPack.sublabel
+                          }}
+                          productName="AETERNYX®"
+                          description={`${selectedPack.sublabel}${selectedPack.shippingFree ? " · Free shipping" : ` · Shipping ${inrFormatter.format(selectedPack.shippingCost ?? 0)}`}`}
+                          receipt={`aet-${selectedPack.id}-${Date.now()}`}
+                          label={`Buy now · ${inrFormatter.format(totalRupees)}`}
+                          className="w-full"
+                        />
+                        <a
+                          href={primary.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-6 py-3 text-[13px] font-medium text-ink transition-all duration-200 hover:border-ink hover:bg-paper"
+                        >
+                          <WhatsAppGlyph className="h-4 w-4 text-[#25D366]" />
+                          Prefer WhatsApp? Order via chat
+                        </a>
+                      </>
+                    )}
                   </>
                 ) : primary.external ? (
                   <a
