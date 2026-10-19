@@ -209,12 +209,16 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                     </span>
                   </div>
                   <div className="mt-1 space-y-0.5 text-[12px] leading-relaxed text-muted">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="uppercase tracking-widest text-[10px]">{hero.mrpLabel}</span>
-                      <span className="tnum text-ink">{selectedPack?.price ?? hero.mrp}</span>
-                      {selectedPack?.priceOriginal ? (
-                        <span className="tnum text-muted line-through">
-                          {selectedPack.priceOriginal}
+                      <span className="tnum text-ink">
+                        {selectedPack?.priceOriginal || selectedPack?.price || hero.mrp}
+                      </span>
+                      {selectedPack?.priceOriginal && selectedPack.priceOriginal !== selectedPack.price ? (
+                        <span className="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-emerald-800">
+                          You save {selectedPack.priceOriginal.replace(/[^\d]/g, "") && selectedPack.price.replace(/[^\d]/g, "")
+                            ? `₹${(Number(selectedPack.priceOriginal.replace(/[^\d]/g, "")) - Number(selectedPack.price.replace(/[^\d]/g, ""))).toLocaleString("en-IN")}`
+                            : ""}
                         </span>
                       ) : null}
                     </div>
