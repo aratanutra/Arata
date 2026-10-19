@@ -120,9 +120,11 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
             </span>
           </div>
           <div className="mt-1 space-y-0.5 text-[11px] leading-relaxed text-muted">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="uppercase tracking-widest text-[9px]">{hero.mrpLabel}</span>
-              <span className="tnum text-ink">{selectedPack?.price ?? hero.mrp}</span>
+              <span className="tnum text-ink">
+                {selectedPack?.priceOriginal || selectedPack?.price || hero.mrp}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <span className="uppercase tracking-widest text-[9px]">Shipping</span>
