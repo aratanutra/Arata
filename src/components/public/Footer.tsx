@@ -21,6 +21,8 @@ export default function Footer({ brand, footer }: Props) {
               src={asset(brand.logoAsset)}
               alt={brand.company}
               className="h-28 w-auto object-contain md:h-32"
+              width={240}
+              height={128}
             />
           </Link>
           <p className="mt-4 text-[15px] leading-relaxed text-ink">{footer.tagline}</p>

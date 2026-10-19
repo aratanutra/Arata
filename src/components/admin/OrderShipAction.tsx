@@ -6,18 +6,51 @@ type Props = {
   orderId: string;
   initialTrackingUrl?: string;
   initialCourier?: string;
+  initialAwbNumber?: string;
+  initialShippedAt?: string;
+  initialExpectedDeliveryDate?: string;
   status: "created" | "paid" | "failed" | "refunded" | "shipped";
 };
+
+function toDateInputValue(iso?: string): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function todayIso(): string {
+  return toDateInputValue(new Date().toISOString());
+}
+
+function plusDaysIso(days: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return toDateInputValue(d.toISOString());
+}
 
 export default function OrderShipAction({
   orderId,
   initialTrackingUrl,
   initialCourier,
+  initialAwbNumber,
+  initialShippedAt,
+  initialExpectedDeliveryDate,
   status
 }: Props) {
   const [open, setOpen] = useState(false);
   const [trackingUrl, setTrackingUrl] = useState(initialTrackingUrl ?? "");
   const [courier, setCourier] = useState(initialCourier ?? "");
+  const [awbNumber, setAwbNumber] = useState(initialAwbNumber ?? "");
+  const [shippedAt, setShippedAt] = useState(
+    toDateInputValue(initialShippedAt) || todayIso()
+  );
+  const [expectedDeliveryDate, setExpectedDeliveryDate] = useState(
+    toDateInputValue(initialExpectedDeliveryDate) || plusDaysIso(5)
+  );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,12 +69,14 @@ export default function OrderShipAction({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           trackingUrl: trackingUrl.trim() || undefined,
-          courier: courier.trim() || undefined
+          courier: courier.trim() || undefined,
+          awbNumber: awbNumber.trim() || undefined,
+          shippedAt: shippedAt || undefined,
+          expectedDeliveryDate: expectedDeliveryDate || undefined
         })
       });
       const body = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) throw new Error(body.error ?? `Failed (${res.status})`);
-      // Reload the current page so the parent server component re-fetches.
       window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
@@ -71,11 +106,48 @@ export default function OrderShipAction({
               type="text"
               value={courier}
               onChange={(e) => setCourier(e.target.value)}
-              placeholder="e.g. Bluedart, DTDC, India Post"
+              placeholder="e.g. Bluedart, DTDC, Delhivery, India Post"
               className="input-clean"
             />
           </div>
           <div>
+            <label className="label-field" htmlFor={`awb-${orderId}`}>
+              AWB / Tracking Number
+            </label>
+            <input
+              id={`awb-${orderId}`}
+              type="text"
+              value={awbNumber}
+              onChange={(e) => setAwbNumber(e.target.value)}
+              placeholder="e.g. 12345678901234"
+              className="input-clean"
+            />
+          </div>
+          <div>
+            <label className="label-field" htmlFor={`shipped-${orderId}`}>
+              Dispatch Date
+            </label>
+            <input
+              id={`shipped-${orderId}`}
+              type="date"
+              value={shippedAt}
+              onChange={(e) => setShippedAt(e.target.value)}
+              className="input-clean"
+            />
+          </div>
+          <div>
+            <label className="label-field" htmlFor={`expected-${orderId}`}>
+              Expected Delivery Date
+            </label>
+            <input
+              id={`expected-${orderId}`}
+              type="date"
+              value={expectedDeliveryDate}
+              onChange={(e) => setExpectedDeliveryDate(e.target.value)}
+              className="input-clean"
+            />
+          </div>
+          <div className="md:col-span-2">
             <label className="label-field" htmlFor={`tracking-${orderId}`}>
               Tracking URL
             </label>

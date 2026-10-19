@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://aratanutra.com"),
   title: {
     default:
-      "AETERNYX® — One tablet. Ten bioactives. Cellular Intelligence™ | Arata Nutraceuticals",
+      "AETERNYX® — Cellular Intelligence™ | Arata Nutraceuticals",
     template: "%s | Arata Nutraceuticals"
   },
   description:

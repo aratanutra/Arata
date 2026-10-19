@@ -126,18 +126,31 @@ export default async function AdminOrdersPage() {
                   {o.paymentId ? (
                     <p className="mt-1 text-[11px] tnum text-muted">Payment ID: {o.paymentId}</p>
                   ) : null}
-                  {o.trackingUrl ? (
-                    <p className="mt-1 text-[11px] text-muted">
-                      {o.courier ? `${o.courier} · ` : ""}
-                      <a
-                        href={o.trackingUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline decoration-hairline underline-offset-2 hover:text-ink"
-                      >
-                        {o.trackingUrl}
-                      </a>
-                    </p>
+                  {o.trackingUrl || o.awbNumber || o.courier || o.expectedDeliveryDate ? (
+                    <div className="mt-1 space-y-0.5 text-[11px] text-muted">
+                      {o.courier || o.awbNumber ? (
+                        <p>
+                          {o.courier ? <span className="font-semibold text-ink">{o.courier}</span> : null}
+                          {o.courier && o.awbNumber ? " · " : ""}
+                          {o.awbNumber ? <span className="tnum">AWB {o.awbNumber}</span> : null}
+                        </p>
+                      ) : null}
+                      {o.expectedDeliveryDate ? (
+                        <p>Expected delivery: {new Date(o.expectedDeliveryDate).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}</p>
+                      ) : null}
+                      {o.trackingUrl ? (
+                        <p>
+                          <a
+                            href={o.trackingUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline decoration-hairline underline-offset-2 hover:text-ink"
+                          >
+                            {o.trackingUrl}
+                          </a>
+                        </p>
+                      ) : null}
+                    </div>
                   ) : null}
                 </div>
               </div>
@@ -146,6 +159,9 @@ export default async function AdminOrdersPage() {
                 orderId={o.orderId}
                 initialTrackingUrl={o.trackingUrl}
                 initialCourier={o.courier}
+                initialAwbNumber={o.awbNumber}
+                initialShippedAt={o.shippedAt}
+                initialExpectedDeliveryDate={o.expectedDeliveryDate}
                 status={o.status}
               />
             </article>

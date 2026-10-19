@@ -302,6 +302,14 @@ function OrderStatusCard({ content, update }: CardProps) {
         multiline
         rows={3}
       />
+      <ToggleField
+        label="Route Order-now buttons to WhatsApp (bypass Razorpay)"
+        value={v.useWhatsAppOrders ?? false}
+        onChange={(x) => set({ useWhatsAppOrders: x })}
+        onLabel="Orders go to WhatsApp"
+        offLabel="Orders use Razorpay checkout"
+        hint="When ON, 'Order now' buttons on the home + product pages open WhatsApp with the pack's pre-filled message instead of the Razorpay checkout modal. Useful during launch while you handle orders manually, or if Razorpay / KYC is unavailable. Flip OFF when you want automated card payments live."
+      />
     </SectionCard>
   );
 }

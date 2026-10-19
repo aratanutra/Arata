@@ -214,40 +214,86 @@ function shippingNotificationTemplate(order: StoredOrder): {
   text: string;
 } {
   const subject = `Your AETERNYX® order is on the way`;
+  const fmtDate = (iso?: string): string | null => {
+    if (!iso) return null;
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return null;
+    return d.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  };
+  const shippedDate = fmtDate(order.shippedAt);
+  const expectedDate = fmtDate(order.expectedDeliveryDate);
+
+  // Rows for the tracking card (courier / AWB / dispatch / expected).
+  const detailRow = (label: string, value: string) =>
+    `<tr>
+       <td style="padding:6px 0;font-size:12px;color:rgba(20,36,63,0.55);letter-spacing:0.08em;text-transform:uppercase;">${escapeHtml(label)}</td>
+       <td style="padding:6px 0;font-size:13px;color:#14243F;font-weight:600;text-align:right;">${value}</td>
+     </tr>`;
+
+  const detailRows = [
+    order.courier ? detailRow("Courier", escapeHtml(order.courier)) : "",
+    order.awbNumber
+      ? detailRow("AWB", `<span style="font-family:ui-monospace,monospace;">${escapeHtml(order.awbNumber)}</span>`)
+      : "",
+    shippedDate ? detailRow("Dispatched", escapeHtml(shippedDate)) : "",
+    expectedDate ? detailRow("Expected delivery", `<span style="color:#8A6318;">${escapeHtml(expectedDate)}</span>`) : ""
+  ].filter(Boolean).join("");
+
+  const detailsTable = detailRows
+    ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:12px 0 14px;">${detailRows}</table>`
+    : "";
+
   const trackingBlock = order.trackingUrl
     ? `<div style="background:#FFFDF6;border:1px solid rgba(184,147,94,0.25);border-radius:14px;padding:18px 20px;margin-bottom:24px;">
         <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#8A6318;margin-bottom:8px;">Track your order</div>
-        ${order.courier ? `<div style="font-size:13px;color:rgba(20,36,63,0.7);margin-bottom:8px;">Courier: ${escapeHtml(order.courier)}</div>` : ""}
+        ${detailsTable}
         <a href="${escapeHtml(order.trackingUrl)}" style="display:inline-block;padding:10px 20px;background:#14243F;color:#F7F3E8;border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;">Open tracking</a>
         <div style="margin-top:12px;font-size:11px;word-break:break-all;color:rgba(20,36,63,0.55);">${escapeHtml(order.trackingUrl)}</div>
        </div>`
-    : `<div style="background:#FFFDF6;border:1px solid rgba(184,147,94,0.25);border-radius:14px;padding:18px 20px;margin-bottom:24px;font-size:14px;line-height:1.6;">
-        We'll share the tracking link as soon as the courier picks up your parcel.
-       </div>`;
+    : (detailsTable
+        ? `<div style="background:#FFFDF6;border:1px solid rgba(184,147,94,0.25);border-radius:14px;padding:18px 20px;margin-bottom:24px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#8A6318;margin-bottom:4px;">Shipment details</div>
+            ${detailsTable}
+            <div style="font-size:12px;color:rgba(20,36,63,0.6);">Tracking link will follow as soon as the courier publishes it.</div>
+           </div>`
+        : `<div style="background:#FFFDF6;border:1px solid rgba(184,147,94,0.25);border-radius:14px;padding:18px 20px;margin-bottom:24px;font-size:14px;line-height:1.6;">
+            We'll share the tracking link as soon as the courier picks up your parcel.
+           </div>`);
+
   const html = shell(`
     <h1 style="margin:0 0 12px;font-size:22px;">On the way, ${escapeHtml(order.customer.name.split(" ")[0] ?? order.customer.name)} —</h1>
     <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
-      Your AETERNYX® ${escapeHtml(order.pack.label)} has just shipped. Expect delivery within 3–7 business days across India.
+      Your AETERNYX® ${escapeHtml(order.pack.label)} has just shipped. ${expectedDate ? `Expected delivery: <strong>${escapeHtml(expectedDate)}</strong>.` : "Expect delivery within 3–7 business days across India."}
     </p>
     ${trackingBlock}
     <div style="font-size:12px;color:rgba(20,36,63,0.6);line-height:1.7;">
       Order ID: <span style="font-family:monospace;">${escapeHtml(order.orderId)}</span>
     </div>
   `);
-  const text = [
+
+  const textLines = [
     `Hi ${order.customer.name},`,
     ``,
-    `Your AETERNYX® ${order.pack.label} has shipped. Delivery in 3-7 business days.`,
+    `Your AETERNYX® ${order.pack.label} has shipped.`,
+    order.courier ? `Courier: ${order.courier}` : null,
+    order.awbNumber ? `AWB / Tracking No.: ${order.awbNumber}` : null,
+    shippedDate ? `Dispatched: ${shippedDate}` : null,
+    expectedDate ? `Expected delivery: ${expectedDate}` : null,
     ``,
     order.trackingUrl
-      ? `Tracking: ${order.trackingUrl}${order.courier ? ` (${order.courier})` : ""}`
-      : `We'll share the tracking link as soon as the courier picks up your parcel.`,
+      ? `Track: ${order.trackingUrl}`
+      : `Tracking link will follow once the courier publishes it.`,
     ``,
     `Order ID: ${order.orderId}`,
     ``,
     `Questions? WhatsApp +91 99599 93973 or reply to this email.`,
     `— Arata Nutraceuticals`
-  ].join("\n");
+  ].filter((l) => l !== null) as string[];
+  const text = textLines.join("\n");
   return { subject, html, text };
 }
 

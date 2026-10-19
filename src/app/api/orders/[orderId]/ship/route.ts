@@ -14,9 +14,15 @@ export const runtime = "nodejs";
 
 /**
  * Admin-gated: flip a paid order to "shipped", store the tracking
- * URL/courier, and email the customer.
+ * URL/courier/AWB/dates, and email the customer.
  *
- * POST body: { trackingUrl?: string; courier?: string }
+ * POST body: {
+ *   trackingUrl?: string;
+ *   courier?: string;
+ *   awbNumber?: string;
+ *   shippedAt?: string;              // ISO date — manual dispatch date override
+ *   expectedDeliveryDate?: string;   // ISO date (YYYY-MM-DD)
+ * }
  */
 export async function POST(
   req: Request,
@@ -38,25 +44,47 @@ export async function POST(
     return NextResponse.json({ error: "Missing orderId" }, { status: 400 });
   }
 
-  let body: { trackingUrl?: unknown; courier?: unknown };
+  let body: {
+    trackingUrl?: unknown;
+    courier?: unknown;
+    awbNumber?: unknown;
+    shippedAt?: unknown;
+    expectedDeliveryDate?: unknown;
+  };
   try {
-    body = (await req.json()) as { trackingUrl?: unknown; courier?: unknown };
+    body = (await req.json()) as typeof body;
   } catch {
     body = {};
   }
 
-  const trackingUrl =
-    typeof body.trackingUrl === "string" && body.trackingUrl.trim().length > 0
-      ? body.trackingUrl.trim()
-      : undefined;
-  const courier =
-    typeof body.courier === "string" && body.courier.trim().length > 0
-      ? body.courier.trim()
-      : undefined;
+  const trim = (v: unknown): string | undefined =>
+    typeof v === "string" && v.trim().length > 0 ? v.trim() : undefined;
+
+  const trackingUrl = trim(body.trackingUrl);
+  const courier = trim(body.courier);
+  const awbNumber = trim(body.awbNumber);
+  const shippedAtInput = trim(body.shippedAt);
+  const expectedDeliveryDate = trim(body.expectedDeliveryDate);
 
   if (trackingUrl && !/^https?:\/\//i.test(trackingUrl)) {
     return NextResponse.json(
       { error: "Tracking URL must start with http:// or https://" },
+      { status: 400 }
+    );
+  }
+
+  // Normalise date inputs — accept YYYY-MM-DD or full ISO; reject garbage.
+  function parseDate(s: string | undefined): string | undefined | "INVALID" {
+    if (!s) return undefined;
+    const d = new Date(s);
+    if (Number.isNaN(d.getTime())) return "INVALID";
+    return d.toISOString();
+  }
+  const shippedAtNormalised = parseDate(shippedAtInput);
+  const expectedDeliveryNormalised = parseDate(expectedDeliveryDate);
+  if (shippedAtNormalised === "INVALID" || expectedDeliveryNormalised === "INVALID") {
+    return NextResponse.json(
+      { error: "Dispatch date / expected delivery date must be a valid date." },
       { status: 400 }
     );
   }
@@ -75,9 +103,13 @@ export async function POST(
   let updated: StoredOrder = {
     ...existing,
     status: "shipped",
-    shippedAt: existing.shippedAt ?? new Date().toISOString(),
+    shippedAt:
+      shippedAtNormalised ?? existing.shippedAt ?? new Date().toISOString(),
     trackingUrl: trackingUrl ?? existing.trackingUrl,
-    courier: courier ?? existing.courier
+    courier: courier ?? existing.courier,
+    awbNumber: awbNumber ?? existing.awbNumber,
+    expectedDeliveryDate:
+      expectedDeliveryNormalised ?? existing.expectedDeliveryDate
   };
   await saveOrder(updated);
 

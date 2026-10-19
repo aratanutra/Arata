@@ -18,7 +18,9 @@ import LaunchBanner from "@/components/public/LaunchBanner";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "AETERNYX® — The single healthspan tablet · Composition, science, price",
+  title: {
+    absolute: "AETERNYX® — Composition, science & price | Arata Nutraceuticals"
+  },
   description:
     "Ten evidence-graded bioactives in one vegetarian tablet — supporting NAD⁺, sirtuin, mitochondrial, redox and inflammatory pathways of cellular ageing. FSSAI-licensed. M.R.P. ₹800 per strip of 10 tablets.",
   alternates: {

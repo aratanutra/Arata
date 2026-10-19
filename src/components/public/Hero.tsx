@@ -46,8 +46,8 @@ export default function Hero({ hero }: Props) {
           </motion.span>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 20 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="mt-6 text-4xl font-semibold tracking-tight text-ink md:text-7xl lg:text-8xl lg:leading-[1.02]"
           >
