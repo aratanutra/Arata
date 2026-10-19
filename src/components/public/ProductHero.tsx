@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import type { SiteContent } from "@/types/content";
 import Product3DSlider from "./Product3DSlider";
 import RazorpayCheckoutButton from "./RazorpayCheckoutButton";
+import WhatsAppOrderButton from "./WhatsAppOrderButton";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -295,15 +296,19 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                 ) : isOrderCta && selectedPack ? (
                   <>
                     {orderStatus.useWhatsAppOrders ? (
-                      <a
-                        href={primary.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <WhatsAppOrderButton
+                        totalRupees={totalRupees}
+                        productRupees={selectedPack.priceNumber ?? 0}
+                        shippingRupees={selectedPack.shippingCost ?? 0}
+                        pack={{
+                          id: selectedPack.id,
+                          label: selectedPack.label,
+                          sublabel: selectedPack.sublabel
+                        }}
+                        whatsappNumber={brand.whatsappNumber}
+                        label={`Order on WhatsApp · ${inrFormatter.format(totalRupees)}`}
                         className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
-                      >
-                        <WhatsAppGlyph className="h-5 w-5" />
-                        Order on WhatsApp · {inrFormatter.format(totalRupees)}
-                      </a>
+                      />
                     ) : (
                       <>
                         <RazorpayCheckoutButton

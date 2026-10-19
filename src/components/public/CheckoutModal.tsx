@@ -102,6 +102,8 @@ export default function CheckoutModal({
   const [values, setValues] = useState<CheckoutFormValues>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof CheckoutFormValues, string>>>({});
   const [touched, setTouched] = useState<Partial<Record<keyof CheckoutFormValues, boolean>>>({});
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [termsTouched, setTermsTouched] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -118,6 +120,8 @@ export default function CheckoutModal({
     if (open) {
       setErrors({});
       setTouched({});
+      setTermsAccepted(false);
+      setTermsTouched(false);
     }
   }, [open]);
 
@@ -139,7 +143,9 @@ export default function CheckoutModal({
       state: true,
       pincode: true
     });
+    setTermsTouched(true);
     if (Object.keys(errs).length > 0) return;
+    if (!termsAccepted) return;
     onSubmit(values);
   }
 
@@ -331,13 +337,40 @@ export default function CheckoutModal({
               </p>
             ) : null}
 
+            <div className="sm:col-span-2 rounded-xl border border-hairline bg-paper p-3">
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => {
+                    setTermsAccepted(e.target.checked);
+                    setTermsTouched(true);
+                  }}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-gold-deep"
+                  aria-describedby="terms-help"
+                />
+                <span className="text-[12px] leading-relaxed text-ink-soft">
+                  I have read and agree to the{" "}
+                  <a href="/terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold-deep">Terms &amp; Conditions</a>,{" "}
+                  <a href="/return-policy" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold-deep">Return Policy</a>,{" "}
+                  <a href="/refund-and-cancellation" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold-deep">Refund &amp; Cancellation</a>, and{" "}
+                  <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold-deep">Privacy Policy</a>. I confirm I am 18 years or older and understand this product is a health supplement, not for medicinal use.
+                </span>
+              </label>
+              {termsTouched && !termsAccepted ? (
+                <p id="terms-help" className="mt-2 pl-7 text-[11px] text-red-600">
+                  Please accept the terms to continue.
+                </p>
+              ) : null}
+            </div>
+
             <div className="sm:col-span-2 flex flex-col gap-2 pt-2">
               <button
                 type="submit"
-                disabled={submitting}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-canvas transition-all duration-200 hover:brightness-110 hover:shadow-card-hover disabled:cursor-wait disabled:opacity-70"
+                disabled={submitting || !termsAccepted}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-canvas transition-all duration-200 hover:brightness-110 hover:shadow-card-hover disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {submitting ? "Opening secure checkout…" : submitLabel}
+                {submitting ? "Please wait…" : submitLabel}
               </button>
               <button
                 type="button"
@@ -347,11 +380,6 @@ export default function CheckoutModal({
               >
                 Cancel
               </button>
-              <p className="text-center text-[11px] leading-relaxed text-muted">
-                By continuing you agree to our{" "}
-                <a href="/terms" className="underline hover:text-gold-deep">Terms</a> and{" "}
-                <a href="/privacy" className="underline hover:text-gold-deep">Privacy Policy</a>.
-              </p>
             </div>
           </form>
         </div>

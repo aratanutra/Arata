@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { SiteContent } from "@/types/content";
 import RazorpayCheckoutButton from "./RazorpayCheckoutButton";
+import WhatsAppOrderButton from "./WhatsAppOrderButton";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -190,15 +191,19 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
       ) : selectedPack ? (
         <div className="mt-5 flex flex-col gap-2">
           {orderStatus.useWhatsAppOrders ? (
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppOrderButton
+              totalRupees={totalRupees}
+              productRupees={selectedPack.priceNumber ?? 0}
+              shippingRupees={selectedPack.shippingCost ?? 0}
+              pack={{
+                id: selectedPack.id,
+                label: selectedPack.label,
+                sublabel: selectedPack.sublabel
+              }}
+              whatsappNumber={brand.whatsappNumber}
+              label={`Order on WhatsApp · ${inrFormatter.format(totalRupees)}`}
               className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
-            >
-              <WhatsAppGlyph className="h-5 w-5" />
-              Order on WhatsApp · {inrFormatter.format(totalRupees)}
-            </a>
+            />
           ) : (
             <RazorpayCheckoutButton
               amountPaise={totalPaise}
