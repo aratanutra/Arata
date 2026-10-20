@@ -77,14 +77,43 @@ const EMPTY: CheckoutFormValues = {
 
 function validate(v: CheckoutFormValues): Partial<Record<keyof CheckoutFormValues, string>> {
   const errs: Partial<Record<keyof CheckoutFormValues, string>> = {};
-  if (v.name.trim().length < 2) errs.name = "Enter your full name.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim())) errs.email = "Enter a valid email.";
+  if (!v.name.trim()) {
+    errs.name = "Full name is required.";
+  } else if (v.name.trim().length < 2) {
+    errs.name = "Full name must be at least 2 letters.";
+  }
+  const email = v.email.trim();
+  if (!email) {
+    errs.email = "Email is required.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    errs.email = "Enter a valid email (e.g. name@example.com).";
+  }
   const digits = v.phone.replace(/\D/g, "");
-  if (digits.length < 10) errs.phone = "Phone must be at least 10 digits.";
-  if (v.address1.trim().length < 4) errs.address1 = "Enter your street address.";
-  if (v.city.trim().length < 2) errs.city = "City is required.";
-  if (!v.state) errs.state = "Select your state.";
-  if (!/^\d{6}$/.test(v.pincode)) errs.pincode = "PIN must be 6 digits.";
+  if (!digits) {
+    errs.phone = "Phone number is required.";
+  } else if (digits.length !== 10) {
+    errs.phone = "Phone must be exactly 10 digits.";
+  } else if (!/^[6-9]/.test(digits)) {
+    errs.phone = "Indian mobile numbers start with 6, 7, 8 or 9.";
+  }
+  if (!v.address1.trim()) {
+    errs.address1 = "Address is required.";
+  } else if (v.address1.trim().length < 5) {
+    errs.address1 = "Address looks too short — please include house/flat no. and street.";
+  }
+  if (!v.city.trim()) {
+    errs.city = "City is required.";
+  } else if (v.city.trim().length < 2) {
+    errs.city = "City name must be at least 2 letters.";
+  }
+  if (!v.state) errs.state = "Please select your state.";
+  if (!v.pincode) {
+    errs.pincode = "PIN code is required.";
+  } else if (!/^\d{6}$/.test(v.pincode)) {
+    errs.pincode = "PIN must be exactly 6 digits.";
+  } else if (/^0/.test(v.pincode)) {
+    errs.pincode = "Indian PIN codes do not start with 0.";
+  }
   return errs;
 }
 
@@ -100,10 +129,15 @@ export default function CheckoutModal({
   submitLabel
 }: Props) {
   const [values, setValues] = useState<CheckoutFormValues>(EMPTY);
-  const [errors, setErrors] = useState<Partial<Record<keyof CheckoutFormValues, string>>>({});
   const [touched, setTouched] = useState<Partial<Record<keyof CheckoutFormValues, boolean>>>({});
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [termsTouched, setTermsTouched] = useState(false);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+
+  // Validate live on every change — needed to disable the submit button
+  // until every required field is good.
+  const errors = validate(values);
+  const isFormValid = Object.keys(errors).length === 0 && termsAccepted;
 
   useEffect(() => {
     if (open) {
@@ -118,10 +152,10 @@ export default function CheckoutModal({
   // Reset form when modal reopens.
   useEffect(() => {
     if (open) {
-      setErrors({});
       setTouched({});
       setTermsAccepted(false);
       setTermsTouched(false);
+      setSubmitAttempted(false);
     }
   }, [open]);
 
@@ -131,8 +165,7 @@ export default function CheckoutModal({
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const errs = validate(values);
-    setErrors(errs);
+    setSubmitAttempted(true);
     setTouched({
       name: true,
       email: true,
@@ -144,15 +177,29 @@ export default function CheckoutModal({
       pincode: true
     });
     setTermsTouched(true);
-    if (Object.keys(errs).length > 0) return;
-    if (!termsAccepted) return;
+    if (Object.keys(errors).length > 0 || !termsAccepted) {
+      // Scroll the modal body to the first error so the user sees it.
+      if (typeof window !== "undefined") {
+        requestAnimationFrame(() => {
+          const first = document.querySelector(
+            "[data-ck-error='true'], [data-ck-terms-error='true']"
+          );
+          first?.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      }
+      return;
+    }
     onSubmit(values);
   }
 
   if (!open) return null;
 
+  // Highlight a field as invalid when the user has touched it OR already
+  // pressed submit at least once.
+  const showErr = (k: keyof CheckoutFormValues) =>
+    (touched[k] || submitAttempted) && Boolean(errors[k]);
   const errClass = (k: keyof CheckoutFormValues) =>
-    touched[k] && errors[k] ? "border-red-400" : "border-hairline";
+    showErr(k) ? "border-red-500 focus:border-red-600 bg-red-50/40" : "border-hairline";
 
   return (
     <div
@@ -198,105 +245,168 @@ export default function CheckoutModal({
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2">
+          <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2" noValidate>
+            {submitAttempted && Object.keys(errors).length > 0 ? (
+              <div
+                role="alert"
+                className="sm:col-span-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-[12px] text-red-700"
+              >
+                Please fix the fields marked below — all fields except Address line 2 are required.
+              </div>
+            ) : null}
+
             <div className="sm:col-span-2">
-              <label className="label-field" htmlFor="ck-name">Full name</label>
+              <label className="label-field" htmlFor="ck-name">
+                Full name <span className="text-red-600" aria-hidden>*</span>
+              </label>
               <input
                 id="ck-name"
                 type="text"
                 autoComplete="name"
                 required
+                aria-invalid={showErr("name")}
+                aria-describedby={showErr("name") ? "ck-name-err" : undefined}
+                data-ck-error={showErr("name") || undefined}
                 value={values.name}
                 onChange={(e) => setField("name", e.target.value)}
                 onBlur={() => setTouched((t) => ({ ...t, name: true }))}
                 className={`input-clean ${errClass("name")}`}
               />
-              {touched.name && errors.name ? <p className="mt-1 text-[11px] text-red-600">{errors.name}</p> : null}
+              {showErr("name") ? (
+                <p id="ck-name-err" className="mt-1 text-[11px] text-red-600">
+                  {errors.name}
+                </p>
+              ) : null}
             </div>
 
             <div>
-              <label className="label-field" htmlFor="ck-email">Email</label>
+              <label className="label-field" htmlFor="ck-email">
+                Email <span className="text-red-600" aria-hidden>*</span>
+              </label>
               <input
                 id="ck-email"
                 type="email"
                 autoComplete="email"
                 required
+                aria-invalid={showErr("email")}
+                aria-describedby={showErr("email") ? "ck-email-err" : undefined}
+                data-ck-error={showErr("email") || undefined}
+                placeholder="name@example.com"
                 value={values.email}
                 onChange={(e) => setField("email", e.target.value)}
                 onBlur={() => setTouched((t) => ({ ...t, email: true }))}
                 className={`input-clean ${errClass("email")}`}
               />
-              {touched.email && errors.email ? <p className="mt-1 text-[11px] text-red-600">{errors.email}</p> : null}
+              {showErr("email") ? (
+                <p id="ck-email-err" className="mt-1 text-[11px] text-red-600">
+                  {errors.email}
+                </p>
+              ) : null}
             </div>
 
             <div>
-              <label className="label-field" htmlFor="ck-phone">Phone</label>
+              <label className="label-field" htmlFor="ck-phone">
+                Phone <span className="text-red-600" aria-hidden>*</span>
+              </label>
               <input
                 id="ck-phone"
                 type="tel"
                 autoComplete="tel"
-                inputMode="tel"
+                inputMode="numeric"
                 required
-                placeholder="10-digit mobile"
+                maxLength={10}
+                aria-invalid={showErr("phone")}
+                aria-describedby={showErr("phone") ? "ck-phone-err" : undefined}
+                data-ck-error={showErr("phone") || undefined}
+                placeholder="10-digit mobile (e.g. 98765 43210)"
                 value={values.phone}
-                onChange={(e) => setField("phone", e.target.value)}
+                onChange={(e) =>
+                  setField("phone", e.target.value.replace(/\D/g, "").slice(0, 10))
+                }
                 onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
                 className={`input-clean ${errClass("phone")}`}
               />
-              {touched.phone && errors.phone ? <p className="mt-1 text-[11px] text-red-600">{errors.phone}</p> : null}
+              {showErr("phone") ? (
+                <p id="ck-phone-err" className="mt-1 text-[11px] text-red-600">
+                  {errors.phone}
+                </p>
+              ) : null}
             </div>
 
             <div className="sm:col-span-2">
-              <label className="label-field" htmlFor="ck-address1">Address (line 1)</label>
+              <label className="label-field" htmlFor="ck-address1">
+                Address (line 1) <span className="text-red-600" aria-hidden>*</span>
+              </label>
               <input
                 id="ck-address1"
                 type="text"
                 autoComplete="address-line1"
                 required
+                aria-invalid={showErr("address1")}
+                aria-describedby={showErr("address1") ? "ck-address1-err" : undefined}
+                data-ck-error={showErr("address1") || undefined}
                 placeholder="Flat / house no., street"
                 value={values.address1}
                 onChange={(e) => setField("address1", e.target.value)}
                 onBlur={() => setTouched((t) => ({ ...t, address1: true }))}
                 className={`input-clean ${errClass("address1")}`}
               />
-              {touched.address1 && errors.address1 ? (
-                <p className="mt-1 text-[11px] text-red-600">{errors.address1}</p>
+              {showErr("address1") ? (
+                <p id="ck-address1-err" className="mt-1 text-[11px] text-red-600">
+                  {errors.address1}
+                </p>
               ) : null}
             </div>
 
             <div className="sm:col-span-2">
-              <label className="label-field" htmlFor="ck-address2">Address (line 2)</label>
+              <label className="label-field" htmlFor="ck-address2">
+                Address (line 2) <span className="text-muted">(optional)</span>
+              </label>
               <input
                 id="ck-address2"
                 type="text"
                 autoComplete="address-line2"
-                placeholder="Landmark, area (optional)"
+                placeholder="Landmark, area"
                 value={values.address2}
                 onChange={(e) => setField("address2", e.target.value)}
-                className={`input-clean ${errClass("address2")}`}
+                className="input-clean border-hairline"
               />
             </div>
 
             <div>
-              <label className="label-field" htmlFor="ck-city">City</label>
+              <label className="label-field" htmlFor="ck-city">
+                City <span className="text-red-600" aria-hidden>*</span>
+              </label>
               <input
                 id="ck-city"
                 type="text"
                 autoComplete="address-level2"
                 required
+                aria-invalid={showErr("city")}
+                aria-describedby={showErr("city") ? "ck-city-err" : undefined}
+                data-ck-error={showErr("city") || undefined}
                 value={values.city}
                 onChange={(e) => setField("city", e.target.value)}
                 onBlur={() => setTouched((t) => ({ ...t, city: true }))}
                 className={`input-clean ${errClass("city")}`}
               />
-              {touched.city && errors.city ? <p className="mt-1 text-[11px] text-red-600">{errors.city}</p> : null}
+              {showErr("city") ? (
+                <p id="ck-city-err" className="mt-1 text-[11px] text-red-600">
+                  {errors.city}
+                </p>
+              ) : null}
             </div>
 
             <div>
-              <label className="label-field" htmlFor="ck-state">State</label>
+              <label className="label-field" htmlFor="ck-state">
+                State <span className="text-red-600" aria-hidden>*</span>
+              </label>
               <select
                 id="ck-state"
                 required
+                aria-invalid={showErr("state")}
+                aria-describedby={showErr("state") ? "ck-state-err" : undefined}
+                data-ck-error={showErr("state") || undefined}
                 value={values.state}
                 onChange={(e) => setField("state", e.target.value)}
                 onBlur={() => setTouched((t) => ({ ...t, state: true }))}
@@ -307,11 +417,17 @@ export default function CheckoutModal({
                   <option key={s} value={s}>{s}</option>
                 ))}
               </select>
-              {touched.state && errors.state ? <p className="mt-1 text-[11px] text-red-600">{errors.state}</p> : null}
+              {showErr("state") ? (
+                <p id="ck-state-err" className="mt-1 text-[11px] text-red-600">
+                  {errors.state}
+                </p>
+              ) : null}
             </div>
 
             <div>
-              <label className="label-field" htmlFor="ck-pincode">PIN code</label>
+              <label className="label-field" htmlFor="ck-pincode">
+                PIN code <span className="text-red-600" aria-hidden>*</span>
+              </label>
               <input
                 id="ck-pincode"
                 type="text"
@@ -320,14 +436,19 @@ export default function CheckoutModal({
                 pattern="[0-9]*"
                 required
                 maxLength={6}
-                placeholder="6-digit PIN"
+                aria-invalid={showErr("pincode")}
+                aria-describedby={showErr("pincode") ? "ck-pincode-err" : undefined}
+                data-ck-error={showErr("pincode") || undefined}
+                placeholder="6-digit PIN (e.g. 500049)"
                 value={values.pincode}
                 onChange={(e) => setField("pincode", e.target.value.replace(/\D/g, "").slice(0, 6))}
                 onBlur={() => setTouched((t) => ({ ...t, pincode: true }))}
                 className={`input-clean ${errClass("pincode")}`}
               />
-              {touched.pincode && errors.pincode ? (
-                <p className="mt-1 text-[11px] text-red-600">{errors.pincode}</p>
+              {showErr("pincode") ? (
+                <p id="ck-pincode-err" className="mt-1 text-[11px] text-red-600">
+                  {errors.pincode}
+                </p>
               ) : null}
             </div>
 
@@ -337,7 +458,14 @@ export default function CheckoutModal({
               </p>
             ) : null}
 
-            <div className="sm:col-span-2 rounded-xl border border-hairline bg-paper p-3">
+            <div
+              className={`sm:col-span-2 rounded-xl border p-3 ${
+                termsTouched && !termsAccepted
+                  ? "border-red-300 bg-red-50/40"
+                  : "border-hairline bg-paper"
+              }`}
+              data-ck-terms-error={termsTouched && !termsAccepted ? true : undefined}
+            >
               <label className="flex cursor-pointer items-start gap-3">
                 <input
                   type="checkbox"
@@ -355,6 +483,7 @@ export default function CheckoutModal({
                   <a href="/return-policy" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold-deep">Return Policy</a>,{" "}
                   <a href="/refund-and-cancellation" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold-deep">Refund &amp; Cancellation</a>, and{" "}
                   <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold-deep">Privacy Policy</a>. I confirm I am 18 years or older and understand this product is a health supplement, not for medicinal use.
+                  <span className="text-red-600" aria-hidden> *</span>
                 </span>
               </label>
               {termsTouched && !termsAccepted ? (
@@ -367,11 +496,16 @@ export default function CheckoutModal({
             <div className="sm:col-span-2 flex flex-col gap-2 pt-2">
               <button
                 type="submit"
-                disabled={submitting || !termsAccepted}
+                disabled={submitting || !isFormValid}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-canvas transition-all duration-200 hover:brightness-110 hover:shadow-card-hover disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {submitting ? "Please wait…" : submitLabel}
               </button>
+              {!isFormValid && submitAttempted ? (
+                <p className="text-center text-[11px] text-muted">
+                  Fill all required fields and accept the terms to continue.
+                </p>
+              ) : null}
               <button
                 type="button"
                 onClick={onCancel}
