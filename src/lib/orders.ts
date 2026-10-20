@@ -124,3 +124,12 @@ export async function listOrders(limit = 100): Promise<StoredOrder[]> {
   out.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   return out;
 }
+
+export async function deleteOrder(orderId: string): Promise<boolean> {
+  try {
+    await ordersStore().delete(orderId);
+    return true;
+  } catch {
+    return false;
+  }
+}
