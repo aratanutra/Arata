@@ -89,13 +89,24 @@ export async function POST(
   await saveOrder(updated);
 
   // Fire the customer order-confirmation (idempotent via marker).
+  let emailResult: { ok: boolean; id?: string; error?: string; skipped?: boolean } | null = null;
   if (!skipEmail && !updated.confirmationEmailSentAt) {
-    const res = await sendOrderConfirmation(updated);
-    if (res.ok) {
-      updated = { ...updated, confirmationEmailSentAt: new Date().toISOString() };
-      await saveOrder(updated);
+    emailResult = await sendOrderConfirmation(updated);
+    if (emailResult.ok) {
+      updated = {
+        ...updated,
+        confirmationEmailSentAt: new Date().toISOString(),
+        confirmationEmailError: undefined
+      };
+    } else {
+      updated = {
+        ...updated,
+        confirmationEmailError:
+          emailResult.error ?? (emailResult.skipped ? "RESEND_API_KEY not configured" : "unknown error")
+      };
     }
+    await saveOrder(updated);
   }
 
-  return NextResponse.json({ ok: true, order: updated });
+  return NextResponse.json({ ok: true, order: updated, email: emailResult });
 }

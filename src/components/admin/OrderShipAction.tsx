@@ -10,6 +10,10 @@ type Props = {
   initialShippedAt?: string;
   initialExpectedDeliveryDate?: string;
   status: "created" | "paid" | "failed" | "refunded" | "shipped";
+  confirmationEmailSentAt?: string;
+  confirmationEmailError?: string;
+  shippingEmailSentAt?: string;
+  shippingEmailError?: string;
 };
 
 function toDateInputValue(iso?: string): string {
@@ -39,7 +43,11 @@ export default function OrderShipAction({
   initialAwbNumber,
   initialShippedAt,
   initialExpectedDeliveryDate,
-  status
+  status,
+  confirmationEmailSentAt,
+  confirmationEmailError,
+  shippingEmailSentAt,
+  shippingEmailError
 }: Props) {
   const [shipOpen, setShipOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
@@ -136,8 +144,79 @@ export default function OrderShipAction({
     }
   }
 
+  async function resendEmail(type: "confirmation" | "shipping") {
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/orders/${encodeURIComponent(orderId)}/resend-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type })
+      });
+      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok) throw new Error(body.error ?? `Failed (${res.status})`);
+      window.location.reload();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed");
+      setBusy(false);
+    }
+  }
+
+  const canResendConfirmation = status === "paid" || status === "shipped";
+  const canResendShipping = status === "shipped";
+
   return (
     <div className="mt-4 border-t border-hairline pt-4">
+      {/* Email status + resend */}
+      {(canResendConfirmation || canResendShipping) && !shipOpen && !payOpen ? (
+        <div className="mb-3 space-y-1.5 text-[11px]">
+          {canResendConfirmation ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="uppercase tracking-widest text-muted">Confirmation email:</span>
+              {confirmationEmailSentAt ? (
+                <span className="text-emerald-700">
+                  ✓ Sent {new Date(confirmationEmailSentAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST
+                </span>
+              ) : confirmationEmailError ? (
+                <span className="text-red-700">✗ Failed — {confirmationEmailError}</span>
+              ) : (
+                <span className="text-muted">Not sent</span>
+              )}
+              <button
+                type="button"
+                onClick={() => resendEmail("confirmation")}
+                disabled={busy}
+                className="ml-auto rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-ink hover:border-ink disabled:opacity-60"
+              >
+                Resend
+              </button>
+            </div>
+          ) : null}
+          {canResendShipping ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="uppercase tracking-widest text-muted">Shipping email:</span>
+              {shippingEmailSentAt ? (
+                <span className="text-emerald-700">
+                  ✓ Sent {new Date(shippingEmailSentAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST
+                </span>
+              ) : shippingEmailError ? (
+                <span className="text-red-700">✗ Failed — {shippingEmailError}</span>
+              ) : (
+                <span className="text-muted">Not sent</span>
+              )}
+              <button
+                type="button"
+                onClick={() => resendEmail("shipping")}
+                disabled={busy}
+                className="ml-auto rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-ink hover:border-ink disabled:opacity-60"
+              >
+                Resend
+              </button>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+
       {/* Action buttons row */}
       {!shipOpen && !payOpen ? (
         <div className="flex flex-wrap items-center gap-2">

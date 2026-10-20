@@ -44,6 +44,11 @@ export type StoredOrder = {
   confirmationEmailSentAt?: string;
   adminAlertSentAt?: string;
   shippingEmailSentAt?: string;
+  // Last email send error per type (cleared on success). Admin UI
+  // uses these to show "failed · <reason>" + Resend buttons.
+  confirmationEmailError?: string;
+  adminAlertError?: string;
+  shippingEmailError?: string;
 };
 
 const STORE_NAME = "orders";
