@@ -46,12 +46,30 @@ export async function readContent(): Promise<SiteContent> {
   const blob = await readContentBlob<SiteContent>();
   if (!blob) return disk;
 
-  // Start from disk (always fresh). Overlay only sections the admin
-  // is allowed to edit — everything else falls through from git.
+  // Start from disk (always fresh). For each admin-editable section,
+  // SHALLOW-MERGE the Blobs overlay on top of disk's version of that
+  // same section — so new top-level fields shipped in the schema
+  // (e.g. orderStatus.useWhatsAppOrders) always show through, even
+  // if the Blobs snapshot was last written before that field existed.
+  // Admin-written fields still override disk defaults.
   const merged = { ...disk } as SiteContent;
   for (const key of ADMIN_EDITABLE_SECTIONS) {
     const blobSection = (blob as Partial<SiteContent>)[key];
-    if (blobSection !== undefined) {
+    if (blobSection === undefined) continue;
+    const diskSection = (disk as Partial<SiteContent>)[key];
+    if (
+      diskSection &&
+      typeof diskSection === "object" &&
+      !Array.isArray(diskSection) &&
+      blobSection &&
+      typeof blobSection === "object" &&
+      !Array.isArray(blobSection)
+    ) {
+      (merged as unknown as Record<string, unknown>)[key] = {
+        ...(diskSection as Record<string, unknown>),
+        ...(blobSection as Record<string, unknown>)
+      };
+    } else {
       (merged as unknown as Record<string, unknown>)[key] = blobSection;
     }
   }
