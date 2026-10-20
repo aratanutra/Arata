@@ -70,8 +70,7 @@ export async function POST(
         }
       : {
           ...existing,
-          confirmationEmailError:
-            res.error ?? (res.skipped ? "RESEND_API_KEY not configured" : "unknown error")
+          confirmationEmailError: describeFailure(res)
         };
     await saveOrder(updated);
     return NextResponse.json({ ok: res.ok, order: updated, email: res });
@@ -93,9 +92,14 @@ export async function POST(
       }
     : {
         ...existing,
-        shippingEmailError:
-          res.error ?? (res.skipped ? "RESEND_API_KEY not configured" : "unknown error")
+        shippingEmailError: describeFailure(res)
       };
   await saveOrder(updated);
   return NextResponse.json({ ok: res.ok, order: updated, email: res });
+}
+
+function describeFailure(res: { ok: boolean } & Record<string, unknown>): string {
+  if ("error" in res && typeof res.error === "string" && res.error) return res.error;
+  if ("skipped" in res && res.skipped === true) return "RESEND_API_KEY not configured";
+  return "unknown error";
 }
