@@ -119,9 +119,9 @@ export default async function AdminOrdersPage() {
                       : "Free"}
                   </p>
                   <p className="mt-2 text-[11px] text-muted">
-                    Created {new Date(o.createdAt).toLocaleString("en-IN")}
-                    {o.paidAt ? ` · Paid ${new Date(o.paidAt).toLocaleString("en-IN")}` : ""}
-                    {o.shippedAt ? ` · Shipped ${new Date(o.shippedAt).toLocaleString("en-IN")}` : ""}
+                    Created {new Date(o.createdAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST
+                    {o.paidAt ? ` · Paid ${new Date(o.paidAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST` : ""}
+                    {o.shippedAt ? ` · Shipped ${new Date(o.shippedAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST` : ""}
                   </p>
                   {o.paymentId ? (
                     <p className="mt-1 text-[11px] tnum text-muted">Payment ID: {o.paymentId}</p>
@@ -136,7 +136,7 @@ export default async function AdminOrdersPage() {
                         </p>
                       ) : null}
                       {o.expectedDeliveryDate ? (
-                        <p>Expected delivery: {new Date(o.expectedDeliveryDate).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}</p>
+                        <p>Expected delivery: {new Date(o.expectedDeliveryDate).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: "Asia/Kolkata" })}</p>
                       ) : null}
                       {o.trackingUrl ? (
                         <p>
