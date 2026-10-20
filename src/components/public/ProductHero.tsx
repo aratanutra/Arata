@@ -310,7 +310,7 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                           sublabel: selectedPack.sublabel
                         }}
                         whatsappNumber={brand.whatsappNumber}
-                        label={`Order on WhatsApp · ${inrFormatter.format(totalRupees)}`}
+                        label={`Order now · ${inrFormatter.format(totalRupees)}`}
                         className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
                       />
                     ) : (

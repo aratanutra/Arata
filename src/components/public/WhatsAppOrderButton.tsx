@@ -106,12 +106,12 @@ export default function WhatsAppOrderButton({
       </button>
       <CheckoutModal
         open={open}
-        title="Order AETERNYX® on WhatsApp"
+        title="Order AETERNYX®"
         summaryLines={summaryLines}
         totalLabel={`Total ${inr(totalRupees)}`}
         onCancel={() => setOpen(false)}
         onSubmit={handleSubmit}
-        submitLabel="Open WhatsApp to confirm order"
+        submitLabel="Confirm order on WhatsApp"
       />
     </>
   );
