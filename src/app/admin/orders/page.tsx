@@ -51,7 +51,10 @@ export default async function AdminOrdersPage() {
             shipping address ready. Cross-reference in Razorpay Dashboard → Payments if needed.
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <Link href="/admin/tools/email-health" className="text-[11px] uppercase tracking-widest text-muted hover:text-ink">
+            Email health →
+          </Link>
           <Link href="/admin" className="btn-secondary text-[13px]">
             ← Content Studio
           </Link>
@@ -163,6 +166,10 @@ export default async function AdminOrdersPage() {
                 initialShippedAt={o.shippedAt}
                 initialExpectedDeliveryDate={o.expectedDeliveryDate}
                 status={o.status}
+                confirmationEmailSentAt={o.confirmationEmailSentAt}
+                confirmationEmailError={o.confirmationEmailError}
+                shippingEmailSentAt={o.shippingEmailSentAt}
+                shippingEmailError={o.shippingEmailError}
               />
             </article>
           ))}

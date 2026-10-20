@@ -114,13 +114,24 @@ export async function POST(
   await saveOrder(updated);
 
   // Fire the shipping email (best-effort, idempotent via marker).
+  let emailResult: { ok: boolean; id?: string; error?: string; skipped?: boolean } | null = null;
   if (!updated.shippingEmailSentAt) {
-    const res = await sendShippingNotification(updated);
-    if (res.ok) {
-      updated = { ...updated, shippingEmailSentAt: new Date().toISOString() };
-      await saveOrder(updated);
+    emailResult = await sendShippingNotification(updated);
+    if (emailResult.ok) {
+      updated = {
+        ...updated,
+        shippingEmailSentAt: new Date().toISOString(),
+        shippingEmailError: undefined
+      };
+    } else {
+      updated = {
+        ...updated,
+        shippingEmailError:
+          emailResult.error ?? (emailResult.skipped ? "RESEND_API_KEY not configured" : "unknown error")
+      };
     }
+    await saveOrder(updated);
   }
 
-  return NextResponse.json({ ok: true, order: updated });
+  return NextResponse.json({ ok: true, order: updated, email: emailResult });
 }
