@@ -344,3 +344,64 @@ export async function sendShippingNotification(order: StoredOrder) {
   const { subject, html, text } = shippingNotificationTemplate(order);
   return safeSend(order.customer.email, subject, html, text);
 }
+
+/* ---------- Review admin alert ---------- */
+
+type ReviewLike = {
+  id: string;
+  name: string;
+  city: string;
+  state?: string;
+  rating: number;
+  title: string;
+  body: string;
+  email?: string;
+  orderId?: string;
+  verifiedPurchaser: boolean;
+  photoKey?: string;
+  createdAt: string;
+};
+
+function reviewAlertTemplate(r: ReviewLike): { subject: string; html: string; text: string } {
+  const stars = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
+  const subject = `New review (${r.rating}★) · ${r.title.slice(0, 60)}`;
+  const html = shell(`
+    <h1 style="margin:0 0 12px;font-size:20px;">New review awaiting moderation</h1>
+    <div style="font-size:22px;color:#B8935E;letter-spacing:2px;margin-bottom:10px;">${stars}</div>
+    <h2 style="margin:0 0 6px;font-size:17px;">${escapeHtml(r.title)}</h2>
+    <p style="margin:0 0 14px;font-size:14px;line-height:1.55;white-space:pre-wrap;">${escapeHtml(r.body)}</p>
+    <div style="background:#FFFDF6;border:1px solid rgba(184,147,94,0.25);border-radius:10px;padding:14px 16px;margin-bottom:18px;font-size:13px;line-height:1.6;">
+      <strong>${escapeHtml(r.name)}</strong>${r.state ? ", " + escapeHtml(r.state) : ""} — ${escapeHtml(r.city)}<br>
+      ${r.email ? `Email: ${escapeHtml(r.email)}<br>` : ""}
+      ${r.orderId ? `Order ID: <span style="font-family:monospace;">${escapeHtml(r.orderId)}</span>${r.verifiedPurchaser ? ' <span style="color:#047857;">✓ verified purchaser</span>' : ""}<br>` : ""}
+      ${r.photoKey ? `Photo attached — see admin page.<br>` : ""}
+      Submitted ${new Date(r.createdAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST
+    </div>
+    <p style="margin:0;font-size:13px;">
+      <a href="https://aratanutra.com/admin/reviews" style="display:inline-block;padding:10px 18px;background:#14243F;color:#F7F3E8;border-radius:999px;text-decoration:none;font-weight:600;">Open admin · Approve / Reject</a>
+    </p>
+  `);
+  const text = [
+    `New review (${r.rating}★)`,
+    "",
+    `"${r.title}"`,
+    r.body,
+    "",
+    `${r.name}${r.state ? ", " + r.state : ""} — ${r.city}`,
+    r.email ? `Email: ${r.email}` : "",
+    r.orderId ? `Order ID: ${r.orderId}${r.verifiedPurchaser ? " (verified purchaser)" : ""}` : "",
+    r.photoKey ? "Photo attached — see admin page." : "",
+    `Submitted ${new Date(r.createdAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST`,
+    "",
+    "Approve or reject: https://aratanutra.com/admin/reviews"
+  ].filter(Boolean).join("\n");
+  return { subject, html, text };
+}
+
+export async function sendReviewSubmittedAlert(r: ReviewLike) {
+  if (!emailEnabled()) return { ok: false, skipped: true as const };
+  const inbox = adminInbox();
+  if (!inbox) return { ok: false, error: "ADMIN_ALERT_EMAIL/ADMIN_EMAIL not set" };
+  const { subject, html, text } = reviewAlertTemplate(r);
+  return safeSend(inbox, subject, html, text);
+}

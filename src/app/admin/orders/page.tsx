@@ -52,6 +52,9 @@ export default async function AdminOrdersPage() {
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
+          <Link href="/admin/reviews" className="text-[11px] uppercase tracking-widest text-muted hover:text-ink">
+            Reviews →
+          </Link>
           <Link href="/admin/tools/email-health" className="text-[11px] uppercase tracking-widest text-muted hover:text-ink">
             Email health →
           </Link>

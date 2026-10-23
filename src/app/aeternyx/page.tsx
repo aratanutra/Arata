@@ -14,6 +14,7 @@ import Faq from "@/components/public/Faq";
 import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import LaunchBanner from "@/components/public/LaunchBanner";
+import ReviewsSection, { fetchAggregateRating, fetchReviewsForJsonLd } from "@/components/public/ReviewsSection";
 
 export const dynamic = "force-dynamic";
 
@@ -37,6 +38,8 @@ export const metadata: Metadata = {
 
 export default async function AeternyxPage() {
   const content = await readContent();
+  const aggregateRating = await fetchAggregateRating();
+  const reviewsForJsonLd = await fetchReviewsForJsonLd(5);
 
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -61,6 +64,37 @@ export default async function AeternyxPage() {
       "@type": "PeopleAudience",
       suggestedMinAge: 18
     },
+    ...(aggregateRating
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: aggregateRating.average,
+            reviewCount: aggregateRating.count,
+            bestRating: 5,
+            worstRating: 1
+          }
+        }
+      : {}),
+    ...(reviewsForJsonLd.length
+      ? {
+          review: reviewsForJsonLd.map((r) => ({
+            "@type": "Review",
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: r.rating,
+              bestRating: 5,
+              worstRating: 1
+            },
+            author: {
+              "@type": "Person",
+              name: `${r.name}${r.state ? `, ${r.state}` : ""}`
+            },
+            name: r.title,
+            reviewBody: r.body,
+            datePublished: r.approvedAt ?? r.createdAt
+          }))
+        }
+      : {}),
     offers: {
       "@type": "Offer",
       url: "https://aratanutra.com/aeternyx",
@@ -151,6 +185,7 @@ export default async function AeternyxPage() {
       <Benefits data={content.benefits} />
       <FiveDrivers data={content.science} />
       <Certifications data={content.certifications} />
+      <ReviewsSection />
       <Faq data={content.faq} />
       <Footer brand={content.brand} footer={content.footer} />
       <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
