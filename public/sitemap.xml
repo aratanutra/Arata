@@ -25,6 +25,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://aratanutra.com/reviews</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aratanutra.com/reviews/new</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://aratanutra.com/privacy</loc>
     <lastmod>2026-09-30</lastmod>
     <changefreq>yearly</changefreq>

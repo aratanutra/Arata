@@ -452,6 +452,7 @@
       "delivery": "Shipped across India via courier within 5 business days of order confirmation. Delivery timelines vary by location. Tracking is shared on WhatsApp.",
       "links": [
         { "label": "Contact", "href": "/contact" },
+        { "label": "Reviews", "href": "/reviews" },
         { "label": "Terms & Conditions", "href": "/terms" },
         { "label": "Privacy Policy", "href": "/privacy" },
         { "label": "Refund & Cancellation", "href": "/refund-and-cancellation" },
