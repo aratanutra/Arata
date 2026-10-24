@@ -100,6 +100,7 @@ export default async function AeternyxPage() {
       url: "https://aratanutra.com/aeternyx",
       priceCurrency: "INR",
       price: content.productHero.packs?.[0]?.priceNumber ?? 800,
+      validFrom: "2026-10-20",
       priceValidUntil: "2027-10-20",
       availability: content.orderStatus.blocked
         ? "https://schema.org/PreOrder"
