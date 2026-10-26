@@ -7,6 +7,8 @@ type Pack = {
   id: string;
   label: string;
   sublabel?: string;
+  priceNumber: number;
+  shippingCost: number;
 };
 
 type Props = {
@@ -27,8 +29,9 @@ function composeMessage(args: {
   productRupees: number;
   shippingRupees: number;
   totalRupees: number;
+  orderId?: string;
 }): string {
-  const { values, pack, productRupees, shippingRupees, totalRupees } = args;
+  const { values, pack, productRupees, shippingRupees, totalRupees, orderId } = args;
   const addressLines = [
     values.address1.trim(),
     values.address2.trim(),
@@ -42,6 +45,7 @@ function composeMessage(args: {
     `Product: ${inr(productRupees)}`,
     shippingRupees > 0 ? `Shipping: ${inr(shippingRupees)}` : "Shipping: Free",
     `Total: ${inr(totalRupees)}`,
+    orderId ? `Order ref: ${orderId}` : "",
     "",
     "Ship to:",
     values.name.trim(),
@@ -51,7 +55,7 @@ function composeMessage(args: {
     "",
     "I accept the Terms, Return Policy and Privacy Policy at aratanutra.com.",
     "Please share the payment link to confirm the order."
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 }
 
 export default function WhatsAppOrderButton({
@@ -64,23 +68,72 @@ export default function WhatsAppOrderButton({
   className
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  function handleSubmit(values: CheckoutFormValues) {
+  async function handleSubmit(values: CheckoutFormValues) {
+    setSubmitting(true);
+    setSubmitError(null);
+
+    // Persist the order to Blobs BEFORE opening WhatsApp so the admin
+    // sees it in /admin/orders even if the customer never sends the
+    // WhatsApp message (or deletes it before sending). If this fails
+    // we still open WhatsApp so the customer isn't blocked — but we
+    // log the failure.
+    let orderId: string | undefined;
+    try {
+      const res = await fetch("/api/orders/whatsapp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pack: {
+            id: pack.id,
+            label: pack.label,
+            sublabel: pack.sublabel,
+            priceNumber: pack.priceNumber,
+            shippingCost: pack.shippingCost
+          },
+          customer: {
+            name: values.name.trim(),
+            email: values.email.trim(),
+            phone: values.phone.trim(),
+            address1: values.address1.trim(),
+            address2: values.address2.trim() || undefined,
+            city: values.city.trim(),
+            state: values.state,
+            pincode: values.pincode
+          }
+        })
+      });
+      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; orderId?: string; error?: string };
+      if (res.ok && body.ok) {
+        orderId = body.orderId;
+      } else {
+        // Non-blocking: log and continue to WhatsApp.
+        console.error("[whatsapp-order.persist]", body.error ?? `HTTP ${res.status}`);
+      }
+    } catch (err) {
+      console.error("[whatsapp-order.persist]", err);
+    }
+
     const message = composeMessage({
       values,
       pack,
       productRupees,
       shippingRupees,
-      totalRupees
+      totalRupees,
+      orderId
     });
     const digits = whatsappNumber.replace(/\D/g, "");
     const url = `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+
     // Open in a new tab so the shopper keeps the site open.
     const win = typeof window !== "undefined" ? window.open(url, "_blank", "noopener,noreferrer") : null;
     // Fallback (popup blockers): navigate the current tab.
     if (!win) {
       window.location.href = url;
     }
+    setSubmitting(false);
     setOpen(false);
   }
 
@@ -111,6 +164,8 @@ export default function WhatsAppOrderButton({
         totalLabel={`Total ${inr(totalRupees)}`}
         onCancel={() => setOpen(false)}
         onSubmit={handleSubmit}
+        submitting={submitting}
+        submitError={submitError}
         submitLabel="Confirm order on WhatsApp"
       />
     </>

@@ -200,7 +200,9 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
               pack={{
                 id: selectedPack.id,
                 label: selectedPack.label,
-                sublabel: selectedPack.sublabel
+                sublabel: selectedPack.sublabel,
+                priceNumber: selectedPack.priceNumber ?? 0,
+                shippingCost: selectedPack.shippingCost ?? 0
               }}
               whatsappNumber={brand.whatsappNumber}
               label={`Order now · ${inrFormatter.format(totalRupees)}`}
