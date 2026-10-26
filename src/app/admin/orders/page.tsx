@@ -2,8 +2,10 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { listOrders, ordersEnabled, type StoredOrder } from "@/lib/orders";
+import { readContent } from "@/lib/content";
 import Link from "next/link";
 import OrderShipAction from "@/components/admin/OrderShipAction";
+import CreateOrderButton from "@/components/admin/CreateOrderButton";
 
 export const dynamic = "force-dynamic";
 
@@ -37,6 +39,14 @@ export default async function AdminOrdersPage() {
 
   const enabled = ordersEnabled();
   const orders = enabled ? await listOrders(200) : [];
+  const content = await readContent();
+  const packs = content.productHero.packs.map((p) => ({
+    id: p.id,
+    label: p.label,
+    sublabel: p.sublabel,
+    priceNumber: p.priceNumber,
+    shippingCost: p.shippingCost
+  }));
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
@@ -52,6 +62,7 @@ export default async function AdminOrdersPage() {
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
+          <CreateOrderButton packs={packs} />
           <Link href="/admin/reviews" className="text-[11px] uppercase tracking-widest text-muted hover:text-ink">
             Reviews →
           </Link>
