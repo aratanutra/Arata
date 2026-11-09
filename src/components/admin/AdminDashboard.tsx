@@ -54,22 +54,18 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
     }
   }
 
+  // Keep in sync with ADMIN_EDITABLE_SECTIONS in src/lib/content.ts.
+  // Compliance-critical sections (hero, trustBar, science, benefits,
+  // philosophy, aeternyxPage, homeValues, footer) are disk-only and
+  // intentionally NOT exposed to the admin console.
   const sections = useMemo(
     () => [
       { id: "brand", label: "Brand" },
       { id: "orderStatus", label: "Order Status" },
-      { id: "hero", label: "Hero" },
-      { id: "trustBar", label: "Trust Bar" },
       { id: "product", label: "Product" },
       { id: "ingredientsSection", label: "Ingredients" },
-      { id: "science", label: "Science" },
-      { id: "benefits", label: "Benefits" },
-      { id: "philosophy", label: "Philosophy" },
       { id: "homeFeatured", label: "Home · Featured" },
-      { id: "homeValues", label: "Home · Values" },
-      { id: "aeternyxPage", label: "AETERNYX Page" },
-      { id: "about", label: "About Page" },
-      { id: "footer", label: "Footer" }
+      { id: "about", label: "About Page" }
     ],
     []
   );
@@ -140,18 +136,10 @@ export default function AdminDashboard({ initialContent, adminEmail }: Props) {
       <div className="mt-8 space-y-4">
         <BrandCard content={content} update={update} />
         <OrderStatusCard content={content} update={update} />
-        <HeroCard content={content} update={update} />
-        <TrustBarCard content={content} update={update} />
         <ProductCard content={content} update={update} />
         <IngredientsCard content={content} update={update} />
-        <ScienceCard content={content} update={update} />
-        <BenefitsCard content={content} update={update} />
-        <PhilosophyCard content={content} update={update} />
         <HomeFeaturedCard content={content} update={update} />
-        <HomeValuesCard content={content} update={update} />
-        <AeternyxPageCard content={content} update={update} />
         <AboutCard content={content} update={update} />
-        <FooterCard content={content} update={update} />
       </div>
     </div>
   );
@@ -314,86 +302,7 @@ function OrderStatusCard({ content, update }: CardProps) {
   );
 }
 
-function HeroCard({ content, update }: CardProps) {
-  const v = content.hero;
-  const set = (patch: Partial<SiteContent["hero"]>) => update("hero", { ...v, ...patch });
-  return (
-    <SectionCard id="hero" title="Hero" subtitle="Top of page · headline, tagline, CTAs, capsule">
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
-      <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
-      <div className="grid gap-5 md:grid-cols-2">
-        <TextField
-          label="Primary CTA Label"
-          value={v.primaryCta.label}
-          onChange={(x) => set({ primaryCta: { ...v.primaryCta, label: x } })}
-        />
-        <TextField
-          label="Primary CTA Href"
-          value={v.primaryCta.href}
-          onChange={(x) => set({ primaryCta: { ...v.primaryCta, href: x } })}
-        />
-        <TextField
-          label="Secondary CTA Label"
-          value={v.secondaryCta.label}
-          onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, label: x } })}
-        />
-        <TextField
-          label="Secondary CTA Href"
-          value={v.secondaryCta.href}
-          onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, href: x } })}
-        />
-      </div>
-    </SectionCard>
-  );
-}
 
-function TrustBarCard({ content, update }: CardProps) {
-  const v = content.trustBar;
-  return (
-    <SectionCard id="trustBar" title="Trust Bar" subtitle="Five trust badges below the hero">
-      {v.badges.map((b, i) => (
-        <div key={i} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
-          <input
-            className="input-clean"
-            value={b.title}
-            onChange={(e) => {
-              const next = [...v.badges];
-              next[i] = { ...b, title: e.target.value };
-              update("trustBar", { badges: next });
-            }}
-          />
-          <input
-            className="input-clean"
-            value={b.subtitle}
-            onChange={(e) => {
-              const next = [...v.badges];
-              next[i] = { ...b, subtitle: e.target.value };
-              update("trustBar", { badges: next });
-            }}
-          />
-          <button
-            type="button"
-            onClick={() => update("trustBar", { badges: v.badges.filter((_, j) => j !== i) })}
-            className="text-[10px] uppercase tracking-widest text-red-500"
-          >
-            Remove
-          </button>
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={() =>
-          update("trustBar", { badges: [...v.badges, { title: "New Badge", subtitle: "Subtitle" }] })
-        }
-        className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-      >
-        + Add badge
-      </button>
-    </SectionCard>
-  );
-}
 
 function ProductCard({ content, update }: CardProps) {
   const v = content.product;
@@ -566,132 +475,8 @@ function IngredientsCard({ content, update }: CardProps) {
   );
 }
 
-function ScienceCard({ content, update }: CardProps) {
-  const v = content.science;
-  const set = (patch: Partial<SiteContent["science"]>) => update("science", { ...v, ...patch });
-  return (
-    <SectionCard id="science" title="Science" subtitle="Five aging pathways">
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
-      <div>
-        <label className="label-field">Pathways</label>
-        {v.pathways.map((p, i) => (
-          <div key={i} className="mb-3 grid gap-3 md:grid-cols-[1fr_2fr_auto]">
-            <input
-              className="input-clean"
-              value={p.name}
-              onChange={(e) => {
-                const next = [...v.pathways];
-                next[i] = { ...p, name: e.target.value };
-                set({ pathways: next });
-              }}
-            />
-            <input
-              className="input-clean"
-              value={p.detail}
-              onChange={(e) => {
-                const next = [...v.pathways];
-                next[i] = { ...p, detail: e.target.value };
-                set({ pathways: next });
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => set({ pathways: v.pathways.filter((_, j) => j !== i) })}
-              className="text-[10px] uppercase tracking-widest text-red-500"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() => set({ pathways: [...v.pathways, { name: "New pathway", detail: "Detail" }] })}
-          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-        >
-          + Add pathway
-        </button>
-      </div>
-    </SectionCard>
-  );
-}
 
-function BenefitsCard({ content, update }: CardProps) {
-  const v = content.benefits;
-  const set = (patch: Partial<SiteContent["benefits"]>) => update("benefits", { ...v, ...patch });
-  return (
-    <SectionCard id="benefits" title="Benefits" subtitle="Eight system-level outcomes">
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <div>
-        <label className="label-field">Tiles (icon keys: energy, cognition, heart, skin, eye, cell, shield, gut)</label>
-        {v.tiles.map((t, i) => (
-          <div key={i} className="mb-3 grid gap-3 md:grid-cols-[1fr_1fr_2fr_auto]">
-            <input
-              className="input-clean"
-              value={t.icon}
-              onChange={(e) => {
-                const next = [...v.tiles];
-                next[i] = { ...t, icon: e.target.value };
-                set({ tiles: next });
-              }}
-            />
-            <input
-              className="input-clean"
-              value={t.title}
-              onChange={(e) => {
-                const next = [...v.tiles];
-                next[i] = { ...t, title: e.target.value };
-                set({ tiles: next });
-              }}
-            />
-            <input
-              className="input-clean"
-              value={t.detail}
-              onChange={(e) => {
-                const next = [...v.tiles];
-                next[i] = { ...t, detail: e.target.value };
-                set({ tiles: next });
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => set({ tiles: v.tiles.filter((_, j) => j !== i) })}
-              className="text-[10px] uppercase tracking-widest text-red-500"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() =>
-            set({ tiles: [...v.tiles, { icon: "cell", title: "New Tile", detail: "Detail" }] })
-          }
-          className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-        >
-          + Add tile
-        </button>
-      </div>
-    </SectionCard>
-  );
-}
 
-function PhilosophyCard({ content, update }: CardProps) {
-  const v = content.philosophy;
-  const set = (patch: Partial<SiteContent["philosophy"]>) => update("philosophy", { ...v, ...patch });
-  return (
-    <SectionCard id="philosophy" title="Philosophy" subtitle="Founder quote">
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Quote" value={v.quote} onChange={(x) => set({ quote: x })} multiline rows={6} />
-      <div className="grid gap-5 md:grid-cols-2">
-        <TextField label="Founder Name" value={v.founderName} onChange={(x) => set({ founderName: x })} />
-        <TextField label="Founder Title" value={v.founderTitle} onChange={(x) => set({ founderTitle: x })} />
-      </div>
-    </SectionCard>
-  );
-}
 
 function HomeFeaturedCard({ content, update }: CardProps) {
   const v = content.homeFeatured;
@@ -774,97 +559,7 @@ function HomeFeaturedCard({ content, update }: CardProps) {
   );
 }
 
-function HomeValuesCard({ content, update }: CardProps) {
-  const v = content.homeValues;
-  const set = (patch: Partial<SiteContent["homeValues"]>) =>
-    update("homeValues", { ...v, ...patch });
-  return (
-    <SectionCard
-      id="homeValues"
-      title="Home · Values"
-      subtitle="Four commitments shown on the homepage"
-    >
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      {v.items.map((it, i) => (
-        <div key={i} className="grid gap-3 md:grid-cols-[1fr_2fr_auto]">
-          <input
-            className="input-clean"
-            value={it.title}
-            onChange={(e) => {
-              const next = [...v.items];
-              next[i] = { ...it, title: e.target.value };
-              set({ items: next });
-            }}
-          />
-          <input
-            className="input-clean"
-            value={it.detail}
-            onChange={(e) => {
-              const next = [...v.items];
-              next[i] = { ...it, detail: e.target.value };
-              set({ items: next });
-            }}
-          />
-          <button
-            type="button"
-            onClick={() => set({ items: v.items.filter((_, j) => j !== i) })}
-            className="text-[11px] font-medium uppercase tracking-widest text-red-500"
-          >
-            Remove
-          </button>
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={() => set({ items: [...v.items, { title: "New value", detail: "Detail" }] })}
-        className="text-[11px] font-medium uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-      >
-        + Add value
-      </button>
-    </SectionCard>
-  );
-}
 
-function AeternyxPageCard({ content, update }: CardProps) {
-  const v = content.aeternyxPage;
-  const set = (patch: Partial<SiteContent["aeternyxPage"]>) =>
-    update("aeternyxPage", { ...v, ...patch });
-  return (
-    <SectionCard
-      id="aeternyxPage"
-      title="AETERNYX Page Hero"
-      subtitle="Top of the dedicated /aeternyx product page"
-    >
-      <TextField label="Eyebrow" value={v.eyebrow} onChange={(x) => set({ eyebrow: x })} />
-      <TextField label="Title" value={v.title} onChange={(x) => set({ title: x })} />
-      <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
-      <TextField label="Subtitle" value={v.subtitle} onChange={(x) => set({ subtitle: x })} multiline />
-      <div className="grid gap-5 md:grid-cols-2">
-        <TextField
-          label="Primary CTA Label"
-          value={v.primaryCta.label}
-          onChange={(x) => set({ primaryCta: { ...v.primaryCta, label: x } })}
-        />
-        <TextField
-          label="Primary CTA Href"
-          value={v.primaryCta.href}
-          onChange={(x) => set({ primaryCta: { ...v.primaryCta, href: x } })}
-        />
-        <TextField
-          label="Secondary CTA Label"
-          value={v.secondaryCta.label}
-          onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, label: x } })}
-        />
-        <TextField
-          label="Secondary CTA Href"
-          value={v.secondaryCta.href}
-          onChange={(x) => set({ secondaryCta: { ...v.secondaryCta, href: x } })}
-        />
-      </div>
-    </SectionCard>
-  );
-}
 
 function AboutCard({ content, update }: CardProps) {
   const v = content.about;
@@ -1060,163 +755,3 @@ function AboutCard({ content, update }: CardProps) {
   );
 }
 
-function FooterCard({ content, update }: CardProps) {
-  const v = content.footer;
-  const set = (patch: Partial<SiteContent["footer"]>) => update("footer", { ...v, ...patch });
-  return (
-    <SectionCard id="footer" title="Footer" subtitle="Four columns of links + legal line">
-      <TextField label="Tagline" value={v.tagline} onChange={(x) => set({ tagline: x })} />
-      <TextField label="Address" value={v.address} onChange={(x) => set({ address: x })} />
-      <TextField label="Rights" value={v.rights} onChange={(x) => set({ rights: x })} />
-      <TextField label="FSSAI Prefix Text" value={v.fssaiText} onChange={(x) => set({ fssaiText: x })} />
-      <TextField
-        label="FSSAI Compliance Disclaimer"
-        value={v.complianceDisclaimer}
-        onChange={(x) => set({ complianceDisclaimer: x })}
-        multiline
-        rows={5}
-      />
-
-      <div className="space-y-4 rounded-xl border border-hairline p-5">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
-          Grievance Officer (Consumer Protection Act, 2019)
-        </p>
-        <div className="grid gap-5 md:grid-cols-2">
-          <TextField
-            label="Block Label"
-            value={v.grievanceOfficer.label}
-            onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, label: x } })}
-          />
-          <TextField
-            label="Officer Name"
-            value={v.grievanceOfficer.name}
-            onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, name: x } })}
-          />
-          <TextField
-            label="Email"
-            value={v.grievanceOfficer.email}
-            onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, email: x } })}
-          />
-          <TextField
-            label="Phone"
-            value={v.grievanceOfficer.phone}
-            onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, phone: x } })}
-          />
-        </div>
-        <TextField
-          label="Acknowledgement / resolution note"
-          value={v.grievanceOfficer.note}
-          onChange={(x) => set({ grievanceOfficer: { ...v.grievanceOfficer, note: x } })}
-          multiline
-        />
-      </div>
-
-      <div className="space-y-4 rounded-xl border border-hairline p-5">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
-          Order Policies (Returns · Cancellation · Delivery)
-        </p>
-        <TextField
-          label="Block Label"
-          value={v.policies.label}
-          onChange={(x) => set({ policies: { ...v.policies, label: x } })}
-        />
-        <TextField
-          label="Returns policy"
-          value={v.policies.returns}
-          onChange={(x) => set({ policies: { ...v.policies, returns: x } })}
-          multiline
-        />
-        <TextField
-          label="Cancellation policy"
-          value={v.policies.cancellation}
-          onChange={(x) => set({ policies: { ...v.policies, cancellation: x } })}
-          multiline
-        />
-        <TextField
-          label="Delivery policy"
-          value={v.policies.delivery}
-          onChange={(x) => set({ policies: { ...v.policies, delivery: x } })}
-          multiline
-        />
-      </div>
-
-      {v.columns.map((col, ci) => (
-        <div key={ci} className="rounded-xl border border-hairline p-5 space-y-3">
-          <div className="flex items-center justify-between">
-            <input
-              className="input-clean text-lg"
-              value={col.title}
-              onChange={(e) => {
-                const next = [...v.columns];
-                next[ci] = { ...col, title: e.target.value };
-                set({ columns: next });
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => set({ columns: v.columns.filter((_, j) => j !== ci) })}
-              className="ml-3 text-[10px] uppercase tracking-widest text-red-500"
-            >
-              Delete column
-            </button>
-          </div>
-          {col.links.map((l, li) => (
-            <div key={li} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
-              <input
-                className="input-clean"
-                value={l.label}
-                onChange={(e) => {
-                  const nextCols = [...v.columns];
-                  const nextLinks = [...col.links];
-                  nextLinks[li] = { ...l, label: e.target.value };
-                  nextCols[ci] = { ...col, links: nextLinks };
-                  set({ columns: nextCols });
-                }}
-              />
-              <input
-                className="input-clean"
-                value={l.href}
-                onChange={(e) => {
-                  const nextCols = [...v.columns];
-                  const nextLinks = [...col.links];
-                  nextLinks[li] = { ...l, href: e.target.value };
-                  nextCols[ci] = { ...col, links: nextLinks };
-                  set({ columns: nextCols });
-                }}
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  const nextCols = [...v.columns];
-                  nextCols[ci] = { ...col, links: col.links.filter((_, k) => k !== li) };
-                  set({ columns: nextCols });
-                }}
-                className="text-[10px] uppercase tracking-widest text-red-500"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => {
-              const nextCols = [...v.columns];
-              nextCols[ci] = { ...col, links: [...col.links, { label: "New", href: "#" }] };
-              set({ columns: nextCols });
-            }}
-            className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-          >
-            + Add link
-          </button>
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={() => set({ columns: [...v.columns, { title: "New Column", links: [] }] })}
-        className="text-[10px] uppercase tracking-widest text-gold-deep hover:text-gold-deep"
-      >
-        + Add column
-      </button>
-    </SectionCard>
-  );
-}

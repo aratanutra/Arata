@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { readContent } from "@/lib/content";
 import Nav from "@/components/public/Nav";
-import Philosophy from "@/components/public/Philosophy";
 import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import AeternyxFloat from "@/components/public/AeternyxFloat";
@@ -14,10 +13,10 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "About Arata Nutraceuticals — evidence-first healthspan"
+    absolute: "About Arata Nutraceuticals"
   },
   description:
-    "Arata Nutraceuticals is building India's most rigorously composed nutraceutical portfolio — audited to global standards, dosed to matter, made for the long game.",
+    "Arata Nutraceuticals is a nutraceutical brand based in Hyderabad, India. AETERNYX® is our first product.",
   alternates: {
     canonical: "/about"
   },
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
     url: "https://aratanutra.com/about",
     title: "About Arata Nutraceuticals",
     description:
-      "Evidence-first healthspan brand from Hyderabad. Rigorously composed, expertly dosed, made for the long game."
+      "Arata Nutraceuticals is a nutraceutical brand based in Hyderabad, India. AETERNYX® is our first product."
   }
 };
 
@@ -38,7 +37,6 @@ export default async function AboutPage() {
       <AboutHero hero={content.about.hero} />
       <AboutStory story={content.about.story} />
       <AboutValues values={content.about.values} />
-      <Philosophy data={content.philosophy} />
       <AboutClosing data={content.about.closingCta} brand={content.brand} />
       <Footer brand={content.brand} footer={content.footer} />
       <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />

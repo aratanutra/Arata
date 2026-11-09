@@ -23,20 +23,19 @@ async function readFromDisk(): Promise<SiteContent> {
  * src/components/admin/AdminDashboard.tsx.
  */
 const ADMIN_EDITABLE_SECTIONS = new Set<keyof SiteContent>([
+  // Operational only. Everything that carries compliance-critical copy
+  // (trustBar, certifications, footer disclaimer, hero/aeternyxPage claim
+  // strings, benefits, philosophy, science, policies) lives on disk and
+  // CANNOT be shadowed by an older admin Blobs snapshot — see the
+  // Nov-2026 FSSAI compliance review. Admins can still edit the fields
+  // below from the console, but a stale snapshot will never silently
+  // re-insert removed function/ageing claims.
   "brand",
   "orderStatus",
-  "hero",
-  "trustBar",
   "homeFeatured",
-  "homeValues",
   "product",
   "ingredientsSection",
-  "science",
-  "benefits",
-  "philosophy",
-  "aeternyxPage",
-  "about",
-  "footer"
+  "about"
 ]);
 
 export async function readContent(): Promise<SiteContent> {

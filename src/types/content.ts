@@ -151,6 +151,14 @@ export type SiteContent = {
     secondaryCta: CtaLink;
     shipLine: string;
     trustIcons: string[];
+    /**
+     * Only true once a Box pack with its own printed MRP exists.
+     * When false, the 10-strip (100-tablet) pack is labelled as
+     * "10 strips (100 tablets)" and the MRP is shown as the strip
+     * MRP × 10 — never "Box", which would need its own Legal
+     * Metrology registration.
+     */
+    boxPackBranded?: boolean;
     packs: {
       id: string;
       label: string;

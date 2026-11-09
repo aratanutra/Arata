@@ -4,7 +4,6 @@ import Hero from "@/components/public/Hero";
 import TrustBar from "@/components/public/TrustBar";
 import HomeFeatured from "@/components/public/HomeFeatured";
 import HomeValues from "@/components/public/HomeValues";
-import Philosophy from "@/components/public/Philosophy";
 import Footer from "@/components/public/Footer";
 import WhatsAppFloat from "@/components/public/WhatsAppFloat";
 import AeternyxFloat from "@/components/public/AeternyxFloat";
@@ -27,7 +26,6 @@ export default async function HomePage() {
         orderStatus={content.orderStatus}
       />
       <HomeValues data={content.homeValues} />
-      <Philosophy data={content.philosophy} />
       <Footer brand={content.brand} footer={content.footer} />
       <WhatsAppFloat number={content.brand.whatsappNumber} greeting={content.brand.whatsappGreeting} />
       <AeternyxFloat />
