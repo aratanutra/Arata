@@ -12,7 +12,7 @@ type Props = { data: SiteContent["compositionTable"] };
 // source + assay, and corrected on the next reprint of the strip label.
 export default function CompositionTable({ data }: Props) {
   return (
-    <section id="composition-table" className="relative bg-canvas py-20 md:py-28">
+    <section id="composition" className="relative scroll-mt-16 bg-canvas py-20 md:py-28 md:scroll-mt-20">
       <div className="container-app">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

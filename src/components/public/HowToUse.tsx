@@ -68,7 +68,7 @@ function Icon({ name }: { name: string }) {
 
 export default function HowToUse({ data }: { data: SiteContent["howToUse"] }) {
   return (
-    <section className="relative bg-paper py-24 md:py-28">
+    <section id="how-to-use" className="relative scroll-mt-16 bg-paper py-24 md:py-28 md:scroll-mt-20">
       <div className="container-app">
         <div className="max-w-2xl">
           <span className="eyebrow">{data.eyebrow}</span>

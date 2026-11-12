@@ -334,9 +334,8 @@
         "title": "AETERNYX®",
         "links": [
           { "label": "Overview", "href": "/aeternyx" },
-          { "label": "Ingredients", "href": "/aeternyx#ingredients" },
-          { "label": "Science", "href": "/aeternyx#science" },
-          { "label": "Benefits", "href": "/aeternyx#benefits" }
+          { "label": "Composition", "href": "/aeternyx#composition" },
+          { "label": "How to use", "href": "/aeternyx#how-to-use" }
         ]
       },
       {
