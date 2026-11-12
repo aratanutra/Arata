@@ -5,6 +5,11 @@ import type { SiteContent } from "@/types/content";
 
 type Props = { data: SiteContent["compositionTable"] };
 
+// TODO: vitamin E %RDA pending manufacturer confirmation (tocotrienols).
+// Per the Nov-2026 FSSAI Regulatory Baseline (§6 + §6.11), the "100%"
+// value shown for Vitamin E (Tocotrienols) is to be left on the composition
+// table for now, pending a confirmation from Sunbeam on the tocotrienol
+// source + assay, and corrected on the next reprint of the strip label.
 export default function CompositionTable({ data }: Props) {
   return (
     <section id="composition-table" className="relative bg-canvas py-20 md:py-28">

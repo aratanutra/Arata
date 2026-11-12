@@ -227,9 +227,21 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                       </span>
                       {selectedPack?.priceOriginal && selectedPack.priceOriginal !== selectedPack.price ? (
                         <span className="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-emerald-800">
-                          You save {selectedPack.priceOriginal.replace(/[^\d]/g, "") && selectedPack.price.replace(/[^\d]/g, "")
-                            ? `₹${(Number(selectedPack.priceOriginal.replace(/[^\d]/g, "")) - Number(selectedPack.price.replace(/[^\d]/g, ""))).toLocaleString("en-IN")}`
-                            : ""}
+                          {(() => {
+                            // Take the FIRST "₹N[,NNN]..." group only — the
+                            // 10-strip pack's priceOriginal is formatted as
+                            // "₹8,000 (10 × ₹800)" per the Nov-2026 Legal
+                            // Metrology fix, so stripping every non-digit
+                            // would concatenate 8000 + 10 + 800 = 800010800
+                            // and fire a bogus "You save ₹80 crore" pill.
+                            const origMatch = selectedPack.priceOriginal.match(/₹\s*([\d,]+)/);
+                            const orig = origMatch ? Number(origMatch[1].replace(/,/g, "")) : NaN;
+                            const paid = selectedPack.priceNumber;
+                            const save = orig - paid;
+                            return save > 0
+                              ? `You save ₹${save.toLocaleString("en-IN")}`
+                              : "";
+                          })()}
                         </span>
                       ) : null}
                     </div>

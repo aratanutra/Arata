@@ -54,15 +54,17 @@ export default function Hero({ hero }: Props) {
             {hero.title}
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="mt-5 text-base font-medium uppercase tracking-widest text-gold-deep md:text-lg"
-          >
-            {hero.tagline}
-            <sup className="ml-0.5 text-[0.55em] font-medium">™</sup>
-          </motion.p>
+          {hero.tagline ? (
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="mt-5 text-base font-medium uppercase tracking-widest text-gold-deep md:text-lg"
+            >
+              {hero.tagline}
+              <sup className="ml-0.5 text-[0.55em] font-medium">™</sup>
+            </motion.p>
+          ) : null}
 
           <motion.p
             initial={{ opacity: 0, y: 12 }}
