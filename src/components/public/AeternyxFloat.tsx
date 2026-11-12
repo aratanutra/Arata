@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { asset } from "@/lib/asset";
+import { ORDERING_ENABLED } from "@/lib/ordering";
 
 type Props = {
   label?: string;
@@ -21,7 +22,11 @@ type Props = {
  */
 export default function AeternyxFloat({
   label = "AETERNYX",
-  href = "/aeternyx#buy"
+  // While ordering is paused the floater points at the product page,
+  // not its #buy anchor, and the "Buy me" cue is suppressed — see the
+  // Nov-2026 compliance brief: no explicit order-flow CTAs until the
+  // FSSAI E-commerce KoB is on the licence.
+  href = ORDERING_ENABLED ? "/aeternyx#buy" : "/aeternyx"
 }: Props = {}) {
   const [visible, setVisible] = useState(false);
   const [showCue, setShowCue] = useState(false);
@@ -69,7 +74,7 @@ export default function AeternyxFloat({
                 looping down into the pill. Absolutely positioned so it
                 doesn't push the tablet layout around. */}
             <AnimatePresence>
-              {showCue ? (
+              {showCue && ORDERING_ENABLED ? (
                 <motion.div
                   key="cue"
                   initial={{ opacity: 0, y: -6 }}

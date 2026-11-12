@@ -7,6 +7,7 @@ import type { SiteContent } from "@/types/content";
 import Product3DSlider from "./Product3DSlider";
 import RazorpayCheckoutButton from "./RazorpayCheckoutButton";
 import WhatsAppOrderButton from "./WhatsAppOrderButton";
+import { ORDERING_ENABLED, ORDERING_PAUSED_COPY } from "@/lib/ordering";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -48,12 +49,6 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
     [digits, waOrderMessage]
   );
 
-  const waNotifyHref = useMemo(
-    () =>
-      `https://wa.me/${digits}?text=${encodeURIComponent(orderStatus.notifyMessage)}`,
-    [digits, orderStatus.notifyMessage]
-  );
-
   function resolveHref(href: string): { href: string; external: boolean } {
     if (href === "whatsapp") return { href: waOrderHref, external: true };
     return { href, external: false };
@@ -62,6 +57,11 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
   const primary = resolveHref(hero.primaryCta.href);
   const secondary = resolveHref(hero.secondaryCta.href);
   const isOrderCta = hero.primaryCta.href === "whatsapp";
+
+  // ORDERING_ENABLED is the master kill switch. Until FSSAI E-commerce
+  // KoB is live on the licence, the pack selector must render as
+  // disabled "Coming soon" and no wa.me order/reserve link may appear.
+  const orderingPaused = !ORDERING_ENABLED || orderStatus.blocked;
 
   const totalPaise = selectedPack
     ? (selectedPack.priceNumber + (selectedPack.shippingCost ?? 0)) * 100
@@ -124,10 +124,21 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                 {brand.trademark}
               </sup>
             </h1>
-            <p className="mt-2 text-sm font-medium uppercase tracking-widest text-gold-deep md:text-base">
-              {hero.tagline}
-              <sup className="ml-0.5 text-[0.55em] font-medium">{brand.taglineTrademark}</sup>
+            {/*
+              Mandatory FSSAI label statement — category word in capital bold
+              directly beside the brand name (Advertising & Claims Regs 2018).
+            */}
+            <p className="mt-2 text-sm font-bold uppercase tracking-[0.2em] text-ink md:text-base">
+              NUTRACEUTICAL
             </p>
+            {hero.tagline ? (
+              <p className="mt-2 text-sm font-medium uppercase tracking-widest text-gold-deep md:text-base">
+                {hero.tagline}
+                {brand.taglineTrademark ? (
+                  <sup className="ml-0.5 text-[0.55em] font-medium">{brand.taglineTrademark}</sup>
+                ) : null}
+              </p>
+            ) : null}
 
             <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-muted md:text-base">{hero.lead}</p>
 
@@ -256,8 +267,17 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                 {hero.bestBefore}
               </p>
 
+              {/*
+                Mandatory FSSAI label statement — capital bold, body-text size,
+                near the price (Advertising & Claims Regs 2018). The disclaimer
+                further down carries the full "not intended to diagnose…" line.
+              */}
+              <p className="mt-4 text-[13px] font-bold uppercase tracking-[0.18em] text-ink md:text-[14px]">
+                NOT FOR MEDICINAL USE
+              </p>
+
               <div className="mt-5 flex flex-col gap-3">
-                {orderStatus.blocked && isOrderCta ? (
+                {orderingPaused && isOrderCta ? (
                   <div
                     role="status"
                     aria-live="polite"
@@ -273,11 +293,11 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                         className="inline-flex h-2 w-2 rounded-full bg-gold-deep animate-pulse"
                       />
                       <span className="text-[11px] font-semibold uppercase tracking-widest text-gold-deep">
-                        {orderStatus.heading}
+                        {ORDERING_PAUSED_COPY.heading}
                       </span>
                     </div>
                     <p className="mt-2 text-[14px] leading-relaxed text-ink md:text-[15px]">
-                      {orderStatus.message}
+                      {ORDERING_PAUSED_COPY.message}
                     </p>
                     <button
                       type="button"
@@ -285,17 +305,8 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                       aria-disabled
                       className="mt-4 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-gold-deep/90 px-6 py-3 text-[15px] font-semibold text-white shadow-sm"
                     >
-                      {orderStatus.buttonLabel}
+                      {ORDERING_PAUSED_COPY.buttonLabel}
                     </button>
-                    <a
-                      href={waNotifyHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
-                    >
-                      <WhatsAppGlyph className="h-5 w-5" />
-                      {orderStatus.notifyLabel}
-                    </a>
                   </div>
                 ) : isOrderCta && selectedPack ? (
                   <>
@@ -400,6 +411,108 @@ export default function ProductHero({ brand, hero, orderStatus }: Props) {
                 </span>
               ))}
             </div>
+
+            {/*
+              Mandatory product-page statements (FSSAI Advertising & Claims
+              Regs 2018 + Nutraceutical Regs 2022 + Legal Metrology Rules
+              2011). These are the on-pack statements reproduced online so
+              the website copy matches the physical label.
+            */}
+            <dl className="mt-8 grid gap-4 rounded-2xl border border-hairline bg-paper p-5 text-[13px] leading-relaxed text-ink md:grid-cols-2 md:p-6">
+              <div>
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  Target consumer group
+                </dt>
+                <dd className="mt-1">Adult men and women.</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  Recommended usage
+                </dt>
+                <dd className="mt-1">
+                  One tablet per day. Not to exceed the recommended daily usage.
+                </dd>
+              </div>
+              <div className="md:col-span-2">
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  Caution
+                </dt>
+                <dd className="mt-1">
+                  Contains vitamin K2 (MK-7): consult your physician before
+                  use if you take anticoagulant (blood-thinning) medicines
+                  such as warfarin or acenocoumarol. Not for use during
+                  pregnancy or lactation without medical advice. Keep out of
+                  reach of children. Product is not to be used as a substitute
+                  for a varied diet.
+                </dd>
+              </div>
+              <p className="md:col-span-2 text-[12px] italic text-muted">
+                This product is not intended to diagnose, treat, cure or
+                prevent any disease.
+              </p>
+            </dl>
+
+            {/*
+              Mandatory label declaration block (Legal Metrology Rules 2011
+              and FSS Labelling & Display Regs 2020). Real text, not an image.
+            */}
+            <dl className="mt-4 grid gap-3 rounded-2xl border border-hairline bg-paper p-5 text-[12px] leading-relaxed text-ink md:grid-cols-2 md:p-6">
+              <div>
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  Net quantity
+                </dt>
+                <dd className="mt-1">10 tablets per strip</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  M.R.P.
+                </dt>
+                <dd className="mt-1">
+                  ₹800.00 per strip of 10 tablets (₹80.00 per tablet),
+                  inclusive of all taxes
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  Country of origin
+                </dt>
+                <dd className="mt-1">India</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  Customer care
+                </dt>
+                <dd className="mt-1">
+                  +91 99599 93973 ·{" "}
+                  <a
+                    href="mailto:aratanutra@gmail.com"
+                    className="underline decoration-hairline underline-offset-4 hover:text-gold-deep hover:decoration-gold-deep"
+                  >
+                    aratanutra@gmail.com
+                  </a>
+                </dd>
+              </div>
+              <div className="md:col-span-2">
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  Manufactured by
+                </dt>
+                <dd className="mt-1">
+                  SunBeam Lifesciences Pvt. Ltd., R.S. No. 23/4, Mangalam
+                  Road, Vadamangalam, Villianur Commune, Puducherry 605102 ·
+                  FSSAI Lic. No. {brand.fssaiManufacturerLicense}
+                </dd>
+              </div>
+              <div className="md:col-span-2">
+                <dt className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
+                  Marketed by
+                </dt>
+                <dd className="mt-1">
+                  Arata Nutraceuticals, Flat No. 107, Vasantha Green View,
+                  Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049,
+                  Telangana · FSSAI Lic. No. {brand.fssaiLicense}
+                </dd>
+              </div>
+            </dl>
           </motion.div>
         </div>
       </div>

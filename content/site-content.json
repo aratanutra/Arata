@@ -19,26 +19,26 @@
     "fssaiLicense": "13626999000569",
     "fssaiManufacturerLicense": "10020045000187",
     "fssaiCategory": "Nutraceutical",
-    "manufacturer": "SunBeam Lifesciences Pvt. Ltd., R.S. No. 224, Mangadam Road, Vadamangalam, Villianur Commune, Puducherry 605102",
+    "manufacturer": "SunBeam Lifesciences Pvt. Ltd., R.S. No. 23/4, Mangalam Road, Vadamangalam, Villianur Commune, Puducherry 605102",
     "marketer": "Arata Nutraceuticals, Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana",
     "vegetarian": true
   },
   "orderStatus": {
     "blocked": true,
-    "opensAt": "Tuesday, 20 October 2026",
-    "opensAtISO": "2026-10-20",
-    "heading": "Launching 20 October 2026",
-    "message": "The wait is nearly over. AETERNYX® — India's most rigorously composed healthspan nutraceutical — opens for orders on Tuesday, 20 October 2026. Be among the first to receive a strip from our founding batch.",
-    "buttonLabel": "Launching Tuesday, 20 October 2026",
-    "notifyLabel": "Reserve yours on WhatsApp",
-    "notifyMessage": "Hi! I'd like to reserve AETERNYX® for launch day (Tuesday, 20 October 2026). Please save a strip from the founding batch for me.",
-    "useWhatsAppOrders": true
+    "opensAt": "",
+    "opensAtISO": "",
+    "heading": "Coming soon",
+    "message": "Online ordering opens shortly. For enquiries, contact customer care.",
+    "buttonLabel": "Coming soon",
+    "notifyLabel": "",
+    "notifyMessage": "",
+    "useWhatsAppOrders": false
   },
   "launchBanner": {
     "enabled": false,
-    "text": "Founding batch now shipping · Free shipping on 3-strip and box",
-    "ctaLabel": "Order AETERNYX®",
-    "ctaHref": "/aeternyx#buy"
+    "text": "",
+    "ctaLabel": "",
+    "ctaHref": ""
   },
   "nav": {
     "links": [
@@ -52,202 +52,130 @@
   },
   "hero": {
     "eyebrow": "Arata Nutraceuticals",
-    "title": "Healthspan, engineered.",
-    "tagline": "Cellular Intelligence",
-    "subtitle": "Building India's most rigorously composed nutraceutical portfolio. Every molecule earns its place through published evidence. Every dose calibrated for daily, sustainable use.",
-    "primaryCta": { "label": "Explore AETERNYX®", "href": "/aeternyx" },
-    "secondaryCta": { "label": "Our standard", "href": "/about" }
+    "title": "AETERNYX®",
+    "tagline": "",
+    "subtitle": "A once-daily nutraceutical tablet with ten declared actives.",
+    "primaryCta": { "label": "View AETERNYX®", "href": "/aeternyx" },
+    "secondaryCta": { "label": "About us", "href": "/about" }
   },
   "trustBar": {
     "badges": [
-      { "title": "Expertly Composed", "subtitle": "Every molecule earned" },
+      { "title": "Transparent composition", "subtitle": "Full ingredient list on pack" },
       { "title": "FSSAI Licensed", "subtitle": "Nutraceutical category" },
-      { "title": "GMP + HACCP + ISO", "subtitle": "9001:2015 · 14001:2015 · 22000:2018" },
+      { "title": "ISO + HACCP", "subtitle": "ISO 22000 · ISO 9001 · ISO 14001 · HACCP" },
       { "title": "100% Vegetarian", "subtitle": "No animal-derived actives" },
-      { "title": "10 Bioactives", "subtitle": "Evidence-graded dosing" }
+      { "title": "10 Actives", "subtitle": "One tablet daily" }
     ]
   },
   "homeFeatured": {
-    "eyebrow": "Our first protocol",
+    "eyebrow": "Our product",
     "title": "AETERNYX",
-    "tagline": "Cellular Intelligence",
-    "description": "One tablet. Ten bioactives. Five cellular ageing pathways. The complete daily healthspan nutraceutical for adults over 30.",
+    "tagline": "",
+    "description": "One tablet a day. Ten declared actives. For adult men and women.",
     "highlights": [
-      { "label": "Bioactives", "value": "10" },
-      { "label": "Ageing pathways", "value": "5" },
+      { "label": "Actives", "value": "10" },
+      { "label": "Tablet / day", "value": "1" },
       { "label": "Tablets / strip", "value": "10" },
       { "label": "M.R.P. / strip", "value": "₹800" }
     ],
     "primaryCta": { "label": "View product", "href": "/aeternyx" },
-    "secondaryCta": { "label": "Read the science", "href": "/aeternyx#science" }
+    "secondaryCta": { "label": "View composition", "href": "/aeternyx#composition" }
   },
   "homeValues": {
     "eyebrow": "How we work",
-    "title": "Four commitments that decide what goes in the tablet.",
+    "title": "Three commitments that decide what goes in the tablet.",
     "items": [
-      { "title": "Evidence-anchored", "detail": "Every ingredient is included because published evidence supports its inclusion. No proprietary blends, no marketing megadoses." },
+      { "title": "Evidence-anchored", "detail": "Every active is declared on the label with its quantity per tablet. No proprietary blends." },
       { "title": "Expertly composed", "detail": "Formulated and audited by our science team. No outsourced label engineering." },
-      { "title": "Indian-realistic", "detail": "Composed for the genetic, dietary, and environmental gaps specific to the Indian population." },
-      { "title": "Manufacturing transparent", "detail": "GMP, HACCP, ISO 9001, ISO 14001, and ISO 22000 certified facility. Third-party tested. Lot-level certificates of analysis." }
+      { "title": "Manufacturing transparent", "detail": "ISO 22000, ISO 9001, ISO 14001 and HACCP certified manufacturing facility. Batch-wise Certificate of Analysis." }
     ]
   },
   "product": {
-    "eyebrow": "The Daily Protocol",
-    "title": "One tablet. The architecture of cellular healthspan.",
-    "description": "AETERNYX® is an expertly composed nutraceutical that brings together ten evidence-graded molecules across five cellular wellness pathways — mitochondrial energy, oxidative balance, membrane integrity, immune capacity, and vascular calcium handling. Each dose is calibrated for daily, sustainable use.",
+    "eyebrow": "The product",
+    "title": "One tablet a day. Ten declared actives.",
+    "description": "AETERNYX® is a nutraceutical tablet for adult men and women. Each tablet carries ten declared actives in the quantities printed on the strip.",
     "stats": [
-      { "value": "10", "label": "Bioactive Ingredients" },
-      { "value": "5", "label": "Ageing Pathways" },
-      { "value": "1", "label": "Daily Tablet" },
-      { "value": "10", "label": "Tablets / Strip" }
+      { "value": "10", "label": "Actives" },
+      { "value": "1", "label": "Tablet / Day" },
+      { "value": "10", "label": "Tablets / Strip" },
+      { "value": "₹800", "label": "M.R.P. / Strip" }
     ],
     "price": "₹800",
     "cadence": "M.R.P. per strip · 10 tablets · inclusive of all taxes",
-    "primaryCta": { "label": "Order now", "href": "whatsapp" },
-    "secondaryCta": { "label": "Read the Science", "href": "#science" },
+    "primaryCta": { "label": "View product", "href": "/aeternyx" },
+    "secondaryCta": { "label": "View composition", "href": "#composition" },
     "image": "",
     "packForm": "1×10 tablet blister strip",
-    "packLabel": "300 GSM ITC Saffire board carton with matt finish and spot UV"
+    "packLabel": ""
   },
   "ingredientsSection": {
-    "eyebrow": "The Formulation",
-    "title": "Ten molecules. Dosed with the published evidence in mind.",
-    "subtitle": "Every ingredient is dosed for daily, sustainable use, with published evidence guiding the number. Values shown per tablet.",
+    "eyebrow": "Composition",
+    "title": "Composition per tablet",
+    "subtitle": "Values shown per tablet.",
     "items": [
-      {
-        "name": "Co-enzyme Q10",
-        "dose": "100 mg",
-        "description": "Mitochondrial ATP synthesis cofactor. Rate-limiting for cellular energy production. Dosed at the threshold at which serum levels reliably rise in adults over 40."
-      },
-      {
-        "name": "Trans-Resveratrol",
-        "dose": "100 mg",
-        "description": "SIRT1 activator and modulator of NF-κB inflammaging signalling. Dosed for cognitive and cardiovascular support in adults over 30."
-      },
-      {
-        "name": "Alpha-Lipoic Acid",
-        "dose": "50 mg",
-        "description": "Universal antioxidant, water and lipid soluble. Regenerates Vitamins C and E. Dosed within the evidence-supported daily range."
-      },
-      {
-        "name": "Vitamin C (L-Ascorbic Acid)",
-        "dose": "40 mg",
-        "description": "Recycles oxidised Vitamin E and glutathione. Collagen synthesis cofactor. Foundational antioxidant network anchor. 50% RDA (Men) · 61.53% RDA (Women)."
-      },
-      {
-        "name": "Vitamin E (Tocotrienols)",
-        "dose": "10 mg",
-        "description": "Membrane-resident lipid-phase antioxidant. Tocotrienol isoforms cross the blood-brain barrier and reach cardiovascular tissue. 100% RDA."
-      },
-      {
-        "name": "Lycopene",
-        "dose": "4 mg",
-        "description": "Lipid peroxidation chain terminator. Supports cardiovascular function. Completes the carotenoid antioxidant spectrum with Astaxanthin."
-      },
-      {
-        "name": "Astaxanthin",
-        "dose": "4 mg",
-        "description": "Carotenoid antioxidant. Crosses blood-brain and blood-retina barriers. Modulates NF-κB signalling. Dosed for daily sustainable use."
-      },
-      {
-        "name": "Vitamin D3 (Cholecalciferol)",
-        "dose": "600 IU",
-        "description": "Contributes to healthy vitamin D status in adults. Supports immune, cardiovascular, and bone function. 100% RDA."
-      },
-      {
-        "name": "Vitamin K2-7 (MK-7)",
-        "dose": "45 mcg",
-        "description": "Activates osteocalcin, directing calcium to bone tissue. Essential D3 partner molecule for extended daily supplementation. 81.81% RDA."
-      },
-      {
-        "name": "Selenium (Sodium selenite)",
-        "dose": "40 mcg",
-        "description": "Rate-limiting cofactor for the GPx1 to GPx5 enzymatic antioxidant cascade. Complements CoQ10 for cardiovascular support. Addresses India's selenium-deficient soil gap. 100% RDA."
-      }
+      { "name": "Co-enzyme Q10", "dose": "100 mg", "description": "" },
+      { "name": "Trans-Resveratrol", "dose": "100 mg", "description": "" },
+      { "name": "Alpha-Lipoic Acid", "dose": "50 mg", "description": "" },
+      { "name": "Vitamin C (L-Ascorbic Acid)", "dose": "40 mg", "description": "50% RDA (Men) · 61.53% RDA (Women)." },
+      { "name": "Vitamin E (Tocotrienols)", "dose": "10 mg", "description": "" },
+      { "name": "Lycopene", "dose": "4 mg", "description": "" },
+      { "name": "Astaxanthin", "dose": "4 mg", "description": "" },
+      { "name": "Vitamin D3 (Cholecalciferol)", "dose": "600 IU", "description": "100% RDA." },
+      { "name": "Vitamin K2-7 (MK-7)", "dose": "45 mcg", "description": "81.81% RDA." },
+      { "name": "Selenium (Sodium selenite)", "dose": "40 mcg", "description": "100% RDA." }
     ]
   },
   "science": {
-    "eyebrow": "Mechanism",
-    "title": "Five cellular wellness pathways. One convergent nutraceutical.",
-    "subtitle": "Cellular ageing is not one process. It is the cumulative drift of mitochondria, redox balance, signalling, calcium handling, and micronutrient status. AETERNYX® supports all five.",
-    "pathways": [
-      {
-        "name": "Mitochondrial Decline",
-        "detail": "CoQ10 and ALA support ATP synthesis efficiency known to decline from age 30 onward."
-      },
-      {
-        "name": "Oxidative Stress",
-        "detail": "Astaxanthin, Lycopene, Vitamin C, Vitamin E, and Selenium-GPx form a layered reactive oxygen species defence."
-      },
-      {
-        "name": "Inflammaging",
-        "detail": "Resveratrol-driven SIRT1 activation and NF-κB signalling modulation at the gene level."
-      },
-      {
-        "name": "Vascular Calcium Handling",
-        "detail": "K2-7 partners with D3 to direct calcium toward bone tissue rather than arterial walls."
-      },
-      {
-        "name": "Micronutrient Adequacy",
-        "detail": "D3, Vitamin C, Vitamin E, and Selenium correct India-specific population-level deficiencies."
-      }
-    ]
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "pathways": []
   },
   "benefits": {
-    "eyebrow": "What you feel",
-    "title": "Eight systems. One protocol.",
-    "tiles": [
-      { "icon": "energy", "title": "Sustained Energy", "detail": "Mitochondrial ATP support without stimulants." },
-      { "icon": "cognition", "title": "Mental Clarity", "detail": "Resveratrol, tocotrienols, and astaxanthin reach central nervous system tissue." },
-      { "icon": "heart", "title": "Cardiovascular Support", "detail": "CoQ10, K2-7, and Lycopene support normal cardiovascular function." },
-      { "icon": "skin", "title": "Skin Resilience", "detail": "Collagen cofactor support and photo-oxidative defence." },
-      { "icon": "eye", "title": "Vision Support", "detail": "Astaxanthin reaches macular tissue and supports retinal antioxidant status." },
-      { "icon": "cell", "title": "Cellular Maintenance", "detail": "Glutathione recycling and antioxidant network support." },
-      { "icon": "shield", "title": "Immune Support", "detail": "Vitamin D3, Vitamin C, and Selenium immune-modulatory triad." },
-      { "icon": "gut", "title": "Gut Comfort", "detail": "Supports normal inflammatory balance and barrier function." }
-    ]
+    "eyebrow": "",
+    "title": "",
+    "tiles": []
   },
   "philosophy": {
-    "eyebrow": "Founding Principle",
-    "quote": "AETERNYX® isn't just another supplement — it's a foundation for longer, healthier years. Every dose is backed by published evidence. Every molecule earns its place. Cellular Intelligence™ isn't a slogan. It's the standard we hold every ingredient to.",
+    "eyebrow": "",
+    "quote": "",
     "founderName": "",
     "founderTitle": ""
   },
   "aeternyxPage": {
-    "eyebrow": "The Protocol",
+    "eyebrow": "The product",
     "title": "AETERNYX",
-    "tagline": "Cellular Intelligence",
-    "subtitle": "A single tablet. Ten bioactives. Five cellular wellness pathways. The complete expertly composed healthspan nutraceutical, dosed and audited to global standards.",
-    "primaryCta": { "label": "Order now", "href": "whatsapp" },
-    "secondaryCta": { "label": "Read the Science", "href": "#science" }
+    "tagline": "",
+    "subtitle": "A nutraceutical tablet for adult men and women. Ten declared actives, one tablet a day.",
+    "primaryCta": { "label": "View composition", "href": "#composition" },
+    "secondaryCta": { "label": "How to use", "href": "#how-to-use" }
   },
   "productHero": {
-    "tag": "Longevity Protocol",
-    "endorsement": "Composed to global standards",
+    "tag": "",
+    "endorsement": "",
     "title": "AETERNYX",
-    "tagline": "Cellular Intelligence",
-    "lead": "The complete expertly composed nutraceutical for adults over 30. Ten evidence-graded bioactives, one daily tablet, five cellular wellness pathways supported.",
+    "tagline": "",
+    "lead": "A nutraceutical tablet for adult men and women. Ten declared actives, one tablet a day.",
     "bullets": [
-      "10 research-graded bioactives in a single tablet",
-      "Expertly composed to evidence-graded dosing",
-      "Addresses 5 cellular wellness pathways",
-      "100% vegetarian, no fillers or binders",
-      "Manufactured in a GMP + HACCP certified facility"
+      "10 declared actives in a single tablet",
+      "100% vegetarian",
+      "Manufactured in an ISO 22000 and HACCP certified facility"
     ],
     "mrpLabel": "M.R.P.",
     "mrp": "₹800",
     "mrpNote": "Inclusive of all taxes",
     "netQuantity": "Net Quantity: 10 tablets per strip",
-    "bestBefore": "Best before: 18 months from date of manufacturing (printed on each strip)",
-    "primaryCta": { "label": "Order now", "href": "whatsapp" },
-    "secondaryCta": { "label": "Read the Science", "href": "#science" },
-    "shipLine": "Batch, MFG date, and expiry printed on each strip. Delivery details confirmed on WhatsApp.",
-    "trustIcons": ["Vegetarian", "GMP + HACCP"],
+    "bestBefore": "Best before: refer to expiry date printed on each strip",
+    "primaryCta": { "label": "View composition", "href": "#composition" },
+    "secondaryCta": { "label": "How to use", "href": "#how-to-use" },
+    "shipLine": "Batch, MFG date and expiry are printed on each strip.",
+    "trustIcons": ["Vegetarian", "HACCP"],
+    "boxPackBranded": false,
     "packs": [
       {
         "id": "single",
         "label": "1 Strip",
-        "sublabel": "10-day supply · 10 tablets",
+        "sublabel": "10 tablets",
         "priceOriginal": "",
         "price": "₹800",
         "priceNumber": 800,
@@ -255,12 +183,12 @@
         "discountLabel": "",
         "shippingLabel": "+ ₹150 shipping",
         "shippingFree": false,
-        "waMessage": "Hi, I would like to order AETERNYX® — 1 strip (10-day supply). Shipping: ₹150."
+        "waMessage": "Hi, I would like to order AETERNYX® — 1 strip (10 tablets). Shipping: ₹150."
       },
       {
-        "id": "monthly",
+        "id": "three",
         "label": "3 Strips",
-        "sublabel": "30-day supply · 30 tablets",
+        "sublabel": "30 tablets",
         "priceOriginal": "₹2,400",
         "price": "₹2,350",
         "priceNumber": 2350,
@@ -268,13 +196,13 @@
         "discountLabel": "",
         "shippingLabel": "Free shipping",
         "shippingFree": true,
-        "waMessage": "Hi, I would like to order AETERNYX® — 3 strips (30-day supply). Free shipping."
+        "waMessage": "Hi, I would like to order AETERNYX® — 3 strips (30 tablets). Free shipping."
       },
       {
-        "id": "box",
-        "label": "1 Box",
-        "sublabel": "100-day supply · 10 strips · 100 tablets",
-        "priceOriginal": "₹8,000",
+        "id": "ten",
+        "label": "10 strips (100 tablets)",
+        "sublabel": "100 tablets",
+        "priceOriginal": "₹8,000 (10 × ₹800)",
         "price": "₹7,200",
         "priceNumber": 7200,
         "shippingCost": 0,
@@ -282,36 +210,30 @@
         "shippingLabel": "Free shipping",
         "shippingFree": true,
         "badge": "Best value",
-        "waMessage": "Hi, I would like to order AETERNYX® — 1 box (100-day supply, 10 strips). Free shipping."
+        "waMessage": "Hi, I would like to order AETERNYX® — 10 strips (100 tablets). Free shipping."
       }
     ]
   },
   "howToUse": {
     "eyebrow": "How to use",
-    "title": "One tablet, once a day. That is the entire protocol.",
+    "title": "One tablet, once a day.",
     "steps": [
       { "icon": "pill", "title": "1 tablet daily", "detail": "Take one AETERNYX® tablet once every 24 hours." },
-      { "icon": "moon", "title": "After dinner or heaviest meal of the day", "detail": "Take it after dinner, or the heaviest meal of your day — the fat-soluble actives (K2, D3, Astaxanthin, Tocotrienols) absorb best with a meal that includes fat." },
-      { "icon": "calendar", "title": "Continue for 90 days", "detail": "Serum levels stabilise across 8–12 weeks. Reassess after 90 days." },
+      { "icon": "moon", "title": "After a meal", "detail": "Take one tablet after a meal." },
       { "icon": "store", "title": "Store cool, dry, dark", "detail": "Store in a cool, dry and dark place. Protect from light and moisture. Keep out of reach of children." }
     ],
-    "warning": "Not to exceed the recommended daily usage. Not intended for use during pregnancy or lactation without medical clearance. Appropriate overages are added to compensate for loss on storage."
+    "warning": "Not to exceed the recommended daily usage. Product is not to be used as a substitute for a varied diet. Not intended for use during pregnancy or lactation without medical clearance. Appropriate overages are added to compensate for loss on storage."
   },
   "metricsPanel": {
-    "eyebrow": "Composition at a glance",
-    "title": "Ten molecules. Five pathways. One tablet.",
-    "paragraph": "AETERNYX® converges ten evidence-graded bioactives across five cellular wellness pathways — mitochondrial energy, oxidative balance, membrane integrity, immune capacity, and vascular calcium handling. Every molecule dosed with the published evidence in mind. Every tablet calibrated for daily, sustainable use.",
-    "footnote": "Composition metrics reflect the AETERNYX® formulation. Not intended to diagnose, treat, cure, or prevent any disease.",
-    "pills": [
-      { "value": "10", "label": "Evidence-graded bioactives" },
-      { "value": "5", "label": "Cellular wellness pathways" },
-      { "value": "18", "unit": "mo", "label": "Best-before shelf life" },
-      { "value": "1", "unit": "/day", "label": "Tablet, once daily" }
-    ],
+    "eyebrow": "",
+    "title": "",
+    "paragraph": "",
+    "footnote": "This product is not intended to diagnose, treat, cure or prevent any disease.",
+    "pills": [],
     "usage": [
-      { "icon": "sun", "title": "Dosage", "detail": "One tablet per day. Take after dinner or the heaviest meal of the day. Not to exceed the recommended daily usage." },
+      { "icon": "sun", "title": "Dosage", "detail": "One tablet per day. Take after a meal. Not to exceed the recommended daily usage." },
       { "icon": "drop", "title": "Directions", "detail": "Swallow whole with a glass of water. Do not chew or crush the tablet." },
-      { "icon": "warning", "title": "Precautions", "detail": "Not for children under 18, pregnant, or nursing women. Consult your healthcare professional before use if you have any medical condition or are on medication." }
+      { "icon": "warning", "title": "Precautions", "detail": "Not for children under 18, pregnant or nursing women. Consult your healthcare professional before use if you have any medical condition or are on medication." }
     ]
   },
   "compositionTable": {
@@ -355,11 +277,11 @@
   },
   "certifications": {
     "eyebrow": "Certifications",
-    "title": "Manufactured to global standards.",
-    "subtitle": "AETERNYX® is produced at an ISO 22000:2018, ISO 9001:2015, ISO 14001:2015, WHO-GMP, and HACCP certified facility. Every batch is third-party tested before dispatch.",
+    "title": "Manufactured to international standards.",
+    "subtitle": "AETERNYX® is manufactured by SunBeam Lifesciences Pvt. Ltd. at an ISO 22000:2018, ISO 9001:2015 and ISO 14001:2015 and HACCP certified facility. Each batch is released against a Certificate of Analysis.",
     "items": [
       { "title": "FSSAI Licensed", "detail": "Marketer Lic. 13626999000569 · Manufacturer Lic. 10020045000187", "code": "FSSAI" },
-      { "title": "WHO-GMP + HACCP", "detail": "Good Manufacturing Practices and Hazard Analysis Critical Control Points certified.", "code": "GMP" },
+      { "title": "HACCP", "detail": "Hazard Analysis and Critical Control Points certified manufacturing facility.", "code": "HACCP" },
       { "title": "ISO Certified Facility", "detail": "ISO 22000:2018 (food safety), ISO 9001:2015 (quality), ISO 14001:2015 (environment).", "code": "ISO" },
       { "title": "100% Vegetarian", "detail": "Plant-source or synthetic actives only. No animal-derived excipients.", "code": "VEG" }
     ]
@@ -368,44 +290,41 @@
     "eyebrow": "Questions",
     "title": "Answers before you ask.",
     "items": [
-      { "q": "Who should take AETERNYX®?", "a": "Adults over 30 looking for an expertly composed foundational healthspan nutraceutical. It is designed to be taken alongside a normal diet. If you are pregnant, lactating, on blood thinners, or managing a serious condition, get medical clearance before starting." },
-      { "q": "How long until I notice the effects?", "a": "Serum levels of the fat-soluble actives (D3, K2, Astaxanthin, Tocotrienols) stabilise across 8–12 weeks. Most subjective effects — energy, sleep quality, cognitive clarity — settle in that window. Give it a full 90-day cycle before evaluating." },
-      { "q": "Can I take AETERNYX® with my other medicines?", "a": "The formulation contains no drug actives and no supra-therapeutic doses. That said, Vitamin K2 can interact with warfarin and other coumarin anticoagulants — if you are on those, get medical clearance before starting." },
-      { "q": "Is it safe to take long-term?", "a": "Every dose sits within the tolerable upper intake level (UL) established in the evidence base. The D3 + K2 pairing is specifically designed to complement long-term D3 supplementation. Annual medical review is still advisable." },
-      { "q": "Why one tablet rather than a stack of pills?", "a": "Compliance. Ten separate bottles is the reason most nutraceutical protocols fail. A single daily tablet is what actually gets taken every day." },
-      { "q": "Is AETERNYX® vegetarian?", "a": "Yes. Every active is plant-derived or synthetic. The Vitamin D3 uses a vegetarian source (lichen-derived cholecalciferol). No gelatin, no animal excipients." },
-      { "q": "Are there any side effects?", "a": "At the doses used, side effects are uncommon. Some individuals report mild gastric warmth from Astaxanthin or mild yellowing of the palm (harmless, from Lycopene) at first. Take with food to minimise both." },
-      { "q": "Where is AETERNYX® manufactured?", "a": "AETERNYX® is manufactured by SunBeam Lifesciences Pvt. Ltd. in Puducherry, India — an ISO 22000/9001/14001, WHO-GMP, and HACCP certified facility. FSSAI licence 10020045000187." }
+      { "q": "Who should take AETERNYX®?", "a": "AETERNYX® is intended for adult men and women. If you are pregnant, lactating, under 18, over 65, on prescription medication, or managing a diagnosed medical condition, consult a qualified physician before use." },
+      { "q": "Can I take AETERNYX® with my other medicines?", "a": "Consult a qualified physician before starting if you are on prescription medication, especially anticoagulants (blood thinners) such as warfarin or acenocoumarol — AETERNYX® contains Vitamin K2-7 (menaquinone-7), which may interact with these medicines." },
+      { "q": "Is it safe to take long-term?", "a": "Consult a qualified physician before starting any dietary supplement for extended use. Annual medical review is advisable." },
+      { "q": "Why one tablet rather than a stack of pills?", "a": "A single daily tablet is easier to take consistently than ten separate bottles." },
+      { "q": "Is AETERNYX® vegetarian?", "a": "Yes. Every active is plant-derived or synthetic. The Vitamin D3 uses a vegetarian source (lichen-derived cholecalciferol). No gelatin, no animal-derived excipients." },
+      { "q": "Are there any side effects?", "a": "If you experience any adverse reaction, discontinue use and consult a qualified physician." },
+      { "q": "Where is AETERNYX® manufactured?", "a": "AETERNYX® is manufactured by SunBeam Lifesciences Pvt. Ltd. in Puducherry, India — an ISO 22000, ISO 9001, ISO 14001 and HACCP certified facility. FSSAI Manufacturer Licence 10020045000187." }
     ]
   },
   "about": {
     "hero": {
       "eyebrow": "About Us",
       "title": "We are Arata Nutraceuticals.",
-      "subtitle": "Building India's most rigorously composed nutraceutical portfolio. AETERNYX® is our founding formulation."
+      "subtitle": "Arata Nutraceuticals is a nutraceutical brand based in Hyderabad, India. AETERNYX® is our first product."
     },
     "story": {
       "title": "Why we exist",
       "paragraphs": [
-        "Arata Nutraceuticals was founded on a single conviction: much of the supplement industry in India had drifted far from the published evidence. Bottles claimed everything, evidence supported almost nothing. Doses were marketing artefacts. Excipients outweighed actives.",
-        "We work backwards from the published evidence. Every molecule in every Arata product is included because there is a defensible reason for it to be there, at the dose it is at. Anything that cannot survive that test is not in the tablet.",
-        "AETERNYX® is the first of a planned portfolio of expertly composed healthspan nutraceuticals. Each is engineered for a specific axis of healthspan, and each is held to the same standard."
+        "Arata Nutraceuticals was founded on a single conviction: that a nutraceutical should clearly declare what is in it, in what quantity, and leave the reader to decide.",
+        "Every active in every Arata product is printed on the label with its quantity per tablet. No proprietary blends."
       ]
     },
     "values": {
       "title": "What we hold to",
       "items": [
-        { "title": "Evidence-anchored", "detail": "Every ingredient is included because published evidence supports its inclusion. No proprietary blends, no marketing megadoses." },
+        { "title": "Transparent composition", "detail": "Every active is declared on the label with its quantity per tablet. No proprietary blends." },
         { "title": "Expertly composed", "detail": "Formulated and audited by our science team. No outsourced label engineering." },
-        { "title": "Indian-realistic", "detail": "Composed for the genetic, dietary, and environmental gaps specific to the Indian population." },
-        { "title": "Manufacturing transparency", "detail": "GMP and USFDA-registered facility. NABL third-party tested. Lot-level certificates of analysis." }
+        { "title": "Manufacturing transparency", "detail": "ISO 22000, ISO 9001, ISO 14001 and HACCP certified manufacturing facility. Batch-wise Certificate of Analysis." }
       ]
     },
     "closingCta": {
-      "eyebrow": "Begin",
-      "title": "Start with AETERNYX®.",
-      "primaryCta": { "label": "Explore AETERNYX®", "href": "/aeternyx" },
-      "secondaryCta": { "label": "Talk to us on WhatsApp", "href": "whatsapp" }
+      "eyebrow": "",
+      "title": "View AETERNYX®.",
+      "primaryCta": { "label": "View AETERNYX®", "href": "/aeternyx" },
+      "secondaryCta": { "label": "Contact us", "href": "/contact" }
     }
   },
   "footer": {
@@ -437,10 +356,10 @@
     "address": "Arata Nutraceuticals · India",
     "rights": "© 2026 Arata Nutraceuticals. AETERNYX® is a trademark of Arata Nutraceuticals.",
     "fssaiText": "FSSAI Lic. No.",
-    "complianceDisclaimer": "AETERNYX® is a nutraceutical food supplement classified under FSSAI (Health Supplements, Nutraceuticals, FSDU, FSMP, and Prebiotic and Probiotic Food) Regulations, 2022. It is not a drug. It is not intended to diagnose, treat, cure, or prevent any disease. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry, and dark place. Protect from light and moisture. Keep out of reach of children.",
+    "complianceDisclaimer": "AETERNYX® is sold as a Nutraceutical under the applicable Food Safety and Standards regulations. It is not a drug. It is not intended to diagnose, treat, cure or prevent any disease. Product is not to be used as a substitute for a varied diet. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry and dark place. Protect from light and moisture. Keep out of reach of children.",
     "grievanceOfficer": {
       "label": "Grievance",
-      "name": "",
+      "name": "[FULL NAME]",
       "email": "aratanutra@gmail.com",
       "phone": "+91 99599 93973",
       "note": "Acknowledgement within 48 hours. Resolution within 30 days, in line with the Consumer Protection Act, 2019."
@@ -464,11 +383,11 @@
   "policies": {
     "updatedAt": "19 September 2026",
     "grievance": {
-      "name": "Prasad",
-      "designation": "Grievance Officer & Data Protection Officer",
+      "name": "[FULL NAME]",
+      "designation": "[DESIGNATION]",
       "company": "Arata Nutraceuticals",
       "address": "Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana, India",
-      "email": "aeternyxbyarata@gmail.com",
+      "email": "aratanutra@gmail.com",
       "phone": "+91 99599 93973",
       "hours": "Monday – Friday · 9:00 – 18:00 IST",
       "responseTimes": {
@@ -480,7 +399,7 @@
     "medicalDisclaimer": {
       "heading": "Medical disclaimer",
       "paragraphs": [
-        "AETERNYX® is a nutraceutical food supplement classified under the FSSAI (Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food) Regulations, 2022. It is not a drug and is not intended to diagnose, treat, cure, mitigate or prevent any disease or medical condition.",
+        "AETERNYX® is sold as a Nutraceutical under the applicable Food Safety and Standards regulations. It is not a drug and is not intended to diagnose, treat, cure, mitigate or prevent any disease or medical condition.",
         "No statement made on this website, in our marketing materials, or on the product packaging is a representation, warranty, or guarantee of any medical outcome. No claim is made under the Drugs and Magic Remedies (Objectionable Advertisements) Act, 1954 for any disease or condition listed in the Schedule to that Act.",
         "Individual results vary and depend on age, diet, lifestyle, existing medical conditions and other factors outside our control. Nothing on this website is a substitute for professional medical advice, diagnosis or treatment. Always seek the advice of a qualified healthcare professional before starting any supplement, especially if you are pregnant, breastfeeding, planning surgery, under 18 years of age, over 65, on prescription medication (particularly anticoagulants such as warfarin — AETERNYX® contains Vitamin K2-7 which may interact), or managing a diagnosed medical condition.",
         "If you experience any adverse reaction, discontinue use immediately and consult a qualified healthcare professional."
@@ -505,7 +424,7 @@
         {
           "heading": "Medical disclaimer",
           "paragraphs": [
-            "AETERNYX® is a nutraceutical food supplement classified under the FSSAI (Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food) Regulations, 2022. It is not a drug and is not intended to diagnose, treat, cure, mitigate or prevent any disease or medical condition.",
+            "AETERNYX® is sold as a Nutraceutical under the applicable Food Safety and Standards regulations. It is not a drug and is not intended to diagnose, treat, cure, mitigate or prevent any disease or medical condition. Product is not to be used as a substitute for a varied diet.",
             "No statement made on this website, in our marketing materials, or on the product packaging is a representation, warranty, or guarantee of any medical outcome. No claim is made under the Drugs and Magic Remedies (Objectionable Advertisements) Act, 1954 for any disease or condition listed in the Schedule to that Act.",
             "Nothing on this website is a substitute for professional medical advice, diagnosis or treatment. Always consult a qualified registered medical practitioner before starting any dietary supplement, and continue to follow your physician's advice."
           ]
@@ -563,9 +482,9 @@
           "heading": "Seller identification (Consumer Protection (E-Commerce) Rules, 2020)",
           "paragraphs": [
             "In compliance with Rule 5 of the Consumer Protection (E-Commerce) Rules, 2020, the following details of the seller are disclosed on this Platform:",
-            "Legal name of the seller: Arata Nutraceuticals. Principal geographic address of the seller: Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana, India. FSSAI Marketer Licence: 13626999000569.",
-            "Product manufacturer and address: SunBeam Lifesciences Pvt. Ltd., R.S. No. 224, Mangadam Road, Vadamangalam, Villianur Commune, Puducherry 605102. FSSAI Manufacturer Licence: 10020045000187. Country of origin: India.",
-            "Customer care contact: aeternyxbyarata@gmail.com · +91 99599 93973. Grievance Officer details are set out in the section titled 'Grievance Officer and consumer complaints' below."
+            "Legal name of the seller: Arata Nutraceuticals. Principal geographic address of the seller: Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana, India. FSSAI Licence No.: 13626999000569.",
+            "Product manufacturer and address: SunBeam Lifesciences Pvt. Ltd., R.S. No. 23/4, Mangalam Road, Vadamangalam, Villianur Commune, Puducherry 605102. FSSAI Manufacturer Licence: 10020045000187. Country of origin: India.",
+            "Customer care contact: aratanutra@gmail.com · +91 99599 93973. Grievance Officer details are set out in the section titled 'Grievance Officer and consumer complaints' below."
           ]
         },
         {
@@ -594,8 +513,8 @@
         {
           "heading": "Grievance Officer and consumer complaints",
           "paragraphs": [
-            "In accordance with the Information Technology Act, 2000, the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, the Consumer Protection (E-Commerce) Rules, 2020, and the Digital Personal Data Protection Act, 2023, the Grievance Officer for Arata Nutraceuticals is Prasad.",
-            "Contact: aeternyxbyarata@gmail.com · +91 99599 93973 · Mon–Fri 9:00–18:00 IST · Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana, India.",
+            "In accordance with the Information Technology Act, 2000, the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, the Consumer Protection (E-Commerce) Rules, 2020, and the Digital Personal Data Protection Act, 2023, the Grievance Officer for Arata Nutraceuticals is [FULL NAME], [DESIGNATION].",
+            "Contact: aratanutra@gmail.com · +91 99599 93973 · Mon–Fri 9:00–18:00 IST · Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana, India.",
             "Consumer complaints under the Consumer Protection (E-Commerce) Rules, 2020 will be acknowledged within 48 hours of receipt and redressed within 30 days. Content-related and intermediary grievances under the IT Intermediary Rules, 2021 will be acknowledged within 24 hours and resolved within 15 days. Requests concerning your personal data (access, correction, erasure, nomination, grievance redressal, withdrawal of consent) under the Digital Personal Data Protection Act, 2023 are handled through the same officer.",
             "Full contact details are also available at aratanutra.com/contact."
           ]
@@ -626,7 +545,7 @@
             "Payment data — collected and processed directly by our payment gateway (Razorpay). We do not store your full card number, CVV, UPI PIN or net-banking password on our servers. We only receive a transaction reference and the last four digits of the payment instrument for reconciliation.",
             "Technical data — IP address, device type, browser type, operating system, referring URL, pages viewed and timestamps, collected via cookies and analytics tools (see 'Cookies and analytics' below).",
             "Communications — the content of any emails, WhatsApp messages, or support tickets you send us.",
-            "If you receive an email or a call from a person or association claiming to be Arata Nutraceuticals and asking for a card PIN, net-banking password or one-time password, do not share it. Report the incident to us at aeternyxbyarata@gmail.com and to your bank."
+            "If you receive an email or a call from a person or association claiming to be Arata Nutraceuticals and asking for a card PIN, net-banking password or one-time password, do not share it. Report the incident to us at aratanutra@gmail.com and to your bank."
           ]
         },
         {
@@ -683,7 +602,7 @@
           "heading": "Children's data",
           "paragraphs": [
             "The Platform and our products are intended for adults aged 18 years or older. We do not knowingly collect personal data from children (individuals under 18 years) or persons with a legal guardian, as defined under the DPDP Act.",
-            "If a parent or lawful guardian believes that a child has submitted personal data to us without their verifiable consent, please contact the Grievance Officer immediately at aeternyxbyarata@gmail.com and we will delete such data promptly."
+            "If a parent or lawful guardian believes that a child has submitted personal data to us without their verifiable consent, please contact the Grievance Officer immediately at aratanutra@gmail.com and we will delete such data promptly."
           ]
         },
         {
@@ -724,7 +643,7 @@
             ]
           },
           "paragraphs": [
-            "To exercise any of these rights, write to Prasad, Grievance Officer, at aeternyxbyarata@gmail.com with the subject line 'DPDP request'. We may need to verify your identity before acting on the request."
+            "To exercise any of these rights, write to the Grievance Officer at aratanutra@gmail.com with the subject line 'DPDP request'. We may need to verify your identity before acting on the request."
           ]
         },
         {
@@ -751,14 +670,14 @@
         {
           "heading": "Cancellations before dispatch",
           "paragraphs": [
-            "You may cancel your order at any time before it has been dispatched from our warehouse. To cancel, message us on WhatsApp at +91 99599 93973 or email aeternyxbyarata@gmail.com with your order ID.",
+            "You may cancel your order at any time before it has been dispatched from our warehouse. To cancel, message us on WhatsApp at +91 99599 93973 or email aratanutra@gmail.com with your order ID.",
             "Once an order has been handed over to the courier or is marked as dispatched, it cannot be cancelled. If you no longer wish to receive the parcel, you may refuse delivery at the doorstep and it will be returned to us; a refund (less shipping if already incurred) will then be processed under the returns process below."
           ]
         },
         {
           "heading": "No returns on opened or used product (hygiene)",
           "paragraphs": [
-            "AETERNYX® is a sealed nutraceutical food supplement. For product-safety and hygiene reasons, we do not accept returns, exchanges or refunds on any strip whose foil seal has been broken, whose outer carton has been opened, or which shows any sign of use. This is consistent with Indian nutraceutical industry practice and with the FSSAI (Health Supplements, Nutraceuticals, FSDU, FSMP, Functional Food and Novel Food) Regulations, 2022.",
+            "AETERNYX® is a sealed nutraceutical. For product-safety and hygiene reasons, we do not accept returns, exchanges or refunds on any strip whose foil seal has been broken, whose outer carton has been opened, or which shows any sign of use. This is consistent with Indian nutraceutical industry practice and with the applicable Food Safety and Standards regulations.",
             "Change-of-mind returns on opened or partially-consumed product are not eligible under any circumstance."
           ]
         },
@@ -768,7 +687,7 @@
           "list": {
             "ordered": true,
             "items": [
-              "Report the issue within 48 hours of delivery — email aeternyxbyarata@gmail.com or WhatsApp +91 99599 93973 with your order ID.",
+              "Report the issue within 48 hours of delivery — email aratanutra@gmail.com or WhatsApp +91 99599 93973 with your order ID.",
               "Provide an unboxing video that clearly shows the outer courier bag unopened, the AETERNYX® carton being taken out, and the issue you are reporting. Photos alone are not sufficient for damage claims; the video is required to protect against transit tampering.",
               "Do not throw away the outer packaging, courier label, invoice or product — we may need them for the courier claim.",
               "Wait for our confirmation before shipping anything back. Once we confirm, we will arrange a reverse pickup at our cost, or share a return address for you to send it to us."
@@ -803,7 +722,7 @@
         {
           "heading": "Consumable product notice",
           "paragraphs": [
-            "AETERNYX® is a sealed consumable nutraceutical supplement. For product-safety and hygiene reasons, and consistent with Indian nutraceutical industry practice under the FSSAI Regulations, 2022, opened or used product cannot be returned, exchanged or refunded under any circumstance.",
+            "AETERNYX® is a sealed consumable nutraceutical. For product-safety and hygiene reasons, and consistent with Indian nutraceutical industry practice under the applicable Food Safety and Standards regulations, opened or used product cannot be returned, exchanged or refunded under any circumstance.",
             "This Return Policy should be read together with the Refund & Cancellation Policy at /refund-and-cancellation. In the event of any conflict between the two, the more specific provision governs."
           ]
         },
@@ -834,7 +753,7 @@
           "list": {
             "ordered": true,
             "items": [
-              "Email aeternyxbyarata@gmail.com or message WhatsApp +91 99599 93973 within 48 hours of delivery, quoting your order ID.",
+              "Email aratanutra@gmail.com or message WhatsApp +91 99599 93973 within 48 hours of delivery, quoting your order ID.",
               "Attach the required unboxing video for any damage, defect or tampering claim.",
               "Do not ship anything back before we confirm. If we approve the return, we will arrange a reverse pickup at our cost or share a return address for you to use."
             ]
@@ -892,7 +811,13 @@
         {
           "heading": "Shipping charges",
           "paragraphs": [
-            "Shipping charges are shown clearly at checkout, alongside the product price, and are inclusive of all applicable taxes. Charges vary by pack size — 3-strip and Box packs currently ship free across India; the 1-strip pack carries a flat shipping charge."
+            "Shipping charges are shown clearly at checkout, alongside the product price, and are inclusive of all applicable taxes. Charges vary by pack size — the 3-strip pack and the 10-strip (100-tablet) pack currently ship free across India; the 1-strip pack carries a flat shipping charge."
+          ]
+        },
+        {
+          "heading": "Shelf life at delivery",
+          "paragraphs": [
+            "Every product dispatched will have at least 30% of its shelf life, or at least 45 days before expiry, remaining at the time of delivery."
           ]
         }
       ]

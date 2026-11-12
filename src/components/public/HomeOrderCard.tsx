@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import type { SiteContent } from "@/types/content";
 import RazorpayCheckoutButton from "./RazorpayCheckoutButton";
 import WhatsAppOrderButton from "./WhatsAppOrderButton";
+import { ORDERING_ENABLED, ORDERING_PAUSED_COPY } from "@/lib/ordering";
 
 type Props = {
   brand: SiteContent["brand"];
@@ -35,10 +36,10 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
     () => `https://wa.me/${digits}?text=${encodeURIComponent(waMessage)}`,
     [digits, waMessage]
   );
-  const waNotifyHref = useMemo(
-    () => `https://wa.me/${digits}?text=${encodeURIComponent(orderStatus.notifyMessage)}`,
-    [digits, orderStatus.notifyMessage]
-  );
+
+  // Master kill switch: ordering is paused until the FSSAI E-commerce KoB
+  // is added to the licence.
+  const orderingPaused = !ORDERING_ENABLED || orderStatus.blocked;
 
   const inrFormatter = useMemo(
     () =>
@@ -150,7 +151,7 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
         </div>
       </div>
 
-      {orderStatus.blocked ? (
+      {orderingPaused ? (
         <div
           role="status"
           aria-live="polite"
@@ -166,11 +167,11 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
               className="inline-flex h-2 w-2 rounded-full bg-gold-deep animate-pulse"
             />
             <span className="text-[10px] font-semibold uppercase tracking-widest text-gold-deep">
-              {orderStatus.heading}
+              {ORDERING_PAUSED_COPY.heading}
             </span>
           </div>
           <p className="mt-2 text-[13px] leading-relaxed text-ink">
-            {orderStatus.message}
+            {ORDERING_PAUSED_COPY.message}
           </p>
           <button
             type="button"
@@ -178,17 +179,8 @@ export default function HomeOrderCard({ brand, hero, orderStatus }: Props) {
             aria-disabled
             className="mt-3 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-gold-deep/90 px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm"
           >
-            {orderStatus.buttonLabel}
+            {ORDERING_PAUSED_COPY.buttonLabel}
           </button>
-          <a
-            href={waNotifyHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-[13px] font-semibold text-white transition-all duration-200 hover:brightness-95 hover:shadow-card-hover"
-          >
-            <WhatsAppGlyph className="h-4 w-4" />
-            {orderStatus.notifyLabel}
-          </a>
         </div>
       ) : selectedPack ? (
         <div className="mt-5 flex flex-col gap-2">

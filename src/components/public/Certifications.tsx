@@ -19,12 +19,19 @@ function FssaiMark() {
   return <LogoChip src="/brand/certifications/fssai.png" alt="FSSAI Licensed" />;
 }
 
-function GmpMark() {
-  return <LogoChip src="/brand/certifications/gmp.png" alt="GMP Quality Certified" />;
-}
-
 function IsoMark() {
   return <LogoChip src="/brand/certifications/iso.png" alt="ISO Certified" />;
+}
+
+function HaccpMark() {
+  // Text-only neutral chip — we do not have a licensed GMP/HACCP
+  // certification graphic cleared for website use yet, so a text
+  // chip is safer than the old gmp.png (see Nov-2026 FSSAI brief).
+  return (
+    <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-hairline bg-canvas text-[11px] font-semibold tracking-[0.18em] text-ink">
+      HACCP
+    </div>
+  );
 }
 
 function VegMark() {
@@ -43,7 +50,7 @@ function VegMark() {
 
 const MARKS: Record<string, JSX.Element> = {
   FSSAI: <FssaiMark />,
-  GMP: <GmpMark />,
+  HACCP: <HaccpMark />,
   ISO: <IsoMark />,
   VEG: <VegMark />
 };

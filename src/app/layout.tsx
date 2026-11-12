@@ -21,29 +21,24 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   metadataBase: new URL("https://aratanutra.com"),
   title: {
-    default:
-      "AETERNYX® — Cellular Intelligence™ | Arata Nutraceuticals",
+    default: "AETERNYX® | Arata Nutraceuticals",
     template: "%s | Arata Nutraceuticals"
   },
   description:
-    "An expertly composed healthspan nutraceutical: ten evidence-graded bioactives across five cellular ageing pathways in one daily vegetarian tablet. Made in India, FSSAI-licensed. Shipping India-wide.",
+    "AETERNYX® – nutraceutical tablet with CoQ10, resveratrol, alpha-lipoic acid, vitamins C, E, D3, K2, lycopene, astaxanthin and selenium. One tablet daily. Marketed by Arata Nutraceuticals, Hyderabad.",
   keywords: [
     "AETERNYX",
     "Arata Nutraceuticals",
-    "healthspan supplement India",
-    "longevity supplement India",
-    "cellular wellness supplement",
-    "single tablet multivitamin",
-    "NMN India",
-    "tocotrienols India",
-    "resveratrol India",
-    "vitamin D3 K2 MK7 India",
-    "premium nutraceutical India",
-    "evidence based supplement",
-    "vegetarian longevity tablet",
-    "sirtuin activator supplement",
-    "mitochondrial support India",
-    "healthspan vs lifespan"
+    "CoQ10",
+    "resveratrol",
+    "alpha lipoic acid",
+    "vitamin C",
+    "vitamin E tocotrienols",
+    "vitamin D3",
+    "vitamin K2 MK-7",
+    "lycopene",
+    "astaxanthin",
+    "selenium"
   ],
   applicationName: "Arata Nutraceuticals",
   authors: [{ name: "Arata Nutraceuticals" }],
@@ -68,9 +63,9 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://aratanutra.com",
     siteName: "Arata Nutraceuticals",
-    title: "AETERNYX® · Cellular Intelligence™",
+    title: "AETERNYX® | Arata Nutraceuticals",
     description:
-      "One tablet, opened up — ten evidence-graded bioactives across five cellular ageing pathways.",
+      "AETERNYX® – nutraceutical tablet with CoQ10, resveratrol, alpha-lipoic acid, vitamins C, E, D3, K2, lycopene, astaxanthin and selenium. One tablet daily. Marketed by Arata Nutraceuticals, Hyderabad.",
     locale: "en_IN",
     images: [
       {
@@ -79,15 +74,15 @@ export const metadata: Metadata = {
         type: "image/jpeg",
         width: 1200,
         height: 630,
-        alt: "AETERNYX® — one tablet opened up, showing ten bioactives inside."
+        alt: "AETERNYX® tablet pack"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "AETERNYX® · Cellular Intelligence™",
+    title: "AETERNYX® | Arata Nutraceuticals",
     description:
-      "One tablet, opened up — ten evidence-graded bioactives across five cellular ageing pathways.",
+      "AETERNYX® – nutraceutical tablet with CoQ10, resveratrol, alpha-lipoic acid, vitamins C, E, D3, K2, lycopene, astaxanthin and selenium. One tablet daily. Marketed by Arata Nutraceuticals, Hyderabad.",
     images: ["/aeternyx-og.jpg"]
   }
 };
