@@ -359,7 +359,7 @@
     "complianceDisclaimer": "AETERNYX® is sold as a Nutraceutical under the applicable Food Safety and Standards regulations. It is not a drug. It is not intended to diagnose, treat, cure or prevent any disease. Product is not to be used as a substitute for a varied diet. Consult a qualified physician before use, especially during pregnancy, lactation, or if you have a pre-existing medical condition. Store in a cool, dry and dark place. Protect from light and moisture. Keep out of reach of children.",
     "grievanceOfficer": {
       "label": "Grievance",
-      "name": "[FULL NAME]",
+      "name": "Phani P",
       "email": "aratanutra@gmail.com",
       "phone": "+91 99599 93973",
       "note": "Acknowledgement within 48 hours. Resolution within 30 days, in line with the Consumer Protection Act, 2019."
@@ -383,8 +383,8 @@
   "policies": {
     "updatedAt": "19 September 2026",
     "grievance": {
-      "name": "[FULL NAME]",
-      "designation": "[DESIGNATION]",
+      "name": "Phani P",
+      "designation": "Grievance Officer & Data Protection Officer",
       "company": "Arata Nutraceuticals",
       "address": "Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana, India",
       "email": "aratanutra@gmail.com",
@@ -513,7 +513,7 @@
         {
           "heading": "Grievance Officer and consumer complaints",
           "paragraphs": [
-            "In accordance with the Information Technology Act, 2000, the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, the Consumer Protection (E-Commerce) Rules, 2020, and the Digital Personal Data Protection Act, 2023, the Grievance Officer for Arata Nutraceuticals is [FULL NAME], [DESIGNATION].",
+            "In accordance with the Information Technology Act, 2000, the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, the Consumer Protection (E-Commerce) Rules, 2020, and the Digital Personal Data Protection Act, 2023, the Grievance Officer for Arata Nutraceuticals is Phani P, Grievance Officer & Data Protection Officer.",
             "Contact: aratanutra@gmail.com · +91 99599 93973 · Mon–Fri 9:00–18:00 IST · Flat No. 107, Vasantha Green View, Sy No. 79 of Hafeezpet, Miyapur, Hyderabad 500049, Telangana, India.",
             "Consumer complaints under the Consumer Protection (E-Commerce) Rules, 2020 will be acknowledged within 48 hours of receipt and redressed within 30 days. Content-related and intermediary grievances under the IT Intermediary Rules, 2021 will be acknowledged within 24 hours and resolved within 15 days. Requests concerning your personal data (access, correction, erasure, nomination, grievance redressal, withdrawal of consent) under the Digital Personal Data Protection Act, 2023 are handled through the same officer.",
             "Full contact details are also available at aratanutra.com/contact."
